@@ -4,7 +4,7 @@
 
 Giao diện dựng theo bộ thiết kế trong thư mục `design/` (KeebHub UI kit).
 
-**Công nghệ:** Node.js 18+ · Express 4 · EJS · MongoDB (Mongoose 8) · express-session · Passport (Google/Facebook) · Nodemailer · Multer · Chart.js · VNPay sandbox API 2.1.0
+**Công nghệ:** Node.js · Express 4 · EJS · MongoDB (Mongoose 8) · express-session · Passport (Google/Facebook) · Nodemailer · Multer · Chart.js · VNPay sandbox API 2.1.0
 
 ---
 
