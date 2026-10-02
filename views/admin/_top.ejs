@@ -1,0 +1,29 @@
+<%- include('../partials/head') %>
+<div class="app"><div class="rail" id="rail">
+  <div class="brand"><span class="mark">K</span><div><b>KeebHub Admin</b><span>Quản trị hệ thống</span></div></div>
+  <div class="shopbox"><span class="lg" style="background:#1B62F5"><%= user.initials %></span><div><b><%= user.name %></b><span>Toàn quyền hệ thống</span></div></div>
+  <div class="gt">TỔNG QUAN</div><a class="<%= active==='dash'?'on':'' %>" href="/admin"><em>◎</em>Bảng điều khiển</a>
+  <div class="gt">NGƯỜI DÙNG</div>
+  <a class="<%= active==='users'?'on':'' %>" href="/admin/users"><em>👥</em>Quản lý người dùng</a>
+  <a class="<%= active==='shops'?'on':'' %>" href="/admin/shops"><em>🏪</em>Tài khoản Seller/Shop<% if (badges.pendingShops) { %><b><%= badges.pendingShops %></b><% } %></a>
+  <div class="gt">SẢN PHẨM</div>
+  <a class="<%= active==='products'&&query.status!=='all'?'on':'' %>" href="/admin/products"><em>✓</em>Kiểm duyệt sản phẩm<% if (badges.pendingProducts) { %><b><%= badges.pendingProducts %></b><% } %></a>
+  <a class="<%= active==='products'&&query.status==='all'?'on':'' %>" href="/admin/products?status=all"><em>▤</em>Tất cả sản phẩm</a>
+  <a class="<%= active==='compat'?'on':'' %>" href="/admin/compat"><em>🧩</em>Danh mục & tương thích</a>
+  <div class="gt">VẬN HÀNH</div>
+  <a class="<%= active==='orders'?'on':'' %>" href="/admin/orders"><em>📦</em>Quản lý đơn hàng</a>
+  <a class="<%= active==='refunds'?'on':'' %>" href="/admin/refunds"><em>↩</em>Huỷ đơn & hoàn tiền<% if (badges.refunds) { %><b><%= badges.refunds %></b><% } %></a>
+  <div class="gt">BÁO CÁO</div>
+  <a class="<%= active==='revenue'?'on':'' %>" href="/admin/revenue"><em>📈</em>Doanh thu & thống kê</a>
+  <div class="gt">KHÁC</div>
+  <a href="/"><em>↗</em>Về trang mua sắm</a>
+  <form method="post" action="/auth/logout"><button class="railbtn"><em>⎋</em>Đăng xuất</button></form>
+</div>
+<div style="min-width:0"><div class="tbar">
+  <button class="ib menu-tg" type="button" onclick="document.getElementById('rail').classList.toggle('open')">☰</button>
+  <div><h1><%= title %></h1><div class="sub">KeebHub · <%= h.date(new Date()) %></div></div>
+  <form class="sbox" action="/admin/orders"><span class="i">⌕</span><input name="q" placeholder="Tìm mã đơn hàng…"></form>
+  <div class="who"><span class="av" style="background:#1B62F5"><%= user.initials %></span><span class="s13 w600"><%= user.name %> · Admin</span></div>
+</div>
+<div class="main">
+<%- include('../partials/flash') %>

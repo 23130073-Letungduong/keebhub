@@ -1,0 +1,19 @@
+<div class="ftr"><div class="ct">
+  <div class="top">
+    <div>
+      <a class="logo" href="/" style="font-size:19px"><span class="mark" style="width:30px;height:30px;font-size:14px"><span>K</span></span><span>Keeb<span style="color:var(--p500)">Hub</span></span></a>
+      <p class="s13 t2" style="margin-top:14px;line-height:1.7;max-width:280px">Sàn thương mại điện tử bàn phím cơ custom. Kết nối người chơi với xưởng gia công uy tín trên toàn quốc.</p>
+      <div class="paylogos"><i>VNPAY</i><i>COD</i><i>VISA</i><i>ATM</i><i>QR</i></div>
+    </div>
+    <div><h4>Khám phá</h4><ul><% categories.slice(0,5).forEach(function(c){ %><li><a href="/c/<%= c.slug %>"><%= c.name %></a></li><% }) %></ul></div>
+    <div><h4>Hỗ trợ</h4><ul><li><a href="/huong-dan">Hướng dẫn mua hàng</a></li><li><a href="/chinh-sach#doi-tra">Chính sách đổi trả</a></li><li><a href="/chinh-sach#bao-hanh">Chính sách bảo hành</a></li><li><a href="/account/orders">Tra cứu đơn hàng</a></li><li><a href="/huong-dan#faq">Câu hỏi thường gặp</a></li></ul></div>
+    <div><h4>Người bán</h4><ul><li><a href="/seller/register">Đăng ký bán hàng</a></li><li><a href="/chinh-sach#quy-che">Quy chế hoạt động</a></li><li><a href="/chinh-sach#phi">Chính sách phí</a></li><li><a href="/seller">Trung tâm người bán</a></li></ul></div>
+    <div><h4>Liên hệ</h4><ul><li>1900 6868</li><li>hotro@keebhub.vn</li><li>Tầng 8, toà nhà A, Q.1, TP.HCM</li></ul></div>
+  </div>
+  <div class="bot"><span>© 2026 KeebHub. Đồ án Thương mại điện tử.</span><span><a href="/chinh-sach">Điều khoản · Bảo mật · Cookie</a></span></div>
+</div></div>
+<%- include('chat') %>
+<% if (!user) { %><script>window.KH_GUEST = true;</script><% } %>
+<script src="/js/app.js?v=<%= locals.v || 1 %>"></script>
+</body>
+</html>

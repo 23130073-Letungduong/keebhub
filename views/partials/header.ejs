@@ -1,0 +1,50 @@
+<div class="topbar"><div class="ct">
+  <div class="tb-l"><a href="/seller" style="margin-left:0">Kênh người bán</a> &nbsp;·&nbsp; <a href="/shops" style="margin-left:0">Tìm gian hàng</a> &nbsp;·&nbsp; <a href="/huong-dan" style="margin-left:0">Hướng dẫn build</a></div>
+  <div>
+    <a href="/chinh-sach">Trợ giúp</a>
+    <% if (mailDev) { %><a href="/dev/mails" title="Chưa cấu hình SMTP — email được lưu tại đây">📨 Hộp thư dev</a><% } %>
+    <% if (!user) { %><a class="hl" href="/auth/register">Đăng ký</a><a class="hl" href="/auth/login">Đăng nhập</a>
+    <% } else if (user.role==='admin') { %><a class="hl" href="/admin">Trang quản trị</a>
+    <% } else if (user.role==='seller') { %><a class="hl" href="/seller">Quản lý shop</a><% } %>
+  </div>
+</div></div>
+<div class="hdr"><div class="ct">
+  <a class="logo" href="/"><span class="mark"><span>K</span></span><span>Keeb<span style="color:var(--p500)">Hub</span></span></a>
+  <form class="search" action="/search" method="get"><span class="ico">⌕</span>
+    <input class="inp" name="q" value="<%= (typeof q!=='undefined' && q) ? q : '' %>" placeholder="Tìm kit, switch, keycap, dịch vụ gia công…" autocomplete="off">
+    <button class="go">Tìm kiếm</button>
+  </form>
+  <div class="hact">
+    <a class="iconbtn" href="/account/wishlist" title="Yêu thích">♡</a>
+    <a class="iconbtn" href="/account/orders" title="Đơn hàng">📦</a>
+    <a class="iconbtn" href="/cart" title="Giỏ hàng">🛒<% if (cartCount) { %><span class="dot" id="cartDot"><%= cartCount %></span><% } else { %><span class="dot" id="cartDot" style="display:none">0</span><% } %></a>
+    <% if (!user) { %>
+      <a class="btn out sm" href="/auth/login">Đăng nhập</a><a class="btn pri sm" href="/auth/register">Đăng ký</a>
+    <% } else { %>
+      <div class="user dd">
+        <% if (user.avatar) { %><img class="avatar" src="<%= user.avatar %>" alt=""><% } else { %><span class="avatar" style="background:<%= user.color %>;color:#fff"><%= user.initials %></span><% } %>
+        <span class="s13 w600 uname"><%= user.name.split(' ').slice(-2).join(' ') %></span><span class="s12 muted">▾</span>
+        <div class="ddm">
+          <a href="/account">👤 Hồ sơ cá nhân</a>
+          <a href="/account/orders">📦 Đơn hàng của tôi</a>
+          <a href="/account/builds">⚙ Cấu hình đã lưu</a>
+          <a href="/account/reviews">⭐ Đánh giá của tôi</a>
+          <% if (user.role==='seller') { %><a href="/seller">🏪 Kênh người bán</a><% } else if (user.role==='customer') { %><a href="/seller/register">🏪 Đăng ký bán hàng</a><% } %>
+          <% if (user.role==='admin') { %><a href="/admin">🛡 Trang quản trị</a><% } %>
+          <form method="post" action="/auth/logout"><button>⎋ Đăng xuất</button></form>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</div></div>
+<div class="nav"><div class="ct">
+  <div class="cat dd">☰ Tất cả danh mục
+    <div class="ddm">
+      <% categories.forEach(function(c){ %><a href="/c/<%= c.slug %>"><%= c.icon %> <%= c.name %></a><% }) %>
+    </div>
+  </div>
+  <% categories.slice(0,6).forEach(function(c){ %><a class="<%= path==='/c/'+c.slug?'on':'' %>" href="/c/<%= c.slug %>"><%= c.name %></a><% }) %>
+  <a class="<%= path.indexOf('/shops')===0?'on':'' %>" href="/shops">Gian hàng</a>
+  <a class="mla" href="/builder" style="color:var(--a600);font-weight:600">⚙ Custom Builder</a>
+</div></div>
+<%- include('flash') %>

@@ -1,0 +1,36 @@
+{
+  "name": "keebhub",
+  "version": "1.0.0",
+  "description": "KeebHub — Sàn thương mại điện tử bàn phím cơ custom (Node.js + Express + EJS + MongoDB)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "seed": "node seed/seed.js",
+    "test": "node --test --test-concurrency=1 --test-reporter=spec test/e2e.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": ["ecommerce", "keyboard", "custom", "express", "mongodb", "vnpay"],
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.9.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.16",
+    "passport": "^0.7.0",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth20": "^2.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

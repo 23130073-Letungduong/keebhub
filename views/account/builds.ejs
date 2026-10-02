@@ -1,0 +1,29 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<div class="ct"><div class="acct">
+  <%- include('_nav') %>
+  <div>
+    <div class="pnl"><div class="hd"><div style="flex:1"><h2>Cấu hình đã lưu</h2><p>Các build bạn tạo trong Custom Builder</p></div><a class="btn pri sm" href="/builder/new">+ Build mới</a></div></div>
+    <% if (!builds.length) { %><div class="card p24 empty"><div class="s38">⚙</div><b>Chưa có cấu hình nào</b><a class="btn pri" style="margin-top:12px" href="/builder/new">Mở Custom Builder</a></div><% } %>
+    <div class="grid2">
+    <% builds.forEach(function(b){ var t = buildTotal(b); %>
+      <div class="pnl" style="margin:0">
+        <div class="hd"><div style="flex:1"><h2 class="s16">#<%= b.code %> · <%= b.name %></h2><p>Cập nhật <%= h.dateTime(b.updatedAt) %></p></div>
+          <span class="bdg <%= b.status==='ordered'?'ok':b.compat.ok?'new':'err' %>"><%= b.status==='ordered' ? 'Đã đặt' : b.compat.ok ? '✓ Tương thích' : '✕ Có xung đột' %></span></div>
+        <div class="bd">
+          <div class="bsheet2">
+            <div class="r"><span>Kit</span><b><%= b.kit ? b.kit.name : '—' %></b></div>
+            <div class="r"><span>Switch</span><b><%= b.switch ? b.switch.name + ' ×' + b.switchQty : '—' %></b></div>
+            <div class="r"><span>Keycap</span><b><%= b.keycap ? b.keycap.name : '—' %></b></div>
+            <div class="r"><span>Stab</span><b><%= b.stab ? b.stab.name : '—' %></b></div>
+            <div class="r"><span>Gia công</span><b><%= b.service ? b.service.name + ' · ' + b.service.shop.name : '—' %></b></div>
+          </div>
+          <div class="f ac jb" style="margin-top:14px"><b class="s18" style="color:var(--a600)"><%= h.money(t.total) %></b>
+            <div class="f" style="gap:8px"><% if (b.status!=='ordered') { %><a class="btn pri sm" href="/builder/edit/<%= b._id %>">Mở & đặt</a><form method="post" action="/account/builds/<%= b._id %>/delete" onsubmit="return confirm('Xoá cấu hình này?')"><button class="btn out sm">Xoá</button></form><% } %></div></div>
+        </div>
+      </div>
+    <% }) %>
+    </div>
+  </div>
+</div></div>
+<%- include('../partials/footer') %>

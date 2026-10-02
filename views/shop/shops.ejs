@@ -1,0 +1,24 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<div class="ct">
+  <div class="crumb"><a href="/">Trang chủ</a><span>›</span><b>Tìm gian hàng</b></div>
+  <div class="hero-cat">
+    <div style="flex:1"><h1>🏪 Tìm gian hàng</h1><p>Tìm shop theo tên, khu vực hoặc chuyên môn. Lọc riêng các xưởng nhận gia công custom.</p>
+      <form class="f" style="gap:10px;margin-top:16px;max-width:560px" method="get">
+        <input class="inp" name="q" value="<%= q %>" placeholder="Tên shop, thành phố…" style="border:0">
+        <label class="f ac s13" style="gap:6px;white-space:nowrap"><input type="checkbox" name="custom" value="1" <%= query.custom==='1'?'checked':'' %>> Có gia công</label>
+        <button class="btn cta">Tìm</button>
+      </form>
+    </div>
+  </div>
+  <p class="s13 muted" style="margin-bottom:14px"><%= shops.length %> gian hàng</p>
+  <% if (!shops.length) { %><div class="card p24 empty"><div class="s38">🏪</div><b>Không tìm thấy gian hàng</b></div><% } %>
+  <div class="shops">
+    <% shops.forEach(function(s){ %>
+    <a class="shopc" href="/shop/<%= s.slug %>"><div class="lg" style="background:<%= s.color %>"><%= s.initials %></div>
+      <div style="min-width:0"><b class="s14"><%= s.name %></b><div class="s12 t2" style="margin-top:4px">★ <%= s.rating ? s.rating.toFixed(1) : '—' %> · <%= cm[String(s._id)]||0 %> sản phẩm · <%= s.city||'Việt Nam' %></div>
+      <div class="f" style="gap:6px;margin-top:9px;flex-wrap:wrap"><% if (s.verified) { %><span class="bdg ok">Đã xác minh</span><% } %><% if (s.offersCustom) { %><span class="bdg new">Gia công</span><% } %></div></div></a>
+    <% }) %>
+  </div>
+</div>
+<%- include('../partials/footer') %>

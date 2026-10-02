@@ -1,0 +1,7 @@
+<% if (pages > 1) { var qs = Object.assign({}, query); %>
+<div class="pager">
+  <% for (var i=1;i<=pages;i++){ if (pages>9 && i>2 && i<pages-1 && Math.abs(i-page)>2) { if (i===3||i===pages-2){ %><a>…</a><% } continue; } qs.page=i; %>
+    <a class="<%= i===page?'on':'' %>" href="?<%= new URLSearchParams(qs).toString() %>"><%= i %></a>
+  <% } %>
+</div>
+<% } %>

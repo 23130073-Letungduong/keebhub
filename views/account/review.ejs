@@ -1,0 +1,21 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<div class="ct"><div class="acct">
+  <%- include('_nav') %>
+  <div>
+    <div class="pnl"><div class="hd"><div><h2>Đánh giá đơn #<%= order.code %></h2><p><%= order.shop.name %> · Đánh giá chân thực giúp người mua khác chọn đúng linh kiện</p></div></div></div>
+    <% order.items.forEach(function(i){ %>
+    <div class="pnl rvform">
+      <div class="hd"><div style="width:56px;height:56px;border-radius:10px;overflow:hidden;border:1px solid var(--border);flex:none"><img src="<%= i.image %>" class="kb"></div><div style="flex:1"><b class="s14"><%= i.name %></b><p>×<%= i.qty %></p></div><% if (i.reviewed) { %><span class="bdg ok">✓ Đã đánh giá</span><% } %></div>
+      <% if (!i.reviewed && i.product) { %>
+      <form class="bd" method="post" action="/account/orders/<%= order.code %>/review/<%= i._id %>" enctype="multipart/form-data">
+        <div class="starsel" data-stars><% for (var s=1;s<=5;s++){ %><label><input type="radio" name="rating" value="<%= s %>" <%= s===5?'checked':'' %> hidden><span>★</span></label><% } %><span class="s14 t2 w600 starlbl" style="letter-spacing:0;margin-left:10px;align-self:center">Tuyệt vời</span></div>
+        <div class="field" style="margin-top:14px"><label>Nhận xét</label><textarea class="inp" name="content" rows="4" placeholder="Cảm giác gõ, âm thanh, chất lượng gia công, đóng gói…"></textarea></div>
+        <div class="f ac" style="gap:12px;margin-top:12px;flex-wrap:wrap"><label class="btn out sm">📷 Thêm ảnh (tối đa 5)<input type="file" name="images" accept="image/*" multiple hidden></label><span class="s12 muted filelbl"></span><button class="btn pri mla">Gửi đánh giá</button></div>
+      </form>
+      <% } %>
+    </div>
+    <% }) %>
+  </div>
+</div></div>
+<%- include('../partials/footer') %>

@@ -1,0 +1,33 @@
+<%- include('_top') %>
+<div class="split">
+  <div class="card2"><div class="hd"><div style="flex:1"><h3>Quy tắc tương thích (<%= rules.length %>)</h3><p>Áp dụng cho Custom Builder, trang sản phẩm và kiểm tra khi đặt hàng. Mức: Chặn / Cảnh báo / Gợi ý</p></div></div>
+    <div class="bd">
+      <% rules.forEach(function(r){ %>
+      <form class="appr" method="post" action="/admin/compat/<%= r._id %>">
+        <div class="top" style="display:block">
+          <div class="f ac" style="gap:10px;flex-wrap:wrap"><b class="s14"><%= r.name %></b><span class="bdg gray"><%= r.code %></span><span class="bdg new"><%= r.parts %></span>
+            <label class="mla f ac s13" style="gap:6px"><input type="checkbox" name="enabled" <%= r.enabled?'checked':'' %>> Bật</label></div>
+          <p class="s13 t2" style="margin:6px 0 10px"><%= r.description %></p>
+          <div class="f" style="gap:10px;flex-wrap:wrap">
+            <select class="inp" name="level" style="width:150px"><option value="block" <%= r.level==='block'?'selected':'' %>>⛔ Chặn</option><option value="warn" <%= r.level==='warn'?'selected':'' %>>⚠ Cảnh báo</option><option value="suggest" <%= r.level==='suggest'?'selected':'' %>>💡 Gợi ý</option></select>
+            <input class="inp" name="message" value="<%= r.message %>" style="flex:1;min-width:260px">
+            <button class="btn pri sm">Lưu</button>
+          </div>
+          <div class="help" style="margin-top:6px">Biến dùng được: {kit} {switch} {keycap} {stab} {service} và biến riêng của quy tắc.</div>
+        </div>
+      </form>
+      <% }) %>
+    </div></div>
+  <div>
+    <div class="card2"><div class="hd"><h3>Danh mục sản phẩm</h3></div><div class="bd" style="padding:8px 12px"><div class="tree">
+      <% cats.forEach(function(c){ %><div class="lv1"><span><%= c.icon %></span><%= c.name %><span class="bdg gray"><%= c.partType %></span><span class="n"><%= cm[String(c._id)]||0 %> sp</span><form method="post" action="/admin/categories/<%= c._id %>/delete" onsubmit="return confirm('Xoá danh mục?')"><button class="btn ghost sm" style="color:var(--d600);padding:2px 6px">✕</button></form></div><% }) %>
+    </div></div></div>
+    <form class="card2" method="post" action="/admin/categories"><div class="hd"><h3>Thêm danh mục</h3></div><div class="bd">
+      <div class="field2"><label>Tên</label><input class="inp" name="name" required></div>
+      <div class="g2"><div class="field2"><label>Icon (emoji)</label><input class="inp" name="icon" value="⌨"></div>
+        <div class="field2"><label>Loại kỹ thuật</label><select class="inp" name="partType"><option value="kit">kit</option><option value="switch">switch</option><option value="keycap">keycap</option><option value="stabilizer">stabilizer</option><option value="accessory">accessory</option><option value="prebuilt">prebuilt</option></select></div></div>
+      <button class="btn pri blk sm">+ Thêm</button>
+    </div></form>
+  </div>
+</div>
+<%- include('_bottom') %>

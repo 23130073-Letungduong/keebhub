@@ -1,0 +1,15 @@
+<%- include('../partials/head') %>
+<div class="auth">
+<%- include('_aside', {heading:'Đặt mật khẩu mới', sub:'Chọn mật khẩu mạnh mà bạn chưa dùng ở nơi khác.'}) %>
+<div class="apane"><div class="aform">
+  <div class="steps3"><div class="s done"><span class="n">✓</span><span>Nhập email</span></div><div class="ln"></div><div class="s done"><span class="n">✓</span><span>Mở email</span></div><div class="ln"></div><div class="s on"><span class="n">3</span><span>Mật khẩu mới</span></div></div>
+  <div class="top"><h1>Mật khẩu mới</h1><div class="sub">Tài khoản: <b><%= email %></b></div></div>
+  <%- include('../partials/flash') %>
+  <form method="post" action="/auth/reset/<%= token %>">
+    <div class="field"><label>Mật khẩu mới</label><div class="pw"><input class="inp" type="password" name="password" id="pw" minlength="8" required><button type="button" class="eye" tabindex="-1">👁</button></div><div class="strength" id="strength"><i></i><i></i><i></i><i></i></div></div>
+    <div class="field"><label>Nhập lại</label><input class="inp" type="password" name="confirm" minlength="8" required></div>
+    <button class="btn pri blk lg">Lưu mật khẩu</button>
+  </form>
+</div></div>
+</div>
+<script src="/js/app.js?v=<%= locals.v || 1 %>"></script></body></html>

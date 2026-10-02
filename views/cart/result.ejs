@@ -1,0 +1,29 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<div class="ct"><div class="resultwrap">
+  <div class="rescard">
+    <div class="resban" style="<%= success ? '' : 'background:linear-gradient(170deg,#FEF3F2,#fff)' %>">
+      <div class="ic" style="<%= success ? '' : 'background:var(--d600);box-shadow:0 8px 22px rgba(217,45,32,.25)' %>"><%= success ? '✓' : '!' %></div>
+      <h1><%= success ? (cod ? 'Đặt hàng thành công!' : 'Thanh toán thành công!') : 'Thanh toán chưa hoàn tất' %></h1>
+      <p><%= success ? 'Cảm ơn bạn đã mua sắm tại KeebHub. Thông tin đơn hàng đã được gửi tới email của bạn.' : (message || 'Giao dịch không thành công.') + ' Đơn hàng vẫn được giữ — bạn có thể thanh toán lại.' %></p>
+    </div>
+    <div style="padding:10px 36px 20px">
+      <% orders.forEach(function(o){ %>
+      <div class="resrow"><span>#<%= o.code %> · <%= o.shop.name %><%= o.isCustom ? ' · Gia công' : '' %></span><b><%= h.money(o.total) %> <span class="bdg <%= PAY[o.paymentStatus].cls %>"><%= PAY[o.paymentStatus].label %></span></b></div>
+      <% }) %>
+      <div class="resrow"><span>Tổng</span><b style="color:var(--a600);font-size:18px"><%= h.money(total) %></b></div>
+      <div class="resrow"><span>Phương thức</span><b><%= cod ? 'Thanh toán khi nhận hàng (COD)' : 'VNPay' %></b></div>
+      <div class="f" style="gap:10px;margin-top:20px">
+        <% if (!success) { %><a class="btn cta" style="flex:1" href="/payment/vnpay/<%= group %>">Thanh toán lại</a><% } %>
+        <a class="btn pri" style="flex:1" href="/account/orders">Xem đơn hàng</a>
+        <a class="btn out" style="flex:1" href="/">Tiếp tục mua sắm</a>
+      </div>
+    </div>
+    <div class="nextsteps">
+      <div class="it"><em>📋</em><b>Shop xác nhận</b><span>Trong 24 giờ</span></div>
+      <div class="it"><em>🛠</em><b>Gia công / đóng gói</b><span>Theo dõi tiến độ kèm ảnh</span></div>
+      <div class="it"><em>🚚</em><b>Giao hàng</b><span>2-4 ngày</span></div>
+    </div>
+  </div>
+</div></div>
+<%- include('../partials/footer') %>

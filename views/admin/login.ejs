@@ -1,0 +1,16 @@
+<%- include('../partials/head') %>
+<div class="loginwrap">
+  <div style="position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(27,98,245,.35),transparent 50%),radial-gradient(circle at 80% 80%,rgba(255,90,31,.25),transparent 50%)"></div>
+  <form class="loginbox" method="post" action="/admin/login">
+    <div class="mark">K</div>
+    <h1 class="s24 w800" style="text-align:center">KeebHub Admin</h1>
+    <p class="s13 t2" style="text-align:center;margin:6px 0 22px">Khu vực dành cho quản trị viên hệ thống</p>
+    <%- include('../partials/flash') %>
+    <div class="field" style="margin-bottom:14px"><label>Email quản trị</label><input class="inp" type="email" name="email" value="<%= email %>" required autofocus></div>
+    <div class="field" style="margin-bottom:20px"><label>Mật khẩu</label><div class="pw"><input class="inp" type="password" name="password" required><button type="button" class="eye" tabindex="-1">👁</button></div></div>
+    <button class="btn pri blk lg">Đăng nhập</button>
+    <p class="s12 muted" style="text-align:center;margin-top:18px">🔒 Mọi thao tác quản trị đều được ghi lại trong lịch sử đơn hàng.</p>
+    <a class="s12" style="display:block;text-align:center;margin-top:8px;color:var(--p600)" href="/">← Về trang chủ</a>
+  </form>
+</div>
+<script src="/js/app.js?v=<%= locals.v || 1 %>"></script></body></html>

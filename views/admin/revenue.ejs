@@ -1,0 +1,8 @@
+<%- include('_top') %>
+<%- include('../partials/revenue-body') %>
+<div class="card2"><div class="hd"><h3>Doanh thu theo shop</h3></div><div class="bd p0 tblx"><table class="tb">
+  <tr><th>Shop</th><th>Số đơn</th><th style="text-align:right">GMV</th><th style="text-align:right">Phí sàn</th><th style="text-align:right">Shop thực nhận</th></tr>
+  <% byShop.forEach(function(r){ %><tr><td><b><%= r.s.name %></b></td><td><%= r.n %></td><td style="text-align:right"><b><%= h.money(r.v) %></b></td><td style="text-align:right"><%= h.money(r.v*FEE) %></td><td style="text-align:right"><%= h.money(r.v*(1-FEE)) %></td></tr><% }) %>
+  <% if (!byShop.length) { %><tr><td colspan="5" class="muted">Không có dữ liệu.</td></tr><% } %>
+</table></div></div>
+<%- include('_bottom') %>

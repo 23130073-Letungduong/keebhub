@@ -1,0 +1,14 @@
+<%- include('../partials/head') %>
+<div class="auth">
+<%- include('_aside', {heading:'Quên mật khẩu?<br>Không sao cả', sub:'Nhập email đã đăng ký, chúng tôi sẽ gửi liên kết để bạn đặt mật khẩu mới.'}) %>
+<div class="apane"><div class="aform">
+  <div class="steps3"><div class="s on"><span class="n">1</span><span>Nhập email</span></div><div class="ln"></div><div class="s"><span class="n">2</span><span>Mở email</span></div><div class="ln"></div><div class="s"><span class="n">3</span><span>Mật khẩu mới</span></div></div>
+  <div class="top"><h1>Lấy lại mật khẩu</h1><div class="sub">Nhớ ra rồi? <a href="/auth/login">Đăng nhập</a></div></div>
+  <%- include('../partials/flash') %>
+  <form method="post" action="/auth/forgot">
+    <div class="field"><label>Email</label><input class="inp" type="email" name="email" required autofocus></div>
+    <button class="btn pri blk lg" style="margin-top:6px">Gửi liên kết đặt lại</button>
+  </form>
+</div></div>
+</div>
+<script src="/js/app.js?v=<%= locals.v || 1 %>"></script></body></html>

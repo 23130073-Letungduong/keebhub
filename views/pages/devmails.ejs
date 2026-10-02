@@ -1,0 +1,11 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<div class="ct" style="max-width:900px;padding-bottom:40px">
+  <h1 class="s30 w800" style="margin:20px 0 6px">📨 Hộp thư dev</h1>
+  <div class="alert warn" style="margin-bottom:16px">Server chưa cấu hình SMTP (SMTP_HOST/SMTP_USER trong .env) nên email xác nhận / đặt lại mật khẩu được lưu tạm ở đây để demo. Cấu hình Gmail App Password để gửi email thật.</div>
+  <div class="card">
+    <% if (!mails.length) { %><p class="muted" style="padding:20px">Chưa có email nào.</p><% } %>
+    <% mails.forEach(function(m,i){ %><a class="f ac" style="gap:14px;padding:14px 18px;border-bottom:1px solid var(--border)" href="/dev/mails/<%= i %>" target="_blank"><span style="font-size:22px">✉</span><div style="flex:1"><b class="s14"><%= m.subject %></b><div class="s12 muted">Tới: <%= m.to %></div></div><span class="s12 muted"><%= h.dateTime(m.at) %></span></a><% }) %>
+  </div>
+</div>
+<%- include('../partials/footer') %>

@@ -1,0 +1,50 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<div class="ct"><div class="acct">
+  <%- include('_nav') %>
+  <div>
+    <div class="grid3" style="margin-bottom:18px">
+      <div class="stat"><div class="lb">Tổng đơn hàng</div><div class="vl"><%= stats.orderCount %></div></div>
+      <div class="stat"><div class="lb">Đã chi tiêu</div><div class="vl" style="color:var(--a600)"><%= h.money(stats.spent) %></div></div>
+      <div class="stat"><div class="lb">Đánh giá đã viết</div><div class="vl"><%= stats.reviewCount %></div></div>
+    </div>
+    <form class="pnl" method="post" action="/account/profile" enctype="multipart/form-data">
+      <div class="hd"><div style="flex:1"><h2>Hồ sơ cá nhân</h2><p>Quản lý thông tin để bảo mật tài khoản và giao hàng nhanh hơn</p></div><button class="btn pri sm">Lưu thay đổi</button></div>
+      <div class="bd">
+        <div class="f" style="gap:24px;align-items:flex-start;flex-wrap:wrap">
+          <div style="text-align:center;width:150px">
+            <% if (user.avatar) { %><img src="<%= user.avatar %>" style="width:96px;height:96px;border-radius:50%;object-fit:cover;margin:0 auto"><% } else { %><div style="width:96px;height:96px;border-radius:50%;background:<%= user.color %>;color:#fff;display:grid;place-items:center;font-size:30px;font-weight:800;margin:0 auto"><%= user.initials %></div><% } %>
+            <label class="btn out sm" style="margin-top:12px">Đổi ảnh<input type="file" name="avatar" accept="image/*" hidden></label>
+            <div class="help" style="margin-top:6px">PNG/JPG tối đa 5MB</div>
+          </div>
+          <div style="flex:1;min-width:280px">
+            <div class="grid2">
+              <div class="field"><label>Họ và tên</label><input class="inp" name="name" value="<%= user.name %>" required></div>
+              <div class="field"><label>Email</label><input class="inp" value="<%= user.email %>" disabled><div class="help"><%= user.emailVerified ? '✓ Đã xác minh' : 'Chưa xác minh' %><%= user.googleId ? ' · Liên kết Google' : '' %><%= user.facebookId ? ' · Liên kết Facebook' : '' %></div></div>
+              <div class="field"><label>Số điện thoại</label><input class="inp" name="phone" value="<%= user.phone %>"></div>
+              <div class="field"><label>Ngày sinh</label><input class="inp" type="date" name="birthday" value="<%= user.birthday ? h.ymd(user.birthday) : '' %>"></div>
+              <div class="field"><label>Giới tính</label><select class="inp" name="gender"><option value="">—</option><option value="male" <%= user.gender==='male'?'selected':'' %>>Nam</option><option value="female" <%= user.gender==='female'?'selected':'' %>>Nữ</option><option value="other" <%= user.gender==='other'?'selected':'' %>>Khác</option></select></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hd" style="border-top:1px solid var(--border)"><div><h2 class="s16">📍 Địa chỉ giao hàng mặc định</h2></div></div>
+      <div class="bd">
+        <div class="grid2">
+          <div class="field"><label>Người nhận</label><input class="inp" name="fullName" value="<%= user.address.fullName %>"></div>
+          <div class="field"><label>SĐT nhận hàng</label><input class="inp" name="addrPhone" value="<%= user.address.phone %>"></div>
+        </div>
+        <div class="field" style="margin-top:14px"><label>Địa chỉ</label><input class="inp" name="line" value="<%= user.address.line %>"></div>
+      </div>
+    </form>
+    <form class="pnl" id="security" method="post" action="/account/password">
+      <div class="hd"><div style="flex:1"><h2>Bảo mật</h2><p><%= user.password ? 'Đổi mật khẩu đăng nhập' : 'Tài khoản đăng nhập bằng mạng xã hội — đặt mật khẩu để đăng nhập bằng email' %></p></div><button class="btn out sm">Cập nhật mật khẩu</button></div>
+      <div class="bd"><div class="grid3">
+        <% if (user.password) { %><div class="field"><label>Mật khẩu hiện tại</label><input class="inp" type="password" name="current" required></div><% } %>
+        <div class="field"><label>Mật khẩu mới</label><input class="inp" type="password" name="password" minlength="8" required></div>
+        <div class="field"><label>Nhập lại</label><input class="inp" type="password" name="confirm" minlength="8" required></div>
+      </div></div>
+    </form>
+  </div>
+</div></div>
+<%- include('../partials/footer') %>

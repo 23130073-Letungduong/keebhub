@@ -1,0 +1,34 @@
+<form class="card2" method="get" style="margin-bottom:18px"><div class="toolrow" style="border:0">
+  <b class="s13">Khoảng thời gian</b>
+  <label class="s13 t2 f ac" style="gap:6px">Từ <input class="inp" type="date" name="from" value="<%= range.fromStr %>" style="padding:6px 10px;width:auto"></label>
+  <label class="s13 t2 f ac" style="gap:6px">Đến <input class="inp" type="date" name="to" value="<%= range.toStr %>" style="padding:6px 10px;width:auto"></label>
+  <select class="inp" name="group" style="padding:6px 10px;width:auto"><option value="">Tự động</option><option value="day" <%= query.group==='day'?'selected':'' %>>Theo ngày</option><option value="month" <%= query.group==='month'?'selected':'' %>>Theo tháng</option></select>
+  <% if (typeof shops !== 'undefined') { %><select class="inp" name="shop" style="padding:6px 10px;width:auto"><option value="">Tất cả shop</option><% shops.forEach(function(s){ %><option value="<%= s._id %>" <%= query.shop===String(s._id)?'selected':'' %>><%= s.name %></option><% }) %></select><% } %>
+  <button class="btn pri sm">Xem thống kê</button>
+  <span class="mla f" style="gap:6px">
+    <% [[7,'7 ngày'],[30,'30 ngày'],[90,'90 ngày'],[365,'12 tháng']].forEach(function(x){ var f = new Date(Date.now()-(x[0]-1)*86400e3); %><a class="tchip" href="?from=<%= h.ymd(f) %>&to=<%= h.ymd(new Date()) %><%= query.shop ? '&shop='+query.shop : '' %>"><%= x[1] %></a><% }) %>
+  </span>
+</div></form>
+<div class="kpis g4">
+  <div class="kpi"><div class="tp"><em style="background:var(--s50);color:var(--s600)">💰</em><span><%= typeof shops !== 'undefined' ? 'GMV' : 'Doanh thu' %></span></div><div class="v"><%= h.money(chart.total) %></div><div class="d t2"><%= range.fromStr.split('-').reverse().join('/') %> → <%= range.toStr.split('-').reverse().join('/') %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--p50);color:var(--p600)">📦</em><span>Số đơn tính doanh thu</span></div><div class="v"><%= chart.count %></div><div class="d t2">Không tính đơn huỷ / chưa thanh toán</div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--w50);color:var(--w600)">🧾</em><span>Giá trị TB / đơn</span></div><div class="v"><%= h.money(chart.count ? chart.total/chart.count : 0) %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--a50);color:var(--a600)">🏦</em><span>Phí sàn (<%= FEE*100 %>%)</span></div><div class="v"><%= h.money(chart.fee) %></div><div class="d t2"><%= typeof shops !== 'undefined' ? 'Doanh thu của sàn' : 'Thực nhận: ' + h.money(chart.total-chart.fee) %></div></div>
+</div>
+<div class="card2">
+  <div class="hd"><div style="flex:1"><h3>Biểu đồ cột — doanh thu theo <%= range.group==='month'?'tháng':'ngày' %></h3><p>Cột xanh: doanh thu (₫) · đường cam: số đơn</p></div></div>
+  <div class="bd"><div style="height:320px"><canvas data-chart="bar" data-labels="<%= JSON.stringify(chart.labels) %>" data-values="<%= JSON.stringify(chart.revenue) %>" data-values2="<%= JSON.stringify(chart.orders) %>" data-label="Doanh thu (₫)" data-label2="Số đơn"></canvas></div></div>
+</div>
+<div class="g3">
+  <div class="card2"><div class="hd"><h3>Biểu đồ tròn — loại đơn</h3></div><div class="bd"><% if (types.length) { %><div style="height:240px"><canvas data-chart="pie" data-labels="<%= JSON.stringify(types.map(function(x){return x.label})) %>" data-values="<%= JSON.stringify(types.map(function(x){return x.value})) %>"></canvas></div><% } else { %><p class="muted s13">Không có dữ liệu.</p><% } %></div></div>
+  <div class="card2"><div class="hd"><h3>Biểu đồ tròn — danh mục</h3></div><div class="bd"><% if (cats.length) { %><div style="height:240px"><canvas data-chart="doughnut" data-labels="<%= JSON.stringify(cats.map(function(x){return x.label})) %>" data-values="<%= JSON.stringify(cats.map(function(x){return x.value})) %>"></canvas></div><% } else { %><p class="muted s13">Không có dữ liệu.</p><% } %></div></div>
+  <div class="card2"><div class="hd"><h3>Biểu đồ tròn — trạng thái đơn</h3></div><div class="bd"><% if (status.length) { %><div style="height:240px"><canvas data-chart="pie" data-money="0" data-labels="<%= JSON.stringify(status.map(function(x){return x.label})) %>" data-values="<%= JSON.stringify(status.map(function(x){return x.value})) %>"></canvas></div><% } else { %><p class="muted s13">Không có dữ liệu.</p><% } %></div></div>
+</div>
+<div class="split">
+  <div class="card2"><div class="hd"><h3>Chi tiết theo <%= range.group==='month'?'tháng':'ngày' %></h3></div><div class="bd p0 tblx" style="max-height:420px;overflow:auto"><table class="tb">
+    <tr><th><%= range.group==='month'?'Tháng':'Ngày' %></th><th>Số đơn</th><th style="text-align:right">Doanh thu</th><th style="text-align:right">Phí sàn</th></tr>
+    <% chart.labels.slice().reverse().forEach(function(l,i){ var j = chart.labels.length-1-i; if (!chart.orders[j]) return; %><tr><td><%= l %></td><td><%= chart.orders[j] %></td><td style="text-align:right"><b><%= h.money(chart.revenue[j]) %></b></td><td style="text-align:right" class="t2"><%= h.money(chart.revenue[j]*FEE) %></td></tr><% }) %>
+    <% if (!chart.count) { %><tr><td colspan="4" class="muted">Không có đơn trong khoảng này.</td></tr><% } %>
+  </table></div></div>
+  <div class="card2"><div class="hd"><h3>Top sản phẩm</h3></div><div class="bd" style="padding:6px 20px"><% top.forEach(function(p,i){ %><div class="todo"><span class="w800 muted" style="width:18px"><%= i+1 %></span><span style="width:40px;height:40px;border-radius:8px;overflow:hidden;border:1px solid var(--border);flex:none"><img src="<%= p.image %>" class="kb"></span><div style="flex:1;min-width:0"><b class="s13"><%= p.name %></b><span><%= p.qty %> đã bán</span></div><b class="s13"><%= h.short(p.v) %>₫</b></div><% }) %><% if (!top.length) { %><p class="muted s13" style="padding:10px 0">Không có dữ liệu.</p><% } %></div></div>
+</div>

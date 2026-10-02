@@ -1,0 +1,34 @@
+<%- include('_top') %>
+<% var total = [1,2,3,4,5].reduce(function(s,k){return s+dist[k]},0); %>
+<div class="card2"><div class="toolrow">
+  <a class="tchip <%= tab==='reviews'?'on':'' %>" href="?tab=reviews">⭐ Đánh giá (<%= total %>)</a>
+  <a class="tchip <%= tab==='qa'?'on':'' %>" href="?tab=qa">💬 Hỏi đáp (<%= comments.length %>)</a>
+  <% if (tab==='reviews') { %><span class="mla"></span><a class="tchip <%= query.f==='unreplied'?'on':'' %>" href="?f=unreplied">Chưa phản hồi</a><% [5,4,3,2,1].forEach(function(s){ %><a class="tchip <%= query.star==String(s)?'on':'' %>" href="?star=<%= s %>"><%= s %>★ (<%= dist[s] %>)</a><% }) %><% } %>
+</div>
+<div class="bd">
+<% if (tab==='reviews') { %>
+  <% if (!reviews.length) { %><p class="muted s13">Chưa có đánh giá.</p><% } %>
+  <% reviews.forEach(function(r){ %>
+  <div class="rvitem"><span class="av" style="background:<%= r.user?r.user.color:'#999' %>;color:#fff"><%= h.initials(r.user?r.user.name:'?') %></span>
+    <div style="flex:1"><div class="f jb"><div><b class="s14"><%= r.user?r.user.name:'' %></b> <span class="stars"><%= h.stars(r.rating) %></span></div><span class="s12 muted"><%= h.dateTime(r.createdAt) %></span></div>
+      <div class="s12 muted"><%= r.product ? r.product.name : '' %></div>
+      <p class="s13 t2" style="margin-top:6px"><%= r.content %></p>
+      <% if (r.images.length) { %><div class="rvph"><% r.images.forEach(function(i){ %><a href="<%= i %>" target="_blank"><i><img src="<%= i %>" style="width:100%;height:100%;object-fit:cover"></i></a><% }) %></div><% } %>
+      <% if (r.reply && r.reply.content) { %><div class="reply"><b class="s13">Shop đã phản hồi</b> <span class="s12 muted"><%= h.dateTime(r.reply.at) %></span><p class="s13 t2"><%= r.reply.content %></p></div>
+      <% } else { %><form method="post" action="/seller/reviews/<%= r._id %>/reply" class="f" style="gap:8px;margin-top:10px"><input class="inp" name="content" required placeholder="Phản hồi khách hàng…"><button class="btn pri sm">Trả lời</button></form><% } %>
+    </div></div>
+  <% }) %>
+<% } else { %>
+  <% if (!comments.length) { %><p class="muted s13">Chưa có câu hỏi.</p><% } %>
+  <% comments.forEach(function(c){ var answered = c.replies.some(function(r){return r.isSeller}); %>
+  <div class="rvitem"><span class="av" style="background:<%= c.user?c.user.color:'#999' %>;color:#fff"><%= h.initials(c.user?c.user.name:'?') %></span>
+    <div style="flex:1"><div class="f jb"><div><b class="s14"><%= c.user?c.user.name:'' %></b> <% if (!answered) { %><span class="bdg warn">Chưa trả lời</span><% } %></div><span class="s12 muted"><%= h.timeAgo(c.createdAt) %></span></div>
+      <div class="s12 muted">Về: <a href="/p/<%= c.product ? c.product.slug : '' %>?tab=qa" target="_blank" style="color:var(--p600)"><%= c.product ? c.product.name : '' %></a></div>
+      <p class="s13" style="margin-top:6px"><%= c.content %></p>
+      <% c.replies.forEach(function(rp){ %><div class="reply"><b class="s13"><%= rp.name %></b> <span class="s12 muted"><%= h.timeAgo(rp.at) %></span><p class="s13 t2"><%= rp.content %></p></div><% }) %>
+      <form method="post" action="/comments/<%= c._id %>/reply" class="f" style="gap:8px;margin-top:10px"><input type="hidden" name="back" value="/seller/reviews?tab=qa"><input class="inp" name="content" required placeholder="Trả lời bình luận…"><button class="btn pri sm">Trả lời</button></form>
+    </div></div>
+  <% }) %>
+<% } %>
+</div></div>
+<%- include('_bottom') %>

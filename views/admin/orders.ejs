@@ -1,0 +1,14 @@
+<%- include('_top') %>
+<div class="card2">
+  <div class="toolrow">
+    <% [['all','Tất cả'],['pending','Chờ xác nhận'],['confirmed','Đã xác nhận'],['processing','Đang gia công'],['shipping','Đang giao'],['delivered','Đã giao'],['completed','Hoàn thành'],['cancelled','Đã huỷ']].forEach(function(t){ %><a class="tchip <%= st===t[0]?'on':'' %>" href="?status=<%= t[0] %>"><%= t[1] %><%= t[0]!=='all'&&counts[t[0]] ? ' ('+counts[t[0]]+')' : '' %></a><% }) %>
+    <form class="mla f" style="gap:6px"><input type="hidden" name="status" value="<%= st %>"><select class="inp" name="pay" style="padding:6px 10px;width:auto" onchange="this.form.submit()"><option value="">Mọi thanh toán</option><% Object.keys(PAY).forEach(function(k){ %><option value="<%= k %>" <%= query.pay===k?'selected':'' %>><%= PAY[k].label %></option><% }) %></select></form>
+  </div>
+  <div class="bd p0 tblx"><table class="tb">
+    <tr><th>Mã đơn</th><th>Khách</th><th>Shop</th><th>Giá trị</th><th>Thanh toán</th><th>Trạng thái</th><th>Ngày</th><th></th></tr>
+    <% orders.forEach(function(o){ %><tr><td><b>#<%= o.code %></b><% if (o.isCustom) { %><div class="sub">Custom</div><% } %></td><td><div class="nm"><%= o.user?o.user.name:'' %></div><div class="sub"><%= o.user?o.user.email:'' %></div></td><td><%= o.shop?o.shop.name:'' %></td><td><b><%= h.money(o.total) %></b></td><td><span class="bdg <%= PAY[o.paymentStatus].cls %>"><%= o.paymentMethod.toUpperCase() %> · <%= PAY[o.paymentStatus].label %></span></td><td><span class="bdg <%= STATUS[o.status].cls %>"><%= STATUS[o.status].label %></span></td><td class="muted"><%= h.dateTime(o.createdAt) %></td><td><a class="btn out sm" href="/admin/orders/<%= o.code %>">Xem</a></td></tr><% }) %>
+    <% if (!orders.length) { %><tr><td colspan="8" class="muted" style="text-align:center;padding:30px">Không có đơn.</td></tr><% } %>
+  </table></div>
+  <%- include('../partials/pager', {pages:pages, page:page}) %>
+</div>
+<%- include('_bottom') %>

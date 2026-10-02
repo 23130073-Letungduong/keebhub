@@ -1,0 +1,76 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<% var o = order; %>
+<div class="ct"><div class="acct">
+  <%- include('_nav') %>
+  <div>
+    <div class="pnl">
+      <div class="hd" style="flex-wrap:wrap"><div style="flex:1">
+        <div class="f ac" style="gap:10px;flex-wrap:wrap"><h2>Đơn hàng #<%= o.code %></h2><span class="bdg <%= STATUS[o.status].cls %>"><%= STATUS[o.status].label %></span><% if (o.isCustom) { %><span class="bdg sale">Đơn custom</span><% } %><span class="bdg <%= PAY[o.paymentStatus].cls %>"><%= PAY[o.paymentStatus].label %></span></div>
+        <p>Đặt ngày <%= h.dateTime(o.createdAt) %> · <a href="/shop/<%= o.shop.slug %>" style="color:var(--p600)"><%= o.shop.name %></a><%= o.isCustom && o.customRequest.deadline && o.status==='processing' ? ' · Dự kiến xong ' + h.date(o.customRequest.deadline) : '' %></p></div>
+        <% if (o.paymentMethod==='vnpay' && ['unpaid','failed'].includes(o.paymentStatus) && o.status!=='cancelled') { %><form method="post" action="/payment/retry/<%= o._id %>"><button class="btn cta sm">Thanh toán VNPay</button></form><% } %>
+      </div>
+      <%- include('../partials/order-progress', {o:o}) %>
+    </div>
+
+    <% if (o.isCustom) { %>
+    <div class="pnl">
+      <div class="hd"><div style="flex:1"><h2>Tiến độ gia công</h2><p><%= o.customRequest.status==='waiting' ? (o.paymentStatus==='paid' ? 'Đang chờ shop nhận đơn (tối đa 24 giờ)' : 'Vui lòng thanh toán để shop tiếp nhận yêu cầu gia công') : o.customRequest.status==='rejected' ? 'Shop đã từ chối: ' + (o.customRequest.note||'') : 'Cập nhật trực tiếp bởi ' + o.shop.name + ' · ' + o.progress.filter(function(s){return s.status==='done'}).length + '/' + o.progress.length + ' công đoạn' %></p></div>
+        <% if (o.progress.length) { %><span class="bdg ok"><%= o.progressPercent %>%</span><% } %></div>
+      <% if (o.progress.length) { %>
+        <div style="padding:16px 22px 0"><div class="cap"><div class="tk"><i style="width:<%= o.progressPercent %>%;background:linear-gradient(90deg,var(--p500),var(--s600))"></i></div><b><%= o.progressPercent %>%</b></div></div>
+        <%- include('../partials/stages', {o:o}) %>
+      <% } %>
+    </div>
+    <% } %>
+
+    <div class="grid2" style="align-items:start">
+      <div class="pnl">
+        <div class="hd"><h2><%= o.isCustom ? 'Build Sheet #' + (o.buildCode||'') : 'Sản phẩm' %></h2></div>
+        <table class="tbl">
+          <% o.items.forEach(function(i){ %><tr><td style="width:64px"><div style="width:52px;height:52px;border-radius:8px;overflow:hidden;border:1px solid var(--border)"><img src="<%= i.image %>" class="kb"></div></td><td><% if (i.role) { %><div class="s12 muted"><%= ({kit:'Kit',switch:'Switch',keycap:'Keycap',stab:'Stabilizer'})[i.role] %></div><% } %><b class="s13"><%= i.name %></b><div class="s12 muted">×<%= i.qty %> · <%= h.money(i.price) %></div></td><td style="text-align:right"><b><%= h.money(i.price*i.qty) %></b></td></tr><% }) %>
+          <% if (o.isCustom && o.service && o.service.name) { %><tr><td><div style="width:52px;height:52px;border-radius:8px;display:grid;place-items:center;background:var(--p50);font-size:22px">🛠</div></td><td><div class="s12 muted">Gia công</div><b class="s13"><%= o.service.name %></b></td><td style="text-align:right"><b><%= h.money(o.serviceFee) %></b></td></tr><% } %>
+        </table>
+      </div>
+      <div>
+        <div class="pnl">
+          <div class="hd"><h2>Thanh toán</h2></div>
+          <div class="bd">
+            <div class="sumrow" style="padding:5px 0"><span>Tạm tính</span><b><%= h.money(o.subtotal) %></b></div>
+            <% if (o.serviceFee) { %><div class="sumrow" style="padding:5px 0"><span>Phí gia công</span><b><%= h.money(o.serviceFee) %></b></div><% } %>
+            <div class="sumrow" style="padding:5px 0"><span>Vận chuyển</span><b><%= o.shippingFee ? h.money(o.shippingFee) : 'Miễn phí' %></b></div>
+            <div class="divider" style="margin:10px 0"></div>
+            <div class="sumrow"><b class="s16">Tổng thanh toán</b><b class="s20" style="color:var(--a600)"><%= h.money(o.total) %></b></div>
+            <div class="alert <%= o.paymentStatus==='paid'?'ok':'info' %> s13" style="margin-top:14px">🔒 <%= o.paymentMethod==='cod' ? 'Thanh toán khi nhận hàng (COD).' : 'VNPay — ' + PAY[o.paymentStatus].label + (o.paidAt ? ' lúc ' + h.dateTime(o.paidAt) : '') + (o.vnpTransactionNo ? ' · Mã GD ' + o.vnpTransactionNo : '') %></div>
+          </div>
+        </div>
+        <div class="pnl">
+          <div class="hd"><h2>Giao hàng</h2></div>
+          <div class="bd s14">
+            <b><%= o.shipping.fullName %> · <%= o.shipping.phone %></b>
+            <p class="t2 s13" style="margin-top:4px"><%= o.shipping.address %></p>
+            <div class="divider" style="margin:12px 0"></div>
+            <div class="sumrow"><span>Đơn vị vận chuyển</span><b><%= o.shipping.carrier %> (<%= o.shipping.method==='express'?'Hoả tốc':'Tiêu chuẩn' %>)</b></div>
+            <div class="sumrow" style="margin-top:6px"><span>Mã vận đơn</span><b><%= o.shipping.trackingCode || 'Chưa có' %></b></div>
+          </div>
+        </div>
+        <div class="pnl"><div class="bd">
+          <% if (canCancel) { %>
+            <details><summary class="btn out blk" style="list-style:none">✕ Huỷ đơn hàng</summary>
+              <form method="post" action="/account/orders/<%= o.code %>/cancel" style="margin-top:12px" onsubmit="return confirm('Bạn chắc chắn muốn huỷ đơn này?')">
+                <select class="inp" name="reason" required><option value="">— Chọn lý do huỷ —</option><option>Muốn thay đổi sản phẩm / cấu hình</option><option>Đặt nhầm, muốn đặt lại</option><option>Tìm được giá tốt hơn</option><option>Thời gian gia công quá lâu</option><option>Lý do khác</option></select>
+                <button class="btn blk" style="margin-top:10px;background:var(--d600);color:#fff">Xác nhận huỷ</button>
+              </form></details>
+          <% } %>
+          <% if (['shipping','delivered'].includes(o.status)) { %><form method="post" action="/account/orders/<%= o.code %>/received" style="margin-top:10px"><button class="btn pri blk">✓ Tôi đã nhận hàng</button></form><p class="s12 muted" style="text-align:center;margin-top:8px">Chỉ bấm khi đã nhận và kiểm tra hàng.</p><% } %>
+          <% if (['delivered','completed'].includes(o.status) && o.items.some(function(i){return !i.reviewed})) { %><a class="btn outp blk" style="margin-top:10px" href="/account/orders/<%= o.code %>/review">⭐ Đánh giá sản phẩm</a><% } %>
+          <a class="btn ghost blk" style="margin-top:6px" href="/account/orders">← Về danh sách đơn</a>
+        </div></div>
+      </div>
+    </div>
+    <div class="pnl"><div class="hd"><h2>Lịch sử đơn hàng</h2></div><div class="tl">
+      <% o.history.slice().reverse().forEach(function(x){ %><div class="tli"><div class="mk"><i style="background:var(--p500)"></i></div><div><b class="s13"><%= x.note || STATUS[x.status].label %></b><div class="s12 muted"><%= h.dateTime(x.at) %></div></div></div><% }) %>
+    </div></div>
+  </div>
+</div></div>
+<%- include('../partials/footer') %>

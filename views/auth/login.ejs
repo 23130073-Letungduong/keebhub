@@ -1,0 +1,25 @@
+<%- include('../partials/head') %>
+<div class="auth">
+<%- include('_aside', {heading:'Chào mừng trở lại,<br>thợ build phím', sub:'Đăng nhập để tiếp tục cấu hình đang lưu, theo dõi tiến độ gia công và quản lý đơn hàng của bạn.'}) %>
+<div class="apane"><div class="aform">
+  <div class="top"><h1>Đăng nhập</h1><div class="sub">Chưa có tài khoản? <a href="/auth/register">Đăng ký miễn phí</a></div></div>
+  <%- include('../partials/flash') %>
+  <% if (typeof unverified !== 'undefined' && unverified) { %>
+    <form method="post" action="/auth/resend" style="margin-bottom:14px"><input type="hidden" name="email" value="<%= email %>"><button class="btn outp sm blk">✉ Gửi lại email xác nhận</button></form>
+  <% } %>
+  <%- include('_social') %>
+  <div class="orline">hoặc đăng nhập bằng email</div>
+  <form method="post" action="/auth/login">
+    <div class="field"><label>Email hoặc số điện thoại</label><input class="inp" name="email" value="<%= email %>" required autofocus></div>
+    <div class="field"><label>Mật khẩu</label><div class="pw"><input class="inp" type="password" name="password" required><button type="button" class="eye" tabindex="-1">👁</button></div></div>
+    <div class="f ac jb" style="margin:6px 0 22px">
+      <label class="f ac s13 t2" style="gap:9px"><input type="checkbox" name="remember" checked> Ghi nhớ đăng nhập</label>
+      <a class="s13" style="color:var(--p600);font-weight:600" href="/auth/forgot">Quên mật khẩu?</a>
+    </div>
+    <button class="btn pri blk lg">Đăng nhập</button>
+  </form>
+  <div class="alert info" style="margin-top:20px"><span>🏪</span><div>Bạn là chủ shop? Đăng nhập bằng tài khoản của bạn rồi vào <a href="/seller" style="color:var(--p700);font-weight:700;text-decoration:underline">Kênh người bán</a>.</div></div>
+  <p class="s12 muted" style="text-align:center;margin-top:26px;line-height:1.6">Bằng việc đăng nhập, bạn đồng ý với <a href="/chinh-sach" style="color:var(--p600)">Điều khoản sử dụng</a> và <a href="/chinh-sach" style="color:var(--p600)">Chính sách bảo mật</a> của KeebHub.</p>
+</div></div>
+</div>
+<script src="/js/app.js?v=<%= locals.v || 1 %>"></script></body></html>

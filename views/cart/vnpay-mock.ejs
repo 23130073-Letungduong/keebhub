@@ -1,0 +1,18 @@
+<%- include('../partials/head') %>
+<div style="min-height:100vh;background:#EAF0F8;display:grid;place-items:center;padding:30px 16px">
+  <div class="card" style="max-width:520px;width:100%;overflow:hidden">
+    <div style="background:#005BAA;color:#fff;padding:18px 24px;display:flex;align-items:center;gap:12px"><b style="font-size:22px;letter-spacing:.02em">VN<span style="color:#ED1C24">PAY</span></b><span class="s13" style="opacity:.85">Cổng thanh toán — MÔ PHỎNG</span></div>
+    <div style="padding:24px">
+      <div class="alert warn s13">🧪 Server chưa có <b>VNP_TMNCODE</b> / <b>VNP_HASHSECRET</b> nên đang dùng trang mô phỏng để demo. Điền khoá sandbox trong <code>.env</code> để chuyển sang VNPay thật.</div>
+      <div class="resrow"><span>Nhà cung cấp</span><b>KeebHub</b></div>
+      <div class="resrow"><span>Mã giao dịch</span><b><%= group %></b></div>
+      <div class="resrow"><span>Nội dung</span><b class="s13" style="text-align:right;max-width:280px"><%= info %></b></div>
+      <div class="resrow"><span>Số tiền</span><b style="color:var(--a600);font-size:20px"><%= h.money(amount) %></b></div>
+      <div class="f" style="gap:10px;margin-top:20px">
+        <form method="post" action="/payment/mock/<%= group %>" style="flex:1"><input type="hidden" name="result" value="fail"><button class="btn out blk">Huỷ giao dịch</button></form>
+        <form method="post" action="/payment/mock/<%= group %>" style="flex:1"><input type="hidden" name="result" value="success"><button class="btn blk" style="background:#005BAA;color:#fff">Thanh toán thành công</button></form>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

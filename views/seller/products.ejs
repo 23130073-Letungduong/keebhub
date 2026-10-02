@@ -1,0 +1,29 @@
+<%- include('_top') %>
+<% var SL = {active:['Đang bán','ok'],pending:['Chờ duyệt','warn'],hidden:['Đã ẩn','gray'],rejected:['Bị từ chối','err']}; %>
+<div class="card2">
+  <div class="toolrow">
+    <% [['all','Tất cả'],['active','Đang bán'],['pending','Chờ duyệt'],['hidden','Đã ẩn'],['rejected','Bị từ chối']].forEach(function(t){ %><a class="tchip <%= st===t[0]?'on':'' %>" href="?status=<%= t[0] %>"><%= t[1] %><%= t[0]!=='all'&&counts[t[0]] ? ' ('+counts[t[0]]+')' : '' %></a><% }) %>
+    <form class="mla f" style="gap:6px"><input type="hidden" name="status" value="<%= st %>"><input class="inp" style="padding:6px 10px;width:200px" name="q" value="<%= query.q||'' %>" placeholder="Tìm sản phẩm…"><button class="btn out sm">Tìm</button></form>
+  </div>
+  <div class="bd p0 tblx"><table class="tb">
+    <tr><th>Sản phẩm</th><th>Danh mục</th><th>Giá</th><th>Kho</th><th>Đã bán</th><th>Đánh giá</th><th>Trạng thái</th><th></th></tr>
+    <% products.forEach(function(p){ %>
+    <tr class="<%= p.stock<=p.lowStock ? 'warnstock' : '' %>">
+      <td><div class="f ac" style="gap:10px"><div class="th"><img src="<%= p.image %>" class="kb"></div><div><a class="nm" href="/p/<%= p.slug %>" target="_blank"><%= p.name %></a><div class="sub"><%= p.sku||'' %><%= p.status==='rejected' && p.rejectReason ? ' · Lý do: '+p.rejectReason : '' %></div></div></div></td>
+      <td><%= p.category ? p.category.name : '' %></td>
+      <td><b class="money"><%= h.money(p.price) %></b><% if (p.discount) { %><div class="sub">−<%= p.discount %>%</div><% } %></td>
+      <td><b style="color:<%= p.stock<=p.lowStock?'var(--d600)':'inherit' %>"><%= p.stock %></b></td>
+      <td><%= p.sold %></td>
+      <td><%= p.rating ? '★ '+p.rating.toFixed(1) : '—' %> <span class="sub">(<%= p.reviewCount %>)</span></td>
+      <td><span class="bdg <%= SL[p.status][1] %>"><%= SL[p.status][0] %></span></td>
+      <td style="white-space:nowrap;text-align:right">
+        <a class="btn out sm" href="/seller/products/<%= p._id %>/edit">Sửa</a>
+        <% if (['active','hidden'].includes(p.status)) { %><form method="post" action="/seller/products/<%= p._id %>/toggle" style="display:inline"><button class="btn ghost sm"><%= p.status==='active'?'Ẩn':'Hiện' %></button></form><% } %>
+        <form method="post" action="/seller/products/<%= p._id %>/delete" style="display:inline" onsubmit="return confirm('Xoá sản phẩm này?')"><button class="btn ghost sm" style="color:var(--d600)">Xoá</button></form>
+      </td>
+    </tr>
+    <% }) %>
+    <% if (!products.length) { %><tr><td colspan="8" class="muted" style="text-align:center;padding:30px">Chưa có sản phẩm. <a style="color:var(--p600)" href="/seller/products/new">Thêm sản phẩm đầu tiên</a></td></tr><% } %>
+  </table></div>
+</div>
+<%- include('_bottom') %>

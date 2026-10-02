@@ -1,0 +1,43 @@
+<%- include('_top') %>
+<div class="split">
+  <div>
+    <% if (!sel) { %><div class="card2"><div class="bd empty"><div class="s38">✓</div><b>Không có yêu cầu gia công nào đang chờ</b><p class="s13 muted">Yêu cầu mới từ Custom Builder sẽ xuất hiện ở đây.</p></div></div>
+    <% } else { var o = sel; var waitH = Math.round((Date.now()-new Date(o.createdAt))/3600e3); %>
+    <div class="card2">
+      <div class="hd"><div style="flex:1"><h3>Yêu cầu gia công #<%= o.code %> · Build #<%= o.buildCode %></h3><p><%= o.user.name %> · gửi <%= h.timeAgo(o.createdAt) %> · hạn phản hồi <%= h.dateTime(o.customRequest.deadline) %></p></div>
+        <span class="bdg <%= waitH>18?'err':'warn' %>">Chờ <%= waitH %>h</span></div>
+      <div class="bd">
+        <% if (o.paymentStatus!=='paid') { %><div class="alert warn" style="margin-bottom:14px">⏳ Khách chưa hoàn tất thanh toán VNPay. Bạn chỉ có thể nhận đơn sau khi khách thanh toán.</div><% } else { %><div class="alert ok" style="margin-bottom:14px">✓ Khách đã thanh toán <%= h.money(o.total) %> qua VNPay — sàn giữ tiền tới khi đơn hoàn thành.</div><% } %>
+        <div class="bsheet2">
+          <% o.items.forEach(function(i){ %><div class="r"><span><%= ({kit:'Kit',switch:'Switch',keycap:'Keycap',stab:'Stab'})[i.role]||'' %></span><b><%= i.name %> ×<%= i.qty %></b></div><% }) %>
+          <div class="r"><span>Gói gia công</span><b><%= o.service.name %> · <%= h.money(o.serviceFee) %></b></div>
+          <div class="r"><span>Thời gian cam kết</span><b>~<%= o.service.days %> ngày</b></div>
+          <% if (o.note) { %><div class="r"><span>Ghi chú của khách</span><b><%= o.note %></b></div><% } %>
+        </div>
+        <% if (o.build && o.build.compat && o.build.compat.issues.length) { %><div style="margin-top:12px"><% o.build.compat.issues.forEach(function(i){ %><div class="alert <%= i.level==='warn'?'warn':'info' %> s12" style="margin-bottom:6px"><%= i.message %></div><% }) %></div><% } %>
+        <div class="g2" style="margin-top:18px">
+          <form method="post" action="/seller/custom/<%= o.code %>/accept">
+            <div class="field2"><label>Lời nhắn cho khách (tuỳ chọn)</label><input class="inp" name="note" placeholder="VD: dự kiến giao trong 5 ngày"></div>
+            <button class="btn pri blk" <%= o.paymentStatus!=='paid'?'disabled':'' %>>✓ Nhận gia công</button>
+          </form>
+          <form method="post" action="/seller/custom/<%= o.code %>/reject" onsubmit="return confirm('Từ chối yêu cầu này? Đơn sẽ bị huỷ và hoàn tiền cho khách.')">
+            <div class="field2"><label>Lý do từ chối <span class="req">*</span></label><select class="inp" name="reason" required><option value="">— Chọn lý do —</option><option>Xưởng đã kín lịch</option><option>Linh kiện không đủ điều kiện gia công</option><option>Yêu cầu vượt khả năng của xưởng</option><option>Lý do khác</option></select></div>
+            <button class="btn out blk" style="color:var(--d600)">✕ Từ chối</button>
+          </form>
+        </div>
+        <p class="s12 muted" style="margin-top:10px">Công suất hiện tại: <%= load %>/<%= shop.capacityPerWeek %> đơn đang gia công.</p>
+      </div>
+    </div>
+    <% } %>
+  </div>
+  <div>
+    <div class="card2"><div class="hd"><h3>Hàng chờ (<%= orders.length %>)</h3></div><div class="bd" style="padding:6px 20px">
+      <% orders.forEach(function(o){ %><a class="todo" href="?code=<%= o.code %>" style="<%= sel && sel.code===o.code ? 'background:var(--p50);margin:0 -20px;padding-left:20px;padding-right:20px' : '' %>"><em style="background:var(--w50);color:var(--w600)">⚙</em><div style="flex:1"><b>#<%= o.code %> · <%= o.user.name %></b><span><%= h.money(o.total) %> · <%= h.timeAgo(o.createdAt) %> · <%= o.paymentStatus==='paid'?'đã TT':'chưa TT' %></span></div></a><% }) %>
+      <% if (!orders.length) { %><p class="muted s13" style="padding:10px 0">Trống.</p><% } %>
+    </div></div>
+    <div class="card2"><div class="hd"><h3>Đã phản hồi gần đây</h3></div><div class="bd" style="padding:6px 20px">
+      <% history.forEach(function(o){ %><div class="todo"><em style="background:<%= o.customRequest.status==='accepted'?'var(--s50)':'var(--d50)' %>"><%= o.customRequest.status==='accepted'?'✓':'✕' %></em><div style="flex:1"><b>#<%= o.code %> · <%= o.user ? o.user.name : '' %></b><span><%= o.customRequest.status==='accepted'?'Đã nhận':'Từ chối: '+(o.customRequest.note||'') %></span></div></div><% }) %>
+    </div></div>
+  </div>
+</div>
+<%- include('_bottom') %>

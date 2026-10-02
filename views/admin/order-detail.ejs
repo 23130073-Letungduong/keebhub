@@ -1,0 +1,33 @@
+<%- include('_top') %>
+<% var o = order; %>
+<div class="split">
+  <div>
+    <div class="card2"><div class="hd"><div style="flex:1"><h3>Đơn #<%= o.code %> <% if (o.isCustom) { %><span class="bdg sale">Custom</span><% } %></h3><p><%= o.user.name %> (<%= o.user.email %>) → <%= o.shop.name %> · <%= h.dateTime(o.createdAt) %></p></div><span class="bdg <%= STATUS[o.status].cls %>"><%= STATUS[o.status].label %></span><span class="bdg <%= PAY[o.paymentStatus].cls %>"><%= PAY[o.paymentStatus].label %></span></div>
+      <%- include('../partials/order-progress', {o:o}) %></div>
+    <div class="card2"><div class="hd"><h3>Sản phẩm</h3></div><div class="bd p0"><table class="tb">
+      <% o.items.forEach(function(i){ %><tr><td style="width:60px"><div class="th"><img src="<%= i.image %>" class="kb"></div></td><td><div class="nm"><%= i.name %></div></td><td><%= h.money(i.price) %> × <%= i.qty %></td><td style="text-align:right"><b><%= h.money(i.price*i.qty) %></b></td></tr><% }) %>
+      <% if (o.isCustom) { %><tr><td>🛠</td><td><div class="nm"><%= o.service.name %></div></td><td></td><td style="text-align:right"><b><%= h.money(o.serviceFee) %></b></td></tr><% } %>
+      <tr><td colspan="3" style="text-align:right">Phí ship</td><td style="text-align:right"><%= h.money(o.shippingFee) %></td></tr>
+      <tr><td colspan="3" style="text-align:right"><b>Tổng</b></td><td style="text-align:right"><b style="color:var(--a600)"><%= h.money(o.total) %></b></td></tr>
+    </table></div></div>
+    <% if (o.progress.length) { %><div class="card2"><div class="hd"><h3>Tiến độ gia công · <%= o.progressPercent %>%</h3></div><%- include('../partials/stages', {o:o}) %></div><% } %>
+    <div class="card2"><div class="hd"><h3>Lịch sử</h3></div><div class="tl"><% o.history.slice().reverse().forEach(function(x){ %><div class="tli"><div class="mk"><i style="background:var(--p500)"></i></div><div><b class="s13"><%= x.note || STATUS[x.status].label %></b><div class="s12 muted"><%= h.dateTime(x.at) %> · <%= x.by %></div></div></div><% }) %></div></div>
+  </div>
+  <div>
+    <form class="card2" method="post" action="/admin/orders/<%= o.code %>/status"><div class="hd"><h3>Can thiệp đơn hàng</h3></div><div class="bd">
+      <div class="field2"><label>Trạng thái mới</label><select class="inp" name="status"><% Object.keys(STATUS).forEach(function(k){ %><option value="<%= k %>" <%= o.status===k?'selected':'' %>><%= STATUS[k].label %></option><% }) %></select></div>
+      <div class="field2"><label>Ghi chú</label><input class="inp" name="note" placeholder="Lý do can thiệp"></div>
+      <button class="btn pri blk" <%= o.status==='cancelled'?'disabled':'' %>>Cập nhật</button>
+      <p class="s12 muted" style="margin-top:8px">Chọn "Đã huỷ" sẽ hoàn kho và chuyển đơn đã thanh toán sang "Chờ hoàn tiền".</p>
+    </div></form>
+    <div class="card2"><div class="hd"><h3>Thanh toán & giao hàng</h3></div><div class="bd s13">
+      <div class="sumrow"><span>Phương thức</span><b><%= o.paymentMethod.toUpperCase() %></b></div>
+      <div class="sumrow" style="margin-top:6px"><span>Mã nhóm GD</span><b><%= o.paymentGroup %></b></div>
+      <% if (o.vnpTransactionNo) { %><div class="sumrow" style="margin-top:6px"><span>Mã GD VNPay</span><b><%= o.vnpTransactionNo %></b></div><% } %>
+      <div class="divider" style="margin:10px 0"></div>
+      <b><%= o.shipping.fullName %> · <%= o.shipping.phone %></b><p class="t2"><%= o.shipping.address %></p>
+      <% if (o.paymentStatus==='refund_pending') { %><form method="post" action="/admin/refunds/<%= o.code %>" style="margin-top:12px"><button class="btn cta blk">Xác nhận đã hoàn tiền</button></form><% } %>
+    </div></div>
+  </div>
+</div>
+<%- include('_bottom') %>

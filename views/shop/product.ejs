@@ -1,0 +1,149 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<% var p = product; var a = p.attrs || {}; var imgs = p.images && p.images.length ? p.images : [p.image]; %>
+<div class="ct">
+  <div class="crumb"><a href="/">Trang chủ</a><span>›</span><a href="/c/<%= p.category.slug %>"><%= p.category.name %></a><span>›</span><b><%= p.name %></b></div>
+  <% if (p.status !== 'active') { %><div class="alert warn" style="margin-bottom:16px">⚠ Sản phẩm đang ở trạng thái "<%= p.status %>" — chỉ chủ shop/admin xem được. <%= p.rejectReason ? 'Lý do: '+p.rejectReason : '' %></div><% } %>
+  <div class="pdp">
+    <div class="gal">
+      <div class="main"><img id="mainImg" src="<%= imgs[0] %>" alt="<%= p.name %>" class="kb" style="aspect-ratio:1/1;object-fit:cover"></div>
+      <% if (imgs.length > 1) { %><div class="thumbs"><% imgs.forEach(function(src,i){ %><div class="t <%= i===0?'on':'' %>" onclick="document.getElementById('mainImg').src='<%= src %>';document.querySelectorAll('.thumbs .t').forEach(function(x){x.classList.remove('on')});this.classList.add('on')"><img src="<%= src %>" class="kb" style="object-fit:cover"></div><% }) %></div><% } %>
+    </div>
+    <div class="inf">
+      <div class="f" style="gap:8px;margin-bottom:10px;flex-wrap:wrap">
+        <% if (p.discount) { %><span class="bdg sale">−<%= p.discount %>%</span><% } %>
+        <% if (p.stock>0) { %><span class="bdg ok">Còn hàng</span><% } else { %><span class="bdg gray">Hết hàng</span><% } %>
+        <% if (services.length) { %><span class="bdg new">Hỗ trợ gia công</span><% } %>
+        <span class="bdg gray"><%= h.PART_LABEL[p.partType] %></span>
+      </div>
+      <h1><%= p.name %></h1>
+      <div class="metarow"><span class="stars"><%= h.stars(p.rating) %></span><b><%= p.rating ? p.rating.toFixed(1) : '—' %></b><span class="sep"></span><span><%= p.reviewCount %> đánh giá</span><span class="sep"></span><span>Đã bán <%= h.short(p.sold) %></span><% if (p.sku) { %><span class="sep"></span><span>Mã SP: <%= p.sku %></span><% } %></div>
+      <div class="pricebar">
+        <span class="now"><%= h.money(p.price) %></span><% if (p.discount) { %><span class="was"><%= h.money(p.oldPrice) %></span><% } %>
+        <% if (p.partType==='switch') { %><div class="s13 t2" style="margin-top:6px">Giá cho <b>1 bộ 10 switch</b> · Custom Builder tự tính số bộ theo layout</div><% } %>
+        <% if (p.discount) { %><div class="s13" style="color:var(--a600);margin-top:6px">Tiết kiệm <%= h.money(p.oldPrice-p.price) %></div><% } %>
+      </div>
+      <% var chips = []; if (a.layout) chips.push(['Layout', a.layout]); if (a.mount) chips.push(['Mount', a.mount]); if (a.hotswap!==undefined && a.hotswap!==null && p.partType==='kit') chips.push(['PCB', a.hotswap ? 'Hotswap '+(a.pins||[]).join('/')+' pin' : 'Hàn mạch']); if (a.switchType) chips.push(['Loại', a.switchType]); if (a.force) chips.push(['Lực nhấn', a.force+'g']); if (a.profile) chips.push(['Profile', a.profile]); if (a.stabMount) chips.push(['Kiểu stab', a.stabMount]); if (p.partType==='switch' && a.pins && a.pins.length) chips.push(['Chân', a.pins.join('/')+' pin']); %>
+      <% if (chips.length) { %>
+      <div class="optrow"><div class="lb">Thông số chính</div><div class="opts"><% chips.forEach(function(c){ %><span class="chip on" style="cursor:default"><span class="muted w500"><%= c[0] %>:</span> <%= c[1] %></span><% }) %></div></div>
+      <% } %>
+      <form method="post" action="/cart/add">
+        <input type="hidden" name="productId" value="<%= p._id %>">
+        <div class="optrow"><div class="lb">Số lượng</div>
+          <div class="f ac" style="gap:12px"><div class="stepper qty"><b data-d="-1">−</b><input name="qty" type="number" value="1" min="1" max="<%= p.stock %>"><b data-d="1">+</b></div><span class="s13 t2">Kho còn <b><%= p.stock %></b> sản phẩm</span></div></div>
+        <div class="buybar">
+          <button class="btn out" <%= p.stock<=0?'disabled':'' %>>🛒 Thêm vào giỏ</button>
+          <button class="btn cta" name="buy" value="1" <%= p.stock<=0?'disabled':'' %>>Mua ngay</button>
+        </div>
+      </form>
+      <% if (p.partType==='kit') { %><a class="btn outp blk" style="margin-top:12px" href="/builder/new?kit=<%= p._id %>">⚙ Dùng kit này để build custom trong Custom Builder</a><% } %>
+      <% if (user) { %><form method="post" action="/wishlist/<%= p._id %>" style="margin-top:10px"><button class="btn ghost sm"><%= wished ? '♥ Đã yêu thích' : '♡ Thêm vào yêu thích' %></button></form><% } %>
+      <div class="shopbar">
+        <span class="lg" style="background:<%= p.shop.color %>"><%= p.shop.initials %></span>
+        <div style="flex:1"><div class="f ac" style="gap:8px"><b><%= p.shop.name %></b><% if (p.shop.verified) { %><span class="bdg ok">Đã xác minh</span><% } %></div>
+          <div class="s12 t2" style="margin-top:3px">★ <%= p.shop.rating ? p.shop.rating.toFixed(1) : '—' %> · <%= p.shop.city || 'Việt Nam' %><%= p.shop.offersCustom ? ' · Xưởng gia công' : '' %></div></div>
+        <a class="btn out sm" href="/shop/<%= p.shop.slug %>">Xem shop</a>
+      </div>
+      <div class="trust">
+        <div class="it"><em>🚚</em><div><b>Giao 2-4 ngày</b><span>Miễn phí đơn từ 500k</span></div></div>
+        <div class="it"><em>🛡</em><div><b>Bảo hành 12 tháng</b><span>Đổi mới 7 ngày đầu</span></div></div>
+        <div class="it"><em>🔒</em><div><b>Thanh toán VNPay</b><span>Hoàn tiền khi huỷ</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lower" id="tabs">
+    <div class="card">
+      <div class="tabs ptabs" style="padding:0 16px">
+        <a data-tab="desc" class="<%= tab==='desc'?'on':'' %>">Mô tả</a>
+        <a data-tab="spec" class="<%= tab==='spec'?'on':'' %>">Thông số kỹ thuật</a>
+        <% if (compatList.length) { %><a data-tab="compat" class="<%= tab==='compat'?'on':'' %>">Tương thích</a><% } %>
+        <a data-tab="reviews" class="<%= tab==='reviews'?'on':'' %>">Đánh giá (<%= p.reviewCount %>)</a>
+        <a data-tab="qa" class="<%= tab==='qa'?'on':'' %>">Hỏi đáp (<%= comments.length %>)</a>
+      </div>
+      <div style="padding:22px 24px">
+        <div class="tabp" data-tab="desc" <%= tab!=='desc'?'hidden':'' %>>
+          <div class="richtext"><%- (p.description||'Chưa có mô tả.').split('\n').map(function(l){ return '<p>'+l.replace(/</g,'&lt;')+'</p>'; }).join('') %></div>
+        </div>
+        <div class="tabp" data-tab="spec" <%= tab!=='spec'?'hidden':'' %>>
+          <table class="spec">
+            <tr><td>Danh mục</td><td><%= p.category.name %></td></tr>
+            <% (p.specs||[]).forEach(function(s){ %><tr><td><%= s.k %></td><td><%= s.v %></td></tr><% }) %>
+            <% chips.forEach(function(c){ %><tr><td><%= c[0] %></td><td><%= c[1] %></td></tr><% }) %>
+            <% if (a.keyCount) { %><tr><td>Số phím</td><td><%= a.keyCount %></td></tr><% } %>
+            <% if (a.ledDirection) { %><tr><td>Hướng LED</td><td><%= a.ledDirection==='south'?'South-facing (hướng nam)':'North-facing (hướng bắc)' %></td></tr><% } %>
+            <% if (a.layouts && a.layouts.length) { %><tr><td>Hỗ trợ layout</td><td><%= a.layouts.join(', ') %></td></tr><% } %>
+            <% if (a.material) { %><tr><td>Chất liệu</td><td><%= a.material %></td></tr><% } %>
+          </table>
+        </div>
+        <% if (compatList.length) { %>
+        <div class="tabp" data-tab="compat" <%= tab!=='compat'?'hidden':'' %>>
+          <p class="s13 t2" style="margin-bottom:12px">Đối chiếu tự động với các linh kiện phổ biến theo quy tắc tương thích của sàn.</p>
+          <div class="compat">
+            <% compatList.forEach(function(c){ %>
+            <a class="it <%= c.ok ? (c.issue ? '' : 'yes') : 'no' %>" href="/p/<%= c.product.slug %>"><em><%= c.ok ? (c.issue ? '⚠' : '✓') : '✕' %></em><div><b><%= c.product.name %></b><span><%= c.issue ? c.issue.message : 'Lắp vừa, không có cảnh báo.' %></span></div></a>
+            <% }) %>
+          </div>
+        </div>
+        <% } %>
+        <div class="tabp" data-tab="reviews" <%= tab!=='reviews'?'hidden':'' %>>
+          <div class="rvsum">
+            <div style="text-align:center"><div class="big"><%= p.rating ? p.rating.toFixed(1) : '0' %></div><div class="stars s16" style="margin:8px 0 4px"><%= h.stars(p.rating) %></div><div class="s12 muted"><%= p.reviewCount %> đánh giá</div></div>
+            <div><% [5,4,3,2,1].forEach(function(s){ var n=distMap[s]; var pc = p.reviewCount ? Math.round(n/p.reviewCount*100) : 0; %><div class="bar"><span><%= s %> ★</span><div class="tk"><i style="width:<%= pc %>%"></i></div><span style="width:30px"><%= n %></span></div><% }) %></div>
+          </div>
+          <% if (canReview) { %><div class="alert info" style="margin-top:16px">⭐ Bạn đã mua sản phẩm này. <a class="w700" href="/account/reviews" style="text-decoration:underline">Viết đánh giá ngay</a></div><% } %>
+          <% if (!reviews.length) { %><p class="muted s14" style="padding:20px 0">Chưa có đánh giá nào. Chỉ khách đã mua mới có thể đánh giá.</p><% } %>
+          <% reviews.forEach(function(r){ %>
+          <div class="rv">
+            <span class="av" style="background:<%= r.user ? r.user.color : '#999' %>;color:#fff"><%= h.initials(r.user ? r.user.name : '?') %></span>
+            <div style="flex:1">
+              <div class="f ac jb"><b class="s14"><%= r.user ? r.user.name : 'Người dùng' %></b><span class="s12 muted"><%= h.date(r.createdAt) %></span></div>
+              <div class="stars" style="margin:3px 0 8px"><%= h.stars(r.rating) %> <span class="bdg ok" style="margin-left:6px">Đã mua hàng</span></div>
+              <p class="s14 t2" style="line-height:1.65"><%= r.content %></p>
+              <% if (r.images && r.images.length) { %><div class="imgs"><% r.images.forEach(function(i){ %><a href="<%= i %>" target="_blank"><i><img src="<%= i %>" style="width:100%;height:100%;object-fit:cover"></i></a><% }) %></div><% } %>
+              <% if (r.reply && r.reply.content) { %><div class="reply"><b class="s13">Phản hồi từ <%= p.shop.name %></b><p class="s13 t2" style="margin-top:4px"><%= r.reply.content %></p></div><% } %>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+        <div class="tabp" data-tab="qa" <%= tab!=='qa'?'hidden':'' %>>
+          <% if (user) { %>
+          <form method="post" action="/p/<%= p.slug %>/comments" class="f" style="gap:10px;margin-bottom:10px">
+            <input class="inp" name="content" placeholder="Đặt câu hỏi cho shop về sản phẩm này…" required maxlength="1000"><button class="btn pri">Gửi</button>
+          </form>
+          <% } else { %><div class="alert info" style="margin-bottom:10px"><a class="w700" href="/auth/login">Đăng nhập</a>&nbsp;để đặt câu hỏi.</div><% } %>
+          <% if (!comments.length) { %><p class="muted s14" style="padding:16px 0">Chưa có câu hỏi nào.</p><% } %>
+          <% comments.forEach(function(c){ %>
+          <div class="rv">
+            <span class="av" style="background:<%= c.user ? c.user.color : '#999' %>;color:#fff"><%= h.initials(c.user ? c.user.name : '?') %></span>
+            <div style="flex:1">
+              <div class="f ac jb"><b class="s14"><%= c.user ? c.user.name : '' %></b><span class="s12 muted"><%= h.timeAgo(c.createdAt) %></span></div>
+              <p class="s14 t2" style="margin-top:4px"><%= c.content %></p>
+              <% c.replies.forEach(function(rp){ %><div class="reply" <%= rp.isSeller ? '' : 'style="background:var(--surface);border-left-color:var(--border2)"' %>><b class="s13"><%= rp.name %> <% if (rp.isSeller) { %><span class="bdg new">Shop</span><% } %></b> <span class="s12 muted"><%= h.timeAgo(rp.at) %></span><p class="s13 t2" style="margin-top:4px"><%= rp.content %></p></div><% }) %>
+              <% if (user) { %><details class="replyform"><summary class="s12" style="color:var(--p600);font-weight:600;cursor:pointer;margin-top:8px">Trả lời</summary>
+                <form method="post" action="/comments/<%= c._id %>/reply" class="f" style="gap:8px;margin-top:8px"><input class="inp" name="content" required placeholder="Nhập câu trả lời…"><button class="btn pri sm">Gửi</button></form></details><% } %>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+    <div class="side">
+      <% if (related.length) { %>
+      <div class="bx"><b class="s14">Thường mua cùng</b>
+        <% related.forEach(function(r){ %><a class="mini" href="/p/<%= r.slug %>"><div class="th"><img src="<%= r.image %>" class="kb"></div><div><b><%= r.name %></b><div class="p"><%= h.money(r.price) %></div></div></a><% }) %>
+      </div>
+      <% } %>
+      <% if (services.length) { %>
+      <div class="bx" style="background:var(--p50);border-color:var(--p100)"><b class="s14" style="color:var(--p700)">🛠 Dịch vụ gia công của shop</b>
+        <% services.forEach(function(s){ %><div class="sumrow" style="padding:8px 0;border-bottom:1px dashed var(--p100)"><span><%= s.name %></span><b><%= h.money(s.price) %></b></div><% }) %>
+        <a class="btn pri blk sm" style="margin-top:12px" href="/builder/new">Mở Custom Builder</a>
+      </div>
+      <% } %>
+      <div class="bx"><b class="s14">Chính sách</b>
+        <p class="s13 t2" style="margin-top:9px;line-height:1.8">↩ Đổi trả 7 ngày nếu lỗi nhà sản xuất<br>🛡 Bảo hành 12 tháng tại xưởng<br>🔒 Hoàn tiền nếu đơn bị huỷ<br>📦 Kiểm tra hàng trước khi nhận (COD)</p>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

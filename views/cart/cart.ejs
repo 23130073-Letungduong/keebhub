@@ -1,0 +1,68 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<div class="ct">
+  <div class="crumb"><a href="/">Trang chủ</a><span>›</span><b>Giỏ hàng</b></div>
+  <h1 class="s30 w800 tight" style="margin-bottom:18px">Giỏ hàng <span class="muted s18 w500">(<%= cartCount %> sản phẩm)</span></h1>
+  <% if (!cart.groups.length) { %>
+    <div class="card p24 empty"><div class="s38">🛒</div><b>Giỏ hàng trống</b><p class="s13 muted">Khám phá sản phẩm hoặc tự build bàn phím của riêng bạn.</p>
+      <div class="f jc" style="gap:10px;margin-top:14px"><a class="btn out" href="/search">Mua sắm</a><a class="btn pri" href="/builder/new">⚙ Custom Builder</a></div></div>
+  <% } else { %>
+  <div class="two">
+    <div>
+      <% cart.groups.forEach(function(g){ %>
+      <div class="shopblk">
+        <div class="hd"><span class="lg" style="background:<%= g.shop.color %>"><%= h.initials(g.shop.name) %></span><a class="s14 w700" href="/shop/<%= g.shop.slug %>"><%= g.shop.name %></a>
+          <span class="mla s12 <%= g.subtotal>=FREE_SHIP_FROM?'':'muted' %>" style="<%= g.subtotal>=FREE_SHIP_FROM?'color:var(--s600);font-weight:600':'' %>"><%= g.subtotal>=FREE_SHIP_FROM ? '🚚 Được miễn phí vận chuyển' : '🚚 Mua thêm '+h.money(FREE_SHIP_FROM-g.subtotal)+' để miễn phí ship' %></span></div>
+        <% g.items.forEach(function(i){ %>
+        <div class="ci">
+          <a class="th" href="/p/<%= i.product.slug %>"><img src="<%= i.product.image %>" class="kb"></a>
+          <div style="flex:1;min-width:0">
+            <a class="nm" href="/p/<%= i.product.slug %>"><%= i.product.name %></a>
+            <div class="var"><%= h.PART_LABEL[i.product.partType] %><%= i.product.partType==='switch' ? ' · bộ 10 switch' : '' %> · Kho còn <%= i.product.stock %></div>
+            <% if (i.overStock) { %><div class="help err">Vượt quá tồn kho</div><% } %>
+            <form method="post" action="/cart/remove/<%= i.id %>" style="margin-top:10px"><button class="btn ghost sm" style="padding-left:0;color:var(--d600)">🗑 Xoá</button></form>
+          </div>
+          <div class="rt">
+            <div><span class="pr"><%= h.money(i.product.price) %></span><% if (i.product.discount) { %><span class="old"><%= h.money(i.product.oldPrice) %></span><% } %></div>
+            <form method="post" action="/cart/update/<%= i.id %>" class="stepper"><button name="op" value="dec" class="sb">−</button><span><%= i.qty %></span><button name="op" value="inc" class="sb">+</button></form>
+            <b class="s14">= <%= h.money(i.total) %></b>
+          </div>
+        </div>
+        <% }) %>
+        <% g.builds.forEach(function(b){ %>
+        <div class="ci">
+          <div class="th"><img src="<%= b.build.kit ? b.build.kit.image : '/img/hero.svg' %>" class="kb"></div>
+          <div style="flex:1;min-width:0">
+            <div class="nm">⚙ Build custom #<%= b.build.code %> — <%= b.build.name %> <span class="bdg new">Đơn gia công</span></div>
+            <div class="var">Gia công bởi <b><%= g.shop.name %></b> · <%= b.build.service.name %> · ~<%= b.build.service.days %> ngày</div>
+            <div class="bsheet"><div class="t">📋 BUILD SHEET</div>
+              <% b.lines.forEach(function(l){ %><div class="r"><span><%= l.label %> · <%= l.product.name %> <%= l.note||'' %></span><b><%= h.money(l.total) %></b></div><% }) %>
+              <div class="r"><span>Gia công · <%= b.build.service.name %></span><b><%= h.money(b.service) %></b></div>
+            </div>
+            <% if (b.outOfStock) { %><div class="help err" style="margin-top:6px">Có linh kiện đã hết hàng — mở lại builder để đổi.</div><% } %>
+            <div class="f" style="gap:6px;margin-top:8px">
+              <a class="btn ghost sm" style="padding-left:0" href="/builder/edit/<%= b.build._id %>">✎ Sửa cấu hình</a>
+              <form method="post" action="/cart/remove/<%= b.id %>"><button class="btn ghost sm" style="color:var(--d600)">🗑 Xoá</button></form>
+            </div>
+          </div>
+          <div class="rt"><span class="pr"><%= h.money(b.total) %></span><span class="s12 muted">Chỉ thanh toán online</span></div>
+        </div>
+        <% }) %>
+      </div>
+      <% }) %>
+    </div>
+    <div class="ordsum stick">
+      <div class="bx">
+        <h3 class="s16 w700" style="margin-bottom:10px">Tóm tắt đơn hàng</h3>
+        <div class="r"><span>Tạm tính (<%= cart.groups.length %> shop)</span><b><%= h.money(cart.subtotal) %></b></div>
+        <div class="r"><span>Phí vận chuyển</span><span>Tính ở bước sau</span></div>
+        <div class="tot"><span class="w700">Tổng cộng</span><b><%= h.money(cart.subtotal) %></b></div>
+        <a class="btn cta blk lg" style="margin-top:16px" href="/checkout">Tiến hành đặt hàng →</a>
+        <% if (cart.hasCustom) { %><div class="alert warn s12" style="margin-top:12px">Giỏ có đơn gia công custom — chỉ hỗ trợ thanh toán VNPay (hàng làm riêng).</div><% } %>
+      </div>
+      <div class="bx s13 t2">🔒 Thanh toán an toàn qua VNPay. Đơn huỷ sẽ được hoàn tiền 3-5 ngày.</div>
+    </div>
+  </div>
+  <% } %>
+</div>
+<%- include('../partials/footer') %>

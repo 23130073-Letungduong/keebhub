@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KeebHub — Đánh giá sản phẩm</title>
+<link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin><link href='https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap' rel='stylesheet'>
+<style>
+:root{
+  --white:#FFFFFF; --surface:#F7F8FA; --surface2:#EFF1F5; --border:#E4E7EC; --border2:#CFD4DC;
+  --text:#101828; --text2:#475467; --muted:#98A2B3;
+  --p50:#EEF4FF; --p100:#D8E5FF; --p500:#1B62F5; --p600:#1450D6; --p700:#0F3DA8;
+  --a50:#FFF3ED; --a500:#FF5A1F; --a600:#E84708;
+  --s50:#ECFDF3; --s600:#079455; --w50:#FFFAEB; --w600:#DC6803; --d50:#FEF3F2; --d600:#D92D20;
+  --star:#FDB022;
+  --r6:6px; --r8:8px; --r10:10px; --r14:14px; --r20:20px; --rf:999px;
+  --sh1:0 1px 2px rgba(16,24,40,.06); --sh2:0 4px 12px rgba(16,24,40,.08); --sh3:0 12px 28px rgba(16,24,40,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Be Vietnam Pro',system-ui,-apple-system,sans-serif;background:var(--surface);color:var(--text);font-size:15px;line-height:1.5}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.ct{max-width:1280px;margin:0 auto;padding:0 32px}
+.f{display:flex} .col{display:flex;flex-direction:column} .g{display:grid}
+.ac{align-items:center} .as{align-items:flex-start} .jb{justify-content:space-between} .jc{justify-content:center}
+.wrap{flex-wrap:wrap} .fl1{flex:1} .mla{margin-left:auto}
+.muted{color:var(--muted)} .t2{color:var(--text2)}
+.s11{font-size:11px}.s12{font-size:12px}.s13{font-size:13px}.s14{font-size:14px}.s16{font-size:16px}
+.s18{font-size:18px}.s20{font-size:20px}.s24{font-size:24px}.s30{font-size:30px}.s38{font-size:38px}
+.w500{font-weight:500}.w600{font-weight:600}.w700{font-weight:700}.w800{font-weight:800}
+.tight{letter-spacing:-.02em}
+
+/* ---------- top bar / header / nav ---------- */
+.topbar{background:var(--text);color:#CDD5E0;font-size:12.5px}
+.topbar .ct{height:36px;display:flex;align-items:center;justify-content:space-between}
+.topbar a{color:#CDD5E0;margin-left:20px}
+.topbar a.hl{color:#fff;font-weight:600}
+.hdr{background:var(--white);border-bottom:1px solid var(--border)}
+.hdr .ct{height:76px;display:flex;align-items:center;gap:26px}
+.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.logo .mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--p500),var(--p700));
+  display:grid;place-items:center;color:#fff;font-size:16px;font-weight:800}
+.logo .mark span{transform:translateY(-1px)}
+.search{flex:1;position:relative;max-width:620px}
+.search input{width:100%;height:46px;border:2px solid var(--p500);border-radius:var(--r10);padding:0 112px 0 42px;
+  font-family:inherit;font-size:14.5px;color:var(--text);background:var(--white)}
+.search input::placeholder{color:var(--muted)}
+.search .ico{position:absolute;left:14px;top:13px;color:var(--muted);font-size:17px}
+.search .go{position:absolute;right:5px;top:5px;height:36px;padding:0 20px;border:0;border-radius:var(--r8);
+  background:var(--p500);color:#fff;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer}
+.hact{display:flex;align-items:center;gap:6px;margin-left:auto}
+.iconbtn{position:relative;width:44px;height:44px;border-radius:var(--r10);display:grid;place-items:center;
+  font-size:19px;color:var(--text2)}
+.iconbtn .dot{position:absolute;top:6px;right:5px;min-width:18px;height:18px;padding:0 5px;border-radius:var(--rf);
+  background:var(--a500);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center}
+.user{display:flex;align-items:center;gap:9px;padding:6px 12px 6px 6px;border-radius:var(--rf);border:1px solid var(--border)}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--p100);color:var(--p700);display:grid;place-items:center;
+  font-size:13px;font-weight:700}
+.nav{background:var(--white);border-bottom:1px solid var(--border)}
+.nav .ct{height:48px;display:flex;align-items:center;gap:28px;font-size:14px;color:var(--text2);font-weight:500}
+.nav .cat{display:flex;align-items:center;gap:9px;font-weight:600;color:var(--text)}
+.nav a.on{color:var(--p600);font-weight:600}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:600;
+  font-size:14.5px;padding:11px 20px;border-radius:var(--r10);border:1px solid transparent;cursor:pointer;white-space:nowrap}
+.btn.pri{background:var(--p500);color:#fff}
+.btn.cta{background:var(--a500);color:#fff}
+.btn.out{background:var(--white);color:var(--text);border-color:var(--border2)}
+.btn.outp{background:var(--a50);color:var(--a600);border-color:#FFC9AE}
+.btn.ghost{background:transparent;color:var(--p600);padding-left:8px;padding-right:8px}
+.btn.dis{background:var(--surface2);color:var(--muted);border-color:var(--border)}
+.btn.sm{padding:8px 14px;font-size:13px;border-radius:var(--r8)}
+.btn.lg{padding:14px 26px;font-size:16px}
+.btn.blk{width:100%}
+
+/* ---------- surfaces ---------- */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);box-shadow:var(--sh1)}
+.card.p16{padding:16px}.card.p20{padding:20px}.card.p24{padding:24px}
+.sechd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
+.sechd h2{font-size:22px;font-weight:700;letter-spacing:-.01em}
+.sechd a{font-size:14px;color:var(--p600);font-weight:600}
+.crumb{font-size:13.5px;color:var(--text2);padding:16px 0}
+.crumb b{color:var(--text);font-weight:600}
+.crumb span{margin:0 7px;color:var(--muted)}
+
+/* ---------- badges & chips ---------- */
+.bdg{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:var(--rf);white-space:nowrap}
+.bdg.new{background:var(--p50);color:var(--p700)}
+.bdg.sale{background:var(--a500);color:#fff}
+.bdg.ok{background:var(--s50);color:var(--s600)}
+.bdg.warn{background:var(--w50);color:var(--w600)}
+.bdg.err{background:var(--d50);color:var(--d600)}
+.bdg.gray{background:var(--surface2);color:var(--text2)}
+.chip{padding:8px 15px;border:1px solid var(--border2);border-radius:var(--r8);font-size:13.5px;font-weight:500;
+  background:var(--white);cursor:pointer;white-space:nowrap}
+.chip.on{border-color:var(--p500);background:var(--p50);color:var(--p700);font-weight:600}
+.chip.off{color:var(--muted);background:var(--surface);border-style:dashed;cursor:not-allowed}
+.chip.rm{display:inline-flex;align-items:center;gap:7px;background:var(--p50);border-color:var(--p100);color:var(--p700);font-weight:600}
+
+/* ---------- form ---------- */
+.field{display:flex;flex-direction:column;gap:7px}
+.field > label{font-size:13.5px;font-weight:600;color:var(--text2)}
+.inp{font-family:inherit;font-size:14.5px;padding:11px 14px;border:1px solid var(--border2);border-radius:var(--r10);
+  background:var(--white);color:var(--text);width:100%}
+.inp::placeholder{color:var(--muted)}
+.inp.focus{border-color:var(--p500);box-shadow:0 0 0 3px var(--p50)}
+.help{font-size:12.5px;color:var(--muted)}
+.help.err{color:var(--d600)}
+.check{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:5px;background:var(--white);flex:none;display:grid;place-items:center}
+.check.on{background:var(--p500);border-color:var(--p500);color:#fff;font-size:11px;font-weight:700}
+.radio{width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex:none;display:grid;place-items:center}
+.radio.on{border-color:var(--p500)}
+.radio.on::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--p500)}
+
+/* ---------- product card ---------- */
+.pgrid{display:grid;gap:16px}
+.pc{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);overflow:hidden;position:relative}
+.pc .thumb{aspect-ratio:1/1;position:relative;overflow:hidden;background:var(--surface2)}
+.pc .thumb .tag{position:absolute;top:10px;left:10px;z-index:2}
+.pc .thumb .wish{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.92);
+  display:grid;place-items:center;font-size:14px;color:var(--muted);z-index:2}
+.pc .bd{padding:13px 14px 15px}
+.pc .shop{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.pc .shop i{width:5px;height:5px;border-radius:50%;background:var(--s600);display:block}
+.pc .tt{font-size:13.8px;font-weight:600;line-height:1.45;height:40px;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:9px}
+.pc .prw{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.pc .pr{font-size:16.5px;font-weight:800;color:var(--a600);white-space:nowrap}
+.pc .old{font-size:12px;color:var(--muted);text-decoration:line-through;font-weight:500;white-space:nowrap}
+.pc .ft{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:11.5px;color:var(--text2)}
+.stars{color:var(--star);letter-spacing:.5px;font-size:12px}
+
+/* keyboard illustration */
+.kb{width:100%;height:100%;display:block}
+
+/* ---------- footer ---------- */
+.ftr{background:var(--white);border-top:1px solid var(--border);margin-top:64px}
+.ftr .top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;gap:34px;padding:44px 0 36px}
+.ftr h4{font-size:13px;font-weight:700;margin-bottom:14px;letter-spacing:.02em}
+.ftr ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ftr li{font-size:13.5px;color:var(--text2)}
+.ftr .bot{border-top:1px solid var(--border);padding:18px 0;display:flex;justify-content:space-between;
+  font-size:12.5px;color:var(--muted)}
+.paylogos{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.paylogos i{width:44px;height:28px;border:1px solid var(--border);border-radius:5px;display:grid;place-items:center;
+  font-size:9px;font-weight:700;color:var(--text2);font-style:normal;background:var(--white)}
+
+/* ---------- misc ---------- */
+.stepper{display:inline-flex;align-items:stretch;border:1px solid var(--border2);border-radius:var(--r8);overflow:hidden}
+.stepper b{width:34px;display:grid;place-items:center;background:var(--white);color:var(--text2);font-weight:500;font-size:15px}
+.stepper span{width:46px;display:grid;place-items:center;font-weight:600;font-size:14.5px;
+  border-left:1px solid var(--border);border-right:1px solid var(--border)}
+.divider{height:1px;background:var(--border)}
+.dashed{height:1px;background:repeating-linear-gradient(90deg,var(--border) 0 6px,transparent 6px 12px)}
+.sumrow{display:flex;justify-content:space-between;font-size:14px;color:var(--text2)}
+.sumrow b{color:var(--text);font-weight:600}
+.alert{display:flex;gap:11px;padding:13px 15px;border-radius:var(--r10);font-size:13.5px;line-height:1.55}
+.alert.ok{background:var(--s50);color:#05603A}
+.alert.warn{background:var(--w50);color:#93370D}
+.alert.info{background:var(--p50);color:var(--p700)}
+.alert.err{background:var(--d50);color:#912018}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border)}
+.tabs a{padding:13px 18px;font-size:14.5px;font-weight:600;color:var(--text2);border-bottom:2px solid transparent}
+.tabs a.on{color:var(--p600);border-bottom-color:var(--p500)}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;
+  padding:12px 14px;background:var(--surface);border-bottom:1px solid var(--border)}
+.tbl td{padding:14px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+
+.acct{display:grid;grid-template-columns:246px 1fr;gap:24px;padding:20px 0 60px;align-items:start}
+.snav{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);overflow:hidden;box-shadow:var(--sh1);position:sticky;top:20px}
+.snav .me{padding:20px 18px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:center}
+.snav .me .av{width:46px;height:46px;border-radius:50%;background:var(--p500);color:#fff;display:grid;place-items:center;
+  font-weight:700;font-size:16px;flex:none}
+.snav .grp{padding:10px 0;border-bottom:1px solid var(--border)}
+.snav .grp:last-child{border-bottom:0}
+.snav .gt{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.07em;padding:6px 18px 8px}
+.snav a{display:flex;align-items:center;gap:11px;padding:9px 18px;font-size:13.8px;color:var(--text2)}
+.snav a em{font-style:normal;width:18px;font-size:14px}
+.snav a b{margin-left:auto;font-size:11px;font-weight:700;background:var(--a500);color:#fff;
+  border-radius:var(--rf);padding:1px 7px}
+.snav a.on{background:var(--p50);color:var(--p700);font-weight:600;box-shadow:inset 3px 0 0 var(--p500)}
+.pnl{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);box-shadow:var(--sh1);margin-bottom:18px}
+.pnl > .hd{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px}
+.pnl > .hd h2{font-size:18px;font-weight:700}
+.pnl > .hd p{font-size:12.5px;color:var(--muted);margin-top:3px}
+.pnl > .bd{padding:22px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stat{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);padding:16px 18px}
+.stat .lb{font-size:12.5px;color:var(--muted)}
+.stat .vl{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-top:6px}
+.stat .dt{font-size:11.5px;margin-top:5px}
+/* order list */
+.ordc{border:1px solid var(--border);border-radius:var(--r14);overflow:hidden;margin-bottom:16px;background:var(--white)}
+.ordc .oh{display:flex;align-items:center;gap:12px;padding:13px 18px;background:var(--surface);border-bottom:1px solid var(--border)}
+.ordc .oh .sh{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600}
+.ordc .oh .sh i{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;color:#fff;font-size:10.5px;font-weight:800;font-style:normal}
+.oi{display:flex;gap:14px;padding:16px 18px;align-items:flex-start}
+.oi .th{width:80px;height:80px;border-radius:var(--r10);overflow:hidden;border:1px solid var(--border);flex:none}
+.oi .nm{font-size:14px;font-weight:600;line-height:1.45}
+.oi .vr{font-size:12.5px;color:var(--muted);margin-top:4px}
+.ordc .of{display:flex;align-items:center;gap:12px;padding:14px 18px;border-top:1px solid var(--border);background:var(--surface)}
+/* progress */
+.prog{display:flex;align-items:flex-start;padding:26px 22px 18px}
+.prog .nd{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;position:relative;text-align:center}
+.prog .nd .dot{width:30px;height:30px;border-radius:50%;border:2px solid var(--border2);background:#fff;
+  display:grid;place-items:center;font-size:13px;color:var(--muted);z-index:2}
+.prog .nd.done .dot{background:var(--s600);border-color:var(--s600);color:#fff}
+.prog .nd.cur .dot{background:var(--p500);border-color:var(--p500);color:#fff;box-shadow:0 0 0 5px var(--p50)}
+.prog .nd .lb{font-size:12px;font-weight:600;color:var(--muted);line-height:1.35}
+.prog .nd.done .lb,.prog .nd.cur .lb{color:var(--text)}
+.prog .nd .dt{font-size:10.5px;color:var(--muted)}
+.prog .nd:not(:last-child):after{content:'';position:absolute;top:14px;left:50%;width:100%;height:2px;background:var(--border);z-index:1}
+.prog .nd.done:not(:last-child):after{background:var(--s600)}
+/* timeline */
+.tl{padding:6px 22px 18px}
+.tli{display:flex;gap:15px;padding:15px 0;border-bottom:1px dashed var(--border)}
+.tli:last-child{border-bottom:0}
+.tli .mk{width:15px;flex:none;display:flex;flex-direction:column;align-items:center;padding-top:4px}
+.tli .mk i{width:13px;height:13px;border-radius:50%;background:var(--s600);display:block}
+.tli.todo .mk i{background:#fff;border:2px solid var(--border2)}
+.tli .ph{display:flex;gap:9px;margin-top:11px}
+.tli .ph i{width:72px;height:72px;border-radius:var(--r8);overflow:hidden;border:1px solid var(--border);display:block}
+.tli.todo b,.tli.todo p{color:var(--muted)}
+/* review */
+.rvform .starsel{display:flex;gap:7px;font-size:32px;color:var(--star);letter-spacing:3px}
+.upl{border:1.5px dashed var(--border2);border-radius:var(--r10);padding:22px;text-align:center;background:var(--surface)}
+.upl .ic{font-size:26px}
+/* shop page */
+.shophero{background:linear-gradient(115deg,#0F2247,#1B62F5);border-radius:var(--r20);padding:28px 32px;color:#fff;
+  display:flex;gap:24px;align-items:center;margin-bottom:20px;position:relative;overflow:hidden}
+.shophero .lg{width:96px;height:96px;border-radius:24px;background:#fff;color:var(--p600);display:grid;place-items:center;
+  font-size:30px;font-weight:800;flex:none}
+.shophero .mt{display:flex;gap:26px;margin-top:14px}
+.shophero .mt div b{display:block;font-size:18px;font-weight:800}
+.shophero .mt div span{font-size:11.5px;color:#9FBCF0}
+.tblwrap{border:1px solid var(--border);border-radius:var(--r14);overflow:hidden;background:var(--white)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="ct">
+  <div>Kênh người bán &nbsp;·&nbsp; Tải ứng dụng &nbsp;·&nbsp; Kết nối cộng đồng</div>
+  <div><a>Thông báo</a><a>Trợ giúp</a><a class="hl">Đăng ký</a><a class="hl">Đăng nhập</a></div>
+</div></div><div class="hdr"><div class="ct">
+  <a class="logo"><span class="mark"><span>K</span></span><span>Keeb<span style="color:var(--p500)">Hub</span></span></a>
+  <div class="search"><span class="ico">⌕</span>
+    <input class="inp" placeholder="Tìm kit, switch, keycap, dịch vụ gia công…" >
+    <button class="go">Tìm kiếm</button>
+  </div>
+  <div class="hact">
+    <div class="iconbtn">♡</div>
+    <div class="iconbtn">🔔<span class="dot">5</span></div>
+    <div class="iconbtn">🛒<span class="dot">3</span></div>
+    <div class="user"><div class="avatar">DT</div><div class="s13 w600">Duong T.</div><span class="s12 muted">▾</span></div>
+  </div>
+</div></div><div class="nav"><div class="ct">
+  <div class="cat">☰ Tất cả danh mục</div>
+  <a class="">Kit bàn phím</a><a class="">Switch</a><a class="">Keycap</a><a class="">Stabilizer</a><a class="">Phụ kiện</a><a class="">Dịch vụ gia công</a><a class="">Build sẵn</a>
+  <a class="mla" style="color:var(--a600);font-weight:600">🔥 Group buy đang mở</a>
+</div></div>
+<div class="ct"><div class="crumb">Trang chủ<span>›</span>Đơn hàng của tôi<span>›</span><b>Đánh giá đơn #KH-281044</b></div>
+<div class="acct"><div class="snav">
+  <div class="me"><div class="av">DT</div><div>
+    <b class="s14">Lê Tùng Dương</b>
+    <div class="s12 muted" style="margin-top:3px">Thành viên Bạc · 1.240 điểm</div></div></div>
+  <div class="grp"><div class="gt">TÀI KHOẢN</div><a class=""><em>👤</em>Hồ sơ cá nhân</a><a class=""><em>📍</em>Sổ địa chỉ</a><a class=""><em>💳</em>Phương thức thanh toán</a><a class=""><em>🔒</em>Bảo mật</a></div><div class="grp"><div class="gt">MUA HÀNG</div><a class=""><em>📦</em>Đơn hàng của tôi<b>3</b></a><a class=""><em>⚙</em>Cấu hình đã lưu</a><a class="on"><em>⭐</em>Đánh giá của tôi</a><a class=""><em>♡</em>Sản phẩm yêu thích</a></div><div class="grp"><div class="gt">HỖ TRỢ</div><a class=""><em>⚠</em>Khiếu nại & hoàn tiền<b>1</b></a><a class=""><em>🎟</em>Kho voucher</a><a class=""><em>🔔</em>Thông báo</a></div>
+  <div class="grp"><a style="color:var(--d600)"><em>⎋</em>Đăng xuất</a></div>
+</div>
+<div class="rvform">
+  <div class="pnl">
+    <div class="hd"><div style="flex:1"><h2>Đánh giá sản phẩm</h2>
+      <p>Đơn #KH-281044 · Akko Official · Giao thành công 18/09/2026</p></div>
+      <span class="bdg sale">🎁 Nhận 50.000₫ voucher</span></div>
+    <div class="bd">
+      <div class="f as" style="gap:16px;padding-bottom:20px;border-bottom:1px solid var(--border)">
+        <div style="width:84px;height:84px;border-radius:var(--r10);overflow:hidden;border:1px solid var(--border);flex:none"><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#EFEFF2"/><rect x="44" y="62" width="40" height="40" rx="6" fill="#F472B6"/><rect x="49" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="62" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="97" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="62" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="145" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="62" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="193" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="62" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="241" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="44" y="110" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="49" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="110" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="97" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="110" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="145" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="110" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="193" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="110" width="40" height="40" rx="6" fill="#F472B6"/><rect x="241" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="44" y="158" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="49" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="158" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="97" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="158" width="40" height="40" rx="6" fill="#F472B6"/><rect x="145" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="158" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="193" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="158" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="241" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="44" y="206" width="40" height="40" rx="6" fill="#F472B6"/><rect x="49" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="206" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="97" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="206" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="145" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="206" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="193" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="206" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="241" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/></svg></div>
+        <div style="flex:1"><b class="s15">Keycap Akko Black &amp; Pink ASA profile — 158 phím</b>
+          <div class="s13 muted" style="margin-top:5px">Phân loại: Black &amp; Pink · ×1</div></div>
+      </div>
+
+      <div style="padding:22px 0;border-bottom:1px solid var(--border)">
+        <div class="s14 w600" style="margin-bottom:12px">Bạn hài lòng đến mức nào?</div>
+        <div class="f ac" style="gap:16px">
+          <div class="starsel">★★★★★</div>
+          <span class="s15 w600" style="color:var(--star)">Tuyệt vời</span>
+        </div>
+      </div>
+
+      <div style="padding:22px 0;border-bottom:1px solid var(--border)">
+        <div class="s14 w600" style="margin-bottom:12px">Đánh giá chi tiết</div>
+        <div class="grid3">
+          <div><div class="s13 t2" style="margin-bottom:7px">Chất lượng</div><div class="stars s18">★★★★★</div></div>
+          <div><div class="s13 t2" style="margin-bottom:7px">Đúng mô tả</div><div class="stars s18">★★★★★</div></div>
+          <div><div class="s13 t2" style="margin-bottom:7px">Tốc độ giao</div><div class="stars s18">★★★★☆</div></div>
+        </div>
+      </div>
+
+      <div style="padding:22px 0;border-bottom:1px solid var(--border)">
+        <div class="s14 w600" style="margin-bottom:10px">Nhận xét của bạn</div>
+        <div class="f wrap" style="gap:8px;margin-bottom:12px">
+          <span class="chip on">Màu đẹp đúng ảnh</span><span class="chip on">Chất nhựa dày</span>
+          <span class="chip">Legend sắc nét</span><span class="chip">Đóng gói kỹ</span><span class="chip">Giao nhanh</span>
+        </div>
+        <textarea class="inp focus" rows="5" style="resize:vertical;font-family:inherit;line-height:1.6">Bộ keycap dày dặn, ASA profile gõ thoải mái hơn OEM nhiều. Màu hồng lên đúng như ảnh shop, không bị lệch tông. Legend in sắc nét, đã dùng 2 tuần chưa thấy bay chữ. Giao hơi chậm 1 ngày nhưng shop có báo trước nên không sao.</textarea>
+        <div class="f jb" style="margin-top:7px"><span class="s12 muted">Tối thiểu 20 ký tự</span><span class="s12 muted">248 / 2000</span></div>
+      </div>
+
+      <div style="padding:22px 0">
+        <div class="s14 w600" style="margin-bottom:10px">Thêm hình ảnh / video <span class="muted w500">(không bắt buộc — có ảnh được thêm 20k)</span></div>
+        <div class="f" style="gap:11px">
+          <div style="width:96px;height:96px;border-radius:var(--r10);overflow:hidden;border:1px solid var(--border);position:relative">
+            <svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#EFEFF2"/><rect x="44" y="62" width="40" height="40" rx="6" fill="#F472B6"/><rect x="49" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="62" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="97" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="62" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="145" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="62" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="193" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="62" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="241" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="44" y="110" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="49" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="110" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="97" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="110" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="145" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="110" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="193" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="110" width="40" height="40" rx="6" fill="#F472B6"/><rect x="241" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="44" y="158" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="49" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="158" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="97" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="158" width="40" height="40" rx="6" fill="#F472B6"/><rect x="145" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="158" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="193" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="158" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="241" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="44" y="206" width="40" height="40" rx="6" fill="#F472B6"/><rect x="49" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="206" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="97" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="206" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="145" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="206" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="193" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="206" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="241" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/></svg>
+            <span style="position:absolute;top:5px;right:5px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;display:grid;place-items:center;font-size:11px">✕</span></div>
+          <div style="width:96px;height:96px;border-radius:var(--r10);overflow:hidden;border:1px solid var(--border);position:relative">
+            <svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#EDF1F6"/><rect x="20" y="80" width="280" height="160" rx="16" fill="#2B2B31"/><rect x="28" y="88" width="264" height="144" rx="11" fill="#F4F7FA"/><rect x="34.0" y="96" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="52.3" y="96" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="70.6" y="96" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="88.9" y="96" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="107.1" y="96" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="125.4" y="96" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="143.7" y="96" width="14.3" height="22" rx="4" fill="#fff"/><rect x="162.0" y="96" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="180.3" y="96" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="198.6" y="96" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="216.9" y="96" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="235.1" y="96" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="253.4" y="96" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="271.7" y="96" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="34.0" y="122" width="14.3" height="22" rx="4" fill="#fff"/><rect x="52.3" y="122" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="70.6" y="122" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="88.9" y="122" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="107.1" y="122" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="125.4" y="122" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="143.7" y="122" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="162.0" y="122" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="180.3" y="122" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="198.6" y="122" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="216.9" y="122" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="235.1" y="122" width="14.3" height="22" rx="4" fill="#fff"/><rect x="253.4" y="122" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="271.7" y="122" width="14.3" height="22" rx="4" fill="#F472B6"/><rect x="34.0" y="148" width="15.7" height="22" rx="4" fill="#F472B6"/><rect x="53.7" y="148" width="15.7" height="22" rx="4" fill="#F472B6"/><rect x="73.4" y="148" width="15.7" height="22" rx="4" fill="#F472B6"/><rect x="93.1" y="148" width="15.7" height="22" rx="4" fill="#F472B6"/><rect x="112.8" y="148" width="15.7" height="22" rx="4" fill="#F472B6"/><rect x="132.5" y="148" width="15.7" height="22" rx="4" fill="#fff"/><rect x="152.2" y="148" width="15.7" height="22" rx="4" fill="#F472B6"/><rect x="171.8" y="148" width="15.7" height="22" rx="4" fill="#F472B6"/><rect x="191.5" y="148" width="15.7" height="22" rx="4" fill="#F472B6"/><rect x="211.2" y="148" width="15.7" height="22" rx="4" fill="#F472B6"/><rect x="230.9" y="148" width="15.7" height="22" rx="4" fill="#F472B6"/><rect x="250.6" y="148" width="15.7" height="22" rx="4" fill="#F472B6"/><rect x="270.3" y="148" width="15.7" height="22" rx="4" fill="#F472B6"/><rect x="34.0" y="174" width="17.3" height="22" rx="4" fill="#F472B6"/><rect x="55.3" y="174" width="17.3" height="22" rx="4" fill="#F472B6"/><rect x="76.7" y="174" width="17.3" height="22" rx="4" fill="#F472B6"/><rect x="98.0" y="174" width="17.3" height="22" rx="4" fill="#F472B6"/><rect x="119.3" y="174" width="17.3" height="22" rx="4" fill="#F472B6"/><rect x="140.7" y="174" width="17.3" height="22" rx="4" fill="#F472B6"/><rect x="162.0" y="174" width="17.3" height="22" rx="4" fill="#F472B6"/><rect x="183.3" y="174" width="17.3" height="22" rx="4" fill="#F472B6"/><rect x="204.7" y="174" width="17.3" height="22" rx="4" fill="#F472B6"/><rect x="226.0" y="174" width="17.3" height="22" rx="4" fill="#F472B6"/><rect x="247.3" y="174" width="17.3" height="22" rx="4" fill="#fff"/><rect x="268.7" y="174" width="17.3" height="22" rx="4" fill="#F472B6"/><rect x="34.0" y="200" width="28.0" height="22" rx="4" fill="#F472B6"/><rect x="66.0" y="200" width="28.0" height="22" rx="4" fill="#F472B6"/><rect x="98.0" y="200" width="28.0" height="22" rx="4" fill="#F472B6"/><rect x="130.0" y="200" width="28.0" height="22" rx="4" fill="#F472B6"/><rect x="162.0" y="200" width="28.0" height="22" rx="4" fill="#fff"/><rect x="194.0" y="200" width="28.0" height="22" rx="4" fill="#F472B6"/><rect x="226.0" y="200" width="28.0" height="22" rx="4" fill="#F472B6"/><rect x="258.0" y="200" width="28.0" height="22" rx="4" fill="#F472B6"/><rect x="20" y="226" width="280" height="14" rx="7" fill="#000" opacity=".07"/></svg>
+            <span style="position:absolute;top:5px;right:5px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;display:grid;place-items:center;font-size:11px">✕</span></div>
+          <div class="upl" style="width:96px;height:96px;display:grid;place-items:center;padding:0">
+            <div><div class="ic">＋</div><div class="s11 muted" style="margin-top:2px">Thêm ảnh</div></div></div>
+        </div>
+        <div class="s12 muted" style="margin-top:9px">Tối đa 6 ảnh (≤5MB/ảnh) và 1 video (≤30 giây)</div>
+      </div>
+
+      <div class="f ac" style="gap:10px;padding:14px 0;border-top:1px solid var(--border)">
+        <span class="check on">✓</span><span class="s13 t2">Hiển thị tên tôi là <b>L*** D***</b> (ẩn danh một phần)</span>
+      </div>
+
+      <div class="f jb ac" style="margin-top:18px">
+        <span class="s12 muted">Đánh giá sẽ hiển thị công khai sau khi được duyệt (UC23)</span>
+        <div class="f" style="gap:10px"><a class="btn out">Để sau</a><a class="btn cta lg">Gửi đánh giá</a></div>
+      </div>
+    </div>
+  </div>
+</div></div></div>
+<div class="ftr"><div class="ct">
+  <div class="top">
+    <div>
+      <a class="logo" style="font-size:19px"><span class="mark" style="width:30px;height:30px;font-size:14px"><span>K</span></span><span>Keeb<span style="color:var(--p500)">Hub</span></span></a>
+      <p class="s13 t2" style="margin-top:14px;line-height:1.7;max-width:280px">Sàn thương mại điện tử bàn phím cơ custom. Kết nối người chơi với xưởng gia công uy tín trên toàn quốc.</p>
+      <div class="paylogos"><i>VNPAY</i><i>MOMO</i><i>ZALOPAY</i><i>VISA</i><i>ATM</i></div>
+    </div>
+    <div><h4>Khám phá</h4><ul><li>Kit bàn phím</li><li>Switch</li><li>Keycap</li><li>Dịch vụ gia công</li><li>Group buy</li></ul></div>
+    <div><h4>Hỗ trợ</h4><ul><li>Hướng dẫn mua hàng</li><li>Chính sách đổi trả</li><li>Chính sách bảo hành</li><li>Tra cứu đơn hàng</li><li>Câu hỏi thường gặp</li></ul></div>
+    <div><h4>Người bán</h4><ul><li>Đăng ký bán hàng</li><li>Quy chế hoạt động</li><li>Chính sách phí</li><li>Trung tâm người bán</li></ul></div>
+    <div><h4>Liên hệ</h4><ul><li>1900 6868</li><li>hotro@keebhub.vn</li><li>Tầng 8, toà nhà A, Q.1, TP.HCM</li></ul>
+      <div class="f" style="gap:8px;margin-top:14px"><i class="s12" style="width:32px;height:32px;border:1px solid var(--border);border-radius:8px;display:grid;place-items:center;font-style:normal">f</i><i class="s12" style="width:32px;height:32px;border:1px solid var(--border);border-radius:8px;display:grid;place-items:center;font-style:normal">ig</i><i class="s12" style="width:32px;height:32px;border:1px solid var(--border);border-radius:8px;display:grid;place-items:center;font-style:normal">yt</i></div>
+    </div>
+  </div>
+  <div class="bot"><span>© 2026 KeebHub. Đồ án Thương mại điện tử.</span><span>Điều khoản · Bảo mật · Cookie</span></div>
+</div></div>
+</body>
+</html>

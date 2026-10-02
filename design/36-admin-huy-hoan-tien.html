@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KeebHub Admin — Huỷ đơn & hoàn tiền</title>
+<link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin><link href='https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap' rel='stylesheet'>
+<style>
+:root{
+  --white:#FFFFFF; --surface:#F7F8FA; --surface2:#EFF1F5; --border:#E4E7EC; --border2:#CFD4DC;
+  --text:#101828; --text2:#475467; --muted:#98A2B3;
+  --p50:#EEF4FF; --p100:#D8E5FF; --p500:#1B62F5; --p600:#1450D6; --p700:#0F3DA8;
+  --a50:#FFF3ED; --a500:#FF5A1F; --a600:#E84708;
+  --s50:#ECFDF3; --s600:#079455; --w50:#FFFAEB; --w600:#DC6803; --d50:#FEF3F2; --d600:#D92D20;
+  --star:#FDB022;
+  --r6:6px; --r8:8px; --r10:10px; --r14:14px; --r20:20px; --rf:999px;
+  --sh1:0 1px 2px rgba(16,24,40,.06); --sh2:0 4px 12px rgba(16,24,40,.08); --sh3:0 12px 28px rgba(16,24,40,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Be Vietnam Pro',system-ui,-apple-system,sans-serif;background:var(--surface);color:var(--text);font-size:15px;line-height:1.5}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.ct{max-width:1280px;margin:0 auto;padding:0 32px}
+.f{display:flex} .col{display:flex;flex-direction:column} .g{display:grid}
+.ac{align-items:center} .as{align-items:flex-start} .jb{justify-content:space-between} .jc{justify-content:center}
+.wrap{flex-wrap:wrap} .fl1{flex:1} .mla{margin-left:auto}
+.muted{color:var(--muted)} .t2{color:var(--text2)}
+.s11{font-size:11px}.s12{font-size:12px}.s13{font-size:13px}.s14{font-size:14px}.s16{font-size:16px}
+.s18{font-size:18px}.s20{font-size:20px}.s24{font-size:24px}.s30{font-size:30px}.s38{font-size:38px}
+.w500{font-weight:500}.w600{font-weight:600}.w700{font-weight:700}.w800{font-weight:800}
+.tight{letter-spacing:-.02em}
+
+/* ---------- top bar / header / nav ---------- */
+.topbar{background:var(--text);color:#CDD5E0;font-size:12.5px}
+.topbar .ct{height:36px;display:flex;align-items:center;justify-content:space-between}
+.topbar a{color:#CDD5E0;margin-left:20px}
+.topbar a.hl{color:#fff;font-weight:600}
+.hdr{background:var(--white);border-bottom:1px solid var(--border)}
+.hdr .ct{height:76px;display:flex;align-items:center;gap:26px}
+.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.logo .mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--p500),var(--p700));
+  display:grid;place-items:center;color:#fff;font-size:16px;font-weight:800}
+.logo .mark span{transform:translateY(-1px)}
+.search{flex:1;position:relative;max-width:620px}
+.search input{width:100%;height:46px;border:2px solid var(--p500);border-radius:var(--r10);padding:0 112px 0 42px;
+  font-family:inherit;font-size:14.5px;color:var(--text);background:var(--white)}
+.search input::placeholder{color:var(--muted)}
+.search .ico{position:absolute;left:14px;top:13px;color:var(--muted);font-size:17px}
+.search .go{position:absolute;right:5px;top:5px;height:36px;padding:0 20px;border:0;border-radius:var(--r8);
+  background:var(--p500);color:#fff;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer}
+.hact{display:flex;align-items:center;gap:6px;margin-left:auto}
+.iconbtn{position:relative;width:44px;height:44px;border-radius:var(--r10);display:grid;place-items:center;
+  font-size:19px;color:var(--text2)}
+.iconbtn .dot{position:absolute;top:6px;right:5px;min-width:18px;height:18px;padding:0 5px;border-radius:var(--rf);
+  background:var(--a500);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center}
+.user{display:flex;align-items:center;gap:9px;padding:6px 12px 6px 6px;border-radius:var(--rf);border:1px solid var(--border)}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--p100);color:var(--p700);display:grid;place-items:center;
+  font-size:13px;font-weight:700}
+.nav{background:var(--white);border-bottom:1px solid var(--border)}
+.nav .ct{height:48px;display:flex;align-items:center;gap:28px;font-size:14px;color:var(--text2);font-weight:500}
+.nav .cat{display:flex;align-items:center;gap:9px;font-weight:600;color:var(--text)}
+.nav a.on{color:var(--p600);font-weight:600}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:600;
+  font-size:14.5px;padding:11px 20px;border-radius:var(--r10);border:1px solid transparent;cursor:pointer;white-space:nowrap}
+.btn.pri{background:var(--p500);color:#fff}
+.btn.cta{background:var(--a500);color:#fff}
+.btn.out{background:var(--white);color:var(--text);border-color:var(--border2)}
+.btn.outp{background:var(--a50);color:var(--a600);border-color:#FFC9AE}
+.btn.ghost{background:transparent;color:var(--p600);padding-left:8px;padding-right:8px}
+.btn.dis{background:var(--surface2);color:var(--muted);border-color:var(--border)}
+.btn.sm{padding:8px 14px;font-size:13px;border-radius:var(--r8)}
+.btn.lg{padding:14px 26px;font-size:16px}
+.btn.blk{width:100%}
+
+/* ---------- surfaces ---------- */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);box-shadow:var(--sh1)}
+.card.p16{padding:16px}.card.p20{padding:20px}.card.p24{padding:24px}
+.sechd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
+.sechd h2{font-size:22px;font-weight:700;letter-spacing:-.01em}
+.sechd a{font-size:14px;color:var(--p600);font-weight:600}
+.crumb{font-size:13.5px;color:var(--text2);padding:16px 0}
+.crumb b{color:var(--text);font-weight:600}
+.crumb span{margin:0 7px;color:var(--muted)}
+
+/* ---------- badges & chips ---------- */
+.bdg{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:var(--rf);white-space:nowrap}
+.bdg.new{background:var(--p50);color:var(--p700)}
+.bdg.sale{background:var(--a500);color:#fff}
+.bdg.ok{background:var(--s50);color:var(--s600)}
+.bdg.warn{background:var(--w50);color:var(--w600)}
+.bdg.err{background:var(--d50);color:var(--d600)}
+.bdg.gray{background:var(--surface2);color:var(--text2)}
+.chip{padding:8px 15px;border:1px solid var(--border2);border-radius:var(--r8);font-size:13.5px;font-weight:500;
+  background:var(--white);cursor:pointer;white-space:nowrap}
+.chip.on{border-color:var(--p500);background:var(--p50);color:var(--p700);font-weight:600}
+.chip.off{color:var(--muted);background:var(--surface);border-style:dashed;cursor:not-allowed}
+.chip.rm{display:inline-flex;align-items:center;gap:7px;background:var(--p50);border-color:var(--p100);color:var(--p700);font-weight:600}
+
+/* ---------- form ---------- */
+.field{display:flex;flex-direction:column;gap:7px}
+.field > label{font-size:13.5px;font-weight:600;color:var(--text2)}
+.inp{font-family:inherit;font-size:14.5px;padding:11px 14px;border:1px solid var(--border2);border-radius:var(--r10);
+  background:var(--white);color:var(--text);width:100%}
+.inp::placeholder{color:var(--muted)}
+.inp.focus{border-color:var(--p500);box-shadow:0 0 0 3px var(--p50)}
+.help{font-size:12.5px;color:var(--muted)}
+.help.err{color:var(--d600)}
+.check{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:5px;background:var(--white);flex:none;display:grid;place-items:center}
+.check.on{background:var(--p500);border-color:var(--p500);color:#fff;font-size:11px;font-weight:700}
+.radio{width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex:none;display:grid;place-items:center}
+.radio.on{border-color:var(--p500)}
+.radio.on::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--p500)}
+
+/* ---------- product card ---------- */
+.pgrid{display:grid;gap:16px}
+.pc{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);overflow:hidden;position:relative}
+.pc .thumb{aspect-ratio:1/1;position:relative;overflow:hidden;background:var(--surface2)}
+.pc .thumb .tag{position:absolute;top:10px;left:10px;z-index:2}
+.pc .thumb .wish{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.92);
+  display:grid;place-items:center;font-size:14px;color:var(--muted);z-index:2}
+.pc .bd{padding:13px 14px 15px}
+.pc .shop{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.pc .shop i{width:5px;height:5px;border-radius:50%;background:var(--s600);display:block}
+.pc .tt{font-size:13.8px;font-weight:600;line-height:1.45;height:40px;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:9px}
+.pc .prw{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.pc .pr{font-size:16.5px;font-weight:800;color:var(--a600);white-space:nowrap}
+.pc .old{font-size:12px;color:var(--muted);text-decoration:line-through;font-weight:500;white-space:nowrap}
+.pc .ft{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:11.5px;color:var(--text2)}
+.stars{color:var(--star);letter-spacing:.5px;font-size:12px}
+
+/* keyboard illustration */
+.kb{width:100%;height:100%;display:block}
+
+/* ---------- footer ---------- */
+.ftr{background:var(--white);border-top:1px solid var(--border);margin-top:64px}
+.ftr .top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;gap:34px;padding:44px 0 36px}
+.ftr h4{font-size:13px;font-weight:700;margin-bottom:14px;letter-spacing:.02em}
+.ftr ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ftr li{font-size:13.5px;color:var(--text2)}
+.ftr .bot{border-top:1px solid var(--border);padding:18px 0;display:flex;justify-content:space-between;
+  font-size:12.5px;color:var(--muted)}
+.paylogos{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.paylogos i{width:44px;height:28px;border:1px solid var(--border);border-radius:5px;display:grid;place-items:center;
+  font-size:9px;font-weight:700;color:var(--text2);font-style:normal;background:var(--white)}
+
+/* ---------- misc ---------- */
+.stepper{display:inline-flex;align-items:stretch;border:1px solid var(--border2);border-radius:var(--r8);overflow:hidden}
+.stepper b{width:34px;display:grid;place-items:center;background:var(--white);color:var(--text2);font-weight:500;font-size:15px}
+.stepper span{width:46px;display:grid;place-items:center;font-weight:600;font-size:14.5px;
+  border-left:1px solid var(--border);border-right:1px solid var(--border)}
+.divider{height:1px;background:var(--border)}
+.dashed{height:1px;background:repeating-linear-gradient(90deg,var(--border) 0 6px,transparent 6px 12px)}
+.sumrow{display:flex;justify-content:space-between;font-size:14px;color:var(--text2)}
+.sumrow b{color:var(--text);font-weight:600}
+.alert{display:flex;gap:11px;padding:13px 15px;border-radius:var(--r10);font-size:13.5px;line-height:1.55}
+.alert.ok{background:var(--s50);color:#05603A}
+.alert.warn{background:var(--w50);color:#93370D}
+.alert.info{background:var(--p50);color:var(--p700)}
+.alert.err{background:var(--d50);color:#912018}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border)}
+.tabs a{padding:13px 18px;font-size:14.5px;font-weight:600;color:var(--text2);border-bottom:2px solid transparent}
+.tabs a.on{color:var(--p600);border-bottom-color:var(--p500)}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;
+  padding:12px 14px;background:var(--surface);border-bottom:1px solid var(--border)}
+.tbl td{padding:14px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+
+body{background:var(--surface)}
+.app{display:grid;grid-template-columns:238px 1fr;min-height:100vh;align-items:start}
+/* ---- side rail ---- */
+.rail{background:#0E1726;color:#AFBACB;min-height:100vh;position:sticky;top:0;padding-bottom:20px}
+.rail .brand{height:66px;display:flex;align-items:center;gap:10px;padding:0 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.rail .brand .mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--p500),var(--p700));
+  display:grid;place-items:center;color:#fff;font-size:14px;font-weight:800}
+.rail .brand b{color:#fff;font-size:15.5px;font-weight:800;letter-spacing:-.01em}
+.rail .brand span{font-size:10px;color:#6E7D93;display:block;font-weight:500;letter-spacing:.06em}
+.rail .shopbox{margin:14px 12px;padding:12px;border-radius:var(--r10);background:rgba(255,255,255,.06);display:flex;gap:10px;align-items:center}
+.rail .shopbox .lg{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;flex:none}
+.rail .shopbox b{color:#fff;font-size:13px;display:block}
+.rail .shopbox span{font-size:10.5px;color:#7C8AA0}
+.rail .gt{font-size:10px;font-weight:700;color:#5E6C82;letter-spacing:.1em;padding:16px 20px 7px}
+.rail a{display:flex;align-items:center;gap:11px;padding:9px 20px;font-size:13.5px;color:#AFBACB}
+.rail a em{font-style:normal;width:17px;font-size:14px;text-align:center}
+.rail a b{margin-left:auto;font-size:10.5px;font-weight:700;background:var(--a500);color:#fff;border-radius:var(--rf);padding:1px 7px}
+.rail a.on{background:rgba(27,98,245,.22);color:#fff;font-weight:600;box-shadow:inset 3px 0 0 var(--p500)}
+/* ---- top bar ---- */
+.tbar{height:66px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;
+  gap:18px;padding:0 26px;position:sticky;top:0;z-index:10}
+.tbar h1{font-size:19px;font-weight:700;letter-spacing:-.015em}
+.tbar .sub{font-size:12.5px;color:var(--muted);margin-top:2px}
+.tbar .sbox{margin-left:auto;position:relative;width:280px}
+.tbar .sbox input{width:100%;height:38px;border:1px solid var(--border2);border-radius:var(--r8);padding:0 12px 0 34px;
+  font-family:inherit;font-size:13.5px}
+.tbar .sbox .i{position:absolute;left:12px;top:9px;color:var(--muted)}
+.tbar .ib{width:38px;height:38px;border-radius:var(--r8);border:1px solid var(--border);display:grid;place-items:center;
+  font-size:15px;color:var(--text2);position:relative}
+.tbar .ib i{position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;border-radius:var(--rf);background:var(--a500);
+  color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center;font-style:normal;padding:0 4px}
+.tbar .who{display:flex;align-items:center;gap:9px;padding:5px 11px 5px 5px;border:1px solid var(--border);border-radius:var(--rf)}
+.tbar .who .av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:11.5px;font-weight:700}
+.main{padding:22px 26px 56px}
+/* ---- widgets ---- */
+.kpis{display:grid;gap:16px;margin-bottom:20px}
+.kpi{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);padding:17px 19px;box-shadow:var(--sh1)}
+.kpi .tp{display:flex;align-items:center;gap:9px}
+.kpi .tp em{font-style:normal;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-size:15px;flex:none}
+.kpi .tp span{font-size:12.5px;color:var(--text2);font-weight:500}
+.kpi .v{font-size:26px;font-weight:800;letter-spacing:-.025em;margin-top:11px}
+.kpi .d{font-size:12px;margin-top:5px;display:flex;align-items:center;gap:5px}
+.up{color:var(--s600)} .down{color:var(--d600)}
+.card2{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);box-shadow:var(--sh1);margin-bottom:18px}
+.card2 > .hd{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px}
+.card2 > .hd h3{font-size:15.5px;font-weight:700}
+.card2 > .hd p{font-size:12px;color:var(--muted);margin-top:2px}
+.card2 > .bd{padding:20px}
+.card2 > .bd.p0{padding:0}
+.toolrow{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tchip{padding:6px 13px;border:1px solid var(--border2);border-radius:var(--r8);font-size:12.5px;font-weight:500;background:var(--white)}
+.tchip.on{background:var(--p500);border-color:var(--p500);color:#fff;font-weight:600}
+.tb{width:100%;border-collapse:collapse;font-size:13.2px}
+.tb th{text-align:left;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;
+  padding:11px 16px;background:var(--surface);border-bottom:1px solid var(--border);white-space:nowrap}
+.tb td{padding:13px 16px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tb tr:last-child td{border-bottom:0}
+.tb .th{width:44px;height:44px;border-radius:var(--r8);overflow:hidden;border:1px solid var(--border);flex:none}
+.tb .nm{font-weight:600;font-size:13.2px;line-height:1.4}
+.tb .sub{font-size:11.5px;color:var(--muted);margin-top:3px}
+.pgr{display:flex;align-items:center;gap:8px;padding:14px 20px;border-top:1px solid var(--border)}
+.pgr a{min-width:32px;height:32px;padding:0 10px;border:1px solid var(--border);border-radius:var(--r8);background:var(--white);
+  display:grid;place-items:center;font-size:13px;color:var(--text2)}
+.pgr a.on{background:var(--p500);border-color:var(--p500);color:#fff;font-weight:700}
+.bars{display:flex;align-items:flex-end;gap:10px;height:170px;padding-top:10px}
+.bars .b{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end}
+.bars .b i{width:100%;max-width:38px;border-radius:6px 6px 0 0;background:var(--p500);display:block}
+.bars .b span{font-size:11px;color:var(--muted)}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--text2)}
+.legend i{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:6px}
+.donut{display:flex;align-items:center;gap:22px}
+.lrow{display:flex;align-items:center;gap:10px;font-size:12.5px;padding:5px 0}
+.lrow .sw{width:10px;height:10px;border-radius:3px;flex:none}
+.lrow .n{margin-left:auto;font-weight:700}
+.todo{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--border);align-items:center}
+.todo:last-child{border-bottom:0}
+.todo em{font-style:normal;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:15px;flex:none}
+.todo b{font-size:13.2px;display:block}
+.todo span{font-size:11.5px;color:var(--muted);display:block;margin-top:2px}
+.field2{display:flex;flex-direction:column;gap:6px;margin-bottom:15px}
+.field2 label{font-size:12.8px;font-weight:600;color:var(--text2)}
+.field2 .req{color:var(--d600)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.upl2{border:1.5px dashed var(--border2);border-radius:var(--r10);padding:20px;text-align:center;background:var(--surface)}
+.tgl{width:40px;height:22px;border-radius:var(--rf);background:var(--border2);position:relative;flex:none}
+.tgl.on{background:var(--p500)}
+.tgl:after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff}
+.tgl.on:after{left:20px}
+
+.split{display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start}
+.split2{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;align-items:start}
+.av2{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700;flex:none}
+.tree{font-size:13.5px}
+.tree .lv1{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:var(--r8);font-weight:600}
+.tree .lv1:hover{background:var(--surface)}
+.tree .lv2{display:flex;align-items:center;gap:10px;padding:8px 14px 8px 36px;color:var(--text2)}
+.tree .lv3{display:flex;align-items:center;gap:10px;padding:7px 14px 7px 58px;color:var(--muted);font-size:12.5px}
+.tree .n{margin-left:auto;font-size:11.5px;color:var(--muted)}
+.tree .on{background:var(--p50);color:var(--p700)}
+.appr{border:1px solid var(--border);border-radius:var(--r14);overflow:hidden;margin-bottom:14px;background:var(--white)}
+.appr .top{display:flex;gap:14px;padding:16px}
+.appr .th{width:96px;height:96px;border-radius:var(--r10);overflow:hidden;border:1px solid var(--border);flex:none}
+.appr .foot{display:flex;align-items:center;gap:10px;padding:12px 16px;border-top:1px solid var(--border);background:var(--surface)}
+.chkline2{display:flex;align-items:flex-start;gap:9px;font-size:12.8px;color:var(--text2);padding:4px 0;line-height:1.5}
+.disp{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.disp .side{border:1px solid var(--border);border-radius:var(--r10);padding:15px}
+.disp .side.cus{border-color:var(--p500);background:var(--p50)}
+.disp .side.shop{border-color:#FFD9C4;background:var(--a50)}
+.money{font-variant-numeric:tabular-nums}
+.tight-tb .tb th,.tight-tb .tb td{padding-left:11px;padding-right:11px;font-size:12.8px}
+.loginwrap{min-height:100vh;display:grid;place-items:center;background:#0E1726;position:relative;overflow:hidden}
+.loginbox{width:420px;background:var(--white);border-radius:var(--r20);padding:38px 36px;box-shadow:0 24px 60px rgba(0,0,0,.4);position:relative;z-index:2}
+.loginbox .mark{width:52px;height:52px;border-radius:15px;background:linear-gradient(135deg,var(--p500),var(--p700));
+  display:grid;place-items:center;color:#fff;font-size:22px;font-weight:800;margin:0 auto 18px}
+</style>
+</head>
+<body>
+<div class="app"><div class="rail">
+  <div class="brand"><span class="mark">K</span><div><b>KeebHub Admin</b><span>Quản trị hệ thống</span></div></div>
+  <div class="shopbox"><span class="lg" style="background:#0F3DA8">AD</span>
+    <div><b>System Admin</b><span>Toàn quyền hệ thống</span></div></div>
+  <div class="gt">TỔNG QUAN</div><a class=""><em>◎</em>Bảng điều khiển</a><div class="gt">NGƯỜI DÙNG</div><a class=""><em>👥</em>Quản lý người dùng</a><a class=""><em>🏪</em>Tài khoản Seller/Shop<b>6</b></a><div class="gt">KIỂM DUYỆT</div><a class=""><em>✓</em>Kiểm duyệt sản phẩm<b>18</b></a><a class=""><em>▤</em>Danh mục kỹ thuật</a><div class="gt">VẬN HÀNH</div><a class="on"><em>↩</em>Huỷ đơn & hoàn tiền<b>7</b></a><a class=""><em>⚠</em>Sự cố từ Shop<b>4</b></a><div class="gt">BÁO CÁO</div><a class=""><em>💰</em>Doanh thu & phí sàn</a><a class=""><em>📈</em>Thống kê hệ thống</a><div class="gt">HỆ THỐNG</div><a class=""><em>⚙</em>Cấu hình sàn</a><a class=""><em>🗒</em>Nhật ký hoạt động</a>
+</div>
+<div><div class="tbar">
+  <div><h1>Huỷ đơn &amp; hoàn tiền</h1><div class="sub">7 yêu cầu chờ phân xử · 2 quá hạn SLA 3 ngày</div></div>
+  <div class="sbox"><span class="i">⌕</span><input placeholder="Tìm đơn hàng, sản phẩm, khách…"></div>
+  <div class="ib">🔔<i>7</i></div><div class="ib">💬<i>24</i></div>
+  <div class="who"><span class="av" style="background:#0F3DA8">AD</span>
+    <span class="s13 w600">Nguyễn An · Admin</span><span class="s12 muted">▾</span></div>
+  
+</div>
+<div class="main">
+  <div class="kpis g4">
+    <div class="kpi"><div class="tp"><em style="background:var(--w50);color:var(--w600)">↩</em>
+  <span>Chờ phân xử</span></div><div class="v">7</div><div class="d down">▼ 2 quá hạn</div></div>
+    <div class="kpi"><div class="tp"><em style="background:var(--d50);color:var(--d600)">💸</em>
+  <span>Đã hoàn tháng này</span></div><div class="v">184.2tr</div><div class="d up">▲ 1.1% GMV</div></div>
+    <div class="kpi"><div class="tp"><em style="background:var(--p50);color:var(--p600)">⏱</em>
+  <span>Thời gian xử lý TB</span></div><div class="v">2.1 ngày</div><div class="d up">▲ Cam kết 3–5 ngày</div></div>
+    <div class="kpi"><div class="tp"><em style="background:var(--s50);color:var(--s600)">⚖</em>
+  <span>Tỉ lệ nghiêng về khách</span></div><div class="v">62%</div></div>
+  </div>
+
+  <div class="card2">
+    <div class="hd"><div style="flex:1"><h3>Vụ việc #KN-1057 — đang phân xử</h3>
+      <p>Đơn #KH-284193 · Lê Tùng Dương ↔ SwitchHouse · gửi 25/09/2026</p></div>
+      <span class="bdg warn">Còn 2 ngày để ra quyết định</span></div>
+    <div class="bd">
+      <div class="disp">
+        <div class="side cus">
+          <div class="f ac" style="gap:9px;margin-bottom:11px">
+            <span class="av2" style="background:#1B62F5">DT</span>
+            <div><b class="s13">Lê Tùng Dương</b><div class="s11 muted">Khách hàng · 24 đơn · 0% huỷ</div></div></div>
+          <b class="s12" style="color:var(--p700)">YÊU CẦU CỦA KHÁCH</b>
+          <p class="s13" style="color:var(--p700);margin-top:7px;line-height:1.65">Huỷ đơn và hoàn toàn bộ 8.490.000₫.
+          Lý do: shop đã quá 2 ngày so với cam kết mà mới xong 3/5 công đoạn, em cần phím gấp cho công việc nên không chờ được nữa.</p>
+          <div class="divider" style="margin:12px 0;background:#C7D7FF"></div>
+          <div class="s12" style="color:var(--p700)">Bằng chứng đính kèm: 3 ảnh chụp màn hình tiến độ, 1 ảnh tin nhắn với shop</div>
+        </div>
+
+        <div class="side shop">
+          <div class="f ac" style="gap:9px;margin-bottom:11px">
+            <span class="av2" style="background:#E84708">SH</span>
+            <div><b class="s13">SwitchHouse</b><div class="s11 muted">Shop · 4.8★ · 0.9% huỷ · 94% đúng hẹn</div></div></div>
+          <b class="s12" style="color:var(--a600)">PHẢN HỒI CỦA SHOP</b>
+          <p class="s13" style="color:#9A3412;margin-top:7px;line-height:1.65">Shop đã lube xong 70 switch và cân stab — phần này không thể hoàn nguyên.
+          Chậm 2 ngày là do lô PCB lỗi, shop đã báo sự cố #SC-0342 lên sàn từ 24/09. Đề nghị hoàn phần linh kiện,
+          giữ lại phí gia công 750.000₫.</p>
+          <div class="divider" style="margin:12px 0;background:#FFD9C4"></div>
+          <div class="s12" style="color:#9A3412">Bằng chứng: ảnh 5 công đoạn, biên bản sự cố #SC-0342 đã được sàn tiếp nhận</div>
+        </div>
+      </div>
+
+      <div class="alert info" style="margin-top:16px"><span>🔎</span><div>
+        <b>Dữ liệu hệ thống ghi nhận:</b> shop xác nhận đơn đúng hạn (21/09 09:10), cập nhật tiến độ đều đặn kèm ảnh ở cả 3 công đoạn,
+        và đã báo sự cố PCB lỗi lên sàn <b>trước khi</b> khách khiếu nại. Sự cố #SC-0342 đang được bộ phận kỹ thuật xác minh với nhà phân phối.</div></div>
+
+      <div style="margin-top:20px">
+        <b class="s14">Quyết định của sàn</b>
+        <div class="col" style="gap:10px;margin-top:12px">
+          <div class="f as" style="gap:11px;padding:13px 15px;border:1px solid var(--border);border-radius:var(--r10)">
+            <span class="radio" style="margin-top:2px"></span>
+            <div><b class="s13.5" style="font-size:13.5px">Hoàn 100% cho khách (8.490.000₫)</b>
+              <div class="s12 muted" style="margin-top:3px">Shop chịu toàn bộ thiệt hại, tính 1 lần huỷ đơn vào chỉ số shop</div></div></div>
+
+          <div class="f as" style="gap:11px;padding:13px 15px;border:1.5px solid var(--p500);background:var(--p50);border-radius:var(--r10)">
+            <span class="radio on" style="margin-top:2px"></span>
+            <div style="flex:1"><b class="s13.5" style="font-size:13.5px;color:var(--p700)">Hoàn phần linh kiện, giữ phí gia công cho shop</b>
+              <div class="s12" style="color:var(--p700);opacity:.85;margin-top:3px">Khách nhận lại 7.740.000₫ · Shop giữ 750.000₫ phí gia công · Không tính huỷ đơn vào chỉ số shop vì lỗi khách quan</div>
+              <div class="f" style="gap:16px;margin-top:9px">
+                <div class="s12" style="color:var(--p700)">Hoàn khách: <b>7.740.000₫</b></div>
+                <div class="s12" style="color:var(--p700)">Shop nhận: <b>750.000₫</b></div>
+                <div class="s12" style="color:var(--p700)">Sàn hỗ trợ: <b>0₫</b></div>
+              </div></div></div>
+
+          <div class="f as" style="gap:11px;padding:13px 15px;border:1px solid var(--border);border-radius:var(--r10)">
+            <span class="radio" style="margin-top:2px"></span>
+            <div><b class="s13.5" style="font-size:13.5px">Không hoàn, yêu cầu shop hoàn thành đơn</b>
+              <div class="s12 muted" style="margin-top:3px">Gia hạn thêm 3 ngày, shop tặng khách voucher xin lỗi</div></div></div>
+
+          <div class="f as" style="gap:11px;padding:13px 15px;border:1px solid var(--border);border-radius:var(--r10)">
+            <span class="radio" style="margin-top:2px"></span>
+            <div><b class="s13.5" style="font-size:13.5px">Hoàn 100% cho khách, sàn bù phí gia công cho shop</b>
+              <div class="s12 muted" style="margin-top:3px">Dùng khi lỗi hoàn toàn thuộc về nhà phân phối hoặc hệ thống</div></div></div>
+        </div>
+
+        <div class="field2" style="margin-top:18px"><label>Lý do quyết định (gửi cho cả hai bên)</label>
+          <textarea class="inp" rows="3" style="resize:vertical;font-family:inherit">Shop đã thực hiện đúng quy trình và chủ động báo sự cố trước khi khách khiếu nại, nguyên nhân chậm trễ là lô PCB lỗi từ nhà phân phối. Phần linh kiện chưa sử dụng được hoàn lại cho khách. Phần gia công đã hoàn thành 3/5 công đoạn và không thể hoàn nguyên nên shop được giữ phí gia công.</textarea></div>
+
+        <div class="f jb ac" style="margin-top:16px">
+          <span class="s12 muted">Quyết định có hiệu lực ngay, tiền hoàn về trong 3–5 ngày làm việc</span>
+          <div class="f" style="gap:10px"><a class="btn out">Yêu cầu bổ sung bằng chứng</a><a class="btn pri lg">Ra quyết định</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card2">
+    <div class="hd" style="padding:0 20px"><div class="tabs" style="border:0;flex:1">
+      <a class="on">Chờ phân xử (7)</a><a>Shop đang phản hồi (4)</a><a>Đã hoàn tiền (284)</a><a>Từ chối hoàn (62)</a></div></div>
+    <div class="bd p0"><table class="tb">
+      <tr><th>Mã KN</th><th>Đơn hàng</th><th>Khách</th><th>Shop</th><th>Lý do</th>
+        <th style="text-align:right">Giá trị</th><th style="text-align:center">Chờ</th><th>Trạng thái</th><th></th></tr>
+      <tr><td><b>#KN-1058</b></td><td>#KH-284121</td><td>Lý Hạnh</td><td>KeebLab Store</td><td>Gia công sai yêu cầu</td>
+        <td class="money" style="text-align:right"><b>6.180.000₫</b></td>
+        <td style="text-align:center">3 ngày</td><td><span class="bdg err">Quá hạn</span></td>
+        <td style="text-align:right"><a class="btn out sm">Xử lý</a></td></tr><tr><td><b>#KN-1057</b></td><td>#KH-284193</td><td>Lê Tùng Dương</td><td>SwitchHouse</td><td>Huỷ đơn khi đang gia công</td>
+        <td class="money" style="text-align:right"><b>8.490.000₫</b></td>
+        <td style="text-align:center">1 ngày</td><td><span class="bdg warn">Chờ phân xử</span></td>
+        <td style="text-align:right"><a class="btn out sm">Xử lý</a></td></tr><tr><td><b>#KN-1055</b></td><td>#KH-284088</td><td>Ngô Sơn</td><td>Phím Cơ 24h</td><td>Hàng lỗi, không đúng mô tả</td>
+        <td class="money" style="text-align:right"><b>1.420.000₫</b></td>
+        <td style="text-align:center">2 ngày</td><td><span class="bdg warn">Chờ phân xử</span></td>
+        <td style="text-align:right"><a class="btn out sm">Xử lý</a></td></tr><tr><td><b>#KN-1052</b></td><td>#KH-284002</td><td>Mai Chi</td><td>Monsgeek VN</td><td>Giao thiếu linh kiện</td>
+        <td class="money" style="text-align:right"><b>2.150.000₫</b></td>
+        <td style="text-align:center">5 giờ</td><td><span class="bdg new">Shop đang phản hồi</span></td>
+        <td style="text-align:right"><a class="btn out sm">Xử lý</a></td></tr><tr><td><b>#KN-1049</b></td><td>#KH-283977</td><td>Vũ Thành</td><td>KeebLab Store</td><td>Quá hạn gia công 6 ngày</td>
+        <td class="money" style="text-align:right"><b>5.740.000₫</b></td>
+        <td style="text-align:center">—</td><td><span class="bdg ok">Đã hoàn tiền</span></td>
+        <td style="text-align:right"><a class="btn out sm">Xử lý</a></td></tr><tr><td><b>#KN-1044</b></td><td>#KH-283902</td><td>Bùi Khánh</td><td>SwitchHouse</td><td>Thay đổi nhu cầu</td>
+        <td class="money" style="text-align:right"><b>890.000₫</b></td>
+        <td style="text-align:center">—</td><td><span class="bdg gray">Từ chối hoàn</span></td>
+        <td style="text-align:right"><a class="btn out sm">Xử lý</a></td></tr>
+    </table></div>
+  </div>
+</div></div></div>
+</body>
+</html>

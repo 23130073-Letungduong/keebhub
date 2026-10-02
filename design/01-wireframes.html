@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KeebHub — Wireframes Customer Core</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Be Vietnam Pro',system-ui,sans-serif;background:#ECEEF2;color:#1B222C;padding:40px 0 100px}
+.wrap{max-width:1360px;margin:0 auto;padding:0 32px}
+.hd{margin-bottom:40px}
+.hd h1{font-size:32px;font-weight:700;letter-spacing:-.02em}
+.hd p{color:#616A75;margin-top:6px;font-size:15px}
+.legend{display:flex;gap:18px;margin-top:18px;flex-wrap:wrap;font-size:12px;color:#616A75}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+
+.screen{margin-bottom:48px}
+.screen > .cap{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+.screen > .cap .num{font-size:12px;font-weight:700;background:#1B222C;color:#fff;padding:3px 9px;border-radius:5px}
+.screen > .cap h2{font-size:19px;font-weight:700}
+.screen > .cap span{font-size:13px;color:#7A828C}
+.frame{background:#fff;border:2px solid #C3C9D2;border-radius:10px;overflow:hidden}
+
+/* wireframe primitives */
+.box{border:1.5px solid #B8BFC9;background:#F4F5F7;border-radius:5px;display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:#7A828C;text-align:center;padding:8px;line-height:1.4}
+.img{background:repeating-linear-gradient(45deg,#E6E9ED,#E6E9ED 8px,#DDE1E6 8px,#DDE1E6 16px);
+  border:1.5px solid #B8BFC9;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#79818B}
+.txt{height:9px;background:#D7DBE0;border-radius:3px}
+.txt.w40{width:40%} .txt.w60{width:60%} .txt.w80{width:80%} .txt.w100{width:100%} .txt.w25{width:25%}
+.txt.dark{background:#AEB5BE}
+.btnw{border:1.5px solid #8A929C;background:#E2E5E9;border-radius:6px;height:38px;display:flex;align-items:center;
+  justify-content:center;font-size:12.5px;font-weight:600;color:#39414B}
+.btnw.solid{background:#3D4753;color:#fff;border-color:#3D4753}
+.btnw.sm{height:30px;font-size:11.5px}
+.stack{display:flex;flex-direction:column}
+.g{display:grid}
+.f{display:flex}
+.note{font-size:11px;color:#8A929C;font-style:italic}
+
+/* structural regions */
+.topbar{height:34px;background:#E8EBEF;border-bottom:1.5px solid #C3C9D2;display:flex;align-items:center;
+  justify-content:space-between;padding:0 24px;font-size:11px;color:#7A828C}
+.header{height:72px;border-bottom:1.5px solid #C3C9D2;display:flex;align-items:center;gap:20px;padding:0 24px}
+.navbar{height:44px;border-bottom:1.5px solid #C3C9D2;display:flex;align-items:center;gap:26px;padding:0 24px;
+  font-size:12px;color:#616A75;background:#FAFBFC}
+.footer{border-top:1.5px solid #C3C9D2;background:#F4F5F7;padding:28px 24px;display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;gap:28px}
+.body-pad{padding:24px}
+.annot{background:#FFF7E0;border:1.5px dashed #E0B94A;border-radius:5px;padding:7px 10px;font-size:11.5px;color:#8A6A10}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hd">
+  <h1>Wireframes — Customer Core</h1>
+  <p>KeebHub · Sàn TMĐT bàn phím custom · Low-fidelity, desktop 1280px · Mapping theo UC01–UC08, UC27, UC28</p>
+  <div class="legend">
+    <span><i style="background:repeating-linear-gradient(45deg,#E6E9ED,#E6E9ED 5px,#DDE1E6 5px,#DDE1E6 10px);border:1px solid #B8BFC9"></i>Vùng ảnh</span>
+    <span><i style="background:#F4F5F7;border:1px solid #B8BFC9"></i>Khối nội dung</span>
+    <span><i style="background:#3D4753"></i>Nút hành động chính</span>
+    <span><i style="background:#FFF7E0;border:1px dashed #E0B94A"></i>Ghi chú logic / use case</span>
+  </div>
+</div>
+
+<!-- ============ 01 HOME ============ -->
+<div class="screen">
+  <div class="cap"><span class="num">01</span><h2>Trang chủ / Landing</h2><span>UC02 điểm vào · điều hướng danh mục</span></div>
+  <div class="frame">
+    <div class="topbar"><span>Hotline · Tra cứu đơn · Trở thành người bán</span><span>Đăng nhập | Đăng ký (UC01)</span></div>
+    <div class="header">
+      <div class="box" style="width:130px;height:36px">LOGO</div>
+      <div class="box" style="flex:1;height:42px;justify-content:flex-start;padding-left:14px">🔍 Ô tìm kiếm — gợi ý theo kit / switch / keycap (UC02)</div>
+      <div class="box" style="width:44px;height:40px">🛒</div>
+      <div class="box" style="width:44px;height:40px">👤</div>
+    </div>
+    <div class="navbar"><b>☰ Danh mục</b><span>Kit bàn phím</span><span>Switch</span><span>Keycap</span><span>Phụ kiện</span><span>Dịch vụ gia công</span><span style="margin-left:auto;color:#8A929C">Build sẵn · Group buy</span></div>
+    <div class="body-pad">
+      <div class="f" style="gap:16px">
+        <div class="box" style="width:210px;height:300px;align-items:flex-start;flex-direction:column;gap:9px;padding:14px">
+          <div class="txt w80 dark"></div><div class="txt w60"></div><div class="txt w80"></div><div class="txt w40"></div>
+          <div class="txt w60"></div><div class="txt w80"></div><div class="txt w40"></div>
+          <div class="note" style="margin-top:auto">Menu danh mục dọc</div>
+        </div>
+        <div class="img" style="flex:1;height:300px">Hero banner — “Tự build bàn phím của bạn” + CTA vào Custom Builder (UC04)</div>
+        <div class="stack" style="width:220px;gap:12px">
+          <div class="img" style="height:144px">Banner phụ</div>
+          <div class="img" style="height:144px">Banner phụ</div>
+        </div>
+      </div>
+
+      <div class="g" style="grid-template-columns:repeat(6,1fr);gap:12px;margin-top:22px">
+        <div class="box" style="height:92px;flex-direction:column;gap:6px">◻<span>Kit</span></div>
+        <div class="box" style="height:92px;flex-direction:column;gap:6px">◻<span>Switch</span></div>
+        <div class="box" style="height:92px;flex-direction:column;gap:6px">◻<span>Keycap</span></div>
+        <div class="box" style="height:92px;flex-direction:column;gap:6px">◻<span>Stabilizer</span></div>
+        <div class="box" style="height:92px;flex-direction:column;gap:6px">◻<span>Cáp &amp; phụ kiện</span></div>
+        <div class="box" style="height:92px;flex-direction:column;gap:6px">◻<span>Gia công</span></div>
+      </div>
+
+      <div class="annot" style="margin-top:22px">Dải CTA lớn: “Bắt đầu build” → mở UC04 Custom Builder. Đây là điểm khác biệt của sàn, phải nằm above-the-fold hoặc ngay sau hero.</div>
+
+      <div class="f" style="justify-content:space-between;align-items:center;margin:24px 0 12px">
+        <div class="txt w25 dark" style="height:14px"></div><div class="note">Xem tất cả ›</div>
+      </div>
+      <div class="g" style="grid-template-columns:repeat(5,1fr);gap:14px">
+        <div class="stack" style="gap:8px"><div class="img" style="height:150px">Ảnh SP</div><div class="txt w100"></div><div class="txt w60"></div><div class="txt w40 dark"></div></div>
+        <div class="stack" style="gap:8px"><div class="img" style="height:150px">Ảnh SP</div><div class="txt w100"></div><div class="txt w60"></div><div class="txt w40 dark"></div></div>
+        <div class="stack" style="gap:8px"><div class="img" style="height:150px">Ảnh SP</div><div class="txt w100"></div><div class="txt w60"></div><div class="txt w40 dark"></div></div>
+        <div class="stack" style="gap:8px"><div class="img" style="height:150px">Ảnh SP</div><div class="txt w100"></div><div class="txt w60"></div><div class="txt w40 dark"></div></div>
+        <div class="stack" style="gap:8px"><div class="img" style="height:150px">Ảnh SP</div><div class="txt w100"></div><div class="txt w60"></div><div class="txt w40 dark"></div></div>
+      </div>
+
+      <div class="f" style="gap:14px;margin-top:26px">
+        <div class="box" style="flex:1;height:110px">Shop nổi bật (UC30 hồ sơ Shop)</div>
+        <div class="box" style="flex:1;height:110px">Build của cộng đồng</div>
+        <div class="box" style="flex:1;height:110px">Cam kết · Bảo hành · Đổi trả</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="stack" style="gap:7px"><div class="txt w60 dark"></div><div class="txt w100"></div><div class="txt w80"></div></div>
+      <div class="stack" style="gap:7px"><div class="txt w60 dark"></div><div class="txt w80"></div><div class="txt w60"></div></div>
+      <div class="stack" style="gap:7px"><div class="txt w60 dark"></div><div class="txt w80"></div><div class="txt w60"></div></div>
+      <div class="stack" style="gap:7px"><div class="txt w60 dark"></div><div class="txt w80"></div><div class="txt w60"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 02 SEARCH ============ -->
+<div class="screen">
+  <div class="cap"><span class="num">02</span><h2>Kết quả tìm kiếm &amp; bộ lọc</h2><span>UC02</span></div>
+  <div class="frame">
+    <div class="header">
+      <div class="box" style="width:130px;height:36px">LOGO</div>
+      <div class="box" style="flex:1;height:42px;justify-content:flex-start;padding-left:14px">🔍 “gateron oil king”</div>
+      <div class="box" style="width:44px;height:40px">🛒</div><div class="box" style="width:44px;height:40px">👤</div>
+    </div>
+    <div class="body-pad">
+      <div class="note" style="margin-bottom:14px">Trang chủ / Switch / Kết quả cho “gateron oil king” — 128 sản phẩm</div>
+      <div class="f" style="gap:20px;align-items:flex-start">
+        <!-- filter rail -->
+        <div class="stack" style="width:238px;gap:14px">
+          <div class="box" style="height:34px;justify-content:space-between;padding:0 12px"><b>Bộ lọc</b><span>Xoá hết</span></div>
+          <div class="box" style="height:120px;flex-direction:column;align-items:flex-start;gap:8px;padding:12px">
+            <div class="txt w60 dark"></div><div class="note">Loại switch</div>
+            <div class="f" style="gap:6px;flex-wrap:wrap"><span class="btnw sm" style="padding:0 10px">Linear</span><span class="btnw sm" style="padding:0 10px">Tactile</span><span class="btnw sm" style="padding:0 10px">Clicky</span></div>
+          </div>
+          <div class="box" style="height:96px;flex-direction:column;align-items:flex-start;gap:9px;padding:12px">
+            <div class="txt w60 dark"></div><div class="note">Khoảng giá</div>
+            <div class="f" style="gap:8px;width:100%"><div class="box" style="flex:1;height:30px">Từ</div><div class="box" style="flex:1;height:30px">Đến</div></div>
+          </div>
+          <div class="box" style="height:130px;flex-direction:column;align-items:flex-start;gap:8px;padding:12px">
+            <div class="txt w60 dark"></div><div class="note">☐ Lực nhấn · ☐ Đã lube · ☐ Hotswap</div>
+            <div class="txt w80"></div><div class="txt w60"></div><div class="txt w80"></div>
+          </div>
+          <div class="box" style="height:100px;flex-direction:column;align-items:flex-start;gap:8px;padding:12px">
+            <div class="txt w60 dark"></div><div class="note">Shop · Đánh giá · Tình trạng kho</div>
+            <div class="txt w80"></div><div class="txt w60"></div>
+          </div>
+          <div class="btnw solid">Áp dụng bộ lọc</div>
+        </div>
+        <!-- results -->
+        <div class="stack" style="flex:1;gap:14px">
+          <div class="box" style="height:44px;justify-content:space-between;padding:0 14px">
+            <span>Sắp xếp: Liên quan | Mới nhất | Giá ↑ | Giá ↓ | Bán chạy</span><span>◫ ☰</span>
+          </div>
+          <div class="f" style="gap:8px;flex-wrap:wrap"><span class="btnw sm" style="padding:0 10px">Linear ✕</span><span class="btnw sm" style="padding:0 10px">Còn hàng ✕</span></div>
+          <div class="g" style="grid-template-columns:repeat(4,1fr);gap:14px">
+            <div class="stack" style="gap:8px"><div class="img" style="height:160px">Ảnh SP</div><div class="txt w100"></div><div class="txt w80"></div><div class="txt w40 dark"></div><div class="txt w60"></div></div>
+            <div class="stack" style="gap:8px"><div class="img" style="height:160px">Ảnh SP</div><div class="txt w100"></div><div class="txt w80"></div><div class="txt w40 dark"></div><div class="txt w60"></div></div>
+            <div class="stack" style="gap:8px"><div class="img" style="height:160px">Ảnh SP</div><div class="txt w100"></div><div class="txt w80"></div><div class="txt w40 dark"></div><div class="txt w60"></div></div>
+            <div class="stack" style="gap:8px"><div class="img" style="height:160px">Ảnh SP</div><div class="txt w100"></div><div class="txt w80"></div><div class="txt w40 dark"></div><div class="txt w60"></div></div>
+            <div class="stack" style="gap:8px"><div class="img" style="height:160px">Ảnh SP</div><div class="txt w100"></div><div class="txt w80"></div><div class="txt w40 dark"></div><div class="txt w60"></div></div>
+            <div class="stack" style="gap:8px"><div class="img" style="height:160px">Ảnh SP</div><div class="txt w100"></div><div class="txt w80"></div><div class="txt w40 dark"></div><div class="txt w60"></div></div>
+            <div class="stack" style="gap:8px"><div class="img" style="height:160px">Ảnh SP</div><div class="txt w100"></div><div class="txt w80"></div><div class="txt w40 dark"></div><div class="txt w60"></div></div>
+            <div class="stack" style="gap:8px"><div class="img" style="height:160px">Ảnh SP</div><div class="txt w100"></div><div class="txt w80"></div><div class="txt w40 dark"></div><div class="txt w60"></div></div>
+          </div>
+          <div class="f" style="justify-content:center;gap:8px;margin-top:8px">
+            <span class="btnw sm" style="width:34px">‹</span><span class="btnw sm solid" style="width:34px">1</span>
+            <span class="btnw sm" style="width:34px">2</span><span class="btnw sm" style="width:34px">3</span><span class="btnw sm" style="width:34px">›</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 03 PRODUCT DETAIL ============ -->
+<div class="screen">
+  <div class="cap"><span class="num">03</span><h2>Chi tiết sản phẩm</h2><span>UC03 → UC05 · hiển thị tồn kho từ UC19</span></div>
+  <div class="frame">
+    <div class="header">
+      <div class="box" style="width:130px;height:36px">LOGO</div>
+      <div class="box" style="flex:1;height:42px;justify-content:flex-start;padding-left:14px">🔍 Tìm kiếm</div>
+      <div class="box" style="width:44px;height:40px">🛒</div><div class="box" style="width:44px;height:40px">👤</div>
+    </div>
+    <div class="body-pad">
+      <div class="note" style="margin-bottom:14px">Trang chủ / Kit bàn phím / Tofu60 2.0 Aluminium</div>
+      <div class="f" style="gap:26px;align-items:flex-start">
+        <div class="stack" style="width:420px;gap:10px">
+          <div class="img" style="height:400px">Ảnh chính (zoom khi hover)</div>
+          <div class="f" style="gap:8px">
+            <div class="img" style="width:76px;height:76px">1</div><div class="img" style="width:76px;height:76px">2</div>
+            <div class="img" style="width:76px;height:76px">3</div><div class="img" style="width:76px;height:76px">4</div>
+            <div class="img" style="width:76px;height:76px">5</div>
+          </div>
+        </div>
+        <div class="stack" style="flex:1;gap:14px">
+          <div class="txt w80 dark" style="height:22px"></div>
+          <div class="f" style="gap:14px;align-items:center"><div class="note">★★★★★ 4.9 · 218 đánh giá · Đã bán 1.2k</div></div>
+          <div class="box" style="height:76px;justify-content:flex-start;padding-left:18px;background:#FAFBFC">
+            <div class="txt w25 dark" style="height:26px"></div><span class="note" style="margin-left:14px">Giá + giá gạch + % giảm</span>
+          </div>
+          <div class="stack" style="gap:8px">
+            <div class="note">Màu sắc</div>
+            <div class="f" style="gap:8px"><span class="btnw sm" style="padding:0 14px">Silver</span><span class="btnw sm" style="padding:0 14px">Black</span><span class="btnw sm" style="padding:0 14px">Navy</span></div>
+          </div>
+          <div class="stack" style="gap:8px">
+            <div class="note">Phiên bản plate</div>
+            <div class="f" style="gap:8px"><span class="btnw sm" style="padding:0 14px">Brass</span><span class="btnw sm" style="padding:0 14px">PC</span><span class="btnw sm" style="padding:0 14px">FR4</span></div>
+          </div>
+          <div class="f" style="gap:14px;align-items:center">
+            <div class="note">Số lượng</div>
+            <div class="box" style="width:110px;height:38px">−  1  +</div>
+            <div class="note">Kho còn 38</div>
+          </div>
+          <div class="f" style="gap:12px;margin-top:6px">
+            <div class="btnw" style="flex:1">Thêm vào giỏ</div>
+            <div class="btnw solid" style="flex:1">Mua ngay</div>
+          </div>
+          <div class="btnw" style="margin-top:2px">⚙ Dùng kit này để build custom (UC04)</div>
+          <div class="box" style="height:84px;flex-direction:column;align-items:flex-start;gap:7px;padding:14px">
+            <div class="txt w40 dark"></div><div class="txt w80"></div><div class="note">Shop · tỉ lệ phản hồi · nút Xem shop, Chat</div>
+          </div>
+          <div class="box" style="height:64px;flex-direction:column;align-items:flex-start;gap:7px;padding:14px">
+            <div class="note">🚚 Giao dự kiến 2–4 ngày · 🛡 Bảo hành 12 tháng · ↩ Đổi trả 7 ngày</div>
+            <div class="txt w60"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="f" style="gap:20px;margin-top:30px;align-items:flex-start">
+        <div class="stack" style="flex:1;gap:12px">
+          <div class="box" style="height:40px;justify-content:flex-start;padding-left:16px">Mô tả | Thông số kỹ thuật | Tương thích | Đánh giá (218) | Hỏi đáp</div>
+          <div class="box" style="height:230px;flex-direction:column;align-items:flex-start;gap:10px;padding:18px">
+            <div class="txt w100"></div><div class="txt w100"></div><div class="txt w80"></div>
+            <div class="img" style="width:100%;height:100px">Ảnh mô tả</div>
+          </div>
+          <div class="annot">Tab “Tương thích” lấy dữ liệu từ UC27 — liệt kê switch/keycap/stab dùng được với kit này.</div>
+          <div class="box" style="height:180px;flex-direction:column;align-items:flex-start;gap:10px;padding:18px">
+            <div class="txt w40 dark"></div><div class="note">Đánh giá kèm ảnh, lọc theo số sao (UC08 / UC23)</div>
+            <div class="f" style="gap:10px;width:100%"><div class="box" style="width:44px;height:44px;border-radius:50%">👤</div>
+              <div class="stack" style="flex:1;gap:6px"><div class="txt w40"></div><div class="txt w100"></div><div class="txt w60"></div></div></div>
+          </div>
+        </div>
+        <div class="stack" style="width:280px;gap:12px">
+          <div class="box" style="height:36px"><b>Sản phẩm tương tự</b></div>
+          <div class="f" style="gap:10px"><div class="img" style="width:74px;height:74px">◻</div><div class="stack" style="flex:1;gap:7px"><div class="txt w100"></div><div class="txt w60"></div><div class="txt w40 dark"></div></div></div>
+          <div class="f" style="gap:10px"><div class="img" style="width:74px;height:74px">◻</div><div class="stack" style="flex:1;gap:7px"><div class="txt w100"></div><div class="txt w60"></div><div class="txt w40 dark"></div></div></div>
+          <div class="f" style="gap:10px"><div class="img" style="width:74px;height:74px">◻</div><div class="stack" style="flex:1;gap:7px"><div class="txt w100"></div><div class="txt w60"></div><div class="txt w40 dark"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 04 CUSTOM BUILDER ============ -->
+<div class="screen">
+  <div class="cap"><span class="num">04</span><h2>Custom Builder — tùy chỉnh cấu hình</h2><span>UC04 · «include» UC27 kiểm tra tương thích · «include» UC28 giữ chỗ tồn kho</span></div>
+  <div class="frame">
+    <div class="header">
+      <div class="box" style="width:130px;height:36px">LOGO</div>
+      <div class="box" style="flex:1;height:42px;justify-content:center">Bước 1 Kit ── Bước 2 Switch ── Bước 3 Keycap ── Bước 4 Gia công ── Bước 5 Xem lại</div>
+      <div class="box" style="width:44px;height:40px">🛒</div>
+    </div>
+    <div class="body-pad">
+      <div class="f" style="gap:22px;align-items:flex-start">
+        <!-- left: option picker -->
+        <div class="stack" style="flex:1;gap:16px">
+          <div class="txt w40 dark" style="height:20px"></div>
+          <div class="box" style="height:40px;justify-content:flex-start;padding-left:14px">Lọc nhanh: layout 60% · 65% · TKL · hotswap · gasket</div>
+          <div class="g" style="grid-template-columns:repeat(3,1fr);gap:14px">
+            <div class="stack" style="gap:8px;border:1.5px solid #8A929C;border-radius:7px;padding:10px">
+              <div class="img" style="height:120px">Kit A</div><div class="txt w100"></div><div class="txt w40 dark"></div>
+              <div class="btnw sm solid">Đã chọn ✓</div></div>
+            <div class="stack" style="gap:8px;border:1.5px solid #D2D7DE;border-radius:7px;padding:10px">
+              <div class="img" style="height:120px">Kit B</div><div class="txt w100"></div><div class="txt w40 dark"></div>
+              <div class="btnw sm">Chọn</div></div>
+            <div class="stack" style="gap:8px;border:1.5px solid #D2D7DE;border-radius:7px;padding:10px">
+              <div class="img" style="height:120px">Kit C</div><div class="txt w100"></div><div class="txt w40 dark"></div>
+              <div class="btnw sm">Chọn</div></div>
+            <div class="stack" style="gap:8px;border:1.5px solid #D2D7DE;border-radius:7px;padding:10px">
+              <div class="img" style="height:120px">Kit D</div><div class="txt w100"></div><div class="txt w40 dark"></div>
+              <div class="btnw sm">Chọn</div></div>
+            <div class="stack" style="gap:8px;border:1.5px solid #D2D7DE;border-radius:7px;padding:10px">
+              <div class="img" style="height:120px">Kit E</div><div class="txt w100"></div><div class="txt w40 dark"></div>
+              <div class="btnw sm">Chọn</div></div>
+            <div class="stack" style="gap:8px;border:1.5px solid #D2D7DE;border-radius:7px;padding:10px">
+              <div class="img" style="height:120px">Kit F</div><div class="txt w100"></div><div class="txt w40 dark"></div>
+              <div class="btnw sm">Chọn</div></div>
+          </div>
+          <div class="annot">Khi chọn xong mỗi bước, hệ thống chạy UC27 nền: linh kiện không tương thích bị làm mờ + hiện lý do ngay trên card (“không hỗ trợ switch 3 chân”).</div>
+          <div class="box" style="height:96px;flex-direction:column;align-items:flex-start;gap:9px;padding:14px;border-color:#E0B94A;background:#FFF7E0">
+            <div class="txt w40 dark" style="background:#D8B65A"></div>
+            <div class="note" style="color:#8A6A10">⚠ Cảnh báo tương thích — “Stab Durock V2 cần plate-mount, kit này chỉ nhận PCB-mount”</div>
+            <div class="f" style="gap:8px"><span class="btnw sm" style="padding:0 12px">Xem cấu hình thay thế</span><span class="btnw sm" style="padding:0 12px">Bỏ qua</span></div>
+          </div>
+        </div>
+        <!-- right: live summary -->
+        <div class="stack" style="width:330px;gap:12px">
+          <div class="img" style="height:190px">Preview bàn phím — render theo lựa chọn hiện tại</div>
+          <div class="box" style="flex-direction:column;align-items:stretch;gap:11px;padding:16px;height:auto">
+            <div class="txt w60 dark"></div>
+            <div class="f" style="justify-content:space-between"><span class="note">Kit · Tofu60 2.0</span><span class="note">2.690.000₫</span></div>
+            <div class="f" style="justify-content:space-between"><span class="note">Switch · Oil King ×70</span><span class="note">890.000₫</span></div>
+            <div class="f" style="justify-content:space-between"><span class="note">Keycap · GMK Olivia</span><span class="note">4.150.000₫</span></div>
+            <div class="f" style="justify-content:space-between"><span class="note">Stabilizer · Durock V2</span><span class="note">420.000₫</span></div>
+            <div style="border-top:1.5px dashed #C3C9D2;margin:3px 0"></div>
+            <div class="f" style="justify-content:space-between"><span class="note">Gói gia công · Full lube + tune</span><span class="note">750.000₫</span></div>
+            <div class="f" style="justify-content:space-between"><span class="note">Thời gian gia công dự kiến</span><span class="note">5–7 ngày</span></div>
+            <div style="border-top:1.5px solid #B8BFC9;margin:3px 0"></div>
+            <div class="f" style="justify-content:space-between;align-items:center">
+              <b style="font-size:13px">Tổng cộng</b><div class="txt w40 dark" style="height:20px;width:110px"></div></div>
+          </div>
+          <div class="box" style="height:52px;flex-direction:column;gap:5px;padding:10px;border-color:#7FB391;background:#F0F9F3">
+            <div class="note" style="color:#2E6B45">✓ Tất cả linh kiện tương thích (UC27)</div>
+            <div class="note" style="color:#2E6B45">🔒 Đã giữ chỗ tồn kho 15 phút (UC28)</div>
+          </div>
+          <div class="btnw solid" style="height:46px">Thêm vào giỏ &amp; đặt hàng (UC05)</div>
+          <div class="btnw">Lưu cấu hình</div>
+          <div class="note" style="text-align:center">Chia sẻ build này ›</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 05 CART ============ -->
+<div class="screen">
+  <div class="cap"><span class="num">05</span><h2>Giỏ hàng</h2><span>UC05 · nhóm theo Shop</span></div>
+  <div class="frame">
+    <div class="header"><div class="box" style="width:130px;height:36px">LOGO</div><div class="box" style="flex:1;height:42px">Giỏ hàng (3)</div><div class="box" style="width:44px;height:40px">👤</div></div>
+    <div class="body-pad">
+      <div class="f" style="gap:20px;align-items:flex-start">
+        <div class="stack" style="flex:1;gap:14px">
+          <div class="box" style="height:40px;justify-content:flex-start;padding-left:14px">☐ Chọn tất cả (3 sản phẩm) &nbsp;&nbsp;·&nbsp;&nbsp; Xoá đã chọn</div>
+
+          <div class="stack" style="border:1.5px solid #B8BFC9;border-radius:7px">
+            <div class="box" style="height:42px;border:0;border-bottom:1.5px solid #D2D7DE;justify-content:flex-start;padding-left:14px;border-radius:0">☐ 🏪 KeebLab Store</div>
+            <div class="f" style="gap:14px;padding:14px;align-items:center">
+              <div class="box" style="width:22px;height:22px">☐</div>
+              <div class="img" style="width:84px;height:84px">◻</div>
+              <div class="stack" style="flex:1;gap:7px"><div class="txt w80"></div><div class="note">Phân loại: Silver / Brass plate</div></div>
+              <div class="txt w40 dark" style="width:96px"></div>
+              <div class="box" style="width:104px;height:34px">−  1  +</div>
+              <div class="note">🗑</div>
+            </div>
+            <div class="f" style="gap:14px;padding:14px;align-items:center;border-top:1.5px dashed #DDE1E6">
+              <div class="box" style="width:22px;height:22px">☐</div>
+              <div class="img" style="width:84px;height:84px">◻</div>
+              <div class="stack" style="flex:1;gap:7px"><div class="txt w80"></div><div class="note">Phân loại: Linear 55g</div></div>
+              <div class="txt w40 dark" style="width:96px"></div>
+              <div class="box" style="width:104px;height:34px">−  2  +</div>
+              <div class="note">🗑</div>
+            </div>
+          </div>
+
+          <div class="stack" style="border:1.5px solid #B8BFC9;border-radius:7px">
+            <div class="box" style="height:42px;border:0;border-bottom:1.5px solid #D2D7DE;justify-content:flex-start;padding-left:14px;border-radius:0">☐ 🏪 SwitchHouse &nbsp;·&nbsp; <span class="note">Đơn CUSTOM — có gia công</span></div>
+            <div class="f" style="gap:14px;padding:14px;align-items:flex-start">
+              <div class="box" style="width:22px;height:22px">☐</div>
+              <div class="img" style="width:84px;height:84px">◻</div>
+              <div class="stack" style="flex:1;gap:8px">
+                <div class="txt w80"></div>
+                <div class="box" style="height:84px;flex-direction:column;align-items:flex-start;gap:6px;padding:10px;background:#FAFBFC">
+                  <div class="note">Build Sheet: Kit Tofu60 · Switch Oil King ×70 · Keycap GMK Olivia · Stab Durock V2</div>
+                  <div class="note">Gói gia công: Full lube + tune · 5–7 ngày</div>
+                  <div class="note">✎ Sửa cấu hình</div>
+                </div>
+              </div>
+              <div class="txt w40 dark" style="width:96px"></div>
+              <div class="box" style="width:104px;height:34px">−  1  +</div>
+              <div class="note">🗑</div>
+            </div>
+          </div>
+          <div class="annot">Sản phẩm custom hiển thị kèm Build Sheet thu gọn, không cho đổi số lượng &gt;1 nếu shop giới hạn công suất gia công.</div>
+        </div>
+
+        <div class="stack" style="width:320px;gap:12px">
+          <div class="box" style="flex-direction:column;align-items:stretch;gap:12px;padding:16px;height:auto">
+            <div class="txt w60 dark"></div>
+            <div class="f" style="justify-content:space-between"><span class="note">Tạm tính</span><span class="note">8.150.000₫</span></div>
+            <div class="f" style="justify-content:space-between"><span class="note">Phí gia công</span><span class="note">750.000₫</span></div>
+            <div class="f" style="justify-content:space-between"><span class="note">Giảm giá</span><span class="note">−200.000₫</span></div>
+            <div style="border-top:1.5px solid #B8BFC9"></div>
+            <div class="f" style="justify-content:space-between;align-items:center"><b style="font-size:13px">Tổng</b><div class="txt dark" style="height:20px;width:110px"></div></div>
+          </div>
+          <div class="box" style="height:44px;justify-content:space-between;padding:0 12px">🎟 Nhập mã giảm giá<span class="btnw sm" style="padding:0 12px">Áp dụng</span></div>
+          <div class="btnw solid" style="height:46px">Tiến hành thanh toán (UC06)</div>
+          <div class="note" style="text-align:center">‹ Tiếp tục mua sắm</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 06 CHECKOUT ============ -->
+<div class="screen">
+  <div class="cap"><span class="num">06</span><h2>Thanh toán</h2><span>UC06 · actor phụ Payment Gateway</span></div>
+  <div class="frame">
+    <div class="header"><div class="box" style="width:130px;height:36px">LOGO</div><div class="box" style="flex:1;height:42px">Thanh toán — bước 2/3</div></div>
+    <div class="body-pad">
+      <div class="f" style="gap:20px;align-items:flex-start">
+        <div class="stack" style="flex:1;gap:16px">
+          <div class="box" style="flex-direction:column;align-items:stretch;gap:12px;padding:18px;height:auto">
+            <div class="f" style="justify-content:space-between"><div class="txt w40 dark"></div><span class="note">Thay đổi</span></div>
+            <div class="note">📍 Địa chỉ nhận hàng — Họ tên · SĐT · Địa chỉ đầy đủ</div>
+            <div class="f" style="gap:10px"><div class="box" style="flex:1;height:38px">Tỉnh/Thành</div><div class="box" style="flex:1;height:38px">Quận/Huyện</div><div class="box" style="flex:1;height:38px">Phường/Xã</div></div>
+            <div class="box" style="height:38px">Địa chỉ cụ thể</div>
+          </div>
+
+          <div class="box" style="flex-direction:column;align-items:stretch;gap:12px;padding:18px;height:auto">
+            <div class="txt w40 dark"></div>
+            <div class="note">🚚 Phương thức vận chuyển</div>
+            <div class="f" style="gap:10px">
+              <div class="box" style="flex:1;height:64px;flex-direction:column;gap:4px;border-color:#8A929C">◉ Tiêu chuẩn<span class="note">3–5 ngày · 30.000₫</span></div>
+              <div class="box" style="flex:1;height:64px;flex-direction:column;gap:4px">○ Nhanh<span class="note">1–2 ngày · 55.000₫</span></div>
+              <div class="box" style="flex:1;height:64px;flex-direction:column;gap:4px">○ Hoả tốc<span class="note">Trong ngày · 90.000₫</span></div>
+            </div>
+            <div class="annot">Đơn có gia công: ngày giao = thời gian gia công (UC21/UC22) + thời gian ship. Phải nói rõ ở đây để khách không bất ngờ.</div>
+          </div>
+
+          <div class="box" style="flex-direction:column;align-items:stretch;gap:12px;padding:18px;height:auto">
+            <div class="txt w40 dark"></div>
+            <div class="note">💳 Phương thức thanh toán</div>
+            <div class="stack" style="gap:9px">
+              <div class="box" style="height:52px;justify-content:flex-start;padding-left:14px;gap:12px;border-color:#8A929C">◉ Ví điện tử / QR — Momo, ZaloPay, VNPay</div>
+              <div class="box" style="height:52px;justify-content:flex-start;padding-left:14px;gap:12px">○ Thẻ ATM nội địa / Visa · Master</div>
+              <div class="box" style="height:52px;justify-content:flex-start;padding-left:14px;gap:12px">○ Chuyển khoản ngân hàng</div>
+              <div class="box" style="height:52px;justify-content:flex-start;padding-left:14px;gap:12px">○ COD — không áp dụng cho đơn custom</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack" style="width:340px;gap:12px">
+          <div class="box" style="flex-direction:column;align-items:stretch;gap:11px;padding:16px;height:auto">
+            <div class="txt w60 dark"></div>
+            <div class="f" style="gap:10px"><div class="img" style="width:50px;height:50px">◻</div><div class="stack" style="flex:1;gap:6px"><div class="txt w100"></div><div class="txt w40"></div></div></div>
+            <div class="f" style="gap:10px"><div class="img" style="width:50px;height:50px">◻</div><div class="stack" style="flex:1;gap:6px"><div class="txt w100"></div><div class="txt w40"></div></div></div>
+            <div style="border-top:1.5px dashed #C3C9D2"></div>
+            <div class="f" style="justify-content:space-between"><span class="note">Tạm tính</span><span class="note">8.150.000₫</span></div>
+            <div class="f" style="justify-content:space-between"><span class="note">Gia công</span><span class="note">750.000₫</span></div>
+            <div class="f" style="justify-content:space-between"><span class="note">Vận chuyển</span><span class="note">30.000₫</span></div>
+            <div class="f" style="justify-content:space-between"><span class="note">Giảm giá</span><span class="note">−200.000₫</span></div>
+            <div style="border-top:1.5px solid #B8BFC9"></div>
+            <div class="f" style="justify-content:space-between;align-items:center"><b style="font-size:13px">Tổng thanh toán</b><div class="txt dark" style="height:22px;width:120px"></div></div>
+          </div>
+          <div class="note">☐ Tôi đồng ý với Điều khoản &amp; Chính sách đổi trả</div>
+          <div class="btnw solid" style="height:48px">Đặt hàng &amp; thanh toán</div>
+          <div class="box" style="height:58px;flex-direction:column;gap:5px;padding:10px">
+            <div class="note">🔒 Thanh toán qua cổng bảo mật</div>
+            <div class="note">Tiền giữ ở sàn tới khi khách xác nhận nhận hàng</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 07 ORDER TRACKING ============ -->
+<div class="screen">
+  <div class="cap"><span class="num">07</span><h2>Theo dõi đơn hàng custom</h2><span>UC07 · dữ liệu tiến độ từ UC22 · nhánh UC29 huỷ/khiếu nại</span></div>
+  <div class="frame">
+    <div class="header"><div class="box" style="width:130px;height:36px">LOGO</div><div class="box" style="flex:1;height:42px">Đơn hàng #KH-284193</div><div class="box" style="width:44px;height:40px">👤</div></div>
+    <div class="body-pad">
+      <div class="f" style="gap:20px;align-items:flex-start">
+        <div class="stack" style="width:210px;gap:8px">
+          <div class="box" style="height:36px;justify-content:flex-start;padding-left:12px;border-color:#8A929C;background:#E8EBEF">Đơn hàng của tôi</div>
+          <div class="box" style="height:36px;justify-content:flex-start;padding-left:12px">Hồ sơ cá nhân (UC09)</div>
+          <div class="box" style="height:36px;justify-content:flex-start;padding-left:12px">Sổ địa chỉ</div>
+          <div class="box" style="height:36px;justify-content:flex-start;padding-left:12px">Đánh giá của tôi (UC08)</div>
+          <div class="box" style="height:36px;justify-content:flex-start;padding-left:12px">Cấu hình đã lưu</div>
+          <div class="box" style="height:36px;justify-content:flex-start;padding-left:12px">Khiếu nại (UC29)</div>
+        </div>
+
+        <div class="stack" style="flex:1;gap:16px">
+          <div class="box" style="height:56px;justify-content:space-between;padding:0 16px">
+            <div class="stack" style="gap:6px;align-items:flex-start"><div class="txt dark" style="width:170px;height:13px"></div><span class="note">Đặt ngày 20/09/2026 · KeebLab Store</span></div>
+            <span class="btnw sm" style="padding:0 14px">Đang gia công</span>
+          </div>
+
+          <div class="box" style="height:118px;flex-direction:column;align-items:stretch;gap:0;padding:22px 24px">
+            <div class="f" style="justify-content:space-between;align-items:center;position:relative">
+              <div class="stack" style="align-items:center;gap:8px;flex:1"><div style="width:26px;height:26px;border-radius:50%;background:#3D4753"></div><span class="note">Đã đặt</span></div>
+              <div class="stack" style="align-items:center;gap:8px;flex:1"><div style="width:26px;height:26px;border-radius:50%;background:#3D4753"></div><span class="note">Đã thanh toán</span></div>
+              <div class="stack" style="align-items:center;gap:8px;flex:1"><div style="width:26px;height:26px;border-radius:50%;background:#3D4753"></div><span class="note">Shop xác nhận</span></div>
+              <div class="stack" style="align-items:center;gap:8px;flex:1"><div style="width:26px;height:26px;border-radius:50%;background:#3D4753;box-shadow:0 0 0 5px #D7DBE0"></div><span class="note"><b>Đang gia công</b></span></div>
+              <div class="stack" style="align-items:center;gap:8px;flex:1"><div style="width:26px;height:26px;border-radius:50%;border:2px solid #B8BFC9;background:#fff"></div><span class="note">Đang giao</span></div>
+              <div class="stack" style="align-items:center;gap:8px;flex:1"><div style="width:26px;height:26px;border-radius:50%;border:2px solid #B8BFC9;background:#fff"></div><span class="note">Hoàn thành</span></div>
+            </div>
+          </div>
+
+          <div class="annot">Đây là điểm khác biệt lớn nhất so với sàn TMĐT thường: đơn custom có tiến độ gia công chi tiết theo công đoạn, shop cập nhật qua UC22, kèm ảnh thực tế.</div>
+
+          <div class="box" style="flex-direction:column;align-items:stretch;gap:0;padding:0;height:auto">
+            <div class="box" style="height:44px;border:0;border-bottom:1.5px solid #D2D7DE;justify-content:flex-start;padding-left:16px;border-radius:0"><b>Tiến độ gia công</b> &nbsp;<span class="note">cập nhật bởi shop</span></div>
+            <div class="stack" style="padding:18px 20px;gap:16px">
+              <div class="f" style="gap:14px"><div style="width:14px;height:14px;border-radius:50%;background:#3D4753;margin-top:3px;flex:none"></div>
+                <div class="stack" style="flex:1;gap:6px"><div class="f" style="justify-content:space-between"><b style="font-size:12.5px">Rã hàn &amp; kiểm tra PCB</b><span class="note">22/09 · 09:20</span></div><div class="txt w80"></div></div>
+                <div class="img" style="width:60px;height:60px">📷</div></div>
+              <div class="f" style="gap:14px"><div style="width:14px;height:14px;border-radius:50%;background:#3D4753;margin-top:3px;flex:none"></div>
+                <div class="stack" style="flex:1;gap:6px"><div class="f" style="justify-content:space-between"><b style="font-size:12.5px">Lube switch (70/70)</b><span class="note">23/09 · 16:40</span></div><div class="txt w80"></div></div>
+                <div class="img" style="width:60px;height:60px">📷</div></div>
+              <div class="f" style="gap:14px"><div style="width:14px;height:14px;border-radius:50%;background:#3D4753;margin-top:3px;flex:none"></div>
+                <div class="stack" style="flex:1;gap:6px"><div class="f" style="justify-content:space-between"><b style="font-size:12.5px">Cân stabilizer</b><span class="note">25/09 · 11:05</span></div><div class="txt w60"></div></div>
+                <div class="img" style="width:60px;height:60px">📷</div></div>
+              <div class="f" style="gap:14px"><div style="width:14px;height:14px;border-radius:50%;border:2px solid #B8BFC9;background:#fff;margin-top:3px;flex:none"></div>
+                <div class="stack" style="flex:1;gap:6px"><div class="f" style="justify-content:space-between"><span class="note">Lắp ráp &amp; test toàn phím</span><span class="note">dự kiến 27/09</span></div></div></div>
+              <div class="f" style="gap:14px"><div style="width:14px;height:14px;border-radius:50%;border:2px solid #B8BFC9;background:#fff;margin-top:3px;flex:none"></div>
+                <div class="stack" style="flex:1;gap:6px"><div class="f" style="justify-content:space-between"><span class="note">Bàn giao đơn vị vận chuyển</span><span class="note">dự kiến 28/09</span></div></div></div>
+            </div>
+          </div>
+
+          <div class="f" style="gap:16px;align-items:flex-start">
+            <div class="box" style="flex:1;flex-direction:column;align-items:stretch;gap:10px;padding:16px;height:auto">
+              <div class="txt w40 dark"></div>
+              <div class="note">Build Sheet — kit, switch, keycap, stab, gói gia công</div>
+              <div class="txt w100"></div><div class="txt w80"></div><div class="txt w60"></div>
+            </div>
+            <div class="stack" style="width:260px;gap:10px">
+              <div class="btnw">💬 Nhắn tin cho Shop</div>
+              <div class="btnw">📄 Xem hoá đơn</div>
+              <div class="btnw">⚠ Yêu cầu huỷ / khiếu nại (UC29)</div>
+              <div class="btnw solid">Đã nhận hàng &amp; đánh giá (UC08)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

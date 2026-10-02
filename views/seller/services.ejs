@@ -1,0 +1,41 @@
+<%- include('_top') %>
+<% var E = edit || {}; %>
+<div class="split">
+  <div>
+    <div class="card2"><div class="hd"><div style="flex:1"><h3>Gói dịch vụ gia công (<%= services.length %>)</h3><p>Khách chọn gói ở bước 4 của Custom Builder</p></div></div>
+      <div class="bd"><div class="g2">
+        <% services.forEach(function(s){ %>
+        <div class="pk <%= s.active?'':'' %>" style="<%= s.active?'':'opacity:.6' %>">
+          <div class="f jb"><h4><%= s.name %></h4><span class="bdg <%= s.active?'ok':'gray' %>"><%= s.active?'Đang mở':'Tạm dừng' %></span></div>
+          <div class="pr"><%= h.money(s.price) %></div><div class="s12 muted">~<%= s.days %> ngày · <%= s.orders %> đơn · <%= s.soldering?'có hàn':'không hàn' %> · <%= s.lube?'có lube':'không lube' %></div>
+          <p class="s13 t2" style="margin-top:8px"><%= s.description %></p>
+          <ul><% s.includes.forEach(function(i){ %><li><em>✓</em><%= i %></li><% }) %></ul>
+          <div class="s12 muted" style="margin-top:10px">Công đoạn: <%= (s.stages||[]).join(' → ') %></div>
+          <div class="f" style="gap:6px;margin-top:12px"><a class="btn out sm" href="?edit=<%= s._id %>">Sửa</a>
+            <form method="post" action="/seller/services/<%= s._id %>/toggle"><button class="btn ghost sm"><%= s.active?'Tạm dừng':'Mở lại' %></button></form>
+            <form method="post" action="/seller/services/<%= s._id %>/delete" onsubmit="return confirm('Xoá gói này?')"><button class="btn ghost sm" style="color:var(--d600)">Xoá</button></form></div>
+        </div>
+        <% }) %>
+        <% if (!services.length) { %><p class="muted s13">Chưa có gói nào. Tạo gói đầu tiên ở khung bên phải.</p><% } %>
+      </div></div></div>
+  </div>
+  <div>
+    <form class="card2" method="post" action="/seller/services/settings"><div class="hd"><h3>Cài đặt xưởng</h3></div><div class="bd">
+      <label class="f ac s13" style="gap:9px;margin-bottom:12px"><input type="checkbox" name="offersCustom" <%= shop.offersCustom?'checked':'' %>> Nhận đơn gia công custom</label>
+      <div class="field2"><label>Công suất (số đơn gia công đồng thời)</label><input class="inp" type="number" min="1" name="capacityPerWeek" value="<%= shop.capacityPerWeek %>"></div>
+      <div class="cap"><span>Đang làm</span><div class="tk"><i style="width:<%= Math.min(100,load/shop.capacityPerWeek*100) %>%;background:var(--p500)"></i></div><b><%= load %>/<%= shop.capacityPerWeek %></b></div>
+      <button class="btn out blk sm" style="margin-top:10px">Lưu cài đặt</button>
+    </div></form>
+    <form class="card2" method="post" action="<%= edit ? '/seller/services/'+edit._id : '/seller/services' %>"><div class="hd"><h3><%= edit ? 'Sửa gói' : 'Thêm gói mới' %></h3><% if (edit) { %><a class="mla s12" style="color:var(--p600)" href="/seller/services">Huỷ</a><% } %></div><div class="bd">
+      <div class="field2"><label>Tên gói <span class="req">*</span></label><input class="inp" name="name" value="<%= E.name||'' %>" required placeholder="VD: Full lube + tune"></div>
+      <div class="g2"><div class="field2"><label>Giá (₫) <span class="req">*</span></label><input class="inp" type="number" name="price" min="0" step="1000" value="<%= E.price||'' %>" required></div><div class="field2"><label>Số ngày</label><input class="inp" type="number" name="days" min="1" value="<%= E.days||5 %>"></div></div>
+      <div class="field2"><label>Mô tả</label><textarea class="inp" name="description" rows="2"><%= E.description||'' %></textarea></div>
+      <div class="field2"><label>Bao gồm (mỗi dòng 1 ý)</label><textarea class="inp" name="includes" rows="3"><%= (E.includes||[]).join('\n') %></textarea></div>
+      <div class="field2"><label>Các công đoạn (mỗi dòng 1 bước)</label><textarea class="inp" name="stages" rows="5"><%= (E.stages && E.stages.length ? E.stages : DEFAULT_STAGES).join('\n') %></textarea></div>
+      <label class="f ac s13" style="gap:8px;margin-bottom:8px"><input type="checkbox" name="soldering" <%= E.soldering?'checked':'' %>> Có hàn / rã hàn PCB</label>
+      <label class="f ac s13" style="gap:8px;margin-bottom:14px"><input type="checkbox" name="lube" <%= E.lube?'checked':'' %>> Có lube switch</label>
+      <button class="btn pri blk"><%= edit ? 'Lưu gói' : '+ Thêm gói' %></button>
+    </div></form>
+  </div>
+</div>
+<%- include('_bottom') %>

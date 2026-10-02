@@ -1,0 +1,24 @@
+<%- include('_top') %>
+<div class="card2">
+  <div class="toolrow">
+    <% [['pending','Chờ duyệt'],['active','Đang hoạt động'],['locked','Đã khoá'],['all','Tất cả']].forEach(function(t){ %><a class="tchip <%= st===t[0]?'on':'' %>" href="?status=<%= t[0] %>"><%= t[1] %><%= counts[t[0]] ? ' ('+counts[t[0]]+')' : '' %></a><% }) %>
+    <form class="mla f" style="gap:6px"><input type="hidden" name="status" value="<%= st %>"><input class="inp" style="padding:6px 10px;width:200px" name="q" value="<%= query.q||'' %>" placeholder="Tên shop…"><button class="btn out sm">Tìm</button></form>
+  </div>
+  <div class="bd p0 tblx"><table class="tb">
+    <tr><th>Shop</th><th>Chủ shop</th><th>Loại</th><th>Sản phẩm</th><th>Đánh giá</th><th>Ngày đăng ký</th><th>Trạng thái</th><th></th></tr>
+    <% shops.forEach(function(s){ %>
+    <tr><td><div class="f ac" style="gap:10px"><span class="av2" style="background:<%= s.color %>;border-radius:9px"><%= s.initials %></span><div><a class="nm" href="/shop/<%= s.slug %>" target="_blank"><%= s.name %></a><div class="sub"><%= s.city||'' %> · <%= s.phone||'' %></div></div></div></td>
+      <td><div class="nm"><%= s.owner ? s.owner.name : '' %></div><div class="sub"><%= s.owner ? s.owner.email : '' %></div></td>
+      <td><%= s.offersCustom ? 'Xưởng gia công' : 'Bán lẻ' %></td><td><%= pc[String(s._id)]||0 %></td><td><%= s.rating ? s.rating+' ★' : '—' %></td><td class="muted"><%= h.date(s.createdAt) %></td>
+      <td><span class="bdg <%= s.status==='active'?'ok':s.status==='pending'?'warn':'err' %>"><%= ({active:'Hoạt động',pending:'Chờ duyệt',locked:'Đã khoá'})[s.status] %></span><% if (s.rejectReason) { %><div class="sub"><%= s.rejectReason %></div><% } %></td>
+      <td style="white-space:nowrap;text-align:right">
+        <% if (s.status==='pending') { %><form method="post" action="/admin/shops/<%= s._id %>/approve" style="display:inline"><button class="btn pri sm">Duyệt</button></form>
+          <form method="post" action="/admin/shops/<%= s._id %>/reject" style="display:inline" onsubmit="var r=prompt('Lý do từ chối?');if(!r)return false;this.reason.value=r"><input type="hidden" name="reason"><button class="btn out sm">Từ chối</button></form>
+        <% } else if (s.status==='active') { %><form method="post" action="/admin/shops/<%= s._id %>/lock" style="display:inline" onsubmit="return confirm('Khoá shop này?')"><button class="btn out sm">Khoá</button></form>
+        <% } else { %><form method="post" action="/admin/shops/<%= s._id %>/unlock" style="display:inline"><button class="btn pri sm">Mở khoá</button></form><% } %>
+      </td></tr>
+    <% }) %>
+    <% if (!shops.length) { %><tr><td colspan="8" class="muted" style="text-align:center;padding:30px">Không có shop.</td></tr><% } %>
+  </table></div>
+</div>
+<%- include('_bottom') %>

@@ -1,0 +1,44 @@
+<%- include('_top') %>
+<% var diff = y.total ? Math.round((t.total - y.total) / y.total * 100) : null; %>
+<div class="kpis g4">
+  <div class="kpi"><div class="tp"><em style="background:var(--s50);color:var(--s600)">💰</em><span>Doanh thu hôm nay</span></div><div class="v"><%= h.short(t.total) %>₫</div><div class="d <%= diff===null||diff>=0?'up':'down' %>"><%= diff===null ? 'Hôm qua: ' + h.short(y.total) + '₫' : (diff>=0?'▲ ':'▼ ') + Math.abs(diff) + '% so với hôm qua' %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--p50);color:var(--p600)">📦</em><span>Đơn chờ xác nhận</span></div><div class="v"><%= newOrders %></div><div class="d up"><%= badges.waitingCustom %> đơn custom chờ nhận</div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--w50);color:var(--w600)">🛠</em><span>Đang gia công</span></div><div class="v"><%= processing %></div><div class="d <%= nearDue?'down':'up' %>"><%= nearDue ? '▼ ' + nearDue + ' đơn đã nhận > 3 ngày' : 'Đúng tiến độ' %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--a50);color:var(--a600)">⭐</em><span>Đánh giá trung bình</span></div><div class="v"><%= shop.rating ? shop.rating.toFixed(1) : '—' %></div><div class="d up"><%= unreplied %> đánh giá chưa phản hồi</div></div>
+</div>
+<div class="split3">
+  <div class="card2">
+    <div class="hd"><div style="flex:1"><h3>Doanh thu 14 ngày qua</h3><p>Tổng <%= h.money(chart.total) %> · <%= chart.count %> đơn · TB <%= h.short(chart.total/14) %>₫/ngày</p></div><a class="tchip" href="/seller/revenue">Chọn khoảng ngày →</a></div>
+    <div class="bd"><div style="height:240px"><canvas data-chart="bar" data-labels="<%= JSON.stringify(chart.labels) %>" data-values="<%= JSON.stringify(chart.revenue) %>" data-label="Doanh thu (₫)"></canvas></div></div>
+  </div>
+  <div class="card2">
+    <div class="hd"><h3>Việc cần làm</h3></div>
+    <div class="bd" style="padding:6px 20px">
+      <div class="todo"><em style="background:var(--d50);color:var(--d600)">⚠</em><div style="flex:1"><b><%= badges.waitingCustom %> đơn custom chờ xác nhận</b><span>Phản hồi trong 24h kẻo khách huỷ</span></div><a class="btn out sm" href="/seller/custom">Xử lý</a></div>
+      <div class="todo"><em style="background:var(--w50);color:var(--w600)">🛠</em><div style="flex:1"><b><%= processing %> đơn đang gia công</b><span>Cập nhật tiến độ kèm ảnh</span></div><a class="btn out sm" href="/seller/progress">Xem</a></div>
+      <div class="todo"><em style="background:var(--p50);color:var(--p600)">📊</em><div style="flex:1"><b><%= lowStock %> sản phẩm sắp hết hàng</b><span>Tồn kho dưới ngưỡng cảnh báo</span></div><a class="btn out sm" href="/seller/inventory?low=1">Nhập</a></div>
+      <div class="todo"><em style="background:var(--a50);color:var(--a600)">⭐</em><div style="flex:1"><b><%= unreplied %> đánh giá chưa phản hồi</b><span>Trả lời để tăng uy tín shop</span></div><a class="btn out sm" href="/seller/reviews?f=unreplied">Trả lời</a></div>
+      <div class="todo"><em style="background:var(--s50);color:var(--s600)">✓</em><div style="flex:1"><b><%= pendingProducts %> sản phẩm chờ sàn duyệt</b><span>Sẽ hiển thị sau khi được duyệt</span></div><a class="btn out sm" href="/seller/products?status=pending">Xem</a></div>
+    </div>
+  </div>
+</div>
+<div class="split">
+  <div class="card2">
+    <div class="hd"><div style="flex:1"><h3>Đơn hàng gần đây</h3></div><a class="s13" style="color:var(--p600);font-weight:600" href="/seller/orders">Xem tất cả →</a></div>
+    <div class="bd p0 tblx"><table class="tb">
+      <tr><th>Mã đơn</th><th>Khách hàng</th><th>Loại</th><th>Giá trị</th><th>Trạng thái</th><th>Ngày</th><th></th></tr>
+      <% recent.forEach(function(o){ %><tr><td><b>#<%= o.code %></b></td><td><%= o.user ? o.user.name : '' %></td><td><%= o.isCustom ? 'Build #' + o.buildCode + ' (custom)' : o.items.length + ' sản phẩm' %></td><td><b><%= h.money(o.total) %></b></td><td><span class="bdg <%= STATUS[o.status].cls %>"><%= STATUS[o.status].label %></span></td><td class="muted"><%= h.date(o.createdAt).slice(0,5) %></td><td style="text-align:right"><a class="s12" style="color:var(--p600);font-weight:600" href="/seller/orders/<%= o.code %>">Xem</a></td></tr><% }) %>
+      <% if (!recent.length) { %><tr><td colspan="7" class="muted">Chưa có đơn hàng.</td></tr><% } %>
+    </table></div>
+  </div>
+  <div>
+    <div class="card2"><div class="hd"><h3>Cơ cấu doanh thu 30 ngày</h3></div>
+      <div class="bd"><% if (types.length) { %><div style="height:200px"><canvas data-chart="doughnut" data-labels="<%= JSON.stringify(types.map(function(x){return x.label})) %>" data-values="<%= JSON.stringify(types.map(function(x){return x.value})) %>"></canvas></div><% } else { %><p class="muted s13">Chưa có dữ liệu.</p><% } %></div></div>
+    <div class="card2"><div class="hd"><h3>Công suất xưởng tuần này</h3></div>
+      <div class="bd"><div class="cap"><span style="width:90px">Đang làm</span><div class="tk"><i style="width:<%= Math.min(100, weekLoad/shop.capacityPerWeek*100) %>%;background:<%= weekLoad>=shop.capacityPerWeek?'var(--a500)':'var(--p500)' %>"></i></div><b><%= weekLoad %>/<%= shop.capacityPerWeek %></b></div>
+      <p class="s12 muted" style="margin-top:8px">Đổi công suất tại mục Dịch vụ gia công. Khi kín lịch, khách không chọn được gói của shop.</p></div></div>
+    <div class="card2"><div class="hd"><h3>Sản phẩm bán chạy (30 ngày)</h3></div>
+      <div class="bd" style="padding:6px 20px"><% top.forEach(function(p){ %><div class="todo"><span style="width:40px;height:40px;border-radius:8px;overflow:hidden;border:1px solid var(--border);flex:none"><img src="<%= p.image %>" class="kb"></span><div style="flex:1;min-width:0"><b class="s13"><%= p.name %></b><span><%= p.qty %> đã bán · <%= h.short(p.v) %>₫</span></div></div><% }) %><% if (!top.length) { %><p class="muted s13" style="padding:10px 0">Chưa có dữ liệu.</p><% } %></div></div>
+  </div>
+</div>
+<%- include('_bottom') %>

@@ -1,0 +1,13 @@
+<%- include('../partials/head') %>
+<div class="auth">
+<%- include('_aside', {heading: kind==='verify' ? 'Sắp xong rồi!' : 'Kiểm tra hộp thư', sub:'Mở email từ KeebHub và bấm vào liên kết để tiếp tục.'}) %>
+<div class="apane"><div class="aform" style="text-align:center">
+  <div style="width:76px;height:76px;border-radius:50%;background:var(--p50);display:grid;place-items:center;font-size:34px;margin:0 auto 18px">✉</div>
+  <h1 class="s24 w800"><%= kind==='verify' ? 'Xác nhận email của bạn' : 'Đã gửi liên kết đặt lại' %></h1>
+  <p class="s14 t2" style="margin-top:10px;line-height:1.7">Chúng tôi đã gửi email tới <b><%= email %></b>.<br><%= kind==='verify' ? 'Bấm vào liên kết trong email để kích hoạt tài khoản (hiệu lực 24 giờ).' : 'Nếu email tồn tại trong hệ thống, bạn sẽ nhận được liên kết (hiệu lực 30 phút).' %></p>
+  <% if (mailDev) { %><div class="alert warn" style="margin-top:18px;text-align:left">🧪 Server chưa cấu hình SMTP nên email được lưu tại <a href="/dev/mails" class="w700" style="text-decoration:underline">Hộp thư dev</a>.</div><% } %>
+  <% if (kind==='verify') { %><form method="post" action="/auth/resend" style="margin-top:18px"><input type="hidden" name="email" value="<%= email %>"><button class="btn out">Gửi lại email</button></form><% } %>
+  <a class="btn pri blk" style="margin-top:14px" href="/auth/login">Về trang đăng nhập</a>
+</div></div>
+</div>
+</body></html>

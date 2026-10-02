@@ -1,0 +1,11 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<div class="ct"><div class="acct">
+  <%- include('_nav') %>
+  <div>
+    <div class="pnl"><div class="hd"><h2>Sản phẩm yêu thích (<%= items.length %>)</h2></div></div>
+    <% if (!items.length) { %><div class="card p24 empty"><div class="s38">♡</div><b>Chưa có sản phẩm yêu thích</b></div><% } %>
+    <div class="pgrid g4"><% items.forEach(function(p){ %><%- include('../partials/pcard', {p:p}) %><% }) %></div>
+  </div>
+</div></div>
+<%- include('../partials/footer') %>

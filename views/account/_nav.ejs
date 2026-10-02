@@ -1,0 +1,17 @@
+<aside class="snav">
+  <div class="me"><% if (user.avatar) { %><img class="av" src="<%= user.avatar %>" style="object-fit:cover"><% } else { %><span class="av" style="background:<%= user.color %>"><%= user.initials %></span><% } %><div><b class="s14"><%= user.name %></b><div class="s12 muted"><%= user.email %></div></div></div>
+  <div class="grp"><div class="gt">TÀI KHOẢN</div>
+    <a class="<%= active==='profile'?'on':'' %>" href="/account"><em>👤</em>Hồ sơ cá nhân</a>
+    <a href="/account#security"><em>🔒</em>Bảo mật</a>
+  </div>
+  <div class="grp"><div class="gt">MUA HÀNG</div>
+    <a class="<%= active==='orders'?'on':'' %>" href="/account/orders"><em>📦</em>Đơn hàng của tôi<% if (side.orders) { %><b><%= side.orders %></b><% } %></a>
+    <a class="<%= active==='builds'?'on':'' %>" href="/account/builds"><em>⚙</em>Cấu hình đã lưu<% if (side.builds) { %><b style="background:var(--p500)"><%= side.builds %></b><% } %></a>
+    <a class="<%= active==='reviews'?'on':'' %>" href="/account/reviews"><em>⭐</em>Đánh giá của tôi<% if (side.toReview) { %><b><%= side.toReview %></b><% } %></a>
+    <a class="<%= active==='wishlist'?'on':'' %>" href="/account/wishlist"><em>♡</em>Sản phẩm yêu thích</a>
+  </div>
+  <div class="grp">
+    <% if (user.role==='customer') { %><a href="/seller/register"><em>🏪</em>Đăng ký bán hàng</a><% } else if (user.role==='seller') { %><a href="/seller"><em>🏪</em>Kênh người bán</a><% } %>
+    <form method="post" action="/auth/logout"><button class="snav-btn"><em>⎋</em>Đăng xuất</button></form>
+  </div>
+</aside>

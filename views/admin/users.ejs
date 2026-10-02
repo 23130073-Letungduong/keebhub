@@ -1,0 +1,31 @@
+<%- include('_top') %>
+<div class="kpis g4">
+  <div class="kpi"><div class="tp"><em style="background:var(--p50)">👥</em><span>Khách hàng</span></div><div class="v"><%= rc.customer||0 %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--a50)">🏪</em><span>Người bán</span></div><div class="v"><%= rc.seller||0 %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--s50)">🛡</em><span>Quản trị</span></div><div class="v"><%= rc.admin||0 %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--d50)">🔍</em><span>Kết quả lọc</span></div><div class="v"><%= total %></div></div>
+</div>
+<div class="card2">
+  <form class="toolrow">
+    <input class="inp" style="padding:7px 12px;width:260px" name="q" value="<%= query.q||'' %>" placeholder="Tên, email, số điện thoại…">
+    <select class="inp" name="role" style="padding:7px 10px;width:auto"><option value="">Mọi vai trò</option><option value="customer" <%= query.role==='customer'?'selected':'' %>>Khách hàng</option><option value="seller" <%= query.role==='seller'?'selected':'' %>>Người bán</option><option value="admin" <%= query.role==='admin'?'selected':'' %>>Admin</option></select>
+    <select class="inp" name="status" style="padding:7px 10px;width:auto"><option value="">Mọi trạng thái</option><option value="active" <%= query.status==='active'?'selected':'' %>>Hoạt động</option><option value="locked" <%= query.status==='locked'?'selected':'' %>>Đã khoá</option></select>
+    <button class="btn pri sm">Lọc</button>
+  </form>
+  <div class="bd p0 tblx"><table class="tb">
+    <tr><th>Người dùng</th><th>Vai trò</th><th>Đăng nhập bằng</th><th>Đơn / chi tiêu</th><th>Ngày tạo</th><th>Trạng thái</th><th></th></tr>
+    <% users.forEach(function(u){ var s = sm[String(u._id)]; %>
+    <tr><td><div class="f ac" style="gap:10px"><span class="av2" style="background:<%= u.color %>"><%= u.initials %></span><div><div class="nm"><%= u.name %></div><div class="sub"><%= u.email %><%= u.phone ? ' · '+u.phone : '' %></div></div></div></td>
+      <td><span class="bdg <%= u.role==='admin'?'err':u.role==='seller'?'sale':'new' %>"><%= ({customer:'Khách hàng',seller:'Người bán',admin:'Admin'})[u.role] %></span></td>
+      <td class="s12"><%= [u.password?'Email':'', u.googleId?'Google':'', u.facebookId?'Facebook':''].filter(Boolean).join(' · ') %><% if (!u.emailVerified) { %><div class="sub" style="color:var(--w600)">Chưa xác minh email</div><% } %></td>
+      <td><%= s ? s.n + ' đơn · ' + h.short(s.t) + '₫' : '—' %></td>
+      <td class="muted"><%= h.date(u.createdAt) %></td>
+      <td><span class="bdg <%= u.status==='active'?'ok':'err' %>"><%= u.status==='active'?'Hoạt động':'Đã khoá' %></span></td>
+      <td style="white-space:nowrap;text-align:right"><% if (u.role!=='admin') { %>
+        <% if (!u.emailVerified) { %><form method="post" action="/admin/users/<%= u._id %>/verify" style="display:inline"><button class="btn ghost sm">Xác minh</button></form><% } %>
+        <form method="post" action="/admin/users/<%= u._id %>/status" style="display:inline" onsubmit="return confirm('Xác nhận <%= u.status==='active'?'khoá':'mở khoá' %> tài khoản?')"><button class="btn <%= u.status==='active'?'out':'pri' %> sm"><%= u.status==='active'?'Khoá':'Mở khoá' %></button></form><% } %></td></tr>
+    <% }) %>
+  </table></div>
+  <%- include('../partials/pager', {pages:pages, page:page}) %>
+</div>
+<%- include('_bottom') %>

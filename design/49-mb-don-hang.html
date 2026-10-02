@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KeebHub Mobile — Đơn hàng</title>
+<link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin><link href='https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap' rel='stylesheet'>
+<style>
+:root{
+  --white:#FFFFFF; --surface:#F7F8FA; --surface2:#EFF1F5; --border:#E4E7EC; --border2:#CFD4DC;
+  --text:#101828; --text2:#475467; --muted:#98A2B3;
+  --p50:#EEF4FF; --p100:#D8E5FF; --p500:#1B62F5; --p600:#1450D6; --p700:#0F3DA8;
+  --a50:#FFF3ED; --a500:#FF5A1F; --a600:#E84708;
+  --s50:#ECFDF3; --s600:#079455; --w50:#FFFAEB; --w600:#DC6803; --d50:#FEF3F2; --d600:#D92D20;
+  --star:#FDB022;
+  --r6:6px; --r8:8px; --r10:10px; --r14:14px; --r20:20px; --rf:999px;
+  --sh1:0 1px 2px rgba(16,24,40,.06); --sh2:0 4px 12px rgba(16,24,40,.08); --sh3:0 12px 28px rgba(16,24,40,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Be Vietnam Pro',system-ui,-apple-system,sans-serif;background:var(--surface);color:var(--text);font-size:15px;line-height:1.5}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.ct{max-width:1280px;margin:0 auto;padding:0 32px}
+.f{display:flex} .col{display:flex;flex-direction:column} .g{display:grid}
+.ac{align-items:center} .as{align-items:flex-start} .jb{justify-content:space-between} .jc{justify-content:center}
+.wrap{flex-wrap:wrap} .fl1{flex:1} .mla{margin-left:auto}
+.muted{color:var(--muted)} .t2{color:var(--text2)}
+.s11{font-size:11px}.s12{font-size:12px}.s13{font-size:13px}.s14{font-size:14px}.s16{font-size:16px}
+.s18{font-size:18px}.s20{font-size:20px}.s24{font-size:24px}.s30{font-size:30px}.s38{font-size:38px}
+.w500{font-weight:500}.w600{font-weight:600}.w700{font-weight:700}.w800{font-weight:800}
+.tight{letter-spacing:-.02em}
+
+/* ---------- top bar / header / nav ---------- */
+.topbar{background:var(--text);color:#CDD5E0;font-size:12.5px}
+.topbar .ct{height:36px;display:flex;align-items:center;justify-content:space-between}
+.topbar a{color:#CDD5E0;margin-left:20px}
+.topbar a.hl{color:#fff;font-weight:600}
+.hdr{background:var(--white);border-bottom:1px solid var(--border)}
+.hdr .ct{height:76px;display:flex;align-items:center;gap:26px}
+.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.logo .mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--p500),var(--p700));
+  display:grid;place-items:center;color:#fff;font-size:16px;font-weight:800}
+.logo .mark span{transform:translateY(-1px)}
+.search{flex:1;position:relative;max-width:620px}
+.search input{width:100%;height:46px;border:2px solid var(--p500);border-radius:var(--r10);padding:0 112px 0 42px;
+  font-family:inherit;font-size:14.5px;color:var(--text);background:var(--white)}
+.search input::placeholder{color:var(--muted)}
+.search .ico{position:absolute;left:14px;top:13px;color:var(--muted);font-size:17px}
+.search .go{position:absolute;right:5px;top:5px;height:36px;padding:0 20px;border:0;border-radius:var(--r8);
+  background:var(--p500);color:#fff;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer}
+.hact{display:flex;align-items:center;gap:6px;margin-left:auto}
+.iconbtn{position:relative;width:44px;height:44px;border-radius:var(--r10);display:grid;place-items:center;
+  font-size:19px;color:var(--text2)}
+.iconbtn .dot{position:absolute;top:6px;right:5px;min-width:18px;height:18px;padding:0 5px;border-radius:var(--rf);
+  background:var(--a500);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center}
+.user{display:flex;align-items:center;gap:9px;padding:6px 12px 6px 6px;border-radius:var(--rf);border:1px solid var(--border)}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--p100);color:var(--p700);display:grid;place-items:center;
+  font-size:13px;font-weight:700}
+.nav{background:var(--white);border-bottom:1px solid var(--border)}
+.nav .ct{height:48px;display:flex;align-items:center;gap:28px;font-size:14px;color:var(--text2);font-weight:500}
+.nav .cat{display:flex;align-items:center;gap:9px;font-weight:600;color:var(--text)}
+.nav a.on{color:var(--p600);font-weight:600}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:600;
+  font-size:14.5px;padding:11px 20px;border-radius:var(--r10);border:1px solid transparent;cursor:pointer;white-space:nowrap}
+.btn.pri{background:var(--p500);color:#fff}
+.btn.cta{background:var(--a500);color:#fff}
+.btn.out{background:var(--white);color:var(--text);border-color:var(--border2)}
+.btn.outp{background:var(--a50);color:var(--a600);border-color:#FFC9AE}
+.btn.ghost{background:transparent;color:var(--p600);padding-left:8px;padding-right:8px}
+.btn.dis{background:var(--surface2);color:var(--muted);border-color:var(--border)}
+.btn.sm{padding:8px 14px;font-size:13px;border-radius:var(--r8)}
+.btn.lg{padding:14px 26px;font-size:16px}
+.btn.blk{width:100%}
+
+/* ---------- surfaces ---------- */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);box-shadow:var(--sh1)}
+.card.p16{padding:16px}.card.p20{padding:20px}.card.p24{padding:24px}
+.sechd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
+.sechd h2{font-size:22px;font-weight:700;letter-spacing:-.01em}
+.sechd a{font-size:14px;color:var(--p600);font-weight:600}
+.crumb{font-size:13.5px;color:var(--text2);padding:16px 0}
+.crumb b{color:var(--text);font-weight:600}
+.crumb span{margin:0 7px;color:var(--muted)}
+
+/* ---------- badges & chips ---------- */
+.bdg{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:var(--rf);white-space:nowrap}
+.bdg.new{background:var(--p50);color:var(--p700)}
+.bdg.sale{background:var(--a500);color:#fff}
+.bdg.ok{background:var(--s50);color:var(--s600)}
+.bdg.warn{background:var(--w50);color:var(--w600)}
+.bdg.err{background:var(--d50);color:var(--d600)}
+.bdg.gray{background:var(--surface2);color:var(--text2)}
+.chip{padding:8px 15px;border:1px solid var(--border2);border-radius:var(--r8);font-size:13.5px;font-weight:500;
+  background:var(--white);cursor:pointer;white-space:nowrap}
+.chip.on{border-color:var(--p500);background:var(--p50);color:var(--p700);font-weight:600}
+.chip.off{color:var(--muted);background:var(--surface);border-style:dashed;cursor:not-allowed}
+.chip.rm{display:inline-flex;align-items:center;gap:7px;background:var(--p50);border-color:var(--p100);color:var(--p700);font-weight:600}
+
+/* ---------- form ---------- */
+.field{display:flex;flex-direction:column;gap:7px}
+.field > label{font-size:13.5px;font-weight:600;color:var(--text2)}
+.inp{font-family:inherit;font-size:14.5px;padding:11px 14px;border:1px solid var(--border2);border-radius:var(--r10);
+  background:var(--white);color:var(--text);width:100%}
+.inp::placeholder{color:var(--muted)}
+.inp.focus{border-color:var(--p500);box-shadow:0 0 0 3px var(--p50)}
+.help{font-size:12.5px;color:var(--muted)}
+.help.err{color:var(--d600)}
+.check{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:5px;background:var(--white);flex:none;display:grid;place-items:center}
+.check.on{background:var(--p500);border-color:var(--p500);color:#fff;font-size:11px;font-weight:700}
+.radio{width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex:none;display:grid;place-items:center}
+.radio.on{border-color:var(--p500)}
+.radio.on::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--p500)}
+
+/* ---------- product card ---------- */
+.pgrid{display:grid;gap:16px}
+.pc{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);overflow:hidden;position:relative}
+.pc .thumb{aspect-ratio:1/1;position:relative;overflow:hidden;background:var(--surface2)}
+.pc .thumb .tag{position:absolute;top:10px;left:10px;z-index:2}
+.pc .thumb .wish{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.92);
+  display:grid;place-items:center;font-size:14px;color:var(--muted);z-index:2}
+.pc .bd{padding:13px 14px 15px}
+.pc .shop{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.pc .shop i{width:5px;height:5px;border-radius:50%;background:var(--s600);display:block}
+.pc .tt{font-size:13.8px;font-weight:600;line-height:1.45;height:40px;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:9px}
+.pc .prw{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.pc .pr{font-size:16.5px;font-weight:800;color:var(--a600);white-space:nowrap}
+.pc .old{font-size:12px;color:var(--muted);text-decoration:line-through;font-weight:500;white-space:nowrap}
+.pc .ft{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:11.5px;color:var(--text2)}
+.stars{color:var(--star);letter-spacing:.5px;font-size:12px}
+
+/* keyboard illustration */
+.kb{width:100%;height:100%;display:block}
+
+/* ---------- footer ---------- */
+.ftr{background:var(--white);border-top:1px solid var(--border);margin-top:64px}
+.ftr .top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;gap:34px;padding:44px 0 36px}
+.ftr h4{font-size:13px;font-weight:700;margin-bottom:14px;letter-spacing:.02em}
+.ftr ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ftr li{font-size:13.5px;color:var(--text2)}
+.ftr .bot{border-top:1px solid var(--border);padding:18px 0;display:flex;justify-content:space-between;
+  font-size:12.5px;color:var(--muted)}
+.paylogos{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.paylogos i{width:44px;height:28px;border:1px solid var(--border);border-radius:5px;display:grid;place-items:center;
+  font-size:9px;font-weight:700;color:var(--text2);font-style:normal;background:var(--white)}
+
+/* ---------- misc ---------- */
+.stepper{display:inline-flex;align-items:stretch;border:1px solid var(--border2);border-radius:var(--r8);overflow:hidden}
+.stepper b{width:34px;display:grid;place-items:center;background:var(--white);color:var(--text2);font-weight:500;font-size:15px}
+.stepper span{width:46px;display:grid;place-items:center;font-weight:600;font-size:14.5px;
+  border-left:1px solid var(--border);border-right:1px solid var(--border)}
+.divider{height:1px;background:var(--border)}
+.dashed{height:1px;background:repeating-linear-gradient(90deg,var(--border) 0 6px,transparent 6px 12px)}
+.sumrow{display:flex;justify-content:space-between;font-size:14px;color:var(--text2)}
+.sumrow b{color:var(--text);font-weight:600}
+.alert{display:flex;gap:11px;padding:13px 15px;border-radius:var(--r10);font-size:13.5px;line-height:1.55}
+.alert.ok{background:var(--s50);color:#05603A}
+.alert.warn{background:var(--w50);color:#93370D}
+.alert.info{background:var(--p50);color:var(--p700)}
+.alert.err{background:var(--d50);color:#912018}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border)}
+.tabs a{padding:13px 18px;font-size:14.5px;font-weight:600;color:var(--text2);border-bottom:2px solid transparent}
+.tabs a.on{color:var(--p600);border-bottom-color:var(--p500)}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;
+  padding:12px 14px;background:var(--surface);border-bottom:1px solid var(--border)}
+.tbl td{padding:14px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+
+body{background:var(--surface);font-size:14px;max-width:390px;margin:0 auto;position:relative;padding-bottom:0}
+.sb{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;
+  font-size:13px;font-weight:600;background:var(--white)}
+.sb .r{display:flex;gap:5px;align-items:center;font-size:11px}
+.mh{background:var(--white);border-bottom:1px solid var(--border);padding:8px 14px 12px;position:sticky;top:0;z-index:20}
+.mh .row1{display:flex;align-items:center;gap:11px;height:40px}
+.mh .logo{font-size:17px;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.mh .logo .mark{width:27px;height:27px;border-radius:8px;background:linear-gradient(135deg,var(--p500),var(--p700));
+  display:grid;place-items:center;color:#fff;font-size:13px;font-weight:800}
+.mh .ic{width:34px;height:34px;display:grid;place-items:center;font-size:17px;color:var(--text2);position:relative}
+.mh .ic i{position:absolute;top:1px;right:1px;min-width:16px;height:16px;padding:0 4px;border-radius:var(--rf);
+  background:var(--a500);color:#fff;font-size:9.5px;font-weight:700;display:grid;place-items:center;font-style:normal}
+.msearch{position:relative;margin-top:10px}
+.msearch input{width:100%;height:40px;border:1.5px solid var(--p500);border-radius:var(--r10);
+  padding:0 14px 0 36px;font-family:inherit;font-size:13.5px}
+.msearch .i{position:absolute;left:12px;top:10px;color:var(--muted);font-size:15px}
+.nbar{display:flex;gap:16px;overflow:hidden;padding:11px 14px 0;font-size:13px;color:var(--text2);font-weight:500;
+  background:var(--white);border-bottom:1px solid var(--border)}
+.nbar span{padding-bottom:9px;white-space:nowrap}
+.nbar span.on{color:var(--p600);font-weight:700;box-shadow:inset 0 -2px 0 var(--p500)}
+.mtop{display:flex;align-items:center;gap:12px;height:52px;padding:0 14px;background:var(--white);
+  border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20}
+.mtop .bk{font-size:19px;color:var(--text2);width:26px}
+.mtop b{font-size:16px;font-weight:700;flex:1}
+.mtop .ic{font-size:17px;color:var(--text2)}
+.mbody{padding:14px}
+.tabbar{background:var(--white);border-top:1px solid var(--border);
+  display:grid;grid-template-columns:repeat(5,1fr);padding:7px 0 12px;z-index:20}
+.tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;color:var(--muted);position:relative}
+.tabbar a em{font-style:normal;font-size:19px}
+.tabbar a.on{color:var(--p600);font-weight:700}
+.tabbar a i{position:absolute;top:-2px;right:calc(50% - 20px);min-width:16px;height:16px;padding:0 4px;
+  border-radius:var(--rf);background:var(--a500);color:#fff;font-size:9.5px;font-weight:700;
+  display:grid;place-items:center;font-style:normal}
+.bbar{background:var(--white);border-top:1px solid var(--border);
+  padding:10px 14px 14px;display:flex;gap:10px;align-items:center;z-index:20}
+.mcard{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);margin-bottom:12px;overflow:hidden}
+.mcard .h{padding:13px 15px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.mcard .h b{font-size:14.5px;font-weight:700}
+.mcard .b{padding:15px}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.mcat{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mcat .it{background:var(--white);border:1px solid var(--border);border-radius:var(--r10);padding:12px 6px;text-align:center}
+.mcat .it .ic{width:38px;height:38px;margin:0 auto 7px;border-radius:11px;display:grid;place-items:center;font-size:17px}
+.mcat .it b{font-size:11px;display:block;line-height:1.3}
+.mhero{border-radius:var(--r14);background:linear-gradient(135deg,#0F1F3D,#1B62F5);color:#fff;padding:20px;
+  position:relative;overflow:hidden;margin-bottom:14px}
+.mhero .eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;color:#8FB6FF}
+.mhero h1{font-size:23px;font-weight:800;line-height:1.2;letter-spacing:-.02em;margin:8px 0 9px}
+.mhero p{font-size:12.5px;color:#C6D8FF;line-height:1.6;max-width:210px}
+.mhero .art{position:absolute;right:-40px;bottom:-24px;width:170px;opacity:.85}
+.sect{display:flex;align-items:baseline;justify-content:space-between;margin:20px 0 11px}
+.sect h2{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.sect a{font-size:12.5px;color:var(--p600);font-weight:600}
+.msteps{display:flex;gap:6px;padding:11px 14px;background:var(--white);border-bottom:1px solid var(--border);
+  overflow:hidden;align-items:center;position:sticky;top:52px;z-index:19}
+.msteps .s{display:flex;align-items:center;gap:6px;flex:none}
+.msteps .s .n{width:22px;height:22px;border-radius:50%;background:var(--surface2);color:var(--muted);
+  display:grid;place-items:center;font-size:10.5px;font-weight:700}
+.msteps .s.done .n{background:var(--s600);color:#fff}
+.msteps .s.on .n{background:var(--p500);color:#fff}
+.msteps .s span{font-size:11.5px;font-weight:600;color:var(--muted)}
+.msteps .s.on span{color:var(--p700)}
+.msteps .ln{width:14px;height:2px;background:var(--border);flex:none}
+.oc2{border:1.5px solid var(--border);border-radius:var(--r10);overflow:hidden;background:var(--white)}
+.oc2.sel{border-color:var(--p500);box-shadow:0 0 0 2px var(--p50)}
+.oc2.bad{opacity:.6}
+.oc2 .t{aspect-ratio:1/1;overflow:hidden;position:relative}
+.oc2 .t .fl{position:absolute;top:7px;left:7px;z-index:2}
+.oc2 .bd{padding:9px 10px}
+.oc2 .nm{font-size:12px;font-weight:600;line-height:1.4;height:34px;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.oc2 .pr{font-size:13.5px;font-weight:800;color:var(--a600);margin-top:6px}
+.sheet{background:var(--white);border-top:1px solid var(--border);
+  box-shadow:0 -8px 30px rgba(16,24,40,.10);padding:10px 14px 18px}
+.sheet .grab{width:38px;height:4px;border-radius:2px;background:var(--border2);margin:0 auto 12px}
+.prog2{display:flex;padding:14px 0 4px}
+.prog2 .nd{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;text-align:center}
+.prog2 .nd .dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--border2);background:#fff;
+  display:grid;place-items:center;font-size:11px;color:var(--muted);z-index:2}
+.prog2 .nd.done .dot{background:var(--s600);border-color:var(--s600);color:#fff}
+.prog2 .nd.cur .dot{background:var(--p500);border-color:var(--p500);color:#fff;box-shadow:0 0 0 4px var(--p50)}
+.prog2 .nd .lb{font-size:9.5px;font-weight:600;color:var(--muted);line-height:1.25}
+.prog2 .nd.done .lb,.prog2 .nd.cur .lb{color:var(--text)}
+.prog2 .nd:not(:last-child):after{content:'';position:absolute;top:11px;left:50%;width:100%;height:2px;background:var(--border);z-index:1}
+.prog2 .nd.done:not(:last-child):after{background:var(--s600)}
+.tli2{display:flex;gap:11px;padding:13px 0;border-bottom:1px dashed var(--border)}
+.tli2:last-child{border-bottom:0}
+.tli2 .mk{width:12px;flex:none;padding-top:3px}
+.tli2 .mk i{width:11px;height:11px;border-radius:50%;background:var(--s600);display:block}
+.tli2.todo .mk i{background:#fff;border:2px solid var(--border2)}
+.tli2 .ph{display:flex;gap:7px;margin-top:9px}
+.tli2 .ph i{width:56px;height:56px;border-radius:var(--r8);overflow:hidden;border:1px solid var(--border);display:block}
+.mrow{display:flex;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid var(--border);background:var(--white)}
+.mrow:last-child{border-bottom:0}
+.mrow em{font-style:normal;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-size:15px;flex:none}
+.mrow b{font-size:13.8px;display:block}
+.mrow .ar{margin-left:auto;color:var(--muted);font-size:15px}
+.ci2{display:flex;gap:11px;padding:13px 0;border-bottom:1px solid var(--border)}
+.ci2:last-child{border-bottom:0}
+.ci2 .th{width:72px;height:72px;border-radius:var(--r8);overflow:hidden;border:1px solid var(--border);flex:none}
+.pc .tt{font-size:12.5px;height:36px}
+.pc .pr{font-size:15px}
+</style>
+</head>
+<body>
+<div class="sb"><span>9:41</span>
+  <span class="r">▮▮▮ &nbsp;⌾ &nbsp;<span style="border:1px solid #101828;border-radius:3px;padding:0 3px">86</span></span></div>
+<div class="mtop"><span class="bk">‹</span><b>Đơn hàng của tôi</b><span class="ic">⌕</span></div>
+<div class="nbar" style="padding:11px 14px 0">
+  <span class="on">Tất cả</span><span>Chờ xác nhận</span><span>Gia công</span><span>Đang giao</span><span>Hoàn thành</span></div>
+
+<div class="mbody" style="padding-bottom:20px">
+  <div class="mcard">
+  <div class="h"><span style="width:22px;height:22px;border-radius:6px;background:#E84708;color:#fff;
+    display:grid;place-items:center;font-size:9px;font-weight:800">SH</span>
+    <b style="font-size:13px">SwitchHouse</b><span class="bdg sale">Custom</span><span class="mla"><span class="bdg warn">Đang gia công</span></span></div>
+  <div class="b" style="padding:0 15px"><div class="ci2"><span class="th"><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F4F1EC"/><rect x="44" y="62" width="40" height="40" rx="6" fill="#C8553D"/><rect x="49" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="62" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="97" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="62" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="145" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="62" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="193" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="62" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="241" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="44" y="110" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="49" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="110" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="97" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="110" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="145" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="110" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="193" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="110" width="40" height="40" rx="6" fill="#C8553D"/><rect x="241" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="44" y="158" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="49" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="158" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="97" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="158" width="40" height="40" rx="6" fill="#C8553D"/><rect x="145" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="158" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="193" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="158" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="241" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="44" y="206" width="40" height="40" rx="6" fill="#C8553D"/><rect x="49" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="206" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="97" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="206" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="145" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="206" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="193" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="206" width="40" height="40" rx="6" fill="#E8E3DC"/><rect x="241" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/></svg></span>
+          <div style="flex:1"><div style="font-size:12.5px;font-weight:600;line-height:1.45">Bàn phím custom — Build #B-7742</div>
+            <div class="s11 muted" style="margin-top:4px">Full lube + tune · 60% hoàn thành</div>
+            <div style="font-size:13.5px;font-weight:800;color:var(--a600);margin-top:6px">5.320.000₫</div></div></div></div>
+  <div style="padding:12px 15px;border-top:1px solid var(--border);background:var(--surface);
+    display:flex;align-items:center;gap:9px">
+    <div style="flex:1"><div class="s11 muted">#KH-284193</div>
+      <b style="font-size:15px;color:var(--a600)">5.320.000₫</b></div>
+    <a class="btn out sm" style="font-size:11.5px;padding:7px 11px">Nhắn shop</a><a class="btn pri sm" style="font-size:11.5px;padding:7px 11px">Xem tiến độ</a></div>
+</div>
+
+  <div class="mcard">
+  <div class="h"><span style="width:22px;height:22px;border-radius:6px;background:#1B62F5;color:#fff;
+    display:grid;place-items:center;font-size:9px;font-weight:800">KL</span>
+    <b style="font-size:13px">KeebLab Store</b><span class="mla"><span class="bdg new">Đang giao</span></span></div>
+  <div class="b" style="padding:0 15px"><div class="ci2"><span class="th"><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#EDF1F6"/><rect x="20" y="80" width="280" height="160" rx="16" fill="#C9D2DE"/><rect x="28" y="88" width="264" height="144" rx="11" fill="#F4F7FA"/><rect x="34.0" y="96" width="14.3" height="22" rx="4" fill="#1B62F5"/><rect x="52.3" y="96" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="70.6" y="96" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="88.9" y="96" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="107.1" y="96" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="125.4" y="96" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="143.7" y="96" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="162.0" y="96" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="180.3" y="96" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="198.6" y="96" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="216.9" y="96" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="235.1" y="96" width="14.3" height="22" rx="4" fill="#1B62F5"/><rect x="253.4" y="96" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="271.7" y="96" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="34.0" y="122" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="52.3" y="122" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="70.6" y="122" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="88.9" y="122" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="107.1" y="122" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="125.4" y="122" width="14.3" height="22" rx="4" fill="#1B62F5"/><rect x="143.7" y="122" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="162.0" y="122" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="180.3" y="122" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="198.6" y="122" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="216.9" y="122" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="235.1" y="122" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="253.4" y="122" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="271.7" y="122" width="14.3" height="22" rx="4" fill="#FFFFFF"/><rect x="34.0" y="148" width="15.7" height="22" rx="4" fill="#FFFFFF"/><rect x="53.7" y="148" width="15.7" height="22" rx="4" fill="#FFFFFF"/><rect x="73.4" y="148" width="15.7" height="22" rx="4" fill="#FFFFFF"/><rect x="93.1" y="148" width="15.7" height="22" rx="4" fill="#FFFFFF"/><rect x="112.8" y="148" width="15.7" height="22" rx="4" fill="#FFFFFF"/><rect x="132.5" y="148" width="15.7" height="22" rx="4" fill="#FFFFFF"/><rect x="152.2" y="148" width="15.7" height="22" rx="4" fill="#FFFFFF"/><rect x="171.8" y="148" width="15.7" height="22" rx="4" fill="#FFFFFF"/><rect x="191.5" y="148" width="15.7" height="22" rx="4" fill="#FFFFFF"/><rect x="211.2" y="148" width="15.7" height="22" rx="4" fill="#FFFFFF"/><rect x="230.9" y="148" width="15.7" height="22" rx="4" fill="#1B62F5"/><rect x="250.6" y="148" width="15.7" height="22" rx="4" fill="#FFFFFF"/><rect x="270.3" y="148" width="15.7" height="22" rx="4" fill="#FFFFFF"/><rect x="34.0" y="174" width="17.3" height="22" rx="4" fill="#FFFFFF"/><rect x="55.3" y="174" width="17.3" height="22" rx="4" fill="#FFFFFF"/><rect x="76.7" y="174" width="17.3" height="22" rx="4" fill="#FFFFFF"/><rect x="98.0" y="174" width="17.3" height="22" rx="4" fill="#FFFFFF"/><rect x="119.3" y="174" width="17.3" height="22" rx="4" fill="#1B62F5"/><rect x="140.7" y="174" width="17.3" height="22" rx="4" fill="#FFFFFF"/><rect x="162.0" y="174" width="17.3" height="22" rx="4" fill="#FFFFFF"/><rect x="183.3" y="174" width="17.3" height="22" rx="4" fill="#FFFFFF"/><rect x="204.7" y="174" width="17.3" height="22" rx="4" fill="#FFFFFF"/><rect x="226.0" y="174" width="17.3" height="22" rx="4" fill="#FFFFFF"/><rect x="247.3" y="174" width="17.3" height="22" rx="4" fill="#FFFFFF"/><rect x="268.7" y="174" width="17.3" height="22" rx="4" fill="#FFFFFF"/><rect x="34.0" y="200" width="28.0" height="22" rx="4" fill="#FFFFFF"/><rect x="66.0" y="200" width="28.0" height="22" rx="4" fill="#FFFFFF"/><rect x="98.0" y="200" width="28.0" height="22" rx="4" fill="#FFFFFF"/><rect x="130.0" y="200" width="28.0" height="22" rx="4" fill="#FFFFFF"/><rect x="162.0" y="200" width="28.0" height="22" rx="4" fill="#FFFFFF"/><rect x="194.0" y="200" width="28.0" height="22" rx="4" fill="#FFFFFF"/><rect x="226.0" y="200" width="28.0" height="22" rx="4" fill="#FFFFFF"/><rect x="258.0" y="200" width="28.0" height="22" rx="4" fill="#FFFFFF"/><rect x="20" y="226" width="280" height="14" rx="7" fill="#000" opacity=".07"/></svg></span>
+          <div style="flex:1"><div style="font-size:12.5px;font-weight:600;line-height:1.45">Kit Tofu60 2.0 Aluminium</div>
+            <div class="s11 muted" style="margin-top:4px">Silver · Brass · ×1</div>
+            <div style="font-size:13.5px;font-weight:800;color:var(--a600);margin-top:6px">3.040.000₫</div></div></div><div class="ci2"><span class="th"><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F1F4F8"/><rect x="96" y="132" width="128" height="16" rx="4" fill="#111827" opacity=".55"/><rect x="88" y="146" width="144" height="92" rx="10" fill="#111827"/><rect x="100" y="156" width="120" height="68" rx="7" fill="#fff" opacity=".16"/><rect x="112" y="118" width="96" height="30" rx="6" fill="#F59E0B" opacity=".9"/><rect x="146" y="72" width="28" height="56" rx="5" fill="#F59E0B"/><rect x="130" y="88" width="60" height="18" rx="5" fill="#F59E0B"/><rect x="116" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="188" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="88" y="230" width="144" height="10" rx="5" fill="#000" opacity=".08"/></svg></span>
+          <div style="flex:1"><div style="font-size:12.5px;font-weight:600;line-height:1.45">Switch Gateron Oil King ×70</div>
+            <div class="s11 muted" style="margin-top:4px">Linear 55g · ×1</div>
+            <div style="font-size:13.5px;font-weight:800;color:var(--a600);margin-top:6px">890.000₫</div></div></div></div>
+  <div style="padding:12px 15px;border-top:1px solid var(--border);background:var(--surface);
+    display:flex;align-items:center;gap:9px">
+    <div style="flex:1"><div class="s11 muted">#KH-284192</div>
+      <b style="font-size:15px;color:var(--a600)">3.930.000₫</b></div>
+    <a class="btn out sm" style="font-size:11.5px;padding:7px 11px">Chi tiết</a><a class="btn pri sm" style="font-size:11.5px;padding:7px 11px">Theo dõi</a></div>
+</div>
+
+  <div class="mcard">
+  <div class="h"><span style="width:22px;height:22px;border-radius:6px;background:#7C3AED;color:#fff;
+    display:grid;place-items:center;font-size:9px;font-weight:800">AK</span>
+    <b style="font-size:13px">Akko Official</b><span class="mla"><span class="bdg ok">Hoàn thành</span></span></div>
+  <div class="b" style="padding:0 15px"><div class="ci2"><span class="th"><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#EFEFF2"/><rect x="44" y="62" width="40" height="40" rx="6" fill="#F472B6"/><rect x="49" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="62" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="97" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="62" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="145" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="62" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="193" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="62" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="241" y="66" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="96" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="44" y="110" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="49" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="110" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="97" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="110" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="145" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="110" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="193" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="110" width="40" height="40" rx="6" fill="#F472B6"/><rect x="241" y="114" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="144" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="44" y="158" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="49" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="158" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="97" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="158" width="40" height="40" rx="6" fill="#F472B6"/><rect x="145" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="158" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="193" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="158" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="241" y="162" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="192" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="44" y="206" width="40" height="40" rx="6" fill="#F472B6"/><rect x="49" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="44" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="92" y="206" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="97" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="92" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="140" y="206" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="145" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="140" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="188" y="206" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="193" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="188" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/><rect x="236" y="206" width="40" height="40" rx="6" fill="#2B2B31"/><rect x="241" y="210" width="30" height="26" rx="5" fill="#fff" opacity=".38"/><rect x="236" y="240" width="40" height="6" rx="3" fill="#000" opacity=".1"/></svg></span>
+          <div style="flex:1"><div style="font-size:12.5px;font-weight:600;line-height:1.45">Keycap Akko Black &amp; Pink ASA</div>
+            <div class="s11 muted" style="margin-top:4px">158 phím · ×1</div>
+            <div style="font-size:13.5px;font-weight:800;color:var(--a600);margin-top:6px">690.000₫</div></div></div></div>
+  <div style="padding:12px 15px;border-top:1px solid var(--border);background:var(--surface);
+    display:flex;align-items:center;gap:9px">
+    <div style="flex:1"><div class="s11 muted">#KH-281044</div>
+      <b style="font-size:15px;color:var(--a600)">690.000₫</b></div>
+    <a class="btn out sm" style="font-size:11.5px;padding:7px 11px">Mua lại</a><a class="btn cta sm" style="font-size:11.5px;padding:7px 11px">⭐ Đánh giá</a></div>
+</div>
+</div>
+<div class="tabbar"><a class=""><em>⌂</em>Trang chủ</a><a class=""><em>▤</em>Danh mục</a><a class=""><em>⚙</em>Build</a><a class=""><em>🛒</em>Giỏ hàng<i>3</i></a><a class="on"><em>👤</em>Tôi</a></div>
+</body>
+</html>

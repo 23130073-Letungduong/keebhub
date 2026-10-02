@@ -1,0 +1,33 @@
+<%- include('../partials/head') %>
+<div class="app"><div class="rail" id="rail">
+  <div class="brand"><span class="mark">K</span><div><b>KeebHub Seller</b><span>Kênh người bán</span></div></div>
+  <div class="shopbox"><span class="lg" style="background:<%= shop.color %>"><%= shop.initials %></span>
+    <div><b><%= shop.name %></b><span><%= shop.verified ? 'Đã xác minh' : 'Chưa xác minh' %><%= shop.offersCustom ? ' · Xưởng gia công' : '' %></span></div></div>
+  <div class="gt">TỔNG QUAN</div><a class="<%= active==='dash'?'on':'' %>" href="/seller"><em>◎</em>Bảng điều khiển</a>
+  <div class="gt">ĐƠN HÀNG</div>
+  <a class="<%= active==='orders'?'on':'' %>" href="/seller/orders"><em>📦</em>Quản lý đơn hàng<% if (badges.pendingOrders) { %><b><%= badges.pendingOrders %></b><% } %></a>
+  <a class="<%= active==='custom'?'on':'' %>" href="/seller/custom"><em>⚙</em>Đơn custom chờ xác nhận<% if (badges.waitingCustom) { %><b><%= badges.waitingCustom %></b><% } %></a>
+  <a class="<%= active==='progress'?'on':'' %>" href="/seller/progress"><em>🛠</em>Tiến độ gia công<% if (badges.processing) { %><b><%= badges.processing %></b><% } %></a>
+  <div class="gt">SẢN PHẨM</div>
+  <a class="<%= active==='products'?'on':'' %>" href="/seller/products"><em>▤</em>Danh sách sản phẩm</a>
+  <a class="<%= active==='new'?'on':'' %>" href="/seller/products/new"><em>＋</em>Thêm sản phẩm</a>
+  <a class="<%= active==='inventory'?'on':'' %>" href="/seller/inventory"><em>📊</em>Quản lý tồn kho</a>
+  <a class="<%= active==='services'?'on':'' %>" href="/seller/services"><em>🔧</em>Dịch vụ gia công</a>
+  <div class="gt">KHÁCH HÀNG</div>
+  <a class="<%= active==='reviews'?'on':'' %>" href="/seller/reviews"><em>⭐</em>Đánh giá & hỏi đáp</a>
+  <div class="gt">TÀI CHÍNH</div>
+  <a class="<%= active==='revenue'?'on':'' %>" href="/seller/revenue"><em>💰</em>Doanh thu & phí</a>
+  <div class="gt">SHOP</div>
+  <a class="<%= active==='profile'?'on':'' %>" href="/seller/profile"><em>🏪</em>Hồ sơ shop</a>
+  <a href="/"><em>↗</em>Về trang mua sắm</a>
+  <form method="post" action="/auth/logout"><button class="railbtn"><em>⎋</em>Đăng xuất</button></form>
+</div>
+<div style="min-width:0"><div class="tbar">
+  <button class="ib menu-tg" type="button" onclick="document.getElementById('rail').classList.toggle('open')">☰</button>
+  <div><h1><%= title %></h1><div class="sub"><%= shop.name %> · <%= h.date(new Date()) %></div></div>
+  <form class="sbox" action="/seller/orders"><span class="i">⌕</span><input name="q" placeholder="Tìm mã đơn hàng…"></form>
+  <div class="who"><span class="av" style="background:<%= user.color %>"><%= user.initials %></span><span class="s13 w600"><%= user.name %> · Chủ shop</span></div>
+  <a class="btn pri sm" style="margin-left:10px" href="/seller/products/new">+ Thêm sản phẩm</a>
+</div>
+<div class="main">
+<%- include('../partials/flash') %>

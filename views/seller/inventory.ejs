@@ -1,0 +1,14 @@
+<%- include('_top') %>
+<form class="card2" method="post" action="/seller/inventory">
+  <div class="toolrow"><a class="tchip <%= query.low!=='1'?'on':'' %>" href="/seller/inventory">Tất cả</a><a class="tchip <%= query.low==='1'?'on':'' %>" href="?low=1">Sắp hết hàng</a><button class="btn pri sm mla">💾 Lưu tồn kho</button></div>
+  <div class="bd p0 tblx"><table class="tb">
+    <tr><th>Sản phẩm</th><th>Loại</th><th>Đã bán</th><th>Tồn kho</th><th>Ngưỡng cảnh báo</th><th>Tình trạng</th></tr>
+    <% products.forEach(function(p){ var low = p.stock<=p.lowStock; %>
+    <tr class="<%= p.stock===0?'lowstock':low?'warnstock':'' %>"><td><div class="f ac" style="gap:10px"><div class="th"><img src="<%= p.image %>" class="kb"></div><div class="nm"><%= p.name %></div></div></td><td><%= h.PART_LABEL[p.partType] %><%= p.partType==='switch' ? ' (bộ 10)' : '' %></td><td><%= p.sold %></td>
+      <td><input class="inp" type="number" min="0" name="stock[<%= p._id %>]" value="<%= p.stock %>" style="width:100px;padding:6px 10px"></td>
+      <td><input class="inp" type="number" min="0" name="low[<%= p._id %>]" value="<%= p.lowStock %>" style="width:90px;padding:6px 10px"></td>
+      <td><span class="bdg <%= p.stock===0?'err':low?'warn':'ok' %>"><%= p.stock===0?'Hết hàng':low?'Sắp hết':'Đủ hàng' %></span></td></tr>
+    <% }) %>
+  </table></div>
+</form>
+<%- include('_bottom') %>

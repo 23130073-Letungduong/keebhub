@@ -1,0 +1,12 @@
+<div class="tl">
+<% o.progress.forEach(function(s){ %>
+  <div class="tli <%= s.status==='todo' ? 'todo' : '' %>">
+    <div class="mk"><i style="<%= s.status==='doing' ? 'background:var(--p500);box-shadow:0 0 0 4px var(--p50)' : '' %>"></i></div>
+    <div style="flex:1">
+      <div class="f jb ac"><b class="s14"><%= s.name %> <% if (s.status==='doing') { %><span class="bdg new">Đang làm</span><% } %></b><span class="s12 muted"><%= s.doneAt ? h.dateTime(s.doneAt) : (s.updatedAt ? 'Cập nhật ' + h.dateTime(s.updatedAt) : '') %></span></div>
+      <% if (s.note) { %><p class="s13 t2" style="margin-top:4px;line-height:1.6"><%= s.note %></p><% } %>
+      <% if (s.photos && s.photos.length) { %><div class="ph"><% s.photos.forEach(function(ph){ %><a href="<%= ph %>" target="_blank"><i><img src="<%= ph %>" style="width:100%;height:100%;object-fit:cover"></i></a><% }) %></div><% } %>
+    </div>
+  </div>
+<% }) %>
+</div>

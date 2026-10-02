@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KeebHub — Kết quả tìm kiếm</title>
+<link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin><link href='https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap' rel='stylesheet'>
+<style>
+:root{
+  --white:#FFFFFF; --surface:#F7F8FA; --surface2:#EFF1F5; --border:#E4E7EC; --border2:#CFD4DC;
+  --text:#101828; --text2:#475467; --muted:#98A2B3;
+  --p50:#EEF4FF; --p100:#D8E5FF; --p500:#1B62F5; --p600:#1450D6; --p700:#0F3DA8;
+  --a50:#FFF3ED; --a500:#FF5A1F; --a600:#E84708;
+  --s50:#ECFDF3; --s600:#079455; --w50:#FFFAEB; --w600:#DC6803; --d50:#FEF3F2; --d600:#D92D20;
+  --star:#FDB022;
+  --r6:6px; --r8:8px; --r10:10px; --r14:14px; --r20:20px; --rf:999px;
+  --sh1:0 1px 2px rgba(16,24,40,.06); --sh2:0 4px 12px rgba(16,24,40,.08); --sh3:0 12px 28px rgba(16,24,40,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Be Vietnam Pro',system-ui,-apple-system,sans-serif;background:var(--surface);color:var(--text);font-size:15px;line-height:1.5}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.ct{max-width:1280px;margin:0 auto;padding:0 32px}
+.f{display:flex} .col{display:flex;flex-direction:column} .g{display:grid}
+.ac{align-items:center} .as{align-items:flex-start} .jb{justify-content:space-between} .jc{justify-content:center}
+.wrap{flex-wrap:wrap} .fl1{flex:1} .mla{margin-left:auto}
+.muted{color:var(--muted)} .t2{color:var(--text2)}
+.s11{font-size:11px}.s12{font-size:12px}.s13{font-size:13px}.s14{font-size:14px}.s16{font-size:16px}
+.s18{font-size:18px}.s20{font-size:20px}.s24{font-size:24px}.s30{font-size:30px}.s38{font-size:38px}
+.w500{font-weight:500}.w600{font-weight:600}.w700{font-weight:700}.w800{font-weight:800}
+.tight{letter-spacing:-.02em}
+
+/* ---------- top bar / header / nav ---------- */
+.topbar{background:var(--text);color:#CDD5E0;font-size:12.5px}
+.topbar .ct{height:36px;display:flex;align-items:center;justify-content:space-between}
+.topbar a{color:#CDD5E0;margin-left:20px}
+.topbar a.hl{color:#fff;font-weight:600}
+.hdr{background:var(--white);border-bottom:1px solid var(--border)}
+.hdr .ct{height:76px;display:flex;align-items:center;gap:26px}
+.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.logo .mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--p500),var(--p700));
+  display:grid;place-items:center;color:#fff;font-size:16px;font-weight:800}
+.logo .mark span{transform:translateY(-1px)}
+.search{flex:1;position:relative;max-width:620px}
+.search input{width:100%;height:46px;border:2px solid var(--p500);border-radius:var(--r10);padding:0 112px 0 42px;
+  font-family:inherit;font-size:14.5px;color:var(--text);background:var(--white)}
+.search input::placeholder{color:var(--muted)}
+.search .ico{position:absolute;left:14px;top:13px;color:var(--muted);font-size:17px}
+.search .go{position:absolute;right:5px;top:5px;height:36px;padding:0 20px;border:0;border-radius:var(--r8);
+  background:var(--p500);color:#fff;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer}
+.hact{display:flex;align-items:center;gap:6px;margin-left:auto}
+.iconbtn{position:relative;width:44px;height:44px;border-radius:var(--r10);display:grid;place-items:center;
+  font-size:19px;color:var(--text2)}
+.iconbtn .dot{position:absolute;top:6px;right:5px;min-width:18px;height:18px;padding:0 5px;border-radius:var(--rf);
+  background:var(--a500);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center}
+.user{display:flex;align-items:center;gap:9px;padding:6px 12px 6px 6px;border-radius:var(--rf);border:1px solid var(--border)}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--p100);color:var(--p700);display:grid;place-items:center;
+  font-size:13px;font-weight:700}
+.nav{background:var(--white);border-bottom:1px solid var(--border)}
+.nav .ct{height:48px;display:flex;align-items:center;gap:28px;font-size:14px;color:var(--text2);font-weight:500}
+.nav .cat{display:flex;align-items:center;gap:9px;font-weight:600;color:var(--text)}
+.nav a.on{color:var(--p600);font-weight:600}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:600;
+  font-size:14.5px;padding:11px 20px;border-radius:var(--r10);border:1px solid transparent;cursor:pointer;white-space:nowrap}
+.btn.pri{background:var(--p500);color:#fff}
+.btn.cta{background:var(--a500);color:#fff}
+.btn.out{background:var(--white);color:var(--text);border-color:var(--border2)}
+.btn.outp{background:var(--a50);color:var(--a600);border-color:#FFC9AE}
+.btn.ghost{background:transparent;color:var(--p600);padding-left:8px;padding-right:8px}
+.btn.dis{background:var(--surface2);color:var(--muted);border-color:var(--border)}
+.btn.sm{padding:8px 14px;font-size:13px;border-radius:var(--r8)}
+.btn.lg{padding:14px 26px;font-size:16px}
+.btn.blk{width:100%}
+
+/* ---------- surfaces ---------- */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);box-shadow:var(--sh1)}
+.card.p16{padding:16px}.card.p20{padding:20px}.card.p24{padding:24px}
+.sechd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
+.sechd h2{font-size:22px;font-weight:700;letter-spacing:-.01em}
+.sechd a{font-size:14px;color:var(--p600);font-weight:600}
+.crumb{font-size:13.5px;color:var(--text2);padding:16px 0}
+.crumb b{color:var(--text);font-weight:600}
+.crumb span{margin:0 7px;color:var(--muted)}
+
+/* ---------- badges & chips ---------- */
+.bdg{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:var(--rf);white-space:nowrap}
+.bdg.new{background:var(--p50);color:var(--p700)}
+.bdg.sale{background:var(--a500);color:#fff}
+.bdg.ok{background:var(--s50);color:var(--s600)}
+.bdg.warn{background:var(--w50);color:var(--w600)}
+.bdg.err{background:var(--d50);color:var(--d600)}
+.bdg.gray{background:var(--surface2);color:var(--text2)}
+.chip{padding:8px 15px;border:1px solid var(--border2);border-radius:var(--r8);font-size:13.5px;font-weight:500;
+  background:var(--white);cursor:pointer;white-space:nowrap}
+.chip.on{border-color:var(--p500);background:var(--p50);color:var(--p700);font-weight:600}
+.chip.off{color:var(--muted);background:var(--surface);border-style:dashed;cursor:not-allowed}
+.chip.rm{display:inline-flex;align-items:center;gap:7px;background:var(--p50);border-color:var(--p100);color:var(--p700);font-weight:600}
+
+/* ---------- form ---------- */
+.field{display:flex;flex-direction:column;gap:7px}
+.field > label{font-size:13.5px;font-weight:600;color:var(--text2)}
+.inp{font-family:inherit;font-size:14.5px;padding:11px 14px;border:1px solid var(--border2);border-radius:var(--r10);
+  background:var(--white);color:var(--text);width:100%}
+.inp::placeholder{color:var(--muted)}
+.inp.focus{border-color:var(--p500);box-shadow:0 0 0 3px var(--p50)}
+.help{font-size:12.5px;color:var(--muted)}
+.help.err{color:var(--d600)}
+.check{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:5px;background:var(--white);flex:none;display:grid;place-items:center}
+.check.on{background:var(--p500);border-color:var(--p500);color:#fff;font-size:11px;font-weight:700}
+.radio{width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex:none;display:grid;place-items:center}
+.radio.on{border-color:var(--p500)}
+.radio.on::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--p500)}
+
+/* ---------- product card ---------- */
+.pgrid{display:grid;gap:16px}
+.pc{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);overflow:hidden;position:relative}
+.pc .thumb{aspect-ratio:1/1;position:relative;overflow:hidden;background:var(--surface2)}
+.pc .thumb .tag{position:absolute;top:10px;left:10px;z-index:2}
+.pc .thumb .wish{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.92);
+  display:grid;place-items:center;font-size:14px;color:var(--muted);z-index:2}
+.pc .bd{padding:13px 14px 15px}
+.pc .shop{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.pc .shop i{width:5px;height:5px;border-radius:50%;background:var(--s600);display:block}
+.pc .tt{font-size:13.8px;font-weight:600;line-height:1.45;height:40px;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:9px}
+.pc .prw{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.pc .pr{font-size:16.5px;font-weight:800;color:var(--a600);white-space:nowrap}
+.pc .old{font-size:12px;color:var(--muted);text-decoration:line-through;font-weight:500;white-space:nowrap}
+.pc .ft{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:11.5px;color:var(--text2)}
+.stars{color:var(--star);letter-spacing:.5px;font-size:12px}
+
+/* keyboard illustration */
+.kb{width:100%;height:100%;display:block}
+
+/* ---------- footer ---------- */
+.ftr{background:var(--white);border-top:1px solid var(--border);margin-top:64px}
+.ftr .top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;gap:34px;padding:44px 0 36px}
+.ftr h4{font-size:13px;font-weight:700;margin-bottom:14px;letter-spacing:.02em}
+.ftr ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ftr li{font-size:13.5px;color:var(--text2)}
+.ftr .bot{border-top:1px solid var(--border);padding:18px 0;display:flex;justify-content:space-between;
+  font-size:12.5px;color:var(--muted)}
+.paylogos{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.paylogos i{width:44px;height:28px;border:1px solid var(--border);border-radius:5px;display:grid;place-items:center;
+  font-size:9px;font-weight:700;color:var(--text2);font-style:normal;background:var(--white)}
+
+/* ---------- misc ---------- */
+.stepper{display:inline-flex;align-items:stretch;border:1px solid var(--border2);border-radius:var(--r8);overflow:hidden}
+.stepper b{width:34px;display:grid;place-items:center;background:var(--white);color:var(--text2);font-weight:500;font-size:15px}
+.stepper span{width:46px;display:grid;place-items:center;font-weight:600;font-size:14.5px;
+  border-left:1px solid var(--border);border-right:1px solid var(--border)}
+.divider{height:1px;background:var(--border)}
+.dashed{height:1px;background:repeating-linear-gradient(90deg,var(--border) 0 6px,transparent 6px 12px)}
+.sumrow{display:flex;justify-content:space-between;font-size:14px;color:var(--text2)}
+.sumrow b{color:var(--text);font-weight:600}
+.alert{display:flex;gap:11px;padding:13px 15px;border-radius:var(--r10);font-size:13.5px;line-height:1.55}
+.alert.ok{background:var(--s50);color:#05603A}
+.alert.warn{background:var(--w50);color:#93370D}
+.alert.info{background:var(--p50);color:var(--p700)}
+.alert.err{background:var(--d50);color:#912018}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border)}
+.tabs a{padding:13px 18px;font-size:14.5px;font-weight:600;color:var(--text2);border-bottom:2px solid transparent}
+.tabs a.on{color:var(--p600);border-bottom-color:var(--p500)}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;
+  padding:12px 14px;background:var(--surface);border-bottom:1px solid var(--border)}
+.tbl td{padding:14px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+
+.layout{display:grid;grid-template-columns:250px 1fr;gap:24px;align-items:start;padding-bottom:20px}
+.filt{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);box-shadow:var(--sh1);overflow:hidden}
+.filt .hd{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--border)}
+.filt .hd b{font-size:15px}
+.filt .hd a{font-size:12.5px;color:var(--p600);font-weight:600}
+.fgrp{padding:16px 18px;border-bottom:1px solid var(--border)}
+.fgrp:last-child{border-bottom:0}
+.fgrp > .t{display:flex;align-items:center;justify-content:space-between;font-size:13.5px;font-weight:700;margin-bottom:12px}
+.fgrp > .t span{color:var(--muted);font-weight:400;font-size:12px}
+.opt{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--text2);padding:5px 0}
+.opt .n{margin-left:auto;font-size:12px;color:var(--muted)}
+.swatches{display:flex;gap:8px;flex-wrap:wrap}
+.swatches i{width:28px;height:28px;border-radius:8px;border:1px solid var(--border);display:block}
+.swatches i.on{box-shadow:0 0 0 2px var(--p500);border-color:#fff}
+.pricebox{display:flex;align-items:center;gap:8px}
+.pricebox .inp{padding:8px 10px;font-size:13px}
+.slider{height:4px;background:var(--surface2);border-radius:2px;margin:16px 4px 10px;position:relative}
+.slider .fill{position:absolute;left:18%;right:34%;top:0;bottom:0;background:var(--p500);border-radius:2px}
+.slider .kn{position:absolute;top:-6px;width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid var(--p500);box-shadow:var(--sh1)}
+.toolbar{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);padding:12px 16px;
+  display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.toolbar .sortl{display:flex;gap:7px}
+.toolbar .sortl a{padding:7px 14px;border-radius:var(--r8);font-size:13.5px;font-weight:500;color:var(--text2);border:1px solid var(--border)}
+.toolbar .sortl a.on{background:var(--p500);color:#fff;border-color:var(--p500);font-weight:600}
+.pager{display:flex;justify-content:center;gap:7px;margin:32px 0 8px}
+.pager a{min-width:38px;height:38px;padding:0 12px;border-radius:var(--r8);border:1px solid var(--border);background:var(--white);
+  display:grid;place-items:center;font-size:14px;font-weight:500;color:var(--text2)}
+.pager a.on{background:var(--p500);border-color:var(--p500);color:#fff;font-weight:700}
+.hero-cat{background:linear-gradient(105deg,#12224A,#1B62F5);border-radius:var(--r20);padding:32px 36px;color:#fff;
+  display:flex;align-items:center;gap:30px;margin-bottom:22px;overflow:hidden;position:relative}
+.hero-cat h1{font-size:30px;font-weight:800;letter-spacing:-.02em}
+.hero-cat p{color:#C6D8FF;font-size:14.5px;margin-top:8px;max-width:520px;line-height:1.6}
+.hero-cat .qk{display:flex;gap:9px;margin-top:18px;flex-wrap:wrap}
+.hero-cat .qk i{font-style:normal;font-size:12.5px;font-weight:600;background:rgba(255,255,255,.16);padding:7px 13px;border-radius:var(--rf)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="ct">
+  <div>Kênh người bán &nbsp;·&nbsp; Tải ứng dụng &nbsp;·&nbsp; Kết nối cộng đồng</div>
+  <div><a>Thông báo</a><a>Trợ giúp</a><a class="hl">Đăng ký</a><a class="hl">Đăng nhập</a></div>
+</div></div><div class="hdr"><div class="ct">
+  <a class="logo"><span class="mark"><span>K</span></span><span>Keeb<span style="color:var(--p500)">Hub</span></span></a>
+  <div class="search"><span class="ico">⌕</span>
+    <input class="inp" placeholder="Tìm kit, switch, keycap, dịch vụ gia công…" value="gateron oil king">
+    <button class="go">Tìm kiếm</button>
+  </div>
+  <div class="hact">
+    <div class="iconbtn">♡</div>
+    <div class="iconbtn">🔔<span class="dot">5</span></div>
+    <div class="iconbtn">🛒<span class="dot">3</span></div>
+    <div class="user"><div class="avatar">DT</div><div class="s13 w600">Duong T.</div><span class="s12 muted">▾</span></div>
+  </div>
+</div></div><div class="nav"><div class="ct">
+  <div class="cat">☰ Tất cả danh mục</div>
+  <a class="">Kit bàn phím</a><a class="on">Switch</a><a class="">Keycap</a><a class="">Stabilizer</a><a class="">Phụ kiện</a><a class="">Dịch vụ gia công</a><a class="">Build sẵn</a>
+  <a class="mla" style="color:var(--a600);font-weight:600">🔥 Group buy đang mở</a>
+</div></div>
+<div class="ct">
+  <div class="crumb">Trang chủ<span>›</span>Switch<span>›</span><b>Kết quả tìm kiếm</b></div>
+  <div style="margin-bottom:18px">
+    <div class="s24 w700 tight">Kết quả cho “gateron oil king”</div>
+    <div class="s14 t2" style="margin-top:6px">Tìm thấy <b>128</b> sản phẩm · <a style="color:var(--p600);font-weight:600">Lưu tìm kiếm này</a></div>
+  </div>
+  <div class="f wrap ac" style="gap:8px;margin-bottom:16px">
+    <span class="s13 t2">Đang lọc:</span>
+    <span class="chip rm">Linear ✕</span><span class="chip rm">45–55g ✕</span><span class="chip rm">Còn hàng ✕</span>
+    <a class="s13" style="color:var(--p600);font-weight:600;margin-left:4px">Xoá tất cả</a>
+  </div>
+  <div class="layout">
+    <div class="filt">
+  <div class="hd"><b>Bộ lọc</b><a>Xoá tất cả</a></div>
+  <div class="fgrp"><div class="t">Loại switch<span></span></div><div class="opt"><span class="check on">✓</span>Linear<span class="n">412</span></div><div class="opt"><span class="check "></span>Tactile<span class="n">298</span></div><div class="opt"><span class="check "></span>Clicky<span class="n">96</span></div><div class="opt"><span class="check "></span>Silent<span class="n">54</span></div></div>
+  <div class="fgrp"><div class="t">Khoảng giá</div>
+    <div class="slider"><div class="fill"></div><div class="kn" style="left:16%"></div><div class="kn" style="right:32%"></div></div>
+    <div class="pricebox"><input class="inp" value="500.000"><span class="muted">—</span><input class="inp" value="5.000.000"></div>
+  </div>
+  <div class="fgrp"><div class="t">Lực nhấn<span></span></div><div class="opt"><span class="check "></span>Dưới 45g<span class="n">88</span></div><div class="opt"><span class="check on">✓</span>45–55g<span class="n">204</span></div><div class="opt"><span class="check "></span>55–65g<span class="n">132</span></div><div class="opt"><span class="check "></span>Trên 65g<span class="n">41</span></div></div>
+  <div class="fgrp"><div class="t">Màu sắc</div>
+    <div class="swatches"><i class="on" style="background:#1B222C"></i><i style="background:#E5E7EB"></i><i style="background:#1B62F5"></i>
+      <i style="background:#E84708"></i><i style="background:#F472B6"></i><i style="background:#059669"></i><i style="background:#FBBF24"></i></div>
+  </div>
+  <div class="fgrp"><div class="t">Tình trạng</div>
+    <div class="opt"><span class="check on">✓</span>Còn hàng<span class="n">984</span></div>
+    <div class="opt"><span class="check"></span>Pre-order<span class="n">142</span></div>
+    <div class="opt"><span class="check"></span>Hàng có sẵn tại VN<span class="n">760</span></div>
+  </div>
+  <div class="fgrp"><div class="t">Dịch vụ</div>
+    <div class="opt"><span class="check"></span>Hỗ trợ gia công<span class="n">318</span></div>
+    <div class="opt"><span class="check"></span>Đã lube sẵn<span class="n">207</span></div>
+    <div class="opt"><span class="check"></span>Hotswap<span class="n">644</span></div>
+  </div>
+  <div class="fgrp"><div class="t">Đánh giá</div>
+    <div class="opt"><span class="radio on"></span><span class="stars">★★★★★</span> từ 4.5 sao</div>
+    <div class="opt"><span class="radio"></span><span class="stars">★★★★☆</span> từ 4.0 sao</div>
+  </div>
+  <div style="padding:16px 18px"><a class="btn pri blk">Áp dụng bộ lọc</a></div>
+</div>
+    <div>
+      <div class="toolbar">
+  <span class="s13 t2">Sắp xếp theo</span>
+  <div class="sortl"><a class="on">Liên quan</a><a class="">Mới nhất</a><a class="">Bán chạy</a><a class="">Giá thấp → cao</a><a class="">Giá cao → thấp</a></div>
+  <div class="mla f ac" style="gap:14px">
+    <span class="s13 t2"><b>128</b> sản phẩm</span>
+    <span class="s16 muted">▦ ☰</span>
+  </div>
+</div>
+      <div class="alert info" style="margin-bottom:16px">
+        <span>💡</span><div>Bạn đang tìm switch cho kit <b>Tofu60 2.0</b> đã lưu? <a style="color:var(--p700);font-weight:700;text-decoration:underline">Bật lọc tương thích</a> để chỉ hiện switch lắp vừa kit này (UC27).</div>
+      </div>
+      <div class="pgrid" style="grid-template-columns:repeat(4,1fr)"><div class="pc">
+  <div class="thumb"><span class="bdg new tag">Mới</span><div class="wish">♡</div><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F1F4F8"/><rect x="96" y="132" width="128" height="16" rx="4" fill="#111827" opacity=".55"/><rect x="88" y="146" width="144" height="92" rx="10" fill="#111827"/><rect x="100" y="156" width="120" height="68" rx="7" fill="#fff" opacity=".16"/><rect x="112" y="118" width="96" height="30" rx="6" fill="#F59E0B" opacity=".9"/><rect x="146" y="72" width="28" height="56" rx="5" fill="#F59E0B"/><rect x="130" y="88" width="60" height="18" rx="5" fill="#F59E0B"/><rect x="116" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="188" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="88" y="230" width="144" height="10" rx="5" fill="#000" opacity=".08"/></svg></div>
+  <div class="bd">
+    <div class="shop"><i></i>SwitchHouse</div>
+    <div class="tt">Switch Gateron Oil King — Linear 55g (bịch 70 nút)</div>
+    <div class="prw"><span class="pr">890.000₫</span></div>
+    <div class="ft"><span class="stars">★★★★★ <span class="t2">4.7</span></span><span>Đã bán 430</span></div>
+  </div>
+</div><div class="pc">
+  <div class="thumb"><span class="bdg sale tag">−24%</span><div class="wish">♡</div><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F1F4F8"/><rect x="96" y="132" width="128" height="16" rx="4" fill="#FBBF24" opacity=".55"/><rect x="88" y="146" width="144" height="92" rx="10" fill="#FBBF24"/><rect x="100" y="156" width="120" height="68" rx="7" fill="#fff" opacity=".16"/><rect x="112" y="118" width="96" height="30" rx="6" fill="#1B222C" opacity=".9"/><rect x="146" y="72" width="28" height="56" rx="5" fill="#1B222C"/><rect x="130" y="88" width="60" height="18" rx="5" fill="#1B222C"/><rect x="116" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="188" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="88" y="230" width="144" height="10" rx="5" fill="#000" opacity=".08"/></svg></div>
+  <div class="bd">
+    <div class="shop"><i></i>Akko Official</div>
+    <div class="tt">Switch Akko Cream Yellow V3 Pro — Linear 50g (45 nút)</div>
+    <div class="prw"><span class="pr">320.000₫</span><span class="old">420.000₫</span></div>
+    <div class="ft"><span class="stars">★★★★★ <span class="t2">4.6</span></span><span>Đã bán 3.4k</span></div>
+  </div>
+</div><div class="pc">
+  <div class="thumb"><span class="bdg new tag">Mới</span><div class="wish">♡</div><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F1F4F8"/><rect x="96" y="132" width="128" height="16" rx="4" fill="#38BDF8" opacity=".55"/><rect x="88" y="146" width="144" height="92" rx="10" fill="#38BDF8"/><rect x="100" y="156" width="120" height="68" rx="7" fill="#fff" opacity=".16"/><rect x="112" y="118" width="96" height="30" rx="6" fill="#0C4A6E" opacity=".9"/><rect x="146" y="72" width="28" height="56" rx="5" fill="#0C4A6E"/><rect x="130" y="88" width="60" height="18" rx="5" fill="#0C4A6E"/><rect x="116" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="188" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="88" y="230" width="144" height="10" rx="5" fill="#000" opacity=".08"/></svg></div>
+  <div class="bd">
+    <div class="shop"><i></i>Tiệm Switch Nhỏ</div>
+    <div class="tt">Switch HMX Xinhai — Linear 52g, đã lube nhà máy</div>
+    <div class="prw"><span class="pr">540.000₫</span></div>
+    <div class="ft"><span class="stars">★★★★★ <span class="t2">4.9</span></span><span>Đã bán 310</span></div>
+  </div>
+</div><div class="pc">
+  <div class="thumb"><div class="wish">♡</div><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F1F4F8"/><rect x="96" y="132" width="128" height="16" rx="4" fill="#C7D2FE" opacity=".55"/><rect x="88" y="146" width="144" height="92" rx="10" fill="#C7D2FE"/><rect x="100" y="156" width="120" height="68" rx="7" fill="#fff" opacity=".16"/><rect x="112" y="118" width="96" height="30" rx="6" fill="#3730A3" opacity=".9"/><rect x="146" y="72" width="28" height="56" rx="5" fill="#3730A3"/><rect x="130" y="88" width="60" height="18" rx="5" fill="#3730A3"/><rect x="116" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="188" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="88" y="230" width="144" height="10" rx="5" fill="#000" opacity=".08"/></svg></div>
+  <div class="bd">
+    <div class="shop"><i></i>SwitchHouse</div>
+    <div class="tt">Stabilizer Durock V2 PCB-mount — đã lube sẵn</div>
+    <div class="prw"><span class="pr">420.000₫</span></div>
+    <div class="ft"><span class="stars">★★★★★ <span class="t2">4.8</span></span><span>Đã bán 760</span></div>
+  </div>
+</div><div class="pc">
+  <div class="thumb"><span class="bdg new tag">Mới</span><div class="wish">♡</div><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F1F4F8"/><rect x="96" y="132" width="128" height="16" rx="4" fill="#111827" opacity=".55"/><rect x="88" y="146" width="144" height="92" rx="10" fill="#111827"/><rect x="100" y="156" width="120" height="68" rx="7" fill="#fff" opacity=".16"/><rect x="112" y="118" width="96" height="30" rx="6" fill="#F59E0B" opacity=".9"/><rect x="146" y="72" width="28" height="56" rx="5" fill="#F59E0B"/><rect x="130" y="88" width="60" height="18" rx="5" fill="#F59E0B"/><rect x="116" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="188" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="88" y="230" width="144" height="10" rx="5" fill="#000" opacity=".08"/></svg></div>
+  <div class="bd">
+    <div class="shop"><i></i>SwitchHouse</div>
+    <div class="tt">Switch Gateron Oil King — Linear 55g (bịch 70 nút)</div>
+    <div class="prw"><span class="pr">890.000₫</span></div>
+    <div class="ft"><span class="stars">★★★★★ <span class="t2">4.7</span></span><span>Đã bán 430</span></div>
+  </div>
+</div><div class="pc">
+  <div class="thumb"><span class="bdg sale tag">−24%</span><div class="wish">♡</div><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F1F4F8"/><rect x="96" y="132" width="128" height="16" rx="4" fill="#FBBF24" opacity=".55"/><rect x="88" y="146" width="144" height="92" rx="10" fill="#FBBF24"/><rect x="100" y="156" width="120" height="68" rx="7" fill="#fff" opacity=".16"/><rect x="112" y="118" width="96" height="30" rx="6" fill="#1B222C" opacity=".9"/><rect x="146" y="72" width="28" height="56" rx="5" fill="#1B222C"/><rect x="130" y="88" width="60" height="18" rx="5" fill="#1B222C"/><rect x="116" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="188" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="88" y="230" width="144" height="10" rx="5" fill="#000" opacity=".08"/></svg></div>
+  <div class="bd">
+    <div class="shop"><i></i>Akko Official</div>
+    <div class="tt">Switch Akko Cream Yellow V3 Pro — Linear 50g (45 nút)</div>
+    <div class="prw"><span class="pr">320.000₫</span><span class="old">420.000₫</span></div>
+    <div class="ft"><span class="stars">★★★★★ <span class="t2">4.6</span></span><span>Đã bán 3.4k</span></div>
+  </div>
+</div><div class="pc">
+  <div class="thumb"><span class="bdg new tag">Mới</span><div class="wish">♡</div><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F1F4F8"/><rect x="96" y="132" width="128" height="16" rx="4" fill="#38BDF8" opacity=".55"/><rect x="88" y="146" width="144" height="92" rx="10" fill="#38BDF8"/><rect x="100" y="156" width="120" height="68" rx="7" fill="#fff" opacity=".16"/><rect x="112" y="118" width="96" height="30" rx="6" fill="#0C4A6E" opacity=".9"/><rect x="146" y="72" width="28" height="56" rx="5" fill="#0C4A6E"/><rect x="130" y="88" width="60" height="18" rx="5" fill="#0C4A6E"/><rect x="116" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="188" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="88" y="230" width="144" height="10" rx="5" fill="#000" opacity=".08"/></svg></div>
+  <div class="bd">
+    <div class="shop"><i></i>Tiệm Switch Nhỏ</div>
+    <div class="tt">Switch HMX Xinhai — Linear 52g, đã lube nhà máy</div>
+    <div class="prw"><span class="pr">540.000₫</span></div>
+    <div class="ft"><span class="stars">★★★★★ <span class="t2">4.9</span></span><span>Đã bán 310</span></div>
+  </div>
+</div><div class="pc">
+  <div class="thumb"><div class="wish">♡</div><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F1F4F8"/><rect x="96" y="132" width="128" height="16" rx="4" fill="#C7D2FE" opacity=".55"/><rect x="88" y="146" width="144" height="92" rx="10" fill="#C7D2FE"/><rect x="100" y="156" width="120" height="68" rx="7" fill="#fff" opacity=".16"/><rect x="112" y="118" width="96" height="30" rx="6" fill="#3730A3" opacity=".9"/><rect x="146" y="72" width="28" height="56" rx="5" fill="#3730A3"/><rect x="130" y="88" width="60" height="18" rx="5" fill="#3730A3"/><rect x="116" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="188" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="88" y="230" width="144" height="10" rx="5" fill="#000" opacity=".08"/></svg></div>
+  <div class="bd">
+    <div class="shop"><i></i>SwitchHouse</div>
+    <div class="tt">Stabilizer Durock V2 PCB-mount — đã lube sẵn</div>
+    <div class="prw"><span class="pr">420.000₫</span></div>
+    <div class="ft"><span class="stars">★★★★★ <span class="t2">4.8</span></span><span>Đã bán 760</span></div>
+  </div>
+</div><div class="pc">
+  <div class="thumb"><span class="bdg new tag">Mới</span><div class="wish">♡</div><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F1F4F8"/><rect x="96" y="132" width="128" height="16" rx="4" fill="#111827" opacity=".55"/><rect x="88" y="146" width="144" height="92" rx="10" fill="#111827"/><rect x="100" y="156" width="120" height="68" rx="7" fill="#fff" opacity=".16"/><rect x="112" y="118" width="96" height="30" rx="6" fill="#F59E0B" opacity=".9"/><rect x="146" y="72" width="28" height="56" rx="5" fill="#F59E0B"/><rect x="130" y="88" width="60" height="18" rx="5" fill="#F59E0B"/><rect x="116" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="188" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="88" y="230" width="144" height="10" rx="5" fill="#000" opacity=".08"/></svg></div>
+  <div class="bd">
+    <div class="shop"><i></i>SwitchHouse</div>
+    <div class="tt">Switch Gateron Oil King — Linear 55g (bịch 70 nút)</div>
+    <div class="prw"><span class="pr">890.000₫</span></div>
+    <div class="ft"><span class="stars">★★★★★ <span class="t2">4.7</span></span><span>Đã bán 430</span></div>
+  </div>
+</div><div class="pc">
+  <div class="thumb"><span class="bdg sale tag">−24%</span><div class="wish">♡</div><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F1F4F8"/><rect x="96" y="132" width="128" height="16" rx="4" fill="#FBBF24" opacity=".55"/><rect x="88" y="146" width="144" height="92" rx="10" fill="#FBBF24"/><rect x="100" y="156" width="120" height="68" rx="7" fill="#fff" opacity=".16"/><rect x="112" y="118" width="96" height="30" rx="6" fill="#1B222C" opacity=".9"/><rect x="146" y="72" width="28" height="56" rx="5" fill="#1B222C"/><rect x="130" y="88" width="60" height="18" rx="5" fill="#1B222C"/><rect x="116" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="188" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="88" y="230" width="144" height="10" rx="5" fill="#000" opacity=".08"/></svg></div>
+  <div class="bd">
+    <div class="shop"><i></i>Akko Official</div>
+    <div class="tt">Switch Akko Cream Yellow V3 Pro — Linear 50g (45 nút)</div>
+    <div class="prw"><span class="pr">320.000₫</span><span class="old">420.000₫</span></div>
+    <div class="ft"><span class="stars">★★★★★ <span class="t2">4.6</span></span><span>Đã bán 3.4k</span></div>
+  </div>
+</div><div class="pc">
+  <div class="thumb"><span class="bdg new tag">Mới</span><div class="wish">♡</div><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F1F4F8"/><rect x="96" y="132" width="128" height="16" rx="4" fill="#38BDF8" opacity=".55"/><rect x="88" y="146" width="144" height="92" rx="10" fill="#38BDF8"/><rect x="100" y="156" width="120" height="68" rx="7" fill="#fff" opacity=".16"/><rect x="112" y="118" width="96" height="30" rx="6" fill="#0C4A6E" opacity=".9"/><rect x="146" y="72" width="28" height="56" rx="5" fill="#0C4A6E"/><rect x="130" y="88" width="60" height="18" rx="5" fill="#0C4A6E"/><rect x="116" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="188" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="88" y="230" width="144" height="10" rx="5" fill="#000" opacity=".08"/></svg></div>
+  <div class="bd">
+    <div class="shop"><i></i>Tiệm Switch Nhỏ</div>
+    <div class="tt">Switch HMX Xinhai — Linear 52g, đã lube nhà máy</div>
+    <div class="prw"><span class="pr">540.000₫</span></div>
+    <div class="ft"><span class="stars">★★★★★ <span class="t2">4.9</span></span><span>Đã bán 310</span></div>
+  </div>
+</div><div class="pc">
+  <div class="thumb"><div class="wish">♡</div><svg class="kb" viewBox="0 0 320 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="320" fill="#F1F4F8"/><rect x="96" y="132" width="128" height="16" rx="4" fill="#C7D2FE" opacity=".55"/><rect x="88" y="146" width="144" height="92" rx="10" fill="#C7D2FE"/><rect x="100" y="156" width="120" height="68" rx="7" fill="#fff" opacity=".16"/><rect x="112" y="118" width="96" height="30" rx="6" fill="#3730A3" opacity=".9"/><rect x="146" y="72" width="28" height="56" rx="5" fill="#3730A3"/><rect x="130" y="88" width="60" height="18" rx="5" fill="#3730A3"/><rect x="116" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="188" y="238" width="16" height="18" rx="3" fill="#9AA5B4"/><rect x="88" y="230" width="144" height="10" rx="5" fill="#000" opacity=".08"/></svg></div>
+  <div class="bd">
+    <div class="shop"><i></i>SwitchHouse</div>
+    <div class="tt">Stabilizer Durock V2 PCB-mount — đã lube sẵn</div>
+    <div class="prw"><span class="pr">420.000₫</span></div>
+    <div class="ft"><span class="stars">★★★★★ <span class="t2">4.8</span></span><span>Đã bán 760</span></div>
+  </div>
+</div></div>
+      <div class="pager"><a>‹</a><a class="on">1</a><a>2</a><a>3</a><a>4</a><a>…</a><a>26</a><a>›</a></div>
+    </div>
+  </div>
+</div>
+<div class="ftr"><div class="ct">
+  <div class="top">
+    <div>
+      <a class="logo" style="font-size:19px"><span class="mark" style="width:30px;height:30px;font-size:14px"><span>K</span></span><span>Keeb<span style="color:var(--p500)">Hub</span></span></a>
+      <p class="s13 t2" style="margin-top:14px;line-height:1.7;max-width:280px">Sàn thương mại điện tử bàn phím cơ custom. Kết nối người chơi với xưởng gia công uy tín trên toàn quốc.</p>
+      <div class="paylogos"><i>VNPAY</i><i>MOMO</i><i>ZALOPAY</i><i>VISA</i><i>ATM</i></div>
+    </div>
+    <div><h4>Khám phá</h4><ul><li>Kit bàn phím</li><li>Switch</li><li>Keycap</li><li>Dịch vụ gia công</li><li>Group buy</li></ul></div>
+    <div><h4>Hỗ trợ</h4><ul><li>Hướng dẫn mua hàng</li><li>Chính sách đổi trả</li><li>Chính sách bảo hành</li><li>Tra cứu đơn hàng</li><li>Câu hỏi thường gặp</li></ul></div>
+    <div><h4>Người bán</h4><ul><li>Đăng ký bán hàng</li><li>Quy chế hoạt động</li><li>Chính sách phí</li><li>Trung tâm người bán</li></ul></div>
+    <div><h4>Liên hệ</h4><ul><li>1900 6868</li><li>hotro@keebhub.vn</li><li>Tầng 8, toà nhà A, Q.1, TP.HCM</li></ul>
+      <div class="f" style="gap:8px;margin-top:14px"><i class="s12" style="width:32px;height:32px;border:1px solid var(--border);border-radius:8px;display:grid;place-items:center;font-style:normal">f</i><i class="s12" style="width:32px;height:32px;border:1px solid var(--border);border-radius:8px;display:grid;place-items:center;font-style:normal">ig</i><i class="s12" style="width:32px;height:32px;border:1px solid var(--border);border-radius:8px;display:grid;place-items:center;font-style:normal">yt</i></div>
+    </div>
+  </div>
+  <div class="bot"><span>© 2026 KeebHub. Đồ án Thương mại điện tử.</span><span>Điều khoản · Bảo mật · Cookie</span></div>
+</div></div>
+</body>
+</html>

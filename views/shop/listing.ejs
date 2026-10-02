@@ -1,0 +1,79 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<% function link(over){ var o=Object.assign({}, query, over); Object.keys(o).forEach(function(k){ if(o[k]===''||o[k]===undefined||o[k]===null) delete o[k]; }); delete o.page; if(over.page) o.page=over.page; return '?'+new URLSearchParams(o).toString(); } %>
+<div class="ct">
+  <div class="crumb"><a href="/">Trang chủ</a><span>›</span><% if (category) { %><b><%= category.name %></b><% } else { %><b><%= q ? 'Kết quả cho "'+q+'"' : 'Tất cả sản phẩm' %></b><% } %></div>
+  <% if (category) { %>
+  <div class="hero-cat">
+    <div><h1><%= category.icon %> <%= category.name %></h1>
+      <p><%= total %> sản phẩm từ các shop đã xác minh. Dùng bộ lọc kỹ thuật bên trái để tìm đúng linh kiện phù hợp với build của bạn.</p>
+      <div class="qk"><a href="/builder/new"><i>⚙ Mở Custom Builder</i></a><a href="<%= link({sort:'rating'}) %>"><i>⭐ Đánh giá cao</i></a><a href="<%= link({sort:'new'}) %>"><i>🆕 Mới về</i></a></div></div>
+  </div>
+  <% } %>
+
+  <% if (shops && shops.length) { %>
+  <div class="card p16" style="margin-bottom:18px">
+    <div class="s13 w700" style="margin-bottom:12px">🏪 Gian hàng khớp "<%= q %>"</div>
+    <div class="shops"><% shops.forEach(function(s){ %><a class="shopc" href="/shop/<%= s.slug %>"><div class="lg" style="background:<%= s.color %>"><%= s.initials %></div><div><b class="s14"><%= s.name %></b><div class="s12 t2" style="margin-top:4px">★ <%= s.rating ? s.rating.toFixed(1) : '—' %> · <%= s.city || 'Việt Nam' %></div></div></a><% }) %></div>
+  </div>
+  <% } %>
+
+  <div class="layout">
+    <form class="filt" method="get" id="filterForm">
+      <% if (q) { %><input type="hidden" name="q" value="<%= q %>"><% } %>
+      <input type="hidden" name="sort" value="<%= sort %>">
+      <div class="hd"><b>Bộ lọc</b><a href="?<%= q ? 'q='+encodeURIComponent(q) : '' %>">Xoá lọc</a></div>
+      <% if (!category) { %>
+      <div class="fgrp"><div class="t">Loại sản phẩm</div>
+        <% [['','Tất cả'],['kit','Kit bàn phím'],['switch','Switch'],['keycap','Keycap'],['stabilizer','Stabilizer'],['accessory','Phụ kiện'],['prebuilt','Build sẵn']].forEach(function(t){ %>
+        <label class="opt"><input type="radio" name="type" value="<%= t[0] %>" <%= (query.type||'')===t[0]?'checked':'' %> onchange="this.form.submit()"> <%= t[1] %></label><% }) %>
+      </div>
+      <% } %>
+      <div class="fgrp"><div class="t">Khoảng giá <span>₫</span></div>
+        <div class="pricebox"><input class="inp" name="min" type="number" min="0" placeholder="Từ" value="<%= query.min||'' %>"><span class="muted">–</span><input class="inp" name="max" type="number" min="0" placeholder="Đến" value="<%= query.max||'' %>"></div>
+        <div class="f wrap" style="gap:6px;margin-top:10px">
+          <a class="chip s12" style="padding:5px 10px" href="<%= link({min:'',max:500000}) %>">Dưới 500k</a>
+          <a class="chip s12" style="padding:5px 10px" href="<%= link({min:500000,max:2000000}) %>">500k–2tr</a>
+          <a class="chip s12" style="padding:5px 10px" href="<%= link({min:2000000,max:''}) %>">Trên 2tr</a>
+        </div>
+      </div>
+      <% var pt = category ? category.partType : (query.type||''); %>
+      <% if (!pt || pt==='kit' || pt==='keycap' || pt==='prebuilt') { %>
+      <div class="fgrp"><div class="t">Layout</div>
+        <% ['60%','65%','75%','TKL','Full'].forEach(function(l){ %><label class="opt"><input type="radio" name="layout" value="<%= l %>" <%= query.layout===l?'checked':'' %> onchange="this.form.submit()"> <%= l %></label><% }) %>
+      </div>
+      <% } %>
+      <% if (!pt || pt==='switch') { %>
+      <div class="fgrp"><div class="t">Loại switch</div>
+        <% [['linear','Linear'],['tactile','Tactile'],['clicky','Clicky'],['silent','Silent']].forEach(function(l){ %><label class="opt"><input type="radio" name="switchType" value="<%= l[0] %>" <%= query.switchType===l[0]?'checked':'' %> onchange="this.form.submit()"> <%= l[1] %></label><% }) %>
+      </div>
+      <% } %>
+      <% if (pt==='keycap') { %>
+      <div class="fgrp"><div class="t">Profile</div>
+        <% ['Cherry','OEM','SA','XDA','MDA','ASA'].forEach(function(l){ %><label class="opt"><input type="radio" name="profile" value="<%= l %>" <%= query.profile===l?'checked':'' %> onchange="this.form.submit()"> <%= l %></label><% }) %>
+      </div>
+      <% } %>
+      <% if (pt==='kit') { %>
+      <div class="fgrp"><label class="opt"><input type="checkbox" name="hotswap" value="1" <%= query.hotswap==='1'?'checked':'' %> onchange="this.form.submit()"> Chỉ kit hotswap</label></div>
+      <% } %>
+      <div class="fgrp"><button class="btn pri blk sm">Áp dụng</button></div>
+    </form>
+
+    <div>
+      <div class="toolbar">
+        <span class="s13 t2">Sắp xếp</span>
+        <div class="sortl">
+          <% [['popular','Bán chạy'],['new','Mới nhất'],['rating','Đánh giá'],['price_asc','Giá ↑'],['price_desc','Giá ↓']].forEach(function(s){ %><a class="<%= sort===s[0]?'on':'' %>" href="<%= link({sort:s[0]}) %>"><%= s[1] %></a><% }) %>
+        </div>
+        <span class="mla s13 muted"><%= total %> sản phẩm</span>
+      </div>
+      <% if (!items.length) { %>
+        <div class="card p24 empty"><div class="s38">🔍</div><b>Không tìm thấy sản phẩm phù hợp</b><p class="s13 muted">Thử bỏ bớt bộ lọc hoặc dùng từ khoá khác.</p></div>
+      <% } else { %>
+      <div class="pgrid g4"><% items.forEach(function(p){ %><%- include('../partials/pcard', {p:p}) %><% }) %></div>
+      <% } %>
+      <%- include('../partials/pager', {pages:pages, page:page}) %>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

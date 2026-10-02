@@ -1,0 +1,11 @@
+<a class="pc" href="/p/<%= p.slug %>">
+  <div class="thumb"><% if (p.discount) { %><span class="bdg sale tag">−<%= p.discount %>%</span><% } else if ((Date.now()-new Date(p.createdAt))<14*86400e3) { %><span class="bdg new tag">Mới</span><% } %>
+    <% if (p.stock<=0) { %><span class="bdg gray tag">Hết hàng</span><% } %>
+    <img src="<%= p.image %>" alt="<%= p.name %>" loading="lazy" class="kb"></div>
+  <div class="bd">
+    <div class="shop"><i></i><%= p.shop && p.shop.name ? p.shop.name : '' %></div>
+    <div class="tt"><%= p.name %></div>
+    <div class="prw"><span class="pr"><%= h.money(p.price) %></span><% if (p.discount) { %><span class="old"><%= h.money(p.oldPrice) %></span><% } %></div>
+    <div class="ft"><span class="stars"><%= h.stars(p.rating||0) %> <span class="t2"><%= p.rating ? p.rating.toFixed(1) : '—' %></span></span><span>Đã bán <%= h.short(p.sold) %></span></div>
+  </div>
+</a>

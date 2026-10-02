@@ -1,0 +1,19 @@
+<%
+  var flow = o.isCustom
+    ? [['pending','Đã đặt'],['paid','Đã thanh toán'],['accepted','Shop nhận gia công'],['processing','Đang gia công'],['shipping','Đang giao'],['completed','Hoàn thành']]
+    : [['pending','Đã đặt'],['confirmed','Shop xác nhận'],['shipping','Đang giao'],['delivered','Đã giao'],['completed','Hoàn thành']];
+  var rank = o.isCustom
+    ? { pending: (o.paymentStatus==='paid' ? 2 : 1), processing:3, shipping:4, delivered:5, completed:5, confirmed:3 }
+    : { pending:1, confirmed:2, processing:2, shipping:3, delivered:4, completed:4 };
+  var cur = rank[o.status] || 0;
+  function at(st){ var hh = (o.history||[]).filter(function(x){return x.status===st}); return hh.length ? h.dateTime(hh[0].at) : ''; }
+%>
+<% if (o.status==='cancelled') { %>
+  <div class="alert err" style="margin:18px 22px">✕ Đơn đã huỷ<%= o.cancelReason ? ' — ' + o.cancelReason : '' %><%= o.paymentStatus==='refund_pending' ? ' · Đang chờ hoàn tiền' : o.paymentStatus==='refunded' ? ' · Đã hoàn tiền' : '' %></div>
+<% } else { %>
+<div class="prog">
+  <% flow.forEach(function(f,i){ var cls = i < cur ? 'done' : (i <= cur ? (i===flow.length-1 && o.status==='completed' ? 'done' : 'cur') : ''); %>
+  <div class="nd <%= cls %>"><span class="dot"><%= cls==='done' ? '✓' : (i+1) %></span><span class="lb"><%= f[1] %></span><span class="dt"><%= f[0]==='paid' ? (o.paidAt ? h.dateTime(o.paidAt) : '') : f[0]==='accepted' ? (o.customRequest && o.customRequest.respondedAt ? h.dateTime(o.customRequest.respondedAt) : '') : at(f[0]) %></span></div>
+  <% }) %>
+</div>
+<% } %>

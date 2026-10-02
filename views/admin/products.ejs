@@ -1,0 +1,35 @@
+<%- include('_top') %>
+<% var SL = {active:['Đang bán','ok'],pending:['Chờ duyệt','warn'],hidden:['Đã ẩn','gray'],rejected:['Bị từ chối','err']}; %>
+<div class="card2">
+  <div class="toolrow">
+    <% [['pending','Chờ duyệt'],['active','Đang bán'],['hidden','Đã ẩn'],['rejected','Bị từ chối'],['all','Tất cả']].forEach(function(t){ %><a class="tchip <%= st===t[0]?'on':'' %>" href="?status=<%= t[0] %>"><%= t[1] %><%= counts[t[0]] ? ' ('+counts[t[0]]+')' : '' %></a><% }) %>
+    <form class="mla f" style="gap:6px"><input type="hidden" name="status" value="<%= st %>"><input class="inp" style="padding:6px 10px;width:220px" name="q" value="<%= query.q||'' %>" placeholder="Tên sản phẩm…"><button class="btn out sm">Tìm</button></form>
+  </div>
+  <% if (st==='pending') { %>
+  <div class="bd">
+    <% if (!products.length) { %><div class="empty"><div class="s38">✓</div><b>Không có sản phẩm chờ duyệt</b></div><% } %>
+    <% products.forEach(function(p){ var a = p.attrs||{}; %>
+    <div class="appr">
+      <div class="top"><div class="th"><img src="<%= p.image %>" class="kb"></div>
+        <div style="flex:1"><a class="s16 w700" href="/p/<%= p.slug %>" target="_blank"><%= p.name %></a>
+          <div class="s12 muted" style="margin:4px 0 8px"><%= p.shop ? p.shop.name : '' %> · <%= p.category ? p.category.name : '' %> · gửi <%= h.timeAgo(p.createdAt) %></div>
+          <div class="f" style="gap:16px;flex-wrap:wrap"><b style="color:var(--a600)"><%= h.money(p.price) %></b><span class="s13">Kho: <%= p.stock %></span><span class="s13">Ảnh: <%= p.images.length || 'minh hoạ' %></span></div>
+          <div class="chkline2">✓ Thuộc tính kỹ thuật: <%= Object.keys(a).filter(function(k){ var v=a[k]; return v!==undefined && v!==null && !(Array.isArray(v)&&!v.length) }).join(', ') || '(chưa khai báo)' %></div>
+          <p class="s13 t2" style="margin-top:6px;max-height:60px;overflow:hidden"><%= p.description %></p></div></div>
+      <div class="foot">
+        <form method="post" action="/admin/products/<%= p._id %>/approve"><button class="btn pri sm">✓ Duyệt</button></form>
+        <form method="post" action="/admin/products/<%= p._id %>/reject" class="f" style="gap:6px;flex:1"><input class="inp" name="reason" placeholder="Lý do từ chối…" style="padding:6px 10px" required><button class="btn out sm">Từ chối</button></form>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <% } else { %>
+  <div class="bd p0 tblx"><table class="tb">
+    <tr><th>Sản phẩm</th><th>Shop</th><th>Giá</th><th>Kho</th><th>Đã bán</th><th>Trạng thái</th><th></th></tr>
+    <% products.forEach(function(p){ %><tr><td><div class="f ac" style="gap:10px"><div class="th"><img src="<%= p.image %>" class="kb"></div><div><a class="nm" href="/p/<%= p.slug %>" target="_blank"><%= p.name %></a><div class="sub"><%= p.category?p.category.name:'' %></div></div></div></td><td><%= p.shop?p.shop.name:'' %></td><td><b><%= h.money(p.price) %></b></td><td><%= p.stock %></td><td><%= p.sold %></td><td><span class="bdg <%= SL[p.status][1] %>"><%= SL[p.status][0] %></span></td>
+      <td style="white-space:nowrap;text-align:right"><% if (p.status!=='active') { %><form method="post" action="/admin/products/<%= p._id %>/approve" style="display:inline"><button class="btn ghost sm">Hiển thị</button></form><% } else { %><form method="post" action="/admin/products/<%= p._id %>/hide" style="display:inline"><button class="btn ghost sm">Ẩn</button></form><% } %><form method="post" action="/admin/products/<%= p._id %>/delete" style="display:inline" onsubmit="return confirm('Xoá sản phẩm?')"><button class="btn ghost sm" style="color:var(--d600)">Xoá</button></form></td></tr><% }) %>
+  </table></div>
+  <% } %>
+  <%- include('../partials/pager', {pages:pages, page:page}) %>
+</div>
+<%- include('_bottom') %>

@@ -1,0 +1,54 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<% var u = user.address || {}; var grand = cart.subtotal + shipTotal; %>
+<div class="ct">
+  <div class="crumb"><a href="/">Trang chủ</a><span>›</span><a href="/cart">Giỏ hàng</a><span>›</span><b>Đặt hàng & thanh toán</b></div>
+  <form class="two" method="post" action="/checkout" id="checkoutForm">
+    <div>
+      <div class="blk-sec">
+        <div class="hd"><span class="n">1</span><h3>Địa chỉ nhận hàng</h3></div>
+        <div class="grid2">
+          <div class="field"><label>Họ tên người nhận</label><input class="inp" name="fullName" value="<%= u.fullName || user.name %>" required></div>
+          <div class="field"><label>Số điện thoại</label><input class="inp" name="phone" value="<%= u.phone || user.phone %>" required pattern="0[0-9]{9,10}"></div>
+        </div>
+        <div class="field" style="margin-top:14px"><label>Địa chỉ (số nhà, đường, phường/xã, quận/huyện, tỉnh/thành)</label><input class="inp" name="address" value="<%= u.line %>" required></div>
+        <div class="field" style="margin-top:14px"><label>Ghi chú cho shop (tuỳ chọn)</label><input class="inp" name="note" placeholder="VD: giao giờ hành chính"></div>
+      </div>
+      <div class="blk-sec">
+        <div class="hd"><span class="n">2</span><h3>Phương thức vận chuyển</h3></div>
+        <div class="shipopt" style="grid-template-columns:repeat(2,1fr)">
+          <% Object.keys(SHIP).forEach(function(k){ %>
+          <a class="it <%= method===k?'on':'' %>" href="/checkout?ship=<%= k %>"><b><%= SHIP[k].label %></b><span><%= SHIP[k].desc %></span><div class="p"><%= k==='standard' ? h.money(SHIP[k].fee)+' · miễn phí từ 500k/shop' : h.money(SHIP[k].fee) %></div></a>
+          <% }) %>
+        </div>
+        <input type="hidden" name="ship" value="<%= method %>">
+      </div>
+      <div class="blk-sec">
+        <div class="hd"><span class="n">3</span><h3>Phương thức thanh toán</h3></div>
+        <div class="payopt">
+          <label class="payl on"><input type="radio" name="payment" value="vnpay" checked><span class="lg">VNPAY</span><div><b>Thanh toán qua VNPay</b><br><span>ATM nội địa, Visa/Master, QR ngân hàng<%= vnpayLive ? '' : ' · (đang dùng trang mô phỏng — chưa cấu hình khoá sandbox)' %></span></div></label>
+          <label class="payl <%= cart.hasCustom?'dis':'' %>"><input type="radio" name="payment" value="cod" <%= cart.hasCustom?'disabled':'' %>><span class="lg">COD</span><div><b>Thanh toán khi nhận hàng</b><br><span><%= cart.hasCustom ? 'Không áp dụng cho đơn gia công custom' : 'Kiểm tra hàng trước khi trả tiền' %></span></div></label>
+        </div>
+      </div>
+      <div class="blk-sec">
+        <div class="hd"><span class="n">4</span><h3>Sản phẩm (<%= cart.groups.length %> shop → <%= cart.groups.reduce(function(s,g){return s + (g.items.length?1:0) + g.builds.length},0) %> đơn hàng)</h3><a href="/cart">Sửa giỏ</a></div>
+        <% cart.groups.forEach(function(g){ %>
+          <div class="s13 w700" style="margin:8px 0 4px">🏪 <%= g.shop.name %> <span class="muted w500">· phí ship <%= g.ship ? h.money(g.ship) : 'miễn phí' %></span></div>
+          <% g.items.forEach(function(i){ %><div class="mini2"><div class="th"><img src="<%= i.product.image %>" class="kb"></div><div style="flex:1"><b><%= i.product.name %></b><div class="s12 muted">×<%= i.qty %></div></div><b class="s13"><%= h.money(i.total) %></b></div><% }) %>
+          <% g.builds.forEach(function(b){ %><div class="mini2"><div class="th"><img src="<%= b.build.kit.image %>" class="kb"></div><div style="flex:1"><b>⚙ Build #<%= b.build.code %> + <%= b.build.service.name %></b><div class="s12 muted"><%= b.lines.map(function(l){return l.product.name}).join(' · ') %></div></div><b class="s13"><%= h.money(b.total) %></b></div><% }) %>
+        <% }) %>
+      </div>
+    </div>
+    <div class="ordsum stick">
+      <div class="bx">
+        <h3 class="s16 w700" style="margin-bottom:10px">Thanh toán</h3>
+        <div class="r"><span>Tạm tính</span><b><%= h.money(cart.subtotal) %></b></div>
+        <div class="r"><span>Phí vận chuyển</span><b><%= shipTotal ? h.money(shipTotal) : 'Miễn phí' %></b></div>
+        <div class="tot"><span class="w700">Tổng thanh toán</span><b><%= h.money(grand) %></b></div>
+        <button class="btn cta blk lg" style="margin-top:16px">Đặt hàng</button>
+        <p class="s12 muted" style="margin-top:10px;line-height:1.6">Nhấn "Đặt hàng" đồng nghĩa bạn đồng ý với điều khoản của KeebHub. Với VNPay, bạn sẽ được chuyển sang cổng thanh toán.</p>
+      </div>
+    </div>
+  </form>
+</div>
+<%- include('../partials/footer') %>

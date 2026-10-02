@@ -1,0 +1,135 @@
+<%- include('../partials/head') %>
+<% var kitA = b.kit ? (b.kit.attrs||{}) : {}; var blocks = result.issues.filter(function(i){return i.level==='block'}); var warns = result.issues.filter(function(i){return i.level==='warn'}); var sugg = result.issues.filter(function(i){return i.level==='suggest'}); %>
+<div class="bhead"><div class="ct">
+  <a class="logo" href="/"><span class="mark"><span>K</span></span><span>Keeb<span style="color:var(--p500)">Hub</span></span></a>
+  <span class="s13 muted bh-sub" style="padding-left:16px;border-left:1px solid var(--border)">Custom Builder · #<%= b.code %></span>
+  <div class="steps">
+    <% STEPS.forEach(function(s,i){ var done = s.n < step && (s.key==='kit'?b.kit:s.key==='switch'?b.switch:s.key==='keycap'?b.keycap:s.key==='service'?b.service:true); %>
+      <% if (i) { %><span class="ln <%= s.n<=step?'done':'' %>"></span><% } %>
+      <a class="st <%= s.n===step?'on':done?'done':'' %>" href="<%= b.kit || s.n===1 ? '/builder?step='+s.n : '#' %>"><span class="n"><%= done && s.n!==step ? '✓' : s.n %></span><span class="lb"><%= s.label %></span></a>
+    <% }) %>
+  </div>
+  <form method="post" action="/builder/save" class="bh-save"><button class="btn ghost sm">💾 Lưu nháp</button></form>
+  <a class="btn out sm" href="/">Thoát</a>
+</div></div>
+<%- include('../partials/flash') %>
+<div class="ct"><div class="bwrap">
+  <div class="panel">
+    <% if (step <= 3) { var titles = {1:'Bước 1 · Chọn kit bàn phím', 2:'Bước 2 · Chọn switch', 3:'Bước 3 · Chọn keycap & stabilizer'}; %>
+    <div class="ptop">
+      <div style="flex:1"><h2><%= titles[step] %></h2>
+        <p><%= step===1 ? 'Kit quyết định layout, kiểu PCB (hotswap/hàn), số chân switch và kiểu stab hỗ trợ.' : 'Đang lọc theo kit đã chọn: ' %><% if (step>1) { %><b><%= b.kit.name %></b> · <%= kitA.layout %> · <%= kitA.hotswap ? 'hotswap ' + (kitA.pins||[]).join('/') + '-pin' : 'PCB hàn' %> · stab <%= kitA.stabMount %> · LED <%= kitA.ledDirection==='north'?'north':'south' %>-facing<% } %></p></div>
+      <% if (step>1) { %><a class="f ac s13 t2" style="gap:8px;white-space:nowrap" href="?step=<%= step %>&f=<%= f %><%= onlyOk ? '&all=1' : '' %>"><span class="check <%= onlyOk?'on':'' %>"><%= onlyOk?'✓':'' %></span>Chỉ hiện linh kiện tương thích</a><% } %>
+    </div>
+    <div class="qfilt"><span class="lb">Lọc nhanh</span>
+      <% var qf = step===1 ? [['','Tất cả'],['60%','60%'],['65%','65%'],['75%','75%'],['TKL','TKL']] : step===2 ? [['','Tất cả'],['linear','Linear'],['tactile','Tactile'],['clicky','Clicky'],['silent','Silent']] : [['','Tất cả'],['Cherry','Cherry'],['OEM','OEM'],['SA','SA'],['XDA','XDA'],['MDA','MDA']]; %>
+      <% qf.forEach(function(x){ %><a class="chip <%= f===x[0]?'on':'' %>" href="?step=<%= step %>&f=<%= encodeURIComponent(x[0]) %><%= onlyOk?'':'&all=1' %>"><%= x[1] %></a><% }) %>
+      <% if (step===2 && kitA.keyCount) { %><span class="mla s12 muted">Cần <%= kitA.keyCount %> switch cho layout <%= kitA.layout %> → <%= Math.ceil(kitA.keyCount/10) %> bộ</span><% } %>
+    </div>
+    <% if (blocks.length) { %>
+    <div class="warnbox" style="margin-top:20px;border-color:#FECDCA;background:var(--d50)"><div class="ic" style="background:#FECDCA">⛔</div><div><h4 style="color:#912018"><%= blocks.length %> linh kiện trong cấu hình không lắp vừa</h4><% blocks.forEach(function(i){ %><p style="color:#912018"><%= i.message %></p><% }) %></div></div>
+    <% } %>
+    <% groups.forEach(function(g){ var selId = g.role==='kit'?b.kit&&b.kit._id:g.role==='sw'?b.switch&&b.switch._id:g.role==='keycap'?b.keycap&&b.keycap._id:b.stab&&b.stab._id; %>
+      <% if (groups.length>1) { %><div class="s14 w700" style="padding:18px 24px 0"><%= g.label %> <span class="muted w500 s12">· <%= g.total %> sản phẩm<%= g.blocked ? ', ' + g.blocked + ' không tương thích' : '' %></span><% if (selId) { %><form method="post" action="/builder/clear" style="display:inline"><input type="hidden" name="role" value="<%= g.role %>"><button class="btn ghost sm">Bỏ chọn</button></form><% } %></div><% } %>
+      <div class="opts">
+        <% if (!g.list.length) { %><p class="muted s14">Không có sản phẩm phù hợp với bộ lọc.</p><% } %>
+        <% g.list.forEach(function(x){ var p = x.p; var sel = selId && String(selId)===String(p._id); %>
+        <div class="oc <%= sel?'sel':'' %> <%= x.blocked?'bad':'' %>">
+          <div class="th"><span class="bdg <%= x.blocked?'err':x.warn?'warn':'ok' %> flag"><%= x.blocked?'Không lắp vừa':x.warn?'Có lưu ý':'Tương thích' %></span><% if (sel) { %><span class="chk">✓</span><% } %><img src="<%= p.image %>" class="kb" style="object-fit:cover"></div>
+          <div class="bd">
+            <a class="nm" href="/p/<%= p.slug %>" target="_blank"><%= p.name %></a>
+            <div class="sp"><%= p.shop.name %> · còn <%= p.stock %><%= p.attrs.switchType ? ' · '+p.attrs.switchType : '' %><%= p.attrs.profile ? ' · '+p.attrs.profile : '' %><%= p.attrs.stabMount && g.role==='stab' ? ' · '+p.attrs.stabMount : '' %></div>
+            <div class="pr"><%= h.money(p.price) %><%= g.role==='sw' ? ' /10 sw' : '' %></div>
+            <div class="act">
+              <% if (x.blocked) { %><span class="btn dis sm blk">Không tương thích</span>
+              <% } else if (sel) { %><span class="btn pri sm blk">✓ Đã chọn</span>
+              <% } else { %><form method="post" action="/builder/select"><input type="hidden" name="role" value="<%= g.role %>"><input type="hidden" name="productId" value="<%= p._id %>"><% if (step===3) { %><input type="hidden" name="stay" value="3"><% } %><button class="btn out sm blk">Chọn</button></form><% } %>
+            </div>
+          </div>
+          <% if (x.blocked) { %><div class="why"><span>✕</span><span><%= x.blocked.message %></span></div><% } else if (x.warn) { %><div class="why" style="background:var(--w50);color:#93370D;border-top-color:#FEDF89"><span>⚠</span><span><%= x.warn.message %></span></div><% } %>
+        </div>
+        <% }) %>
+      </div>
+    <% }) %>
+    <div class="f ac jb" style="padding:0 24px 22px">
+      <% if (step>1) { %><a class="btn out" href="?step=<%= step-1 %>">‹ Quay lại</a><% } else { %><span></span><% } %>
+      <% var canNext = step===1 ? b.kit : step===2 ? b.switch : b.keycap; %>
+      <a class="btn <%= canNext?'pri':'dis' %> lg" href="<%= canNext ? '?step='+(step+1) : '#' %>">Tiếp tục ›</a>
+    </div>
+
+    <% } else if (step===4) { %>
+    <div class="ptop"><div style="flex:1"><h2>Bước 4 · Chọn gói gia công</h2><p>Xưởng sẽ lube, cân stab, lắp ráp và test toàn bộ trước khi giao. Bạn theo dõi tiến độ từng công đoạn kèm ảnh.</p></div></div>
+    <div style="padding:20px 24px;display:grid;gap:14px">
+      <% if (!services.length) { %><p class="muted">Chưa có xưởng nào mở dịch vụ gia công.</p><% } %>
+      <% services.forEach(function(x){ var s = x.s; var sel = b.service && String(b.service._id)===String(s._id); var full = x.load >= s.shop.capacityPerWeek; %>
+      <div class="pk <%= sel?'on':'' %>">
+        <div class="f" style="gap:16px;align-items:flex-start;flex-wrap:wrap">
+          <span class="lg" style="width:44px;height:44px;border-radius:12px;background:<%= s.shop.color %>;color:#fff;display:grid;place-items:center;font-weight:800;flex:none"><%= h.initials(s.shop.name) %></span>
+          <div style="flex:1;min-width:220px">
+            <h4><%= s.name %> <span class="s12 muted w500">· <%= s.shop.name %> ★ <%= s.shop.rating ? s.shop.rating.toFixed(1) : '—' %></span></h4>
+            <p class="s13 t2" style="margin-top:4px"><%= s.description %></p>
+            <ul><% s.includes.forEach(function(i){ %><li><em>✓</em><%= i %></li><% }) %><% if (s.soldering) { %><li><em>✓</em>Có hàn / rã hàn PCB</li><% } %></ul>
+            <div class="s12 muted" style="margin-top:10px">⏱ ~<%= s.days %> ngày · Xưởng đang làm <%= x.load %>/<%= s.shop.capacityPerWeek %> đơn tuần này</div>
+            <% if (x.warn) { %><div class="alert warn s12" style="margin-top:10px">⚠ <%= x.warn.message %></div><% } %>
+            <% if (x.suggest) { %><div class="alert info s12" style="margin-top:10px">💡 <%= x.suggest.message %></div><% } %>
+          </div>
+          <div style="text-align:right">
+            <div class="pr" style="margin:0 0 10px"><%= h.money(s.price) %></div>
+            <% if (sel) { %><span class="btn pri sm">✓ Đã chọn</span><% } else if (full) { %><span class="btn dis sm">Xưởng đã kín lịch</span><% } else { %><form method="post" action="/builder/service"><input type="hidden" name="serviceId" value="<%= s._id %>"><button class="btn out sm">Chọn gói này</button></form><% } %>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <div class="f ac jb" style="padding:0 24px 22px"><a class="btn out" href="?step=3">‹ Quay lại</a><a class="btn <%= b.service?'pri':'dis' %> lg" href="<%= b.service ? '?step=5' : '#' %>">Xem lại ›</a></div>
+
+    <% } else { %>
+    <div class="ptop"><div style="flex:1"><h2>Bước 5 · Xem lại cấu hình</h2><p>Kiểm tra lần cuối trước khi gửi yêu cầu gia công tới xưởng.</p></div></div>
+    <div style="padding:20px 24px">
+      <% if (result.ok && !warns.length) { %><div class="alert ok">✓ Tất cả linh kiện đã chọn đều tương thích với nhau.</div><% } %>
+      <% result.issues.forEach(function(i){ %><div class="alert <%= i.level==='block'?'err':i.level==='warn'?'warn':'info' %>" style="margin-bottom:8px"><span><%= i.level==='block'?'⛔':i.level==='warn'?'⚠':'💡' %></span><div><b><%= i.level==='block'?'Chặn':i.level==='warn'?'Cảnh báo':'Gợi ý' %>:</b> <%= i.message %></div></div><% }) %>
+      <table class="tbl" style="margin-top:16px;border:1px solid var(--border);border-radius:12px;overflow:hidden">
+        <tr><th>Hạng mục</th><th>Sản phẩm</th><th>SL</th><th style="text-align:right">Thành tiền</th><th></th></tr>
+        <% lines.forEach(function(l){ %><tr><td class="t2"><%= l.label %></td><td><b><%= l.product.name %></b><div class="s12 muted"><%= l.note||'' %></div></td><td><%= l.qty %></td><td style="text-align:right"><b><%= h.money(l.product.price*l.qty) %></b></td><td><a class="s12" style="color:var(--p600)" href="?step=<%= l.role==='kit'?1:l.role==='switch'?2:3 %>">Sửa</a></td></tr><% }) %>
+        <% if (b.switch) { %><tr><td class="t2">Số switch</td><td colspan="4"><form method="post" action="/builder/qty" class="f ac" style="gap:8px"><input class="inp" type="number" name="qty" value="<%= b.switchQty %>" min="10" step="10" style="width:110px;padding:6px 10px"><button class="btn out sm">Cập nhật</button><span class="s12 muted">Tối thiểu <%= kitA.keyCount || '—' %> switch (làm tròn theo bộ 10)</span></form></td></tr><% } %>
+        <% if (b.service) { %><tr><td class="t2">Gia công</td><td><b><%= b.service.name %></b><div class="s12 muted"><%= b.service.shop.name %> · ~<%= b.service.days %> ngày</div></td><td>1</td><td style="text-align:right"><b><%= h.money(b.service.price) %></b></td><td><a class="s12" style="color:var(--p600)" href="?step=4">Sửa</a></td></tr><% } %>
+      </table>
+      <form method="post" action="/builder/cart" style="margin-top:18px">
+        <div class="field"><label>Ghi chú cho xưởng (tuỳ chọn)</label><textarea class="inp" name="note" rows="3" placeholder="VD: lube nhẹ tay, cân stab kỹ phím Space…"><%= b.note %></textarea></div>
+        <div class="f" style="gap:10px;margin-top:14px;flex-wrap:wrap">
+          <button class="btn cta lg" name="checkout" value="1" <%= (!result.ok || !b.service || !b.keycap || !b.switch) ? 'disabled' : '' %>>Thêm vào giỏ & đặt hàng</button>
+          <button class="btn out lg" <%= (!result.ok || !b.service || !b.keycap || !b.switch) ? 'disabled' : '' %>>Thêm vào giỏ</button>
+        </div>
+      </form>
+    </div>
+    <% } %>
+  </div>
+
+  <aside class="sum"><div class="sumcard">
+    <div class="preview"><span class="lbl">Xem trước cấu hình</span><div class="art"><img src="<%= b.kit ? b.kit.image : '/img/hero.svg' %>" class="kb" style="background:#fff"></div></div>
+    <div class="s14 w700" style="padding:14px 16px 6px">Cấu hình của bạn</div>
+    <% [['kit','⌨','Kit',b.kit,1],['switch','🔘','Switch',b.switch,2],['keycap','🎨','Keycap',b.keycap,3],['stab','⚖','Stabilizer',b.stab,3]].forEach(function(r){ var p=r[3]; %>
+      <div class="sline <%= p?'':'empty' %>"><span class="ic"><%= r[1] %></span><div style="min-width:0"><div class="nm"><%= p ? p.name + (r[0]==='switch' ? ' ×'+b.switchQty : '') : 'Chưa chọn ' + r[2].toLowerCase() %><% if (p) { %><a class="ed" href="?step=<%= r[4] %>">Sửa</a><% } %></div><div class="sub"><%= p ? r[2] : 'Bước ' + r[4] %></div></div><span class="pr"><%= p ? h.money(r[0]==='switch' ? p.price*Math.ceil(b.switchQty/10) : p.price) : '—' %></span></div>
+    <% }) %>
+    <div class="sline <%= b.service?'':'empty' %>"><span class="ic">🛠</span><div><div class="nm"><%= b.service ? b.service.name : 'Chưa chọn gói gia công' %><% if (b.service) { %><a class="ed" href="?step=4">Sửa</a><% } %></div><div class="sub"><%= b.service ? b.service.shop.name : 'Bước 4' %></div></div><span class="pr"><%= b.service ? h.money(b.service.price) : '—' %></span></div>
+    <div class="totals">
+      <div class="r"><span>Linh kiện</span><b><%= h.money(totals.parts) %></b></div>
+      <div class="r"><span>Phí gia công</span><b><%= totals.service ? h.money(totals.service) : 'Chưa chọn' %></b></div>
+      <div class="r big"><span>Tổng tạm tính</span><b><%= h.money(totals.total) %></b></div>
+    </div>
+    <div class="statusbox">
+      <% if (!b.kit) { %><div class="stline muted">Chọn kit để bắt đầu kiểm tra tương thích.</div>
+      <% } else if (result.ok) { %><div class="stline" style="color:var(--s600)">✓ <span>Không có xung đột chặn<%= warns.length ? ' · ' + warns.length + ' cảnh báo' : '' %><%= sugg.length ? ' · ' + sugg.length + ' gợi ý' : '' %></span></div>
+      <% } else { %><div class="stline" style="color:var(--d600)">✕ <span><%= blocks.length %> linh kiện không tương thích</span></div><% } %>
+      <% if (b.service) { %><div class="stline t2">⏱ <span>Thời gian gia công dự kiến ~<%= b.service.days %> ngày</span></div><% } %>
+    </div>
+    <div class="actions">
+      <% if (step<5) { %><a class="btn cta blk lg" href="?step=5">Xem lại & đặt hàng</a><% } %>
+      <form method="post" action="/builder/save" class="f" style="gap:8px"><input class="inp" name="name" value="<%= b.name %>" style="padding:8px 10px;font-size:13px"><button class="btn out sm">💾 Lưu</button></form>
+      <a class="s12 muted" style="text-align:center" href="/builder/new">↺ Bắt đầu build mới</a>
+    </div>
+  </div></aside>
+</div></div>
+<%- include('../partials/chat') %>
+<script src="/js/app.js?v=<%= locals.v || 1 %>"></script>
+</body></html>

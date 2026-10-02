@@ -1,0 +1,23 @@
+<%- include('../partials/head') %>
+<div class="auth">
+<%- include('_aside', {heading:'Tạo tài khoản,<br>build phím đầu tiên', sub:'Chỉ mất 1 phút. Chúng tôi sẽ gửi email xác nhận để kích hoạt tài khoản của bạn.'}) %>
+<div class="apane"><div class="aform">
+  <div class="top"><h1>Đăng ký</h1><div class="sub">Đã có tài khoản? <a href="/auth/login">Đăng nhập</a></div></div>
+  <%- include('../partials/flash') %>
+  <%- include('_social') %>
+  <div class="orline">hoặc đăng ký bằng email</div>
+  <form method="post" action="/auth/register">
+    <div class="field"><label>Họ và tên</label><input class="inp" name="name" value="<%= form.name||'' %>" required></div>
+    <div class="grid2" style="gap:12px">
+      <div class="field"><label>Email</label><input class="inp" type="email" name="email" value="<%= form.email||'' %>" required></div>
+      <div class="field"><label>Số điện thoại</label><input class="inp" name="phone" value="<%= form.phone||'' %>" placeholder="09xxxxxxxx"></div>
+    </div>
+    <div class="field"><label>Mật khẩu</label><div class="pw"><input class="inp" type="password" name="password" id="pw" minlength="8" required><button type="button" class="eye" tabindex="-1">👁</button></div>
+      <div class="strength" id="strength"><i></i><i></i><i></i><i></i></div><div class="help">Tối thiểu 8 ký tự, nên có chữ hoa, số và ký tự đặc biệt</div></div>
+    <div class="field"><label>Nhập lại mật khẩu</label><input class="inp" type="password" name="confirm" minlength="8" required></div>
+    <label class="f s13 t2" style="gap:9px;margin:6px 0 20px;align-items:flex-start"><input type="checkbox" name="agree" required style="margin-top:3px"> Tôi đồng ý với Điều khoản sử dụng và Chính sách bảo mật của KeebHub</label>
+    <button class="btn pri blk lg">Tạo tài khoản</button>
+  </form>
+</div></div>
+</div>
+<script src="/js/app.js?v=<%= locals.v || 1 %>"></script></body></html>

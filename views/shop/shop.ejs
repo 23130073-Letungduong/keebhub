@@ -1,0 +1,42 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<div class="ct">
+  <div class="crumb"><a href="/">Trang chủ</a><span>›</span><a href="/shops">Gian hàng</a><span>›</span><b><%= s.name %></b></div>
+  <div class="shophero">
+    <div class="lg" style="color:<%= s.color %>"><%= s.initials %></div>
+    <div style="flex:1">
+      <div class="f ac" style="gap:10px;flex-wrap:wrap"><h1 class="s30 w800"><%= s.name %></h1><% if (s.verified) { %><span class="bdg ok">✓ Đã xác minh</span><% } %><% if (s.offersCustom) { %><span class="bdg new">Xưởng gia công</span><% } %></div>
+      <p style="color:#C6D8FF;margin-top:6px;max-width:640px" class="s14"><%= s.description %></p>
+      <div class="mt"><div><b><%= s.rating ? s.rating.toFixed(1) : '—' %> ★</b><span><%= s.reviewCount %> đánh giá</span></div><div><b><%= total %></b><span>Sản phẩm</span></div><div><b><%= sold %></b><span>Đơn đã giao</span></div><div><b><%= h.short(s.followers) %></b><span>Theo dõi</span></div><div><b><%= s.city||'—' %></b><span>Khu vực</span></div></div>
+    </div>
+  </div>
+
+  <% if (services.length) { %>
+  <div style="margin:26px 0 30px">
+    <div class="sechd"><h2>🛠 Dịch vụ gia công</h2><a href="/builder/new">Đặt qua Custom Builder →</a></div>
+    <div class="g3">
+      <% services.forEach(function(sv){ %>
+      <div class="pk"><h4><%= sv.name %></h4><div class="pr"><%= h.money(sv.price) %></div><div class="s12 muted">~<%= sv.days %> ngày · <%= sv.orders %> đơn đã nhận</div>
+        <p class="s13 t2" style="margin-top:8px"><%= sv.description %></p>
+        <ul><% sv.includes.forEach(function(i){ %><li><em>✓</em><%= i %></li><% }) %></ul></div>
+      <% }) %>
+    </div>
+  </div>
+  <% } %>
+
+  <div class="toolbar">
+    <form class="f ac" style="gap:8px" method="get"><input class="inp" style="padding:7px 12px;width:240px" name="q" value="<%= query.q||'' %>" placeholder="Tìm trong shop…"><input type="hidden" name="sort" value="<%= sort %>"><button class="btn out sm">Tìm</button></form>
+    <div class="sortl mla">
+      <% [['popular','Bán chạy'],['new','Mới nhất'],['price_asc','Giá ↑'],['price_desc','Giá ↓']].forEach(function(x){ %><a class="<%= sort===x[0]?'on':'' %>" href="?sort=<%= x[0] %><%= query.q ? '&q='+encodeURIComponent(query.q) : '' %>"><%= x[1] %></a><% }) %>
+    </div>
+  </div>
+  <div class="pgrid g5"><% products.forEach(function(p){ p.shop = s; %><%- include('../partials/pcard', {p:p}) %><% }) %></div>
+  <% if (!products.length) { %><div class="card p24 empty"><b>Shop chưa có sản phẩm phù hợp.</b></div><% } %>
+
+  <% if (reviews.length) { %>
+  <div class="card p24" style="margin-top:30px"><h3 class="s18 w700" style="margin-bottom:6px">Đánh giá gần đây</h3>
+    <% reviews.forEach(function(r){ %><div class="rv"><span class="av" style="background:<%= r.user?r.user.color:'#999' %>;color:#fff"><%= h.initials(r.user?r.user.name:'?') %></span><div><b class="s14"><%= r.user?r.user.name:'' %></b> <span class="stars"><%= h.stars(r.rating) %></span><div class="s12 muted"><%= r.product ? r.product.name : '' %> · <%= h.date(r.createdAt) %></div><p class="s14 t2" style="margin-top:6px"><%= r.content %></p></div></div><% }) %>
+  </div>
+  <% } %>
+</div>
+<%- include('../partials/footer') %>

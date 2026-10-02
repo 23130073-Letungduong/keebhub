@@ -1,0 +1,27 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<div class="ct"><div class="doclay">
+  <nav class="toc"><div class="gt">MỤC LỤC</div><a class="on" href="#mua">Mua hàng</a><a href="#build">Custom Builder</a><a href="#tuong-thich">Tương thích</a><a href="#thanh-toan">Thanh toán</a><a href="#gia-cong">Theo dõi gia công</a><a href="#faq">Câu hỏi thường gặp</a></nav>
+  <article class="doc">
+    <h1>Hướng dẫn mua hàng & build phím</h1>
+    <p class="lead">Mọi thứ bạn cần để mua linh kiện lẻ hoặc đặt một chiếc bàn phím custom hoàn chỉnh trên KeebHub.</p>
+    <h2 id="mua">1. Mua linh kiện lẻ</h2>
+    <div class="stepbig"><span class="n">1</span><div><h4>Tìm sản phẩm</h4><p>Dùng thanh tìm kiếm hoặc vào danh mục, lọc theo layout, loại switch, profile keycap, khoảng giá.</p></div></div>
+    <div class="stepbig"><span class="n">2</span><div><h4>Thêm vào giỏ</h4><p>Giỏ hàng tự gom sản phẩm theo shop. Mỗi shop là một đơn hàng riêng, miễn phí ship cho đơn từ 500.000₫.</p></div></div>
+    <div class="stepbig"><span class="n">3</span><div><h4>Đặt hàng & thanh toán</h4><p>Nhập địa chỉ, chọn VNPay hoặc COD. Theo dõi đơn trong mục "Đơn hàng của tôi".</p></div></div>
+    <h2 id="build">2. Đặt build custom</h2>
+    <p>Mở <a href="/builder/new" style="color:var(--p600)"><b>Custom Builder</b></a> và đi qua 5 bước: <b>Kit → Switch → Keycap & Stab → Gói gia công → Xem lại</b>. Số switch được tính tự động theo số phím của kit (bán theo bộ 10).</p>
+    <h2 id="tuong-thich">3. Kiểm tra tương thích</h2>
+    <table class="tblp"><tr><th>Mức</th><th>Ý nghĩa</th></tr><tr><td>⛔ Chặn</td><td>Linh kiện không lắp được (VD: stab PCB-mount cho kit chỉ hỗ trợ plate-mount). Không thể đặt hàng.</td></tr><tr><td>⚠ Cảnh báo</td><td>Lắp được nhưng có rủi ro (VD: LED north-facing + keycap Cherry).</td></tr><tr><td>💡 Gợi ý</td><td>Khuyến nghị để phím tốt hơn (VD: lube switch linear).</td></tr></table>
+    <h2 id="thanh-toan">4. Thanh toán</h2>
+    <div class="notice"><p>Đơn gia công custom <b>chỉ thanh toán online qua VNPay</b> vì hàng làm riêng, không bán lại được.</p></div>
+    <h2 id="gia-cong">5. Theo dõi gia công</h2>
+    <p>Sau khi shop nhận đơn (trong 24h), bạn xem được từng công đoạn: kiểm tra PCB → lube switch → cân stab → lắp ráp & test → đóng gói, kèm ảnh thợ chụp.</p>
+    <h2 id="faq">Câu hỏi thường gặp</h2>
+    <div class="faq open"><div class="q">Tôi có huỷ được đơn custom không?<span>−</span></div><div class="a">Được, khi shop chưa nhận gia công. Nếu đã thanh toán, tiền được hoàn trong 3-5 ngày làm việc.</div></div>
+    <div class="faq open"><div class="q">Khi nào tôi được đánh giá sản phẩm?<span>−</span></div><div class="a">Khi đơn ở trạng thái Đã giao hoặc Hoàn thành. Mỗi sản phẩm trong đơn được đánh giá một lần.</div></div>
+    <div class="faq open"><div class="q">Trợ lý AI giúp được gì?<span>−</span></div><div class="a">Bấm nút "Hỏi Keeby" ở góc phải để được gợi ý linh kiện theo ngân sách, giải thích tương thích và tra cứu đơn hàng.</div></div>
+  </article>
+  <aside class="side2"><div class="bx"><b class="s14">Cần hỗ trợ?</b><p class="s13 t2" style="margin-top:8px">Hotline 1900 6868<br>hotro@keebhub.vn</p></div></aside>
+</div></div>
+<%- include('../partials/footer') %>

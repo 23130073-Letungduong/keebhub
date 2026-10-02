@@ -1,0 +1,58 @@
+<%- include('_top') %>
+<% var P = p || { attrs:{}, art:{}, specs:[], images:[] }; var A = P.attrs || {}; var pins = A.pins || []; var lays = A.layouts || []; %>
+<form method="post" action="<%= p ? '/seller/products/'+p._id : '/seller/products' %>" enctype="multipart/form-data" class="split">
+  <div>
+    <div class="card2"><div class="hd"><h3>Thông tin cơ bản</h3></div><div class="bd">
+      <div class="field2"><label>Tên sản phẩm <span class="req">*</span></label><input class="inp" name="name" value="<%= P.name||'' %>" required maxlength="160"></div>
+      <div class="g2">
+        <div class="field2"><label>Danh mục <span class="req">*</span></label><select class="inp" name="category" id="catSel" required><% categories.forEach(function(c){ %><option value="<%= c._id %>" data-type="<%= c.partType %>" <%= P.category && String(P.category._id||P.category)===String(c._id)?'selected':'' %>><%= c.icon %> <%= c.name %></option><% }) %></select></div>
+        <div class="field2"><label>Mã SKU</label><input class="inp" name="sku" value="<%= P.sku||'' %>"></div>
+      </div>
+      <div class="field2"><label>Mô tả</label><textarea class="inp" name="description" rows="6"><%= P.description||'' %></textarea></div>
+    </div></div>
+    <div class="card2"><div class="hd"><h3>Thuộc tính kỹ thuật</h3><p style="margin-left:8px">Dùng cho bộ lọc và kiểm tra tương thích trong Custom Builder</p></div><div class="bd">
+      <div class="attr-grp" data-for="kit prebuilt keycap"><div class="g3">
+        <div class="field2" data-for="kit prebuilt"><label>Layout</label><select class="inp" name="layout"><option value="">—</option><% ['60%','65%','75%','TKL','Full'].forEach(function(l){ %><option <%= A.layout===l?'selected':'' %>><%= l %></option><% }) %></select></div>
+        <div class="field2" data-for="kit prebuilt"><label>Số phím</label><input class="inp" type="number" name="keyCount" value="<%= A.keyCount||'' %>"></div>
+        <div class="field2" data-for="kit prebuilt"><label>Kiểu mount</label><select class="inp" name="mount"><option value="">—</option><% ['gasket','tray','top','plateless','leaf-spring'].forEach(function(l){ %><option <%= A.mount===l?'selected':'' %>><%= l %></option><% }) %></select></div>
+        <div class="field2" data-for="kit prebuilt"><label>PCB</label><select class="inp" name="hotswap"><option value="">—</option><option value="yes" <%= A.hotswap===true?'selected':'' %>>Hotswap</option><option value="no" <%= A.hotswap===false?'selected':'' %>>Hàn mạch</option></select></div>
+        <div class="field2" data-for="kit prebuilt"><label>Hướng LED</label><select class="inp" name="ledDirection"><option value="">—</option><option value="south" <%= A.ledDirection==='south'?'selected':'' %>>South-facing</option><option value="north" <%= A.ledDirection==='north'?'selected':'' %>>North-facing</option></select></div>
+        <div class="field2" data-for="kit prebuilt stabilizer"><label>Kiểu stab</label><select class="inp" name="stabMount"><option value="">—</option><option value="pcb-screw" <%= A.stabMount==='pcb-screw'?'selected':'' %>>PCB screw-in</option><option value="pcb-clip" <%= A.stabMount==='pcb-clip'?'selected':'' %>>PCB clip-in</option><option value="plate" <%= A.stabMount==='plate'?'selected':'' %>>Plate-mount</option></select></div>
+      </div></div>
+      <div class="g3">
+        <div class="field2" data-for="kit prebuilt switch"><label>Số chân switch</label><div class="f" style="gap:14px;padding:10px 0"><label class="f ac" style="gap:6px"><input type="checkbox" name="pins" value="3" <%= pins.includes(3)?'checked':'' %>> 3 pin</label><label class="f ac" style="gap:6px"><input type="checkbox" name="pins" value="5" <%= pins.includes(5)?'checked':'' %>> 5 pin</label></div></div>
+        <div class="field2" data-for="switch"><label>Loại switch</label><select class="inp" name="switchType"><option value="">—</option><% ['linear','tactile','clicky','silent'].forEach(function(l){ %><option <%= A.switchType===l?'selected':'' %>><%= l %></option><% }) %></select></div>
+        <div class="field2" data-for="switch"><label>Lực nhấn (g)</label><input class="inp" type="number" name="force" value="<%= A.force||'' %>"></div>
+        <div class="field2" data-for="keycap"><label>Profile</label><select class="inp" name="profile"><option value="">—</option><% ['Cherry','OEM','SA','XDA','MDA','ASA'].forEach(function(l){ %><option <%= A.profile===l?'selected':'' %>><%= l %></option><% }) %></select></div>
+        <div class="field2" data-for="keycap"><label>Hỗ trợ layout</label><div class="f wrap" style="gap:10px;padding:8px 0"><% ['60%','65%','75%','TKL','Full'].forEach(function(l){ %><label class="f ac" style="gap:5px"><input type="checkbox" name="layouts" value="<%= l %>" <%= lays.includes(l)?'checked':'' %>> <%= l %></label><% }) %></div></div>
+        <div class="field2"><label>Chất liệu</label><input class="inp" name="material" value="<%= A.material||'' %>" placeholder="Nhôm, PBT, POM…"></div>
+      </div>
+      <div class="s13 w700" style="margin:10px 0 8px">Thông số bổ sung</div>
+      <div id="specs">
+        <% (P.specs.length ? P.specs : [{k:'',v:''},{k:'',v:''}]).forEach(function(s){ %><div class="g2" style="margin-bottom:8px"><input class="inp" name="specK" value="<%= s.k %>" placeholder="Tên thông số"><input class="inp" name="specV" value="<%= s.v %>" placeholder="Giá trị"></div><% }) %>
+      </div>
+      <button type="button" class="btn ghost sm" onclick="var d=document.createElement('div');d.className='g2';d.style.marginBottom='8px';d.innerHTML='<input class=&quot;inp&quot; name=&quot;specK&quot; placeholder=&quot;Tên thông số&quot;><input class=&quot;inp&quot; name=&quot;specV&quot; placeholder=&quot;Giá trị&quot;>';document.getElementById('specs').appendChild(d)">+ Thêm dòng</button>
+    </div></div>
+  </div>
+  <div>
+    <div class="card2"><div class="hd"><h3>Giá & kho</h3></div><div class="bd">
+      <div class="field2"><label>Giá bán (₫) <span class="req">*</span></label><input class="inp" type="number" name="price" min="1000" step="1000" value="<%= P.price||'' %>" required></div>
+      <div class="field2"><label>Giá gốc (để hiện % giảm)</label><input class="inp" type="number" name="oldPrice" min="0" step="1000" value="<%= P.oldPrice||'' %>"></div>
+      <div class="g2"><div class="field2"><label>Tồn kho</label><input class="inp" type="number" name="stock" min="0" value="<%= P.stock||0 %>"></div><div class="field2"><label>Ngưỡng cảnh báo</label><input class="inp" type="number" name="lowStock" min="0" value="<%= P.lowStock||5 %>"></div></div>
+      <p class="s12 muted">Switch: giá & tồn kho tính theo <b>bộ 10 switch</b>.</p>
+    </div></div>
+    <div class="card2"><div class="hd"><h3>Hình ảnh</h3></div><div class="bd">
+      <% if (P.images.length) { %><div class="ph" style="flex-wrap:wrap;margin:0 0 12px"><% P.images.forEach(function(i){ %><label style="text-align:center"><i><img src="<%= i %>" style="width:100%;height:100%;object-fit:cover"></i><span class="s12"><input type="checkbox" name="removeImg" value="<%= i %>"> Xoá</span></label><% }) %></div><% } %>
+      <div class="upl2"><label style="cursor:pointer">📷 <b>Tải ảnh lên</b> (tối đa 6)<input type="file" name="images" accept="image/*" multiple hidden></label><div class="s12 muted filelbl" style="margin-top:4px">Không có ảnh → hệ thống vẽ ảnh minh hoạ theo màu bên dưới</div></div>
+      <div class="g3" style="margin-top:12px">
+        <div class="field2"><label>Màu chính</label><input type="color" name="artColor" value="<%= P.art.color||'#4B5563' %>" class="inp" style="padding:2px;height:38px"></div>
+        <div class="field2"><label>Màu nhấn</label><input type="color" name="artAccent" value="<%= P.art.accent||'#1B62F5' %>" class="inp" style="padding:2px;height:38px"></div>
+        <div class="field2"><label>Màu nền</label><input type="color" name="artBg" value="<%= P.art.bg||'#E7EBF0' %>" class="inp" style="padding:2px;height:38px"></div>
+      </div>
+      <input type="hidden" name="artKind" value="<%= P.art.kind||'' %>">
+    </div></div>
+    <button class="btn pri blk lg"><%= p ? 'Lưu thay đổi' : 'Gửi duyệt sản phẩm' %></button>
+    <p class="s12 muted" style="margin-top:8px;text-align:center"><%= p ? '' : 'Sản phẩm mới cần sàn duyệt trước khi hiển thị.' %></p>
+  </div>
+</form>
+<%- include('_bottom') %>

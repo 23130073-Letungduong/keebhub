@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KeebHub — Chính sách đổi trả & hoàn tiền</title>
+<link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin><link href='https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap' rel='stylesheet'>
+<style>
+:root{
+  --white:#FFFFFF; --surface:#F7F8FA; --surface2:#EFF1F5; --border:#E4E7EC; --border2:#CFD4DC;
+  --text:#101828; --text2:#475467; --muted:#98A2B3;
+  --p50:#EEF4FF; --p100:#D8E5FF; --p500:#1B62F5; --p600:#1450D6; --p700:#0F3DA8;
+  --a50:#FFF3ED; --a500:#FF5A1F; --a600:#E84708;
+  --s50:#ECFDF3; --s600:#079455; --w50:#FFFAEB; --w600:#DC6803; --d50:#FEF3F2; --d600:#D92D20;
+  --star:#FDB022;
+  --r6:6px; --r8:8px; --r10:10px; --r14:14px; --r20:20px; --rf:999px;
+  --sh1:0 1px 2px rgba(16,24,40,.06); --sh2:0 4px 12px rgba(16,24,40,.08); --sh3:0 12px 28px rgba(16,24,40,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Be Vietnam Pro',system-ui,-apple-system,sans-serif;background:var(--surface);color:var(--text);font-size:15px;line-height:1.5}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.ct{max-width:1280px;margin:0 auto;padding:0 32px}
+.f{display:flex} .col{display:flex;flex-direction:column} .g{display:grid}
+.ac{align-items:center} .as{align-items:flex-start} .jb{justify-content:space-between} .jc{justify-content:center}
+.wrap{flex-wrap:wrap} .fl1{flex:1} .mla{margin-left:auto}
+.muted{color:var(--muted)} .t2{color:var(--text2)}
+.s11{font-size:11px}.s12{font-size:12px}.s13{font-size:13px}.s14{font-size:14px}.s16{font-size:16px}
+.s18{font-size:18px}.s20{font-size:20px}.s24{font-size:24px}.s30{font-size:30px}.s38{font-size:38px}
+.w500{font-weight:500}.w600{font-weight:600}.w700{font-weight:700}.w800{font-weight:800}
+.tight{letter-spacing:-.02em}
+
+/* ---------- top bar / header / nav ---------- */
+.topbar{background:var(--text);color:#CDD5E0;font-size:12.5px}
+.topbar .ct{height:36px;display:flex;align-items:center;justify-content:space-between}
+.topbar a{color:#CDD5E0;margin-left:20px}
+.topbar a.hl{color:#fff;font-weight:600}
+.hdr{background:var(--white);border-bottom:1px solid var(--border)}
+.hdr .ct{height:76px;display:flex;align-items:center;gap:26px}
+.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.logo .mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--p500),var(--p700));
+  display:grid;place-items:center;color:#fff;font-size:16px;font-weight:800}
+.logo .mark span{transform:translateY(-1px)}
+.search{flex:1;position:relative;max-width:620px}
+.search input{width:100%;height:46px;border:2px solid var(--p500);border-radius:var(--r10);padding:0 112px 0 42px;
+  font-family:inherit;font-size:14.5px;color:var(--text);background:var(--white)}
+.search input::placeholder{color:var(--muted)}
+.search .ico{position:absolute;left:14px;top:13px;color:var(--muted);font-size:17px}
+.search .go{position:absolute;right:5px;top:5px;height:36px;padding:0 20px;border:0;border-radius:var(--r8);
+  background:var(--p500);color:#fff;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer}
+.hact{display:flex;align-items:center;gap:6px;margin-left:auto}
+.iconbtn{position:relative;width:44px;height:44px;border-radius:var(--r10);display:grid;place-items:center;
+  font-size:19px;color:var(--text2)}
+.iconbtn .dot{position:absolute;top:6px;right:5px;min-width:18px;height:18px;padding:0 5px;border-radius:var(--rf);
+  background:var(--a500);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center}
+.user{display:flex;align-items:center;gap:9px;padding:6px 12px 6px 6px;border-radius:var(--rf);border:1px solid var(--border)}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--p100);color:var(--p700);display:grid;place-items:center;
+  font-size:13px;font-weight:700}
+.nav{background:var(--white);border-bottom:1px solid var(--border)}
+.nav .ct{height:48px;display:flex;align-items:center;gap:28px;font-size:14px;color:var(--text2);font-weight:500}
+.nav .cat{display:flex;align-items:center;gap:9px;font-weight:600;color:var(--text)}
+.nav a.on{color:var(--p600);font-weight:600}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:600;
+  font-size:14.5px;padding:11px 20px;border-radius:var(--r10);border:1px solid transparent;cursor:pointer;white-space:nowrap}
+.btn.pri{background:var(--p500);color:#fff}
+.btn.cta{background:var(--a500);color:#fff}
+.btn.out{background:var(--white);color:var(--text);border-color:var(--border2)}
+.btn.outp{background:var(--a50);color:var(--a600);border-color:#FFC9AE}
+.btn.ghost{background:transparent;color:var(--p600);padding-left:8px;padding-right:8px}
+.btn.dis{background:var(--surface2);color:var(--muted);border-color:var(--border)}
+.btn.sm{padding:8px 14px;font-size:13px;border-radius:var(--r8)}
+.btn.lg{padding:14px 26px;font-size:16px}
+.btn.blk{width:100%}
+
+/* ---------- surfaces ---------- */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);box-shadow:var(--sh1)}
+.card.p16{padding:16px}.card.p20{padding:20px}.card.p24{padding:24px}
+.sechd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
+.sechd h2{font-size:22px;font-weight:700;letter-spacing:-.01em}
+.sechd a{font-size:14px;color:var(--p600);font-weight:600}
+.crumb{font-size:13.5px;color:var(--text2);padding:16px 0}
+.crumb b{color:var(--text);font-weight:600}
+.crumb span{margin:0 7px;color:var(--muted)}
+
+/* ---------- badges & chips ---------- */
+.bdg{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:var(--rf);white-space:nowrap}
+.bdg.new{background:var(--p50);color:var(--p700)}
+.bdg.sale{background:var(--a500);color:#fff}
+.bdg.ok{background:var(--s50);color:var(--s600)}
+.bdg.warn{background:var(--w50);color:var(--w600)}
+.bdg.err{background:var(--d50);color:var(--d600)}
+.bdg.gray{background:var(--surface2);color:var(--text2)}
+.chip{padding:8px 15px;border:1px solid var(--border2);border-radius:var(--r8);font-size:13.5px;font-weight:500;
+  background:var(--white);cursor:pointer;white-space:nowrap}
+.chip.on{border-color:var(--p500);background:var(--p50);color:var(--p700);font-weight:600}
+.chip.off{color:var(--muted);background:var(--surface);border-style:dashed;cursor:not-allowed}
+.chip.rm{display:inline-flex;align-items:center;gap:7px;background:var(--p50);border-color:var(--p100);color:var(--p700);font-weight:600}
+
+/* ---------- form ---------- */
+.field{display:flex;flex-direction:column;gap:7px}
+.field > label{font-size:13.5px;font-weight:600;color:var(--text2)}
+.inp{font-family:inherit;font-size:14.5px;padding:11px 14px;border:1px solid var(--border2);border-radius:var(--r10);
+  background:var(--white);color:var(--text);width:100%}
+.inp::placeholder{color:var(--muted)}
+.inp.focus{border-color:var(--p500);box-shadow:0 0 0 3px var(--p50)}
+.help{font-size:12.5px;color:var(--muted)}
+.help.err{color:var(--d600)}
+.check{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:5px;background:var(--white);flex:none;display:grid;place-items:center}
+.check.on{background:var(--p500);border-color:var(--p500);color:#fff;font-size:11px;font-weight:700}
+.radio{width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex:none;display:grid;place-items:center}
+.radio.on{border-color:var(--p500)}
+.radio.on::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--p500)}
+
+/* ---------- product card ---------- */
+.pgrid{display:grid;gap:16px}
+.pc{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);overflow:hidden;position:relative}
+.pc .thumb{aspect-ratio:1/1;position:relative;overflow:hidden;background:var(--surface2)}
+.pc .thumb .tag{position:absolute;top:10px;left:10px;z-index:2}
+.pc .thumb .wish{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.92);
+  display:grid;place-items:center;font-size:14px;color:var(--muted);z-index:2}
+.pc .bd{padding:13px 14px 15px}
+.pc .shop{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.pc .shop i{width:5px;height:5px;border-radius:50%;background:var(--s600);display:block}
+.pc .tt{font-size:13.8px;font-weight:600;line-height:1.45;height:40px;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:9px}
+.pc .prw{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.pc .pr{font-size:16.5px;font-weight:800;color:var(--a600);white-space:nowrap}
+.pc .old{font-size:12px;color:var(--muted);text-decoration:line-through;font-weight:500;white-space:nowrap}
+.pc .ft{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:11.5px;color:var(--text2)}
+.stars{color:var(--star);letter-spacing:.5px;font-size:12px}
+
+/* keyboard illustration */
+.kb{width:100%;height:100%;display:block}
+
+/* ---------- footer ---------- */
+.ftr{background:var(--white);border-top:1px solid var(--border);margin-top:64px}
+.ftr .top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1.2fr;gap:34px;padding:44px 0 36px}
+.ftr h4{font-size:13px;font-weight:700;margin-bottom:14px;letter-spacing:.02em}
+.ftr ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ftr li{font-size:13.5px;color:var(--text2)}
+.ftr .bot{border-top:1px solid var(--border);padding:18px 0;display:flex;justify-content:space-between;
+  font-size:12.5px;color:var(--muted)}
+.paylogos{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.paylogos i{width:44px;height:28px;border:1px solid var(--border);border-radius:5px;display:grid;place-items:center;
+  font-size:9px;font-weight:700;color:var(--text2);font-style:normal;background:var(--white)}
+
+/* ---------- misc ---------- */
+.stepper{display:inline-flex;align-items:stretch;border:1px solid var(--border2);border-radius:var(--r8);overflow:hidden}
+.stepper b{width:34px;display:grid;place-items:center;background:var(--white);color:var(--text2);font-weight:500;font-size:15px}
+.stepper span{width:46px;display:grid;place-items:center;font-weight:600;font-size:14.5px;
+  border-left:1px solid var(--border);border-right:1px solid var(--border)}
+.divider{height:1px;background:var(--border)}
+.dashed{height:1px;background:repeating-linear-gradient(90deg,var(--border) 0 6px,transparent 6px 12px)}
+.sumrow{display:flex;justify-content:space-between;font-size:14px;color:var(--text2)}
+.sumrow b{color:var(--text);font-weight:600}
+.alert{display:flex;gap:11px;padding:13px 15px;border-radius:var(--r10);font-size:13.5px;line-height:1.55}
+.alert.ok{background:var(--s50);color:#05603A}
+.alert.warn{background:var(--w50);color:#93370D}
+.alert.info{background:var(--p50);color:var(--p700)}
+.alert.err{background:var(--d50);color:#912018}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border)}
+.tabs a{padding:13px 18px;font-size:14.5px;font-weight:600;color:var(--text2);border-bottom:2px solid transparent}
+.tabs a.on{color:var(--p600);border-bottom-color:var(--p500)}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;
+  padding:12px 14px;background:var(--surface);border-bottom:1px solid var(--border)}
+.tbl td{padding:14px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+
+.doclay{display:grid;grid-template-columns:262px 1fr 232px;gap:32px;align-items:start;padding:24px 0 70px}
+.toc{position:sticky;top:20px;background:var(--white);border:1px solid var(--border);border-radius:var(--r14);
+  padding:16px 0;box-shadow:var(--sh1)}
+.toc .gt{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;padding:8px 18px}
+.toc a{display:block;padding:8px 18px;font-size:13.5px;color:var(--text2)}
+.toc a.on{background:var(--p50);color:var(--p700);font-weight:600;box-shadow:inset 3px 0 0 var(--p500)}
+.doc{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);padding:38px 42px;box-shadow:var(--sh1)}
+.doc h1{font-size:32px;font-weight:800;letter-spacing:-.025em}
+.doc .lead{font-size:15.5px;color:var(--text2);line-height:1.75;margin-top:12px}
+.doc h2{font-size:21px;font-weight:700;margin:36px 0 14px;letter-spacing:-.015em;scroll-margin-top:90px}
+.doc h3{font-size:16px;font-weight:700;margin:24px 0 10px}
+.doc p{font-size:14.5px;color:var(--text2);line-height:1.8;margin-bottom:13px}
+.doc ul,.doc ol{margin:0 0 15px 20px}
+.doc li{font-size:14.5px;color:var(--text2);line-height:1.8;margin-bottom:7px}
+.doc b{color:var(--text)}
+.stepbig{display:flex;gap:18px;padding:20px;border:1px solid var(--border);border-radius:var(--r14);margin-bottom:14px;background:var(--surface)}
+.stepbig .n{width:40px;height:40px;border-radius:12px;background:var(--p500);color:#fff;display:grid;place-items:center;
+  font-size:16px;font-weight:800;flex:none}
+.stepbig h4{font-size:15.5px;font-weight:700}
+.stepbig p{font-size:13.8px;margin:6px 0 0;line-height:1.7}
+.faq{border:1px solid var(--border);border-radius:var(--r10);margin-bottom:10px;overflow:hidden}
+.faq .q{display:flex;align-items:center;gap:12px;padding:15px 18px;font-size:14.5px;font-weight:600;background:var(--white)}
+.faq .q span{margin-left:auto;color:var(--muted);font-size:17px}
+.faq .a{padding:0 18px 16px;font-size:14px;color:var(--text2);line-height:1.75}
+.faq.open{border-color:var(--p500)}
+.faq.open .q{background:var(--p50);color:var(--p700)}
+.side2{position:sticky;top:20px}
+.side2 .bx{background:var(--white);border:1px solid var(--border);border-radius:var(--r14);padding:16px;margin-bottom:14px}
+.tblp{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:16px}
+.tblp th{text-align:left;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text2);
+  padding:11px 14px;background:var(--surface);border:1px solid var(--border)}
+.tblp td{padding:12px 14px;border:1px solid var(--border);color:var(--text2);line-height:1.6}
+.notice{border-left:3px solid var(--p500);background:var(--p50);border-radius:0 var(--r10) var(--r10) 0;padding:14px 18px;margin:16px 0}
+.notice.warn{border-left-color:var(--w600);background:var(--w50)}
+.notice p{margin:0;font-size:14px;line-height:1.7}
+.nf{min-height:78vh;display:grid;place-items:center;text-align:center;padding:60px 0}
+.nf .code{font-size:120px;font-weight:800;letter-spacing:-.06em;line-height:1;
+  background:linear-gradient(135deg,var(--p500),var(--a500));-webkit-background-clip:text;background-clip:text;color:transparent}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="ct">
+  <div>Kênh người bán &nbsp;·&nbsp; Tải ứng dụng &nbsp;·&nbsp; Kết nối cộng đồng</div>
+  <div><a>Thông báo</a><a>Trợ giúp</a><a class="hl">Đăng ký</a><a class="hl">Đăng nhập</a></div>
+</div></div><div class="hdr"><div class="ct">
+  <a class="logo"><span class="mark"><span>K</span></span><span>Keeb<span style="color:var(--p500)">Hub</span></span></a>
+  <div class="search"><span class="ico">⌕</span>
+    <input class="inp" placeholder="Tìm kit, switch, keycap, dịch vụ gia công…" >
+    <button class="go">Tìm kiếm</button>
+  </div>
+  <div class="hact">
+    <div class="iconbtn">♡</div>
+    <div class="iconbtn">🔔<span class="dot">5</span></div>
+    <div class="iconbtn">🛒<span class="dot">3</span></div>
+    <div class="user"><div class="avatar">DT</div><div class="s13 w600">Duong T.</div><span class="s12 muted">▾</span></div>
+  </div>
+</div></div><div class="nav"><div class="ct">
+  <div class="cat">☰ Tất cả danh mục</div>
+  <a class="">Kit bàn phím</a><a class="">Switch</a><a class="">Keycap</a><a class="">Stabilizer</a><a class="">Phụ kiện</a><a class="">Dịch vụ gia công</a><a class="">Build sẵn</a>
+  <a class="mla" style="color:var(--a600);font-weight:600">🔥 Group buy đang mở</a>
+</div></div>
+<div class="ct">
+  <div class="crumb">Trang chủ<span>›</span>Trợ giúp<span>›</span><b>Chính sách đổi trả &amp; hoàn tiền</b></div>
+  <div class="doclay">
+    <div class="toc">
+      <div class="gt">HƯỚNG DẪN</div>
+      <a>Quy trình mua hàng</a><a>Dùng Custom Builder</a><a>Thanh toán</a><a>Theo dõi đơn hàng</a>
+      <div class="gt" style="margin-top:8px">CHÍNH SÁCH</div>
+      <a class="on">Đổi trả &amp; hoàn tiền</a><a>Bảo hành</a><a>Vận chuyển</a><a>Bảo mật thông tin</a>
+      <div class="gt" style="margin-top:8px">NGƯỜI BÁN</div>
+      <a>Đăng ký bán hàng</a><a>Quy chế hoạt động</a><a>Biểu phí</a>
+    </div>
+
+    <div class="doc">
+      <h1>Chính sách đổi trả &amp; hoàn tiền</h1>
+      <p class="lead">Cập nhật lần cuối: 01/09/2026 · Áp dụng cho mọi giao dịch trên KeebHub</p>
+
+      <h2>1. Nguyên tắc giữ tiền</h2>
+      <p>KeebHub giữ toàn bộ số tiền bạn thanh toán và chỉ chuyển cho người bán sau khi:</p>
+      <ul>
+        <li>Bạn bấm <b>“Đã nhận hàng”</b> trong trang chi tiết đơn, hoặc</li>
+        <li>Đủ <b>7 ngày</b> kể từ khi đơn vị vận chuyển xác nhận giao thành công mà bạn không khiếu nại.</li>
+      </ul>
+      <p>Nếu bạn mở khiếu nại trong thời hạn trên, tiền tiếp tục được giữ cho tới khi có kết luận xử lý.</p>
+
+      <h2>2. Thời hạn đổi trả</h2>
+      <table class="tblp">
+        <tr><th>Loại hàng</th><th>Thời hạn</th><th>Điều kiện</th></tr>
+        <tr><td><b>Linh kiện nguyên seal</b><br>kit, switch, keycap, stabilizer</td><td>7 ngày</td>
+          <td>Còn nguyên tem, hộp, phụ kiện đi kèm. Chưa qua sử dụng.</td></tr>
+        <tr><td><b>Linh kiện đã mở seal</b></td><td>7 ngày</td>
+          <td>Chỉ khi lỗi nhà sản xuất hoặc không đúng mô tả.</td></tr>
+        <tr><td><b>Hàng đã gia công theo yêu cầu</b></td><td>7 ngày</td>
+          <td><b>Chỉ đổi trả khi lỗi tay nghề hoặc sai Build Sheet.</b> Không nhận lý do “không thích”.</td></tr>
+        <tr><td><b>Hàng pre-order / group buy</b></td><td>Theo điều khoản từng đợt</td>
+          <td>Thường không huỷ được sau khi đợt đóng đơn.</td></tr>
+      </table>
+
+      <h2>3. Huỷ đơn có gia công</h2>
+      <p>Đơn gia công đi qua nhiều giai đoạn, quyền huỷ và mức hoàn tiền thay đổi theo từng giai đoạn:</p>
+      <table class="tblp">
+        <tr><th>Giai đoạn</th><th>Được huỷ?</th><th>Mức hoàn</th></tr>
+        <tr><td>Chờ shop xác nhận</td><td>Có, tự động</td><td><b>100%</b></td></tr>
+        <tr><td>Shop đã xác nhận, chưa bắt đầu</td><td>Có</td><td><b>100%</b></td></tr>
+        <tr><td>Đang gia công</td><td>Cần shop đồng ý hoặc sàn phân xử</td>
+          <td>Hoàn phần linh kiện. <b>Phí gia công có thể không hoàn</b> tương ứng phần việc đã làm.</td></tr>
+        <tr><td>Đã bàn giao vận chuyển</td><td>Không</td><td>Từ chối nhận hàng sẽ bị tính phí vận chuyển hai chiều.</td></tr>
+      </table>
+      <div class="notice warn"><p><b>Ví dụ thực tế:</b> đơn 8.490.000₫ gồm 7.740.000₫ linh kiện và 750.000₫ phí gia công.
+      Shop đã lube xong 70 switch và cân stabilizer (3/5 công đoạn). Bạn huỷ đơn. Sàn hoàn 7.740.000₫ phần linh kiện,
+      shop giữ 750.000₫ vì công lube không thể hoàn nguyên.</p></div>
+
+      <h2>4. Trường hợp lỗi thuộc về shop</h2>
+      <p>Bạn được hoàn <b>100%</b> kể cả phí gia công nếu:</p>
+      <ul>
+        <li>Shop giao sai so với Build Sheet đã chốt (sai switch, sai keycap, thiếu mod đã cam kết).</li>
+        <li>Tay nghề gia công có lỗi rõ ràng: stabilizer rattle nặng, switch lube không đều, phím không ăn.</li>
+        <li>Shop trễ hẹn quá <b>5 ngày làm việc</b> so với cam kết mà không báo trước.</li>
+        <li>Shop không phản hồi quá 72 giờ trong lúc đơn đang gia công.</li>
+      </ul>
+      <p>Trong các trường hợp này bạn có quyền chọn: shop làm lại miễn phí, hoặc hoàn tiền toàn bộ.</p>
+
+      <h2>5. Quy trình khiếu nại</h2>
+      <ol>
+        <li>Mở đơn hàng, bấm <b>Yêu cầu huỷ / khiếu nại</b>, chọn lý do và đính kèm bằng chứng (ảnh, video, ảnh chụp tin nhắn).</li>
+        <li>Shop có <b>48 giờ</b> để phản hồi.</li>
+        <li>Hai bên tự thoả thuận được thì hồ sơ đóng tại đây.</li>
+        <li>Không thoả thuận được, sàn tiếp nhận phân xử và ra quyết định trong <b>3–5 ngày làm việc</b> dựa trên bằng chứng hai bên cùng dữ liệu hệ thống (thời điểm xác nhận đơn, lịch sử cập nhật tiến độ, ảnh từng công đoạn).</li>
+        <li>Quyết định của sàn có hiệu lực ngay. Tiền hoàn về phương thức thanh toán gốc trong 3–5 ngày làm việc, hoặc vào ví KeebHub ngay lập tức nếu bạn chọn.</li>
+      </ol>
+
+      <h2>6. Chi phí vận chuyển khi đổi trả</h2>
+      <table class="tblp">
+        <tr><th>Nguyên nhân</th><th>Ai chịu phí</th></tr>
+        <tr><td>Hàng lỗi, sai mô tả, sai Build Sheet</td><td><b>Người bán</b></td></tr>
+        <tr><td>Giao nhầm, thiếu hàng</td><td><b>Người bán</b></td></tr>
+        <tr><td>Khách đổi ý, không thích</td><td><b>Người mua</b></td></tr>
+        <tr><td>Khách đặt nhầm cấu hình</td><td><b>Người mua</b></td></tr>
+      </table>
+
+      <h2>7. Trường hợp không được hỗ trợ</h2>
+      <ul>
+        <li>Hư hỏng do người dùng tự tháo lắp, tự mod sau khi nhận hàng.</li>
+        <li>Hao mòn tự nhiên: keycap bóng, switch nhẹ đi sau thời gian dài sử dụng.</li>
+        <li>Quá thời hạn 7 ngày kể từ khi giao thành công mà không có khiếu nại.</li>
+        <li>Không cung cấp được bằng chứng khi sàn yêu cầu.</li>
+      </ul>
+
+      <div class="notice"><p>Chính sách này có thể thay đổi. Phiên bản áp dụng cho đơn hàng của bạn là phiên bản
+      có hiệu lực tại thời điểm bạn đặt hàng. Mọi thắc mắc liên hệ <b>hotro@keebhub.vn</b> hoặc <b>1900 6868</b>.</p></div>
+    </div>
+
+    <div class="side2">
+      <div class="bx">
+        <b class="s14">Tóm tắt nhanh</b>
+        <div class="col" style="gap:12px;margin-top:12px">
+          <div class="s13 t2">🔒 Sàn giữ tiền tới khi bạn xác nhận</div>
+          <div class="s13 t2">↩ Đổi trả 7 ngày với hàng nguyên seal</div>
+          <div class="s13 t2">⚙ Hàng gia công chỉ đổi khi lỗi tay nghề</div>
+          <div class="s13 t2">⚖ Sàn phân xử trong 3–5 ngày</div>
+        </div>
+      </div>
+      <div class="bx">
+        <b class="s14">Tài liệu liên quan</b>
+        <div class="col" style="gap:10px;margin-top:11px">
+          <a class="s13" style="color:var(--p600);font-weight:500">Chính sách bảo hành</a>
+          <a class="s13" style="color:var(--p600);font-weight:500">Chính sách vận chuyển</a>
+          <a class="s13" style="color:var(--p600);font-weight:500">Điều khoản sử dụng</a>
+          <a class="s13" style="color:var(--p600);font-weight:500">Chính sách bảo mật</a>
+        </div>
+      </div>
+      <div class="bx">
+        <b class="s14">Cần mở khiếu nại?</b>
+        <p class="s13 t2" style="margin-top:7px;line-height:1.6">Vào đơn hàng cần khiếu nại và bấm nút yêu cầu ngay trong trang chi tiết.</p>
+        <a class="btn out blk sm" style="margin-top:12px">Tới đơn hàng của tôi</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ftr"><div class="ct">
+  <div class="top">
+    <div>
+      <a class="logo" style="font-size:19px"><span class="mark" style="width:30px;height:30px;font-size:14px"><span>K</span></span><span>Keeb<span style="color:var(--p500)">Hub</span></span></a>
+      <p class="s13 t2" style="margin-top:14px;line-height:1.7;max-width:280px">Sàn thương mại điện tử bàn phím cơ custom. Kết nối người chơi với xưởng gia công uy tín trên toàn quốc.</p>
+      <div class="paylogos"><i>VNPAY</i><i>MOMO</i><i>ZALOPAY</i><i>VISA</i><i>ATM</i></div>
+    </div>
+    <div><h4>Khám phá</h4><ul><li>Kit bàn phím</li><li>Switch</li><li>Keycap</li><li>Dịch vụ gia công</li><li>Group buy</li></ul></div>
+    <div><h4>Hỗ trợ</h4><ul><li>Hướng dẫn mua hàng</li><li>Chính sách đổi trả</li><li>Chính sách bảo hành</li><li>Tra cứu đơn hàng</li><li>Câu hỏi thường gặp</li></ul></div>
+    <div><h4>Người bán</h4><ul><li>Đăng ký bán hàng</li><li>Quy chế hoạt động</li><li>Chính sách phí</li><li>Trung tâm người bán</li></ul></div>
+    <div><h4>Liên hệ</h4><ul><li>1900 6868</li><li>hotro@keebhub.vn</li><li>Tầng 8, toà nhà A, Q.1, TP.HCM</li></ul>
+      <div class="f" style="gap:8px;margin-top:14px"><i class="s12" style="width:32px;height:32px;border:1px solid var(--border);border-radius:8px;display:grid;place-items:center;font-style:normal">f</i><i class="s12" style="width:32px;height:32px;border:1px solid var(--border);border-radius:8px;display:grid;place-items:center;font-style:normal">ig</i><i class="s12" style="width:32px;height:32px;border:1px solid var(--border);border-radius:8px;display:grid;place-items:center;font-style:normal">yt</i></div>
+    </div>
+  </div>
+  <div class="bot"><span>© 2026 KeebHub. Đồ án Thương mại điện tử.</span><span>Điều khoản · Bảo mật · Cookie</span></div>
+</div></div>
+</body>
+</html>

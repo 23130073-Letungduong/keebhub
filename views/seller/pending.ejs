@@ -1,0 +1,9 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<div class="ct"><div class="resultwrap"><div class="rescard">
+  <div class="resban" style="background:linear-gradient(170deg,#FFFAEB,#fff)"><div class="ic" style="background:var(--w600)">⏳</div>
+    <h1><%= shop.status==='locked' ? 'Shop đang bị khoá' : 'Hồ sơ shop đang chờ duyệt' %></h1>
+    <p><%= shop.status==='locked' ? (shop.rejectReason ? 'Lý do: ' + shop.rejectReason : 'Vui lòng liên hệ hotro@keebhub.vn.') : 'Quản trị viên sẽ kiểm tra và duyệt shop "' + shop.name + '" trong vòng 24 giờ.' %></p></div>
+  <div class="f jc" style="gap:10px;padding:22px"><a class="btn out" href="/seller/register">Sửa hồ sơ</a><a class="btn pri" href="/">Về trang chủ</a></div>
+</div></div></div>
+<%- include('../partials/footer') %>

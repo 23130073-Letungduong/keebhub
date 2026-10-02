@@ -1,0 +1,97 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<div class="ct">
+  <div class="hero">
+    <div class="catrail">
+      <% categories.forEach(function(c,i){ %><a class="<%= i===0?'on':'' %>" href="/c/<%= c.slug %>"><em><%= c.icon %></em><%= c.name %><b><%= countMap[String(c._id)]||0 %></b></a><% }) %>
+      <a href="/shops"><em>🏪</em>Gian hàng<b>›</b></a>
+    </div>
+    <div class="banner">
+      <div class="glow"></div>
+      <div class="kbart-hero"><img src="/img/hero.svg" alt=""></div>
+      <div class="eyebrow">Sàn bàn phím custom số 1 Việt Nam</div>
+      <h1>Tự build bàn phím<br>đúng gu của bạn</h1>
+      <p>Chọn kit, switch, keycap và gói gia công trong một luồng duy nhất. Hệ thống tự kiểm tra tương thích trước khi bạn đặt hàng.</p>
+      <div class="acts">
+        <a class="btn cta lg" href="/builder/new">⚙ Bắt đầu build ngay</a>
+        <a class="btn lg" href="/huong-dan" style="background:rgba(255,255,255,.96);color:#0F2E6B;border-color:transparent">Xem hướng dẫn</a>
+      </div>
+      <div class="stats">
+        <div><b><%= totalProducts %></b><span>Sản phẩm</span></div>
+        <div><b><%= shopCount %></b><span>Xưởng gia công</span></div>
+        <div><b><%= totalOrders %></b><span>Đơn đã giao</span></div>
+      </div>
+    </div>
+    <div class="sidebn">
+      <a class="sbn" href="/c/<%= (categories.find(function(c){return c.partType==='keycap'})||{}).slug %>" style="background:linear-gradient(150deg,#FFF3ED,#FFE2D2);color:#7C2D12">
+        <div><h3>Keycap mới về<br>giảm đến 25%</h3><p>Cherry, MDA, ASA profile</p></div>
+        <div class="go">Xem ngay →</div>
+      </a>
+      <a class="sbn" href="/builder/new" style="background:linear-gradient(150deg,#ECFDF3,#D3F4E2);color:#05603A">
+        <div><h3>Gói lube trọn bộ<br>từ xưởng uy tín</h3><p>Theo dõi tiến độ kèm ảnh thật</p></div>
+        <div class="go">Đặt dịch vụ →</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="usp"><div class="it"><em>🚚</em><div><b>Miễn phí vận chuyển</b><span>Đơn từ 500.000₫ mỗi shop</span></div></div><div class="it"><em>🛡</em><div><b>Bảo hành 12 tháng</b><span>Đổi mới trong 7 ngày</span></div></div><div class="it"><em>🔒</em><div><b>Thanh toán VNPay</b><span>An toàn, hoàn tiền khi huỷ</span></div></div><div class="it"><em>🛠</em><div><b>Xưởng gia công thẩm định</b><span><%= shopCount %> shop đã xác minh</span></div></div></div>
+
+  <div style="margin-top:44px">
+    <div class="sechd"><h2>Danh mục nổi bật</h2><a href="/search">Xem tất cả →</a></div>
+    <div class="catgrid">
+      <% categories.slice(0,6).forEach(function(c){ %><a class="it" href="/c/<%= c.slug %>"><div class="ic" style="background:<%= c.bg %>;color:<%= c.fg %>"><%= c.icon %></div><b><%= c.name %></b><span><%= countMap[String(c._id)]||0 %> sp</span></a><% }) %>
+    </div>
+  </div>
+
+  <div class="builder">
+    <div class="l">
+      <span class="bdg new">Tính năng độc quyền</span>
+      <h2>Custom Builder — ráp phím<br>không sợ lệch linh kiện</h2>
+      <p>Mỗi lựa chọn được đối chiếu tức thì với quy tắc tương thích: chân switch, kiểu mount stabilizer, layout keycap, hướng LED. Sai một chi tiết là hệ thống báo ngay, kèm lý do cụ thể.</p>
+      <div class="steps"><i>1 · <b>Kit</b></i><i>2 · <b>Switch</b></i><i>3 · <b>Keycap</b></i><i>4 · <b>Gia công</b></i><i>5 · <b>Xem lại</b></i></div>
+      <div class="f" style="gap:12px;flex-wrap:wrap"><a class="btn pri lg" href="/builder/new">Mở Custom Builder</a><a class="btn out lg" href="/huong-dan">Xem hướng dẫn</a></div>
+    </div>
+    <div class="r">
+      <div class="mock">
+        <div class="hd"><span>Ví dụ cấu hình</span><span style="color:var(--s600)">✓ Tương thích</span></div>
+        <div class="bd">
+          <div class="ln"><span>Kit · Tofu60 2.0</span><b>2.690.000₫</b></div>
+          <div class="ln"><span>Switch · Oil King ×70</span><b>889.000₫</b></div>
+          <div class="ln"><span>Keycap · GMK Olivia</span><b>4.150.000₫</b></div>
+          <div class="ln"><span>Stab · Durock V2</span><b>420.000₫</b></div>
+          <div class="ln"><span>Gia công · Full lube</span><b>750.000₫</b></div>
+          <div class="dashed" style="margin:9px 0"></div>
+          <div class="ln"><b style="font-size:14px">Tổng cộng</b><b style="font-size:17px;color:var(--a600)">8.899.000₫</b></div>
+          <div class="alert ok s12" style="margin-top:12px;padding:9px 11px">✓ Tất cả linh kiện đã kiểm tra tương thích</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if (sale && sale.length) { %>
+  <a class="deal" href="/search?sort=price_asc">
+    <div><div class="s12 w700" style="opacity:.85;letter-spacing:.1em">ĐANG GIẢM GIÁ</div>
+      <div class="s24 w800" style="margin-top:4px">Săn deal switch & keycap trên KeebHub</div></div>
+    <span class="btn lg mla" style="background:#fff;color:var(--a600)">Xem deal</span>
+  </a>
+  <% } %>
+
+  <div style="margin-top:44px">
+    <div class="sechd"><h2>Sản phẩm bán chạy</h2><a href="/search?sort=popular">Xem tất cả →</a></div>
+    <div class="pgrid g6"><% bestsellers.forEach(function(p){ %><%- include('../partials/pcard', {p:p}) %><% }) %></div>
+  </div>
+
+  <div style="margin-top:44px">
+    <div class="sechd"><h2>Gợi ý cho bạn</h2><a href="/search?sort=rating">Xem tất cả →</a></div>
+    <% if (!user) { %><p class="s13 muted" style="margin:-8px 0 14px">Đăng nhập để nhận gợi ý theo sản phẩm bạn đã xem và đã mua.</p><% } %>
+    <div class="pgrid g6"><% suggestions.forEach(function(p){ %><%- include('../partials/pcard', {p:p}) %><% }) %></div>
+  </div>
+
+  <div style="margin-top:44px">
+    <div class="sechd"><h2>Shop gia công uy tín</h2><a href="/shops?custom=1">Xem tất cả →</a></div>
+    <div class="shops"><% customShops.forEach(function(s){ %><a class="shopc" href="/shop/<%= s.slug %>"><div class="lg" style="background:<%= s.color %>"><%= s.initials %></div>
+      <div><b class="s14"><%= s.name %></b><div class="s12 t2" style="margin-top:4px">★ <%= s.rating ? s.rating.toFixed(1) : '—' %> · <%= h.short(s.followers) %> lượt theo dõi</div>
+      <div class="f" style="gap:6px;margin-top:9px"><% if (s.verified) { %><span class="bdg ok">Đã xác minh</span><% } %><span class="bdg new">Gia công</span></div></div></a><% }) %></div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

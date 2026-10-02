@@ -1,0 +1,7 @@
+<% if (typeof flash !== 'undefined' && flash) { %>
+<div class="flashes">
+<% ['success','error','info'].forEach(function(k){ (flash[k]||[]).forEach(function(m){ %>
+  <div class="alert <%= k==='success'?'ok':k==='error'?'err':'info' %> flash"><span><%= k==='success'?'✓':k==='error'?'⚠':'ℹ' %></span><div><%= m %></div><button type="button" class="x" onclick="this.parentNode.remove()">×</button></div>
+<% }) }) %>
+</div>
+<% } %>

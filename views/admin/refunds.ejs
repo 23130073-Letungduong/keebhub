@@ -1,0 +1,21 @@
+<%- include('_top') %>
+<div class="card2">
+  <div class="toolrow"><a class="tchip <%= tab==='pending'?'on':'' %>" href="?tab=pending">Chờ hoàn tiền (<%= badges.refunds %>)</a><a class="tchip <%= tab==='done'?'on':'' %>" href="?tab=done">Đã hoàn</a></div>
+  <div class="bd">
+    <% if (!orders.length) { %><div class="empty"><div class="s38">↩</div><b>Không có yêu cầu</b></div><% } %>
+    <% orders.forEach(function(o){ %>
+    <div class="appr">
+      <div class="top" style="flex-wrap:wrap"><div style="flex:1;min-width:260px">
+        <b class="s16">#<%= o.code %> · <%= h.money(o.total) %></b> <% if (o.isCustom) { %><span class="bdg sale">Custom</span><% } %>
+        <div class="s12 muted" style="margin:4px 0 10px">Huỷ bởi <b><%= ({customer:'khách hàng',seller:'shop',admin:'admin'})[o.cancelledBy]||o.cancelledBy %></b> · <%= h.dateTime(o.updatedAt) %></div>
+        <div class="disp">
+          <div class="side cus"><b class="s13">👤 Khách hàng</b><p class="s13" style="margin-top:4px"><%= o.user?o.user.name:'' %><br><span class="muted"><%= o.user?o.user.email:'' %></span></p></div>
+          <div class="side shop"><b class="s13">🏪 Shop</b><p class="s13" style="margin-top:4px"><%= o.shop?o.shop.name:'' %><br><span class="muted">Lý do: <%= o.cancelReason||'—' %></span></p></div>
+        </div></div></div>
+      <div class="foot"><span class="s13 t2">Thanh toán VNPay <%= o.vnpTransactionNo ? '· GD '+o.vnpTransactionNo : '' %></span><a class="btn ghost sm mla" href="/admin/orders/<%= o.code %>">Chi tiết</a>
+        <% if (tab==='pending') { %><form method="post" action="/admin/refunds/<%= o.code %>" class="f" style="gap:6px"><input class="inp" name="note" placeholder="Ghi chú (mã hoàn tiền…)" style="padding:6px 10px"><button class="btn cta sm">Xác nhận đã hoàn <%= h.money(o.total) %></button></form><% } else { %><span class="bdg ok">Đã hoàn tiền</span><% } %></div>
+    </div>
+    <% }) %>
+  </div>
+</div>
+<%- include('_bottom') %>

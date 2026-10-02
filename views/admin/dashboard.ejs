@@ -1,0 +1,36 @@
+<%- include('_top') %>
+<% var diff = y.total ? Math.round((t.total - y.total)/y.total*100) : null; %>
+<div class="kpis g4">
+  <div class="kpi"><div class="tp"><em style="background:var(--s50);color:var(--s600)">💰</em><span>GMV hôm nay</span></div><div class="v"><%= h.short(t.total) %>₫</div><div class="d <%= diff===null||diff>=0?'up':'down' %>"><%= diff===null ? 'Hôm qua: '+h.short(y.total)+'₫' : (diff>=0?'▲ ':'▼ ')+Math.abs(diff)+'% so với hôm qua' %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--p50);color:var(--p600)">📦</em><span>Đơn hôm nay</span></div><div class="v"><%= ordersToday %></div><div class="d up">▲ <%= customToday %> đơn custom</div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--w50);color:var(--w600)">👥</em><span>Người dùng mới (7 ngày)</span></div><div class="v"><%= newUsers %></div><div class="d t2">Tổng <%= health.totalUsers %> tài khoản</div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--a50);color:var(--a600)">💵</em><span>Phí sàn thu được (14 ngày)</span></div><div class="v"><%= h.short(chart.fee) %>₫</div><div class="d up">5% GMV</div></div>
+</div>
+<div class="split3">
+  <div class="card2"><div class="hd"><div style="flex:1"><h3>GMV 14 ngày qua</h3><p>Tổng <%= h.money(chart.total) %> · <%= chart.count %> đơn</p></div><a class="tchip" href="/admin/revenue">Chọn khoảng ngày →</a></div>
+    <div class="bd"><div style="height:240px"><canvas data-chart="bar" data-labels="<%= JSON.stringify(chart.labels) %>" data-values="<%= JSON.stringify(chart.revenue) %>" data-label="GMV (₫)"></canvas></div></div></div>
+  <div class="card2"><div class="hd"><h3>Cần xử lý ngay</h3><span class="bdg err mla"><%= badges.refunds + badges.pendingProducts + badges.pendingShops %> mục</span></div>
+    <div class="bd" style="padding:6px 20px">
+      <div class="todo"><em style="background:var(--d50);color:var(--d600)">↩</em><div style="flex:1"><b><%= badges.refunds %> yêu cầu hoàn tiền</b><span>Đơn đã thanh toán bị huỷ</span></div><a class="btn out sm" href="/admin/refunds">Xử lý</a></div>
+      <div class="todo"><em style="background:var(--w50);color:var(--w600)">✓</em><div style="flex:1"><b><%= badges.pendingProducts %> sản phẩm chờ kiểm duyệt</b><span>Từ các shop</span></div><a class="btn out sm" href="/admin/products">Duyệt</a></div>
+      <div class="todo"><em style="background:var(--p50);color:var(--p600)">🏪</em><div style="flex:1"><b><%= badges.pendingShops %> shop chờ xác minh</b><span>Hồ sơ đăng ký bán hàng</span></div><a class="btn out sm" href="/admin/shops">Xem</a></div>
+    </div></div>
+</div>
+<div class="split2">
+  <div class="card2"><div class="hd"><div style="flex:1"><h3>Top shop theo GMV 30 ngày</h3></div><a class="s13" style="color:var(--p600);font-weight:600" href="/admin/shops?status=all">Xem tất cả →</a></div>
+    <div class="bd p0 tblx"><table class="tb"><tr><th>#</th><th>Shop</th><th>Đơn</th><th>GMV</th><th>Phí sàn</th><th>Đánh giá</th></tr>
+      <% topShops.forEach(function(s,i){ %><tr><td><b><%= i+1 %></b></td><td><div class="f ac" style="gap:10px"><span class="av2" style="background:<%= s.shop.color %>"><%= h.initials(s.shop.name) %></span><div><div class="nm"><%= s.shop.name %></div><div class="sub"><%= s.shop.offersCustom?'Xưởng gia công':'Bán lẻ' %> · <%= s.shop.city||'' %></div></div></div></td><td><%= s.n %></td><td><b><%= h.short(s.gmv) %>₫</b></td><td class="t2"><%= h.short(s.gmv*0.05) %>₫</td><td><%= s.shop.rating||'—' %> ★</td></tr><% }) %>
+      <% if (!topShops.length) { %><tr><td colspan="6" class="muted">Chưa có dữ liệu.</td></tr><% } %>
+    </table></div></div>
+  <div>
+    <div class="card2"><div class="hd"><h3>Cơ cấu GMV 30 ngày</h3></div><div class="bd"><% if (types.length) { %><div style="height:210px"><canvas data-chart="doughnut" data-labels="<%= JSON.stringify(types.map(function(x){return x.label})) %>" data-values="<%= JSON.stringify(types.map(function(x){return x.value})) %>"></canvas></div><% } else { %><p class="muted s13">Chưa có dữ liệu.</p><% } %></div></div>
+    <div class="card2"><div class="hd"><h3>Sức khoẻ hệ thống</h3></div><div class="bd">
+      <div class="sumrow" style="padding:6px 0"><span>Tỉ lệ huỷ đơn toàn sàn</span><b><%= health.cancelRate %>%</b></div>
+      <div class="sumrow" style="padding:6px 0"><span>Shop đang hoạt động</span><b><%= health.activeShops %></b></div>
+      <div class="sumrow" style="padding:6px 0"><span>Xưởng gia công</span><b><%= health.customShops %></b></div>
+      <div class="sumrow" style="padding:6px 0"><span>Người dùng đăng ký</span><b><%= health.totalUsers %></b></div>
+    </div></div>
+    <div class="card2"><div class="hd"><h3>Đơn mới nhất</h3></div><div class="bd" style="padding:6px 20px"><% recent.forEach(function(o){ %><a class="todo" href="/admin/orders/<%= o.code %>"><em style="background:var(--p50)">📦</em><div style="flex:1"><b>#<%= o.code %> · <%= h.money(o.total) %></b><span><%= o.user?o.user.name:'' %> → <%= o.shop?o.shop.name:'' %> · <%= h.timeAgo(o.createdAt) %></span></div><span class="bdg <%= STATUS[o.status].cls %>"><%= STATUS[o.status].label %></span></a><% }) %></div></div>
+  </div>
+</div>
+<%- include('_bottom') %>
