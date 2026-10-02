@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Order, Review, Build, Product } = require('../models');
+const { User, Order, Review, Build, Product, Shop } = require('../models');
 const { requireLogin } = require('../middleware/auth');
 const upload = require('../config/upload');
 const { cancelOrder, canCustomerCancel, recalcRating } = require('../utils/orders');
@@ -30,14 +30,23 @@ router.get('/', async (req, res) => {
 
 router.post('/profile', upload.single('avatar'), async (req, res, next) => {
   try {
-    const { name, phone, gender, birthday, fullName, addrPhone, line } = req.body;
-    if (!name || name.trim().length < 2) { req.flash('error', 'Họ tên không hợp lệ.'); return res.redirect('/account'); }
-    if (phone && !/^0\d{9,10}$/.test(phone.trim())) { req.flash('error', 'Số điện thoại không hợp lệ.'); return res.redirect('/account'); }
-    req.user.name = name.trim();
-    req.user.phone = (phone || '').trim();
+    const f = (k, n = 200) => String(req.body[k] == null ? '' : req.body[k]).trim().slice(0, n);
+    const name = f('name', 80), phone = f('phone', 15), gender = f('gender'), birthday = f('birthday', 10), fullName = f('fullName', 80), addrPhone = f('addrPhone', 15), line = f('line', 300);
+    const PHONE = /^0\d{9,10}$/;
+    if (name.length < 2) { req.flash('error', 'Họ tên không hợp lệ.'); return res.redirect('/account'); }
+    if (phone && !PHONE.test(phone)) { req.flash('error', 'Số điện thoại không hợp lệ.'); return res.redirect('/account'); }
+    if (addrPhone && !PHONE.test(addrPhone)) { req.flash('error', 'Số điện thoại người nhận không hợp lệ.'); return res.redirect('/account'); }
+    let bday;
+    if (birthday) {
+      bday = new Date(birthday);
+      if (isNaN(bday) || bday > new Date() || bday.getFullYear() < 1900) { req.flash('error', 'Ngày sinh không hợp lệ.'); return res.redirect('/account'); }
+    }
+    if (phone && phone !== req.user.phone && await User.exists({ phone, _id: { $ne: req.user._id } })) { req.flash('error', 'Số điện thoại đã được tài khoản khác sử dụng.'); return res.redirect('/account'); }
+    req.user.name = name;
+    req.user.phone = phone;
     req.user.gender = ['male', 'female', 'other'].includes(gender) ? gender : '';
-    req.user.birthday = birthday ? new Date(birthday) : undefined;
-    req.user.address = { fullName: (fullName || '').trim(), phone: (addrPhone || '').trim(), line: (line || '').trim() };
+    req.user.birthday = bday;
+    req.user.address = { fullName, phone: addrPhone, line };
     if (req.file) req.user.avatar = '/uploads/' + req.file.filename;
     await req.user.save();
     req.flash('success', 'Đã cập nhật thông tin cá nhân.');
@@ -171,7 +180,8 @@ router.post('/builds/:id/delete', async (req, res) => {
 });
 
 router.get('/wishlist', async (req, res) => {
-  const items = await Product.find({ _id: { $in: req.user.wishlist }, status: 'active' }).populate('shop', 'name slug');
+  const live = (await Shop.find({ status: 'active' }).select('_id')).map(s => s._id);
+  const items = await Product.find({ _id: { $in: req.user.wishlist }, status: 'active', shop: { $in: live } }).populate('shop', 'name slug');
   res.render('account/wishlist', { title: 'Sản phẩm yêu thích', active: 'wishlist', items });
 });
 

@@ -925,3 +925,316 @@ describe('12. Chat AI', () => {
     assert.equal(last.status, 429);
   });
 });
+
+// =====================================================================
+describe('13. Hồi quy: các lỗi đã sửa sau đợt rà soát chức năng', () => {
+  it('Khách vãng lai bấm "Thêm vào giỏ" → đăng nhập xong quay lại trang sản phẩm (không 404)', async () => {
+    const p = await M.Product.findOne({ status: 'active', partType: 'accessory' });
+    const c = new Client();
+    const r1 = await c.post('/cart/add', { productId: String(p._id) }, { headers: { referer: BASE + '/p/' + p.slug } });
+    assert.ok(r1.url.startsWith('/auth/login'));
+    const r2 = await c.login('user8@keebhub.vn', 'Khach@123');
+    assert.equal(r2.status, 200); assert.equal(r2.url, '/p/' + p.slug);
+  });
+  it('Đơn đã huỷ mà vẫn thanh toán VNPay → chuyển "Chờ hoàn tiền", không thành "Đã thanh toán"', async () => {
+    const u = await M.User.findOne({ email: 'user8@keebhub.vn' });
+    const o = await M.Order.findOne({ isCustom: false, paymentMethod: 'vnpay' });
+    await M.Order.updateOne({ _id: o._id }, { user: u._id, status: 'cancelled', paymentStatus: 'unpaid', paymentGroup: 'PGTESTCANCEL' });
+    const c = new Client(); await c.login('user8@keebhub.vn', 'Khach@123');
+    await c.post('/payment/mock/PGTESTCANCEL', { result: 'success' });
+    assert.equal((await M.Order.findById(o._id)).paymentStatus, 'refund_pending');
+  });
+  it('Không thanh toán mô phỏng hộ đơn của người khác', async () => {
+    const u = await M.User.findOne({ email: 'user8@keebhub.vn' });
+    const o = await M.Order.findOne({ isCustom: false, paymentMethod: 'vnpay', _id: { $ne: (await M.Order.findOne({ paymentGroup: 'PGTESTCANCEL' }))._id } });
+    await M.Order.updateOne({ _id: o._id }, { user: u._id, status: 'pending', paymentStatus: 'unpaid', paymentGroup: 'PGTESTOTHER' });
+    const c = new Client(); await c.login('user9@keebhub.vn', 'Khach@123');
+    await c.post('/payment/mock/PGTESTOTHER', { result: 'success' });
+    assert.equal((await M.Order.findById(o._id)).paymentStatus, 'unpaid');
+  });
+  it('Khách huỷ đơn custom chưa thanh toán → không còn báo "Vui lòng thanh toán"', async () => {
+    const u = await M.User.findOne({ email: 'user9@keebhub.vn' });
+    const o = await M.Order.findOne({ isCustom: true, status: 'completed' });
+    await M.Order.updateOne({ _id: o._id }, { user: u._id, status: 'pending', paymentStatus: 'unpaid', 'customRequest.status': 'waiting' });
+    const c = new Client(); await c.login('user9@keebhub.vn', 'Khach@123');
+    const r = await c.post(`/account/orders/${o.code}/cancel`, { reason: 'Đổi ý' });
+    const x = await M.Order.findById(o._id);
+    assert.equal(x.status, 'cancelled'); assert.notEqual(x.customRequest.status, 'waiting');
+    assert.ok(!has(r, 'Vui lòng thanh toán để shop')); assert.ok(has(r, 'Đơn đã huỷ'));
+  });
+  it('Seller không chuyển đơn custom sang "Đang giao" khi chưa xong các công đoạn', async () => {
+    const shop = await M.Shop.findOne({ slug: 'switchhouse' });
+    const o = await M.Order.findOne({ isCustom: true, shop: shop._id, 'progress.0': { $exists: true } });
+    const progress = o.progress.map((s, i) => ({ ...s.toObject(), status: i === o.progress.length - 1 ? 'todo' : 'done' }));
+    await M.Order.updateOne({ _id: o._id }, { status: 'processing', paymentStatus: 'paid', progress });
+    const s = new Client(); await s.login('switchhouse@keebhub.vn', 'Seller@123');
+    const page = await s.get(`/seller/orders/${o.code}`);
+    assert.ok(!/<option[^>]*value="shipping"/.test(page.text), 'vẫn còn lựa chọn Đang giao');
+    await s.post(`/seller/orders/${o.code}/status`, { status: 'shipping' });
+    assert.equal((await M.Order.findById(o._id)).status, 'processing');
+  });
+  it('Sửa gói gia công đang tạm dừng → vẫn tạm dừng', async () => {
+    const shop = await M.Shop.findOne({ slug: 'switchhouse' });
+    const sv = await M.CustomService.findOne({ shop: shop._id });
+    await M.CustomService.updateOne({ _id: sv._id }, { active: false });
+    const s = new Client(); await s.login('switchhouse@keebhub.vn', 'Seller@123');
+    await s.post('/seller/services/' + sv._id, { name: sv.name, price: String(sv.price), days: String(sv.days), stages: sv.stages.join('\n') });
+    assert.equal((await M.CustomService.findById(sv._id)).active, false);
+    await M.CustomService.updateOne({ _id: sv._id }, { active: true });
+  });
+  it('Admin: không huỷ được đơn đã giao; chuyển COD sang "Đã giao" → tự thành đã thanh toán', async () => {
+    const a = new Client(); await a.login('admin@keebhub.vn', 'Admin@123', true);
+    const d = await M.Order.findOne({ status: 'delivered' });
+    await a.post(`/admin/orders/${d.code}/status`, { status: 'cancelled' });
+    assert.equal((await M.Order.findById(d._id)).status, 'delivered');
+    const cod = await M.Order.findOne({ paymentMethod: 'cod', status: { $in: ['confirmed', 'shipping'] } });
+    await M.Order.updateOne({ _id: cod._id }, { paymentStatus: 'unpaid' });
+    await a.post(`/admin/orders/${cod.code}/status`, { status: 'delivered' });
+    assert.equal((await M.Order.findById(cod._id)).paymentStatus, 'paid');
+  });
+  it('Admin mở khoá người bán → shop hoạt động lại', async () => {
+    const a = new Client(); await a.login('admin@keebhub.vn', 'Admin@123', true);
+    const u = await M.User.findOne({ email: 'akko@keebhub.vn' });
+    await a.post(`/admin/users/${u._id}/status`, {});
+    assert.equal((await M.Shop.findOne({ owner: u._id })).status, 'locked');
+    await a.post(`/admin/users/${u._id}/status`, {});
+    assert.equal((await M.Shop.findOne({ owner: u._id })).status, 'active');
+  });
+  it('Đăng nhập bằng SĐT khi chưa xác nhận email → nút gửi lại dùng đúng email', async () => {
+    const email = `phone${Date.now()}@example.com`;
+    await new Client().post('/auth/register', { name: 'Người SĐT', email, phone: '0977000111', password: 'Test@1234', confirm: 'Test@1234', agree: 'on' });
+    const r = await new Client().login('0977000111', 'Test@1234');
+    assert.ok(has(r, `name="email" value="${email}"`));
+  });
+  it('Admin vào /seller → về trang quản trị', async () => {
+    const a = new Client(); await a.login('admin@keebhub.vn', 'Admin@123', true);
+    assert.ok((await a.get('/seller')).url.startsWith('/admin'));
+    assert.ok((await a.get('/seller/register')).url.startsWith('/admin'));
+  });
+  it('Giỏ có build mất kit (shop xoá kit) → checkout không lỗi', async () => {
+    const c = new Client(); await c.login('user10@keebhub.vn', 'Khach@123');
+    const u = await M.User.findOne({ email: 'user10@keebhub.vn' });
+    const sv = await M.CustomService.findOne({ active: true });
+    const b = await M.Build.create({ user: u._id, status: 'draft', name: 'Thiếu kit', service: sv._id, switchQty: 70 });
+    const p = await M.Product.findOne({ status: 'active', partType: 'accessory' });
+    await M.User.updateOne({ _id: u._id }, { cart: [{ build: b._id, qty: 1 }, { product: p._id, qty: 1 }] });
+    assert.notEqual((await c.get('/checkout')).status, 500);
+    assert.notEqual((await c.get('/cart')).status, 500);
+  });
+  it('Trang sản phẩm khi khách đã đánh giá → không lỗi', async () => {
+    const r = await M.Review.findOne().populate('product'); const u = await M.User.findById(r.user);
+    if (!u || u.role !== 'customer') return;
+    const c = new Client(); await c.login(u.email, 'Khach@123');
+    assert.equal((await c.get('/p/' + r.product.slug)).status, 200);
+  });
+});
+
+// =====================================================================
+describe('14. Kiểm thử mở rộng (đợt rà soát lần 2)', () => {
+  const part = (t) => M.Product.findOne({ status: 'active', partType: t }).sort({ price: 1 });
+  const mp = (o) => { const fd = new FormData(); for (const [k, v] of Object.entries(o)) [].concat(v).forEach(x => fd.append(k, x)); return fd; };
+
+  it('Shop bị từ chối hồ sơ → được sửa và gửi lại (chờ duyệt)', async () => {
+    const c = new Client(); await c.login('user4@keebhub.vn', 'Khach@123');
+    await c.post('/seller/register', { name: 'Shop Bị Từ Chối', city: 'Đà Nẵng' });
+    const shop = await M.Shop.findOne({ name: 'Shop Bị Từ Chối' });
+    const a = new Client(); await a.login('admin@keebhub.vn', 'Admin@123', true);
+    await a.post(`/admin/shops/${shop._id}/reject`, { reason: 'Thiếu địa chỉ' });
+    assert.equal((await M.Shop.findById(shop._id)).status, 'locked');
+    assert.ok(has(await c.get('/seller'), 'Sửa hồ sơ'));
+    await c.post('/seller/register', { name: 'Shop Bị Từ Chối', city: 'Đà Nẵng', address: '12 Bạch Đằng' });
+    const x = await M.Shop.findById(shop._id);
+    assert.equal(x.status, 'pending'); assert.ok(!x.rejectReason);
+  });
+  it('Shop bị khoá vì vi phạm → không tự gửi lại được', async () => {
+    const shop = await M.Shop.findOne({ name: 'Shop Bị Từ Chối' });
+    const a = new Client(); await a.login('admin@keebhub.vn', 'Admin@123', true);
+    await a.post(`/admin/shops/${shop._id}/lock`, {});
+    const c = new Client(); await c.login('user4@keebhub.vn', 'Khach@123');
+    assert.ok(!has(await c.get('/seller'), 'Sửa hồ sơ'));
+    await c.post('/seller/register', { name: 'Shop Bị Từ Chối', city: 'Huế' });
+    assert.equal((await M.Shop.findById(shop._id)).status, 'locked');
+  });
+  it('Thêm stabilizer: lưu được kiểu stab; số âm / giá gốc thấp hơn giá bán được xử lý', async () => {
+    const s = new Client(); await s.login('switchhouse@keebhub.vn', 'Seller@123');
+    const cat = await M.Category.findOne({ partType: 'stabilizer' });
+    await s.req('POST', '/seller/products', { multipart: mp({ name: 'Stab Kiểm Thử', category: String(cat._id), price: '150000', oldPrice: '100000', stock: '-5', lowStock: '0', stabMount: 'pcb-screw', layout: '65%' }) });
+    const p = await M.Product.findOne({ name: 'Stab Kiểm Thử' });
+    assert.equal(p.attrs.stabMount, 'pcb-screw');
+    assert.equal(p.attrs.layout, undefined, 'stab không được có layout');
+    assert.equal(p.stock, 0); assert.equal(p.lowStock, 0); assert.equal(p.oldPrice, 0);
+  });
+  it('Đổi danh mục kit → switch: bỏ thuộc tính cũ, đổi ảnh minh hoạ', async () => {
+    const s = new Client(); await s.login('switchhouse@keebhub.vn', 'Seller@123');
+    const kitCat = await M.Category.findOne({ partType: 'kit' }), swCat = await M.Category.findOne({ partType: 'switch' });
+    await s.req('POST', '/seller/products', { multipart: mp({ name: 'Kit Đổi Loại', category: String(kitCat._id), price: '900000', stock: '3', layout: '75%', hotswap: 'yes', pins: ['3', '5'] }) });
+    const p = await M.Product.findOne({ name: 'Kit Đổi Loại' });
+    assert.equal(p.art.kind, 'kit');
+    await s.req('POST', '/seller/products/' + p._id, { multipart: mp({ name: 'Kit Đổi Loại', category: String(swCat._id), price: '900000', stock: '3', layout: '75%', hotswap: 'yes', artKind: 'kit', switchType: 'linear', pins: '5' }) });
+    const x = await M.Product.findById(p._id);
+    assert.equal(x.partType, 'switch'); assert.equal(x.art.kind, 'switch');
+    assert.equal(x.attrs.layout, undefined); assert.equal(x.attrs.hotswap, undefined); assert.equal(x.attrs.switchType, 'linear');
+  });
+  it('Sửa tên sản phẩm đang bán → chờ duyệt lại; chỉ sửa giá → vẫn đang bán', async () => {
+    const s = new Client(); await s.login('switchhouse@keebhub.vn', 'Seller@123');
+    const shop = await M.Shop.findOne({ slug: 'switchhouse' });
+    const p = await M.Product.findOne({ shop: shop._id, status: 'active', partType: 'switch' });
+    const base = { name: p.name, category: String(p.category), price: String(p.price + 1000), stock: String(p.stock), description: p.description || '', switchType: p.attrs.switchType || '', pins: (p.attrs.pins || []).map(String) };
+    await s.req('POST', '/seller/products/' + p._id, { multipart: mp(base) });
+    assert.equal((await M.Product.findById(p._id)).status, 'active');
+    const r = await s.req('POST', '/seller/products/' + p._id, { multipart: mp({ ...base, name: p.name + ' V2' }) });
+    assert.equal((await M.Product.findById(p._id)).status, 'pending'); assert.ok(has(r, 'sau khi sàn duyệt'));
+    await M.Product.updateOne({ _id: p._id }, { status: 'active', name: p.name });
+  });
+  it('Yêu thích và Chat AI không hiện sản phẩm của shop bị khoá', async () => {
+    const shop = await M.Shop.findOne({ slug: { $ne: 'switchhouse' }, status: 'active' });
+    const p = await M.Product.findOne({ shop: shop._id, status: 'active' });
+    const u = await M.User.findOne({ email: 'user7@keebhub.vn' });
+    await M.User.updateOne({ _id: u._id }, { wishlist: [p._id] });
+    await M.Shop.updateOne({ _id: shop._id }, { status: 'locked' });
+    try {
+      const c = new Client(); await c.login('user7@keebhub.vn', 'Khach@123');
+      assert.ok(!has(await c.get('/account/wishlist'), p.slug));
+      const r = await c.req('POST', '/api/chat', { json: { messages: [{ role: 'user', content: p.name }] } });
+      assert.ok(!r.text.includes('/p/' + p.slug));
+    } finally { await M.Shop.updateOne({ _id: shop._id }, { status: 'active' }); }
+  });
+  it('Tham số URL lạ không gây lỗi: tab không tồn tại, q[]=, switchType[$ne]=, page rất lớn', async () => {
+    const c = new Client(); const p = await part('accessory');
+    const r = await c.get('/p/' + p.slug + '?tab=compat');
+    assert.equal(r.status, 200); assert.match(r.text, /class="tabp" data-tab="desc" >/);
+    for (const u of ['/search?q[]=x', '/search?switchType[$ne]=x', '/search?page=99999', '/search?shop=abc', '/admin/login?q[]=1', '/shops?q[]=a'])
+      assert.equal((await c.get(u)).status, 200, u);
+  });
+  it('Danh mục: tên toàn emoji không lỗi, trùng tên bị chặn, danh mục mới hiện ngay ở menu', async () => {
+    const a = new Client(); await a.login('admin@keebhub.vn', 'Admin@123', true);
+    assert.notEqual((await a.post('/admin/categories', { name: '⌨⌨', partType: 'accessory' })).status, 500);
+    assert.ok(has(await a.post('/admin/categories', { name: 'Switch', partType: 'switch' }), 'đã tồn tại'));
+    assert.ok(has(await a.post('/admin/categories', { name: 'Kê tay gỗ', partType: 'accessory' }), 'Đã thêm danh mục'));
+    assert.ok(has(await new Client().get('/'), 'Kê tay gỗ'));
+  });
+  it('Hồ sơ: ngày sinh sai, SĐT người nhận sai, SĐT trùng người khác → báo lỗi (không 500)', async () => {
+    const c = new Client(); await c.login('user11@keebhub.vn', 'Khach@123');
+    const other = await M.User.findOne({ email: 'user12@keebhub.vn' });
+    const cases = [[{ birthday: 'abc' }, 'Ngày sinh không hợp lệ'], [{ birthday: '2999-01-01' }, 'Ngày sinh không hợp lệ'], [{ addrPhone: '12' }, 'người nhận không hợp lệ']];
+    if (other.phone) cases.push([{ phone: other.phone }, 'đã được tài khoản khác']);
+    for (const [extra, msg] of cases) {
+      const r = await c.req('POST', '/account/profile', { multipart: mp({ name: 'Người Dùng 11', ...extra }) });
+      assert.ok(r.status < 500 && has(r, msg), JSON.stringify(extra));
+    }
+  });
+  it('Đăng ký trùng số điện thoại → báo lỗi; mật khẩu kiểu mảng không gây lỗi 500', async () => {
+    const u = await M.User.findOne({ email: 'user1@keebhub.vn' });
+    if (u.phone) assert.ok(has(await new Client().post('/auth/register', { name: 'Trùng SĐT', email: `dup${Date.now()}@example.com`, phone: u.phone, password: 'Test@1234', confirm: 'Test@1234', agree: 'on' }), 'Số điện thoại đã được sử dụng'));
+    const r = await new Client().req('POST', '/auth/register', { form: new URLSearchParams([['name', 'Mảng'], ['email', `arr${Date.now()}@example.com`], ['password[]', 'a'], ['password[]', 'b'], ['confirm', 'x'], ['agree', 'on']]) });
+    assert.notEqual(r.status, 500);
+    const r2 = await new Client().req('POST', '/auth/reset/abc', { form: new URLSearchParams([['password[]', 'a'], ['confirm', 'a']]) });
+    assert.notEqual(r2.status, 500);
+  });
+  it('Builder: không chọn được gói tạm dừng hoặc xưởng đã kín lịch', async () => {
+    const c = new Client(); await c.login('user2@keebhub.vn', 'Khach@123');
+    await c.get('/builder/new');
+    const sv = await M.CustomService.findOne({ active: true });
+    await M.CustomService.updateOne({ _id: sv._id }, { active: false });
+    let r = await c.post('/builder/service', { serviceId: String(sv._id) });
+    assert.ok(has(r, 'không khả dụng'));
+    await M.CustomService.updateOne({ _id: sv._id }, { active: true });
+    const shop = await M.Shop.findById(sv.shop);
+    await M.Shop.updateOne({ _id: shop._id }, { capacityPerWeek: 1 });
+    await M.Order.updateOne({ isCustom: true }, { shop: shop._id, status: 'processing' });
+    r = await c.post('/builder/service', { serviceId: String(sv._id) });
+    assert.ok(has(r, 'kín lịch'));
+    await M.Shop.updateOne({ _id: shop._id }, { capacityPerWeek: shop.capacityPerWeek });
+  });
+  it('Build trong giỏ mà gói gia công bị tạm dừng → chuyển về "Cấu hình đã lưu" kèm thông báo', async () => {
+    const c = new Client(); await c.login('user3@keebhub.vn', 'Khach@123');
+    const u = await M.User.findOne({ email: 'user3@keebhub.vn' });
+    const sv = await M.CustomService.findOne({ active: true });
+    const b = await M.Build.create({ user: u._id, status: 'saved', name: 'Build tạm dừng', kit: (await part('kit'))._id, switch: (await part('switch'))._id, keycap: (await part('keycap'))._id, service: sv._id, switchQty: 70 });
+    await M.User.updateOne({ _id: u._id }, { cart: [{ build: b._id, qty: 1 }] });
+    await M.CustomService.updateOne({ _id: sv._id }, { active: false });
+    try {
+      const r = await c.get('/cart');
+      assert.ok(has(r, 'Cấu hình đã lưu'));
+      assert.equal((await M.User.findById(u._id)).cart.length, 0);
+    } finally { await M.CustomService.updateOne({ _id: sv._id }, { active: true }); }
+  });
+  it('Đặt hàng 2 shop cùng lúc → tách 2 đơn; miễn ship từ 500.000₫; hoả tốc luôn 55.000₫', async () => {
+    const c = new Client(); await c.login('user12@keebhub.vn', 'Khach@123');
+    const shops = await M.Shop.find({ status: 'active' }).limit(5);
+    const picks = [];
+    for (const s of shops) { const p = await M.Product.findOne({ shop: s._id, status: 'active', stock: { $gte: 5 } }); if (p) picks.push(p); if (picks.length === 2) break; }
+    const u = await M.User.findOne({ email: 'user12@keebhub.vn' });
+    await M.User.updateOne({ _id: u._id }, { cart: picks.map(p => ({ product: p._id, qty: 1 })) });
+    await c.post('/checkout', { fullName: 'Người 12', phone: '0901234567', address: '1 Lê Lợi', payment: 'cod', ship: 'standard' });
+    const orders = await M.Order.find({ user: u._id }).sort({ createdAt: -1 }).limit(2);
+    assert.equal(orders.length, 2); assert.equal(orders[0].paymentGroup, orders[1].paymentGroup);
+    for (const o of orders) assert.equal(o.shippingFee, o.subtotal >= 500000 ? 0 : 30000);
+    await M.User.updateOne({ _id: u._id }, { cart: [{ product: picks[0]._id, qty: 1 }] });
+    await c.post('/checkout', { fullName: 'Người 12', phone: '0901234567', address: '1 Lê Lợi', payment: 'cod', ship: 'express' });
+    assert.equal((await M.Order.findOne({ user: u._id }).sort({ createdAt: -1 })).shippingFee, 55000);
+  });
+  it('Checkout gửi dữ liệu kiểu mảng không gây lỗi 500', async () => {
+    const c = new Client(); await c.login('user12@keebhub.vn', 'Khach@123');
+    const u = await M.User.findOne({ email: 'user12@keebhub.vn' });
+    await M.User.updateOne({ _id: u._id }, { cart: [{ product: (await part('accessory'))._id, qty: 1 }] });
+    const r = await c.req('POST', '/checkout', { form: new URLSearchParams([['fullName[]', 'A'], ['fullName[]', 'B'], ['phone', '0901234567'], ['address', 'x'], ['payment', 'cod']]) });
+    assert.notEqual(r.status, 500);
+  });
+  it('"Đã nhận hàng" khi đơn còn chờ xác nhận → không đổi trạng thái', async () => {
+    const u = await M.User.findOne({ email: 'user12@keebhub.vn' });
+    const o = await M.Order.findOne({ user: u._id, status: 'pending' });
+    const c = new Client(); await c.login('user12@keebhub.vn', 'Khach@123');
+    await c.post(`/account/orders/${o.code}/received`, {});
+    assert.equal((await M.Order.findById(o._id)).status, 'pending');
+  });
+  it('Seller không cập nhật được đơn của shop khác', async () => {
+    const other = await M.Shop.findOne({ slug: 'keeblab-store' });
+    const o = await M.Order.findOne({ shop: other._id, status: 'pending', isCustom: false }) || await M.Order.findOne({ shop: other._id });
+    const before = o.status;
+    const s = new Client(); await s.login('switchhouse@keebhub.vn', 'Seller@123');
+    assert.equal((await s.post(`/seller/orders/${o.code}/status`, { status: 'confirmed' })).status, 404);
+    assert.equal((await M.Order.findById(o._id)).status, before);
+  });
+  it('Tên sản phẩm chứa mã HTML được hiển thị an toàn (chống XSS)', async () => {
+    const p = await part('accessory');
+    await M.Product.updateOne({ _id: p._id }, { name: '<script>alert(1)</script>Cáp' });
+    const r = await new Client().get('/p/' + p.slug);
+    assert.ok(!r.text.includes('<script>alert(1)</script>')); assert.ok(r.text.includes('&lt;script&gt;'));
+    await M.Product.updateOne({ _id: p._id }, { name: p.name });
+  });
+  it('Ảnh tiến độ gia công / ảnh đánh giá không phải ảnh → báo lỗi, không 500', async () => {
+    const shop = await M.Shop.findOne({ slug: 'switchhouse' });
+    const o = await M.Order.findOne({ shop: shop._id, isCustom: true, 'progress.0': { $exists: true } });
+    await M.Order.updateOne({ _id: o._id }, { status: 'processing', paymentStatus: 'paid' });
+    const s = new Client(); await s.login('switchhouse@keebhub.vn', 'Seller@123');
+    const fd = new FormData(); fd.append('note', 'x'); fd.append('photos', new Blob(['hi'], { type: 'text/plain' }), 'a.txt');
+    assert.ok((await s.req('POST', `/seller/progress/${o.code}/stage/${o.progress[0]._id}`, { multipart: fd })).status < 500);
+    const d = await M.Order.findOne({ status: { $in: ['delivered', 'completed'] }, 'items.reviewed': false }).populate('user');
+    if (d && d.user.role === 'customer') {
+      const c = new Client(); await c.login(d.user.email, 'Khach@123');
+      const it = d.items.find(i => !i.reviewed);
+      const f2 = new FormData(); f2.append('rating', '5'); f2.append('content', 'x'.repeat(5000)); f2.append('images', new Blob(['hi'], { type: 'text/plain' }), 'b.txt');
+      assert.ok((await c.req('POST', `/account/orders/${d.code}/review/${it._id}`, { multipart: f2 })).status < 500);
+    }
+  });
+  it('Xoá cấu hình đã lưu', async () => {
+    const u = await M.User.findOne({ email: 'user3@keebhub.vn' });
+    const b = await M.Build.findOne({ user: u._id, status: { $ne: 'ordered' } });
+    const c = new Client(); await c.login('user3@keebhub.vn', 'Khach@123');
+    await c.post(`/account/builds/${b._id}/delete`, {});
+    assert.equal(await M.Build.findById(b._id), null);
+  });
+  it('Tắt quy tắc tương thích → không còn chặn', async () => {
+    const compat = require(path.join(ROOT, 'utils/compat'));
+    const kbd = await M.Product.findOne({ name: /KBD67/ }); const sw5 = await M.Product.findOne({ name: /Oil King/ });
+    await M.CompatRule.updateOne({ code: 'SWITCH_PINS' }, { enabled: false, level: 'block' }); compat.clearCache();
+    const r = await compat.check({ kit: kbd, sw: sw5, qty: 999 });
+    assert.ok(!r.issues.some(i => i.code === 'SWITCH_PINS'));
+    await M.CompatRule.updateOne({ code: 'SWITCH_PINS' }, { enabled: true }); compat.clearCache();
+  });
+  it('Chat AI: tin nhắn rất dài vẫn trả lời', async () => {
+    const r = await new Client().req('POST', '/api/chat', { json: { messages: [{ role: 'user', content: 'switch '.repeat(2000) }] } });
+    assert.equal(r.status, 200); assert.ok(JSON.parse(r.text).reply);
+  });
+});

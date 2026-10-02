@@ -54,7 +54,7 @@ router.post('/login', async (req, res, next) => {
       return res.render('auth/login', { title: 'Đăng nhập', email, flash: { error: ['Email hoặc mật khẩu không đúng.'], success: [], info: [] } });
     }
     if (!user.emailVerified) {
-      return res.render('auth/login', { title: 'Đăng nhập', email, unverified: true, flash: { error: ['Tài khoản chưa xác nhận email. Kiểm tra hộp thư hoặc gửi lại email xác nhận.'], success: [], info: [] } });
+      return res.render('auth/login', { title: 'Đăng nhập', email, unverified: true, resendEmail: user.email, flash: { error: ['Tài khoản chưa xác nhận email. Kiểm tra hộp thư hoặc gửi lại email xác nhận.'], success: [], info: [] } });
     }
     await mergeAndGo(req, res, user, req.body.remember === 'on');
   } catch (e) { next(e); }
@@ -68,19 +68,22 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res, next) => {
   try {
-    const form = { name: (req.body.name || '').trim(), email: (req.body.email || '').toLowerCase().trim(), phone: (req.body.phone || '').trim() };
+    const f = (k, n = 120) => String(req.body[k] == null ? '' : req.body[k]).trim().slice(0, n);
+    const form = { name: f('name', 80), email: f('email').toLowerCase(), phone: f('phone', 15) };
+    const password = typeof req.body.password === 'string' ? req.body.password : '';
     const errors = [];
     if (form.name.length < 2) errors.push('Vui lòng nhập họ tên.');
     if (!EMAIL_RE.test(form.email)) errors.push('Email không hợp lệ.');
     if (form.phone && !/^0\d{9,10}$/.test(form.phone)) errors.push('Số điện thoại không hợp lệ.');
-    if ((req.body.password || '').length < 8) errors.push('Mật khẩu tối thiểu 8 ký tự.');
-    if (req.body.password !== req.body.confirm) errors.push('Mật khẩu nhập lại không khớp.');
+    if (password.length < 8) errors.push('Mật khẩu tối thiểu 8 ký tự.');
+    if (password !== req.body.confirm) errors.push('Mật khẩu nhập lại không khớp.');
     if (!req.body.agree) errors.push('Bạn cần đồng ý điều khoản sử dụng.');
     if (await User.exists({ email: form.email })) errors.push('Email đã được sử dụng.');
+    if (form.phone && await User.exists({ phone: form.phone })) errors.push('Số điện thoại đã được sử dụng.');
     if (errors.length) return res.render('auth/register', { title: 'Đăng ký', form, flash: { error: errors, success: [], info: [] } });
 
     const user = new User({ ...form, verifyToken: token(), verifyExpires: Date.now() + 24 * 3600e3 });
-    await user.setPassword(req.body.password);
+    await user.setPassword(password);
     await user.save();
     await mailer.sendVerify(user, `${BASE()}/auth/verify/${user.verifyToken}`);
     res.render('auth/check-email', { title: 'Kiểm tra email', email: user.email, kind: 'verify' });
@@ -142,7 +145,7 @@ router.post('/reset/:token', async (req, res, next) => {
   try {
     const user = await User.findOne({ resetToken: req.params.token, resetExpires: { $gt: Date.now() } });
     if (!user) { req.flash('error', 'Liên kết đã hết hạn.'); return res.redirect('/auth/forgot'); }
-    const pw = req.body.password || '';
+    const pw = typeof req.body.password === 'string' ? req.body.password : '';
     if (pw.length < 8 || pw !== req.body.confirm) {
       return res.render('auth/reset', { title: 'Đặt mật khẩu mới', token: req.params.token, email: user.email, flash: { error: ['Mật khẩu tối thiểu 8 ký tự và phải khớp.'], success: [], info: [] } });
     }

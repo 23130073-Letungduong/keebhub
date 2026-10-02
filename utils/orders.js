@@ -11,7 +11,8 @@ async function cancelOrder(order, by, reason) {
   order.cancelledBy = by;
   if (order.paymentStatus === 'paid') order.paymentStatus = 'refund_pending';
   if (order.isCustom && order.customRequest && order.customRequest.status === 'waiting') {
-    order.customRequest.status = by === 'seller' ? 'rejected' : order.customRequest.status;
+    // Shop huỷ = từ chối; khách/admin huỷ = rút yêu cầu (không còn "chờ thanh toán")
+    order.customRequest.status = by === 'seller' ? 'rejected' : '';
     order.customRequest.respondedAt = new Date();
   }
   if (order.isCustom && order.service && order.service.ref) await CustomService.updateOne({ _id: order.service.ref }, { $inc: { orders: -1 } });

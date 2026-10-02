@@ -26,7 +26,7 @@ async function currentBuild(req) {
   return b;
 }
 async function populated(b) {
-  return Build.findById(b._id).populate('kit switch keycap stab').populate({ path: 'service', populate: { path: 'shop', select: 'name slug color' } });
+  return Build.findById(b._id).populate('kit switch keycap stab').populate({ path: 'service', populate: { path: 'shop', select: 'name slug color status offersCustom capacityPerWeek' } });
 }
 function partsOf(b, step) {
   return { kit: b.kit, sw: b.switch, keycap: b.keycap, stab: b.stab, service: b.service, qty: b.switchQty, step };
@@ -38,6 +38,10 @@ async function refresh(b) {
   p.total = buildTotal(p).total;
   await p.save();
   return p;
+}
+// Số đơn custom xưởng đang nhận (chờ nhận + đang gia công)
+async function shopLoad(shopId) {
+  return Order.countDocuments({ isCustom: true, shop: shopId, status: { $in: ['pending', 'processing'] } });
 }
 async function activeShopIds() {
   return (await Shop.find({ status: 'active' }).select('_id')).map(s => s._id);
@@ -172,7 +176,8 @@ router.post('/service', async (req, res, next) => {
   try {
     const b = await currentBuild(req);
     const s = isValidObjectId(String(req.body.serviceId || '')) ? await CustomService.findOne({ _id: req.body.serviceId, active: true }).populate('shop') : null;
-    if (!s || s.shop.status !== 'active') { req.flash('error', 'Gói gia công không khả dụng.'); return res.redirect('/builder?step=4'); }
+    if (!s || !s.shop || s.shop.status !== 'active' || !s.shop.offersCustom) { req.flash('error', 'Gói gia công không khả dụng.'); return res.redirect('/builder?step=4'); }
+    if ((await shopLoad(s.shop._id)) >= (s.shop.capacityPerWeek || 10)) { req.flash('error', `Xưởng ${s.shop.name} đã kín lịch tuần này, vui lòng chọn xưởng khác.`); return res.redirect('/builder?step=4'); }
     b.service = s._id;
     await b.save();
     await refresh(b);
@@ -202,6 +207,7 @@ router.post('/cart', async (req, res, next) => {
     if (!b.switch) missing.push('switch');
     if (!b.keycap) missing.push('keycap');
     if (!b.service) missing.push('gói gia công');
+    else if (!b.service.active || !b.service.shop || b.service.shop.status !== 'active') { req.flash('error', 'Gói gia công đã chọn hiện tạm ngưng, vui lòng chọn gói khác.'); return res.redirect('/builder?step=4'); }
     if (missing.length) { req.flash('error', 'Bạn còn thiếu: ' + missing.join(', ')); return res.redirect('/builder?step=5'); }
     if (!b.compat.ok) { req.flash('error', 'Cấu hình còn linh kiện không tương thích, vui lòng sửa trước khi đặt.'); return res.redirect('/builder?step=5'); }
     if (req.shop && String(req.shop._id) === String(b.service.shop._id)) { req.flash('error', 'Không thể đặt gia công tại chính shop của bạn.'); return res.redirect('/builder?step=4'); }

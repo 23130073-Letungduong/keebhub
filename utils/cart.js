@@ -37,7 +37,7 @@ async function loadCart(userId) {
       const key = String(p.shop._id);
       groups[key] = groups[key] || { shop: p.shop, items: [], builds: [] };
       groups[key].items.push({ id: it._id, product: p, qty: it.qty, total: p.price * it.qty, overStock: it.qty > p.stock });
-    } else if (it.build && it.build.service && it.build.service.shop) {
+    } else if (it.build && it.build.kit && it.build.switch && it.build.keycap && it.build.service && it.build.service.active !== false && it.build.service.shop && it.build.service.shop.status === 'active') {
       const b = it.build;
       const key = String(b.service.shop._id);
       groups[key] = groups[key] || { shop: b.service.shop, items: [], builds: [] };

@@ -10,7 +10,8 @@ async function markGroup(group, ok, info = {}) {
   for (const o of orders) {
     if (o.paymentStatus === 'paid') continue;
     if (ok) {
-      o.paymentStatus = 'paid';
+      // Đơn đã bị huỷ mà khách vẫn trả tiền → đưa vào hàng chờ hoàn tiền
+      o.paymentStatus = o.status === 'cancelled' ? 'refund_pending' : 'paid';
       o.paidAt = new Date();
       o.vnpTransactionNo = info.transactionNo;
       o.history.push({ status: o.status, note: `Thanh toán VNPay thành công${info.bank ? ' (' + info.bank + ')' : ''}`, by: 'system' });
@@ -60,6 +61,7 @@ router.post('/retry/:id', requireLogin, async (req, res, next) => {
 router.post('/mock/:group', requireLogin, async (req, res, next) => {
   try {
     if (vnpay.isConfigured()) return res.redirect('/');
+    if (!(await Order.exists({ paymentGroup: req.params.group, user: req.user._id }))) return res.redirect('/account/orders');
     const ok = req.body.result === 'success';
     const orders = await markGroup(req.params.group, ok, { transactionNo: 'MOCK' + Date.now(), bank: 'NCB' });
     if (ok) mailer.sendOrder(req.user, orders, `${process.env.BASE_URL || 'http://localhost:3000'}/account/orders`).catch(() => {});

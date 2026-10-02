@@ -222,7 +222,7 @@ MongoDB phải đang chạy. Tại thư mục `keebhub`:
 npm test
 ```
 
-- Bộ kiểm thử gồm **184 ca**, chạy khoảng 1–2 phút, kết quả cuối là `ℹ pass 184` / `ℹ fail 0`.
+- Bộ kiểm thử gồm **217 ca**, chạy khoảng 1–2 phút, kết quả cuối là `ℹ pass 217` / `ℹ fail 0`.
 - Kiểm thử dùng database riêng **`keebhub_test`** và cổng **3100**, **không** ảnh hưởng dữ liệu demo ở database `keebhub`, cũng không cần tắt web đang chạy.
 - Dùng MongoDB Atlas thì đặt thêm biến môi trường trước khi chạy: `set TEST_MONGODB_URI=mongodb+srv://.../keebhub_test` (tên database bắt buộc chứa chữ `test`).
 - Chi tiết từng ca xem file Excel *KeebHub-Danh-sach-ca-kiem-thu.xlsx*.

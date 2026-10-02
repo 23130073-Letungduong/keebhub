@@ -29,7 +29,12 @@ async function loadUser(req, res, next) {
 function requireLogin(req, res, next) {
   if (req.user) return next();
   if (req.xhr || (req.headers.accept || '').includes('application/json')) return res.status(401).json({ error: 'Vui lòng đăng nhập' });
-  req.session.returnTo = req.originalUrl;
+  // POST (vd. bấm "Thêm vào giỏ") → sau khi đăng nhập quay lại trang đang xem, không gọi lại URL POST
+  if (req.method === 'GET') req.session.returnTo = req.originalUrl;
+  else {
+    const ref = req.get('Referrer') || '';
+    try { const u = new URL(ref); if (u.host === req.get('host') && !u.pathname.startsWith('/auth')) req.session.returnTo = u.pathname + u.search; } catch (e) { /* bỏ qua */ }
+  }
   req.flash('info', 'Bạn cần đăng nhập để sử dụng tính năng này.');
   res.redirect('/auth/login');
 }
@@ -45,6 +50,7 @@ function requireRole(...roles) {
 // Seller có shop đã được duyệt
 async function requireShop(req, res, next) {
   if (!req.user) return requireLogin(req, res, next);
+  if (req.user.role === 'admin') return res.redirect('/admin');
   if (req.user.role !== 'seller') return res.redirect('/seller/register');
   if (!req.shop) return res.redirect('/seller/register');
   if (req.shop.status !== 'active') {

@@ -27,6 +27,15 @@ app.set('trust proxy', 1);
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1h' }));
 app.use(express.urlencoded({ extended: true, limit: '2mb' }));
 app.use(express.json({ limit: '2mb' }));
+// Tham số trên URL chỉ nhận chuỗi: ?q[]=a → 'a', ?x[$ne]=1 → bỏ (chặn lỗi 500 và NoSQL injection qua query)
+app.use((req, res, next) => {
+  for (const k of Object.keys(req.query)) {
+    const v = req.query[k];
+    if (Array.isArray(v)) req.query[k] = typeof v[0] === 'string' ? v[0] : '';
+    else if (v !== null && typeof v === 'object') delete req.query[k];
+  }
+  next();
+});
 app.use(methodOverride('_method'));
 
 app.use(session({
@@ -41,6 +50,7 @@ app.use(passport.initialize());
 
 // Biến dùng chung cho mọi view
 let catCache = null, catAt = 0;
+app.locals.clearCatCache = () => { catCache = null; }; // gọi khi admin thêm/xoá danh mục
 app.use(async (req, res, next) => {
   try {
     res.locals.v = ASSET_V; // thêm ?v= vào link css/js → trình duyệt luôn tải bản mới sau khi khởi động lại web

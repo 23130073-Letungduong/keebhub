@@ -47,7 +47,7 @@ router.get('/', async (req, res, next) => {
   try {
     const range = stats.parseRange({}, 14);
     const today = stats.parseRange({ from: range.toStr, to: range.toStr });
-    const yStr = new Date(Date.now() - 86400e3).toISOString().slice(0, 10);
+    const yStr = require('../utils/helpers').ymd(new Date(Date.now() - 86400e3));
     const startToday = new Date(); startToday.setHours(0, 0, 0, 0);
     const [chart, t, y, ordersToday, customToday, newUsers, types, recent, topShops, totalUsers, activeShops, customShops, cancelled, allOrders] = await Promise.all([
       stats.series({}, range), stats.series({}, today), stats.series({}, stats.parseRange({ from: yStr, to: yStr })),
@@ -91,6 +91,8 @@ router.post('/users/:id/status', async (req, res) => {
     u.status = u.status === 'active' ? 'locked' : 'active';
     await u.save();
     if (u.role === 'seller' && u.status === 'locked') await Shop.updateOne({ owner: u._id }, { status: 'locked' });
+    // mở khoá người bán → mở lại shop đã bị khoá theo tài khoản
+    if (u.role === 'seller' && u.status === 'active') await Shop.updateOne({ owner: u._id, status: 'locked' }, { status: 'active' });
     req.flash('success', `${u.status === 'locked' ? 'Đã khoá' : 'Đã mở khoá'} tài khoản ${u.email}.`);
   }
   res.redirect('back');
@@ -116,7 +118,7 @@ router.post('/shops/:id/:action', async (req, res) => {
   if (s) {
     const a = req.params.action;
     if (a === 'approve') { s.status = 'active'; s.verified = true; s.rejectReason = undefined; }
-    if (a === 'lock') s.status = 'locked';
+    if (a === 'lock') { s.status = 'locked'; s.rejectReason = undefined; }
     if (a === 'unlock') s.status = 'active';
     if (a === 'reject') { s.status = 'locked'; s.rejectReason = req.body.reason || 'Hồ sơ chưa hợp lệ'; }
     await s.save();
@@ -182,9 +184,16 @@ router.post('/orders/:code/status', async (req, res, next) => {
     const order = await Order.findOne({ code: req.params.code });
     if (!order) return next();
     const to = req.body.status;
+    if (to === 'cancelled' && ['delivered', 'completed'].includes(order.status)) {
+      req.flash('error', 'Đơn đã giao tới khách, không thể huỷ (hãy xử lý đổi trả/hoàn tiền riêng).');
+      return res.redirect(`/admin/orders/${order.code}`);
+    }
     if (to === 'cancelled') await cancelOrder(order, 'admin', req.body.note || 'Quản trị viên huỷ');
     else if (Order.STATUS[to] && order.status !== 'cancelled') {
       order.status = to;
+      // COD đã giao/hoàn thành = đã thu tiền
+      if (['delivered', 'completed'].includes(to) && order.paymentMethod === 'cod' && order.paymentStatus === 'unpaid') { order.paymentStatus = 'paid'; order.paidAt = new Date(); }
+      if (to === 'shipping' && !order.shipping.trackingCode) order.shipping.trackingCode = 'GHN' + Date.now().toString().slice(-9);
       order.history.push({ status: to, note: req.body.note || 'Cập nhật bởi quản trị viên', by: 'admin' });
       await order.save();
     }
@@ -232,17 +241,24 @@ router.post('/compat/:id', async (req, res) => {
   res.redirect('/admin/compat');
 });
 router.post('/categories', async (req, res) => {
-  const { name, icon, partType } = req.body;
-  if (name && partType) {
-    const slug = require('../utils/helpers').slugify(name);
-    if (!(await Category.exists({ slug }))) await Category.create({ name, slug, icon: icon || '⌨', partType, order: 50 });
-    req.flash('success', 'Đã thêm danh mục.');
+  const name = String(req.body.name || '').trim().slice(0, 60);
+  const partType = String(req.body.partType || '');
+  const icon = String(req.body.icon || '').trim().slice(0, 4) || '⌨';
+  if (!name || !['kit', 'prebuilt', 'switch', 'keycap', 'stabilizer', 'accessory'].includes(partType)) {
+    req.flash('error', 'Nhập tên danh mục và chọn loại linh kiện.'); return res.redirect('/admin/compat');
   }
+  const slug = require('../utils/helpers').slugify(name) || 'danh-muc-' + Date.now().toString(36);
+  if (await Category.exists({ $or: [{ slug }, { name: new RegExp('^' + escapeRegex(name) + '$', 'i') }] })) {
+    req.flash('error', 'Danh mục này đã tồn tại.'); return res.redirect('/admin/compat');
+  }
+  await Category.create({ name, slug, icon, partType, order: 50 });
+  if (req.app.locals.clearCatCache) req.app.locals.clearCatCache();
+  req.flash('success', 'Đã thêm danh mục.');
   res.redirect('/admin/compat');
 });
 router.post('/categories/:id/delete', async (req, res) => {
   if (await Product.exists({ category: req.params.id })) req.flash('error', 'Danh mục đang có sản phẩm, không xoá được.');
-  else { await Category.deleteOne({ _id: req.params.id }); req.flash('success', 'Đã xoá danh mục.'); }
+  else { await Category.deleteOne({ _id: req.params.id }); if (req.app.locals.clearCatCache) req.app.locals.clearCatCache(); req.flash('success', 'Đã xoá danh mục.'); }
   res.redirect('/admin/compat');
 });
 

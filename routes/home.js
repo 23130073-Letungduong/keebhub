@@ -59,10 +59,13 @@ router.get('/', async (req, res, next) => {
 // Danh mục + tìm kiếm + lọc
 async function listing(req, res, next, category) {
   try {
-    const { q = '', sort = 'popular', min, max, layout, switchType, profile, hotswap, type } = req.query;
+    // Ép mọi tham số về chuỗi (chặn ?q[]=x hoặc ?switchType[$ne]=x)
+    const S = (k) => (typeof req.query[k] === 'string' ? req.query[k] : '');
+    const q = S('q'), sort = S('sort') || 'popular', min = S('min'), max = S('max'), layout = S('layout'), switchType = S('switchType'), profile = S('profile'), hotswap = S('hotswap'), type = S('type');
     const page = Math.max(1, parseInt(req.query.page) || 1);
     const per = 20;
-    const filter = { ...ACTIVE, shop: { $in: await activeShopIds() } };
+    const liveShops = await activeShopIds();
+    const filter = { ...ACTIVE, shop: { $in: liveShops } };
     if (category) filter.category = category._id;
     if (type) filter.partType = type;
     if (q.trim()) filter.name = new RegExp(escapeRegex(q.trim()), 'i');
@@ -77,7 +80,7 @@ async function listing(req, res, next, category) {
     if (switchType) filter['attrs.switchType'] = switchType;
     if (profile) filter['attrs.profile'] = profile;
     if (hotswap === '1') filter['attrs.hotswap'] = true;
-    if (req.query.shop) filter.shop = req.query.shop;
+    if (S('shop')) filter.shop = liveShops.find(id => String(id) === S('shop')) || null;
     const sorts = { popular: { sold: -1 }, new: { createdAt: -1 }, price_asc: { price: 1 }, price_desc: { price: -1 }, rating: { rating: -1, reviewCount: -1 } };
     const [items, total] = await Promise.all([
       Product.find(filter).sort(sorts[sort] || sorts.popular).skip((page - 1) * per).limit(per).populate('shop', 'name slug'),
@@ -127,10 +130,11 @@ router.get('/p/:slug', async (req, res, next) => {
       req.user.viewed = [product._id, ...req.user.viewed.filter(id => String(id) !== String(product._id))].slice(0, 20);
       await req.user.save();
     }
+    const liveShops = await activeShopIds();
     const [reviews, comments, related, services, dist] = await Promise.all([
       Review.find({ product: product._id }).sort({ createdAt: -1 }).limit(30).populate('user', 'name color'),
       Comment.find({ product: product._id }).sort({ createdAt: -1 }).limit(30).populate('user', 'name color'),
-      Product.find({ ...ACTIVE, _id: { $ne: product._id }, $or: [{ shop: product.shop._id }, { partType: { $ne: product.partType } }] }).sort({ sold: -1 }).limit(4).populate('shop', 'name'),
+      Product.find({ ...ACTIVE, shop: { $in: liveShops }, _id: { $ne: product._id }, $or: [{ shop: product.shop._id }, { partType: { $ne: product.partType } }] }).sort({ sold: -1 }).limit(4).populate('shop', 'name'),
       CustomService.find({ shop: product.shop._id, active: true }).limit(3),
       Review.aggregate([{ $match: { product: product._id } }, { $group: { _id: '$rating', n: { $sum: 1 } } }])
     ]);
@@ -143,7 +147,7 @@ router.get('/p/:slug', async (req, res, next) => {
     const myRole = roleOf[product.partType];
     if (myRole) {
       const targets = myRole === 'kit' ? ['switch', 'keycap', 'stabilizer'] : ['kit'];
-      const others = await Product.find({ ...ACTIVE, partType: { $in: targets } }).sort({ sold: -1 }).limit(6);
+      const others = await Product.find({ ...ACTIVE, shop: { $in: liveShops }, partType: { $in: targets } }).sort({ sold: -1 }).limit(6);
       for (const o of others) {
         const parts = { qty: 999 };
         parts[myRole] = product;
@@ -153,11 +157,13 @@ router.get('/p/:slug', async (req, res, next) => {
         compatList.push({ product: o, ok: !bad || bad.level !== 'block', issue: bad });
       }
     }
-    const canReview = req.user ? await Order.exists({ user: req.user._id, status: { $in: ['delivered', 'completed'] }, 'items.product': product._id, 'items.reviewed': false }) : false;
+    // còn ít nhất 1 dòng hàng của sản phẩm này đã giao mà chưa đánh giá
+    const canReview = req.user ? (await Order.find({ user: req.user._id, status: { $in: ['delivered', 'completed'] }, 'items.product': product._id }).select('items').lean())
+      .some(o => o.items.some(i => String(i.product) === String(product._id) && !i.reviewed)) : false;
     const wished = req.user ? req.user.wishlist.some(id => String(id) === String(product._id)) : false;
     res.render('shop/product', {
       title: product.name, product, reviews, comments, related, services, distMap, compatList, canReview, wished,
-      tab: req.query.tab || 'desc'
+      tab: ['desc', 'spec', 'reviews', 'qa'].concat(compatList.length ? ['compat'] : []).includes(req.query.tab) ? req.query.tab : 'desc'
     });
   } catch (e) { next(e); }
 });

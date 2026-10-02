@@ -5,7 +5,7 @@
   <div class="top"><h1>Đăng nhập</h1><div class="sub">Chưa có tài khoản? <a href="/auth/register">Đăng ký miễn phí</a></div></div>
   <%- include('../partials/flash') %>
   <% if (typeof unverified !== 'undefined' && unverified) { %>
-    <form method="post" action="/auth/resend" style="margin-bottom:14px"><input type="hidden" name="email" value="<%= email %>"><button class="btn outp sm blk">✉ Gửi lại email xác nhận</button></form>
+    <form method="post" action="/auth/resend" style="margin-bottom:14px"><input type="hidden" name="email" value="<%= (typeof resendEmail !== 'undefined' && resendEmail) || email %>"><button class="btn outp sm blk">✉ Gửi lại email xác nhận</button></form>
   <% } %>
   <%- include('_social') %>
   <div class="orline">hoặc đăng nhập bằng email</div>

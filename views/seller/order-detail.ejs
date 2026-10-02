@@ -1,5 +1,5 @@
 <%- include('_top') %>
-<% var o = order; var nexts = (NEXT[o.status]||[]).filter(function(s){ return s!=='completed' && !(o.isCustom && o.status==='pending'); }); %>
+<% var o = order; var nexts = (NEXT[o.status]||[]).filter(function(s){ return s!=='completed' && !(o.isCustom && o.status==='pending') && !(o.isCustom && s==='shipping' && (o.progress||[]).some(function(x){return x.status!=='done'})); }); %>
 <div class="split">
   <div>
     <div class="card2">

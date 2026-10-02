@@ -12,6 +12,14 @@ router.get('/cart', requireLogin, async (req, res, next) => {
   try {
     const cart = await loadCart(req.user._id);
     if (cart.invalid.length) {
+      // Build không còn đặt được (thiếu linh kiện / gói gia công tạm ngưng) → trả về "Cấu hình đã lưu" để khách sửa
+      const builds = cart.invalid.filter(i => i.build).map(i => i.build._id || i.build);
+      if (builds.length) {
+        await Build.updateMany({ _id: { $in: builds } }, { status: 'saved' });
+        res.locals.flash.info.push('Có cấu hình custom không còn đặt được (linh kiện hết bán hoặc gói gia công tạm ngưng) nên đã được chuyển về mục "Cấu hình đã lưu" để bạn chỉnh lại.');
+      }
+      const removed = cart.invalid.filter(i => !i.build).length;
+      if (removed) res.locals.flash.info.push('Một số sản phẩm đã ngừng bán nên được bỏ khỏi giỏ.');
       cart.user.cart = cart.user.cart.filter(i => !cart.invalid.includes(i));
       await cart.user.save();
     }
@@ -96,7 +104,8 @@ router.post('/checkout', requireLogin, async (req, res, next) => {
   try {
     const cart = await loadCart(req.user._id);
     if (!cart.groups.length) return res.redirect('/cart');
-    const { fullName, phone, address, note } = req.body;
+    const f = (k, n = 300) => String(req.body[k] == null ? '' : req.body[k]).trim().slice(0, n);
+    const fullName = f('fullName', 80), phone = f('phone', 15), address = f('address'), note = f('note', 500);
     const method = req.body.ship === 'express' ? 'express' : 'standard';
     let payment = req.body.payment === 'cod' ? 'cod' : 'vnpay';
     if (!fullName || !phone || !address || !/^0\d{9,10}$/.test(String(phone).trim())) {
@@ -170,7 +179,13 @@ router.post('/checkout', requireLogin, async (req, res, next) => {
   } catch (e) {
     // hoàn tác nếu lỗi giữa chừng
     for (const d of decremented) await Product.updateOne({ _id: d.productId }, { $inc: { stock: d.qty, sold: -d.qty } });
-    if (created.length) await Order.deleteMany({ _id: { $in: created.map(o => o._id) } });
+    if (created.length) {
+      for (const o of created.filter(x => x.isCustom)) {
+        await Build.updateOne({ _id: o.build }, { status: 'saved' });
+        if (o.service && o.service.ref) await CustomService.updateOne({ _id: o.service.ref }, { $inc: { orders: -1 } });
+      }
+      await Order.deleteMany({ _id: { $in: created.map(o => o._id) } });
+    }
     if (/hết hàng/.test(e.message)) { req.flash('error', e.message); return res.redirect('/cart'); }
     next(e);
   }

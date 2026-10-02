@@ -11,7 +11,7 @@
 </div></form>
 <div class="kpis g4">
   <div class="kpi"><div class="tp"><em style="background:var(--s50);color:var(--s600)">💰</em><span><%= typeof shops !== 'undefined' ? 'GMV' : 'Doanh thu' %></span></div><div class="v"><%= h.money(chart.total) %></div><div class="d t2"><%= range.fromStr.split('-').reverse().join('/') %> → <%= range.toStr.split('-').reverse().join('/') %></div></div>
-  <div class="kpi"><div class="tp"><em style="background:var(--p50);color:var(--p600)">📦</em><span>Số đơn tính doanh thu</span></div><div class="v"><%= chart.count %></div><div class="d t2">Không tính đơn huỷ / chưa thanh toán</div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--p50);color:var(--p600)">📦</em><span>Số đơn tính doanh thu</span></div><div class="v"><%= chart.count %></div><div class="d t2">Không tính đơn huỷ / VNPay chưa thanh toán</div></div>
   <div class="kpi"><div class="tp"><em style="background:var(--w50);color:var(--w600)">🧾</em><span>Giá trị TB / đơn</span></div><div class="v"><%= h.money(chart.count ? chart.total/chart.count : 0) %></div></div>
   <div class="kpi"><div class="tp"><em style="background:var(--a50);color:var(--a600)">🏦</em><span>Phí sàn (<%= FEE*100 %>%)</span></div><div class="v"><%= h.money(chart.fee) %></div><div class="d t2"><%= typeof shops !== 'undefined' ? 'Doanh thu của sàn' : 'Thực nhận: ' + h.money(chart.total-chart.fee) %></div></div>
 </div>

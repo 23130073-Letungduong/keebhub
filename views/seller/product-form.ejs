@@ -11,7 +11,7 @@
       <div class="field2"><label>Mô tả</label><textarea class="inp" name="description" rows="6"><%= P.description||'' %></textarea></div>
     </div></div>
     <div class="card2"><div class="hd"><h3>Thuộc tính kỹ thuật</h3><p style="margin-left:8px">Dùng cho bộ lọc và kiểm tra tương thích trong Custom Builder</p></div><div class="bd">
-      <div class="attr-grp" data-for="kit prebuilt keycap"><div class="g3">
+      <div class="attr-grp" data-for="kit prebuilt stabilizer"><div class="g3">
         <div class="field2" data-for="kit prebuilt"><label>Layout</label><select class="inp" name="layout"><option value="">—</option><% ['60%','65%','75%','TKL','Full'].forEach(function(l){ %><option <%= A.layout===l?'selected':'' %>><%= l %></option><% }) %></select></div>
         <div class="field2" data-for="kit prebuilt"><label>Số phím</label><input class="inp" type="number" name="keyCount" value="<%= A.keyCount||'' %>"></div>
         <div class="field2" data-for="kit prebuilt"><label>Kiểu mount</label><select class="inp" name="mount"><option value="">—</option><% ['gasket','tray','top','plateless','leaf-spring'].forEach(function(l){ %><option <%= A.mount===l?'selected':'' %>><%= l %></option><% }) %></select></div>

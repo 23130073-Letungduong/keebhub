@@ -71,9 +71,17 @@
   var cat = document.getElementById('catSel');
   if (cat) {
     var apply = function () {
-      var t = cat.options[cat.selectedIndex].dataset.type;
+      var opt = cat.options[cat.selectedIndex];
+      if (!opt) return;
+      var t = opt.dataset.type;
       document.querySelectorAll('[data-for]').forEach(function (el) {
         el.style.display = el.dataset.for.split(' ').indexOf(t) >= 0 ? '' : 'none';
+      });
+      // ô bị ẩn thì không gửi lên (tránh lưu thuộc tính của loại cũ khi đổi danh mục)
+      cat.form.querySelectorAll('[data-for] input, [data-for] select, [data-for] textarea').forEach(function (inp) {
+        var hidden = false, p = inp.parentElement;
+        while (p && p !== cat.form) { if (p.dataset && p.dataset.for && p.style.display === 'none') { hidden = true; break; } p = p.parentElement; }
+        inp.disabled = hidden;
       });
     };
     cat.addEventListener('change', apply); apply();

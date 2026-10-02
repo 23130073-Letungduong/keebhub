@@ -19,7 +19,7 @@ const STOP = new Set(['tôi', 'mình', 'cho', 'cần', 'muốn', 'mua', 'tìm', 
 
 async function findProducts(text, limit = 6) {
   const t = text.toLowerCase();
-  const q = { status: 'active' };
+  const q = { status: 'active', shop: { $in: (await Shop.find({ status: 'active' }).select('_id')).map(s => s._id) } };
   const part = /switch/.test(t) ? 'switch' : /keycap|nút/.test(t) ? 'keycap' : /stab/.test(t) ? 'stabilizer' : /kit|vỏ|case/.test(t) ? 'kit' : /cáp|cable|phụ kiện/.test(t) ? 'accessory' : null;
   if (part) q.partType = part;
   const priceM = t.match(/(dưới|<|tầm|khoảng|max)\s*(\d+[.,]?\d*)\s*(k|tr|triệu|nghìn)?/);
@@ -54,7 +54,7 @@ function productLine(p) {
 
 async function buildContext(user, text) {
   const products = await findProducts(text);
-  const best = products.length ? [] : await Product.find({ status: 'active' }).sort({ sold: -1 }).limit(5).populate('shop', 'name');
+  const best = products.length ? [] : await Product.find({ status: 'active', shop: { $in: (await Shop.find({ status: 'active' }).select('_id')).map(s => s._id) } }).sort({ sold: -1 }).limit(5).populate('shop', 'name');
   let ctx = `Câu hỏi thường gặp:${FAQ}\n\nSản phẩm liên quan trong kho:\n${(products.length ? products : best).map(productLine).join('\n') || '(không có)'}`;
   if (user) {
     const orders = await Order.find({ user: user._id }).sort({ createdAt: -1 }).limit(5);

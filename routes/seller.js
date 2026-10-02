@@ -1,5 +1,6 @@
 // Kênh người bán: sản phẩm, đơn hàng, dịch vụ custom, tiến độ gia công, đánh giá, doanh thu
 const router = require('express').Router();
+const { isValidObjectId } = require('mongoose');
 const { Shop, Product, Category, Order, CustomService, Review, Comment, User } = require('../models');
 const { requireLogin, requireShop } = require('../middleware/auth');
 const upload = require('../config/upload');
@@ -11,21 +12,25 @@ const COLORS = ['#1B62F5', '#E84708', '#7C3AED', '#079455', '#DC6803', '#0E7490'
 
 // ---------- Đăng ký mở shop ----------
 router.get('/register', requireLogin, (req, res) => {
+  if (req.user.role === 'admin') return res.redirect('/admin');
   if (req.shop && req.shop.status === 'active') return res.redirect('/seller');
   res.render('seller/register', { title: 'Đăng ký bán hàng', form: req.shop || {} });
 });
 router.post('/register', requireLogin, async (req, res, next) => {
   try {
     if (req.user.role === 'admin') { req.flash('error', 'Tài khoản admin không mở shop.'); return res.redirect('/'); }
-    const { name, description, address, city, phone } = req.body;
-    if (!name || name.trim().length < 3) { req.flash('error', 'Tên shop tối thiểu 3 ký tự.'); return res.redirect('/seller/register'); }
-    if (await Shop.exists({ name: new RegExp('^' + escapeRegex(name.trim()) + '$', 'i'), owner: { $ne: req.user._id } })) {
+    const f = (k, n = 200) => String(req.body[k] == null ? '' : req.body[k]).trim().slice(0, n);
+    const name = f('name', 80), description = f('description', 2000), address = f('address'), city = f('city', 60), phone = f('phone', 20);
+    if (!name || name.length < 3) { req.flash('error', 'Tên shop tối thiểu 3 ký tự.'); return res.redirect('/seller/register'); }
+    if (await Shop.exists({ name: new RegExp('^' + escapeRegex(name) + '$', 'i'), owner: { $ne: req.user._id } })) {
       req.flash('error', 'Tên shop đã tồn tại.'); return res.redirect('/seller/register');
     }
     let shop = req.shop || await Shop.findOne({ owner: req.user._id });
+    // bị khoá (vi phạm) thì không tự mở lại; bị từ chối hồ sơ thì được sửa & gửi lại
+    if (shop && shop.status === 'locked' && !shop.rejectReason) { req.flash('error', 'Shop của bạn đang bị khoá. Liên hệ hotro@keebhub.vn.'); return res.redirect('/seller'); }
     if (!shop) shop = new Shop({ owner: req.user._id, slug: slugify(name) + '-' + Date.now().toString(36), color: COLORS[Math.floor(Math.random() * COLORS.length)] });
-    Object.assign(shop, { name: name.trim(), description, address, city, phone, offersCustom: req.body.offersCustom === 'on' });
-    if (shop.status !== 'active') shop.status = 'pending';
+    Object.assign(shop, { name, description, address, city, phone, offersCustom: req.body.offersCustom === 'on' });
+    if (shop.status !== 'active') { shop.status = 'pending'; shop.rejectReason = undefined; }
     await shop.save();
     req.user.role = 'seller';
     await req.user.save();
@@ -42,7 +47,7 @@ router.get('/', async (req, res, next) => {
     const sid = req.shop._id;
     const range = stats.parseRange({}, 14);
     const today = stats.parseRange({ from: range.toStr, to: range.toStr });
-    const yRange = new Date(Date.now() - 86400e3).toISOString().slice(0, 10);
+    const yRange = require('../utils/helpers').ymd(new Date(Date.now() - 86400e3));
     const yesterday = stats.parseRange({ from: yRange, to: yRange });
     const [chart, t, y, newOrders, processing, lowStock, pendingProducts, unreplied, recent, types, top, nearDue] = await Promise.all([
       stats.series({ shop: sid }, range),
@@ -106,6 +111,10 @@ router.post('/orders/:code/status', async (req, res, next) => {
     if (order.isCustom && order.status === 'pending' && to === 'confirmed') {
       req.flash('error', 'Đơn custom cần xử lý ở mục "Đơn custom chờ xác nhận".');
       return res.redirect('/seller/custom');
+    }
+    if (order.isCustom && to === 'shipping' && (order.progress || []).some(s => s.status !== 'done')) {
+      req.flash('error', 'Đơn custom cần hoàn thành đủ các công đoạn ở mục "Tiến độ gia công" rồi mới giao hàng.');
+      return res.redirect('/seller/progress');
     }
     if (to === 'cancelled') {
       await cancelOrder(order, 'seller', req.body.note || 'Shop huỷ đơn');
@@ -228,37 +237,57 @@ router.get('/products', async (req, res, next) => {
   } catch (e) { next(e); }
 });
 
-function readProductForm(body) {
-  const num = (v) => (v === '' || v === undefined ? undefined : Number(v));
+// Thuộc tính kỹ thuật hợp lệ theo loại linh kiện (bỏ thuộc tính thừa khi đổi danh mục)
+const ATTRS_BY_TYPE = {
+  kit: ['layout', 'keyCount', 'mount', 'hotswap', 'pins', 'ledDirection', 'stabMount', 'material'],
+  prebuilt: ['layout', 'keyCount', 'mount', 'hotswap', 'pins', 'ledDirection', 'stabMount', 'material'],
+  switch: ['pins', 'switchType', 'force', 'material'],
+  keycap: ['profile', 'layouts', 'material'],
+  stabilizer: ['stabMount', 'material'],
+  accessory: ['material']
+};
+const ART_BY_TYPE = { kit: 'kit', prebuilt: 'kit', switch: 'switch', keycap: 'keycap', stabilizer: 'stab', accessory: 'cable' };
+
+function readProductForm(body, partType) {
+  const str = (v) => (Array.isArray(v) ? String(v[0] || '') : String(v == null ? '' : v)).trim();
+  // số nguyên không âm; rỗng/sai → undefined
+  const int = (v) => { const n = Math.floor(Number(str(v))); return str(v) === '' || !Number.isFinite(n) || n < 0 ? undefined : n; };
   const specs = [];
   const ks = [].concat(body.specK || []), vs = [].concat(body.specV || []);
-  ks.forEach((k, i) => { if (k && vs[i]) specs.push({ k: String(k).trim(), v: String(vs[i]).trim() }); });
-  const pins = [].concat(body.pins || []).map(Number).filter(Boolean);
-  const layouts = [].concat(body.layouts || []).filter(Boolean);
+  ks.forEach((k, i) => { if (k && vs[i]) specs.push({ k: String(k).trim().slice(0, 60), v: String(vs[i]).trim().slice(0, 200) }); });
+  const pins = [...new Set([].concat(body.pins || []).map(Number).filter(n => n === 3 || n === 5))];
+  const layouts = [].concat(body.layouts || []).map(String).filter(l => ['60%', '65%', '75%', 'TKL', 'Full'].includes(l));
+  const price = int(body.price) || 0;
+  const oldPrice = int(body.oldPrice) || 0;
+  const low = int(body.lowStock);
+  const all = {
+    layout: str(body.layout) || undefined,
+    keyCount: int(body.keyCount) || undefined,
+    mount: str(body.mount) || undefined,
+    hotswap: body.hotswap === 'yes' ? true : body.hotswap === 'no' ? false : undefined,
+    pins,
+    ledDirection: str(body.ledDirection) || undefined,
+    stabMount: str(body.stabMount) || undefined,
+    switchType: str(body.switchType) || undefined,
+    force: int(body.force),
+    profile: str(body.profile) || undefined,
+    layouts,
+    material: str(body.material).slice(0, 80) || undefined
+  };
+  const keep = ATTRS_BY_TYPE[partType] || Object.keys(all);
+  const attrs = { pins: [], layouts: [] };
+  keep.forEach(k => { attrs[k] = all[k]; });
   return {
-    name: String(body.name || '').trim(),
-    sku: body.sku || '',
-    price: num(body.price) || 0,
-    oldPrice: num(body.oldPrice) || 0,
-    stock: Math.max(0, num(body.stock) || 0),
-    lowStock: num(body.lowStock) || 5,
-    description: body.description || '',
+    name: str(body.name).slice(0, 160),
+    sku: str(body.sku).slice(0, 60),
+    price,
+    oldPrice: oldPrice > price ? oldPrice : 0, // giá gốc phải lớn hơn giá bán mới hiện giảm giá
+    stock: int(body.stock) || 0,
+    lowStock: low === undefined ? 5 : low,
+    description: str(body.description).slice(0, 5000),
     specs,
-    art: { kind: body.artKind || undefined, color: body.artColor || '#4B5563', accent: body.artAccent || '#1B62F5', bg: body.artBg || '#E7EBF0' },
-    attrs: {
-      layout: body.layout || undefined,
-      keyCount: num(body.keyCount),
-      mount: body.mount || undefined,
-      hotswap: body.hotswap === 'yes' ? true : body.hotswap === 'no' ? false : undefined,
-      pins,
-      ledDirection: body.ledDirection || undefined,
-      stabMount: body.stabMount || undefined,
-      switchType: body.switchType || undefined,
-      force: num(body.force),
-      profile: body.profile || undefined,
-      layouts,
-      material: body.material || undefined
-    }
+    art: { kind: str(body.artKind) || undefined, color: str(body.artColor) || '#4B5563', accent: str(body.artAccent) || '#1B62F5', bg: str(body.artBg) || '#E7EBF0' },
+    attrs
   };
 }
 
@@ -268,12 +297,12 @@ router.get('/products/new', async (req, res) => {
 
 router.post('/products', upload.array('images', 6), async (req, res, next) => {
   try {
-    const data = readProductForm(req.body);
-    const cat = await Category.findById(req.body.category);
+    const cat = isValidObjectId(String(req.body.category || '')) ? await Category.findById(req.body.category) : null;
+    const data = readProductForm(req.body, cat && cat.partType);
     if (!data.name || !cat || data.price <= 0) { req.flash('error', 'Vui lòng nhập tên, danh mục và giá bán hợp lệ.'); return res.redirect('/seller/products/new'); }
     const p = new Product({ ...data, shop: req.shop._id, category: cat._id, partType: cat.partType, slug: uniqueSlug(data.name), status: 'pending' });
     p.images = (req.files || []).map(f => '/uploads/' + f.filename);
-    if (!p.art.kind) p.art.kind = { kit: 'kit', prebuilt: 'kit', switch: 'switch', keycap: 'keycap', stabilizer: 'stab', accessory: 'cable' }[cat.partType];
+    if (!p.art.kind) p.art.kind = ART_BY_TYPE[cat.partType];
     await p.save();
     req.flash('success', 'Đã gửi sản phẩm. Sản phẩm sẽ hiển thị sau khi sàn duyệt.');
     res.redirect('/seller/products');
@@ -290,16 +319,24 @@ router.post('/products/:id', upload.array('images', 6), async (req, res, next) =
   try {
     const p = await Product.findOne({ _id: req.params.id, shop: req.shop._id });
     if (!p) return next();
-    const data = readProductForm(req.body);
-    const cat = await Category.findById(req.body.category);
+    const cat = isValidObjectId(String(req.body.category || '')) ? await Category.findById(req.body.category) : null;
+    const data = readProductForm(req.body, cat && cat.partType);
     if (!data.name || !cat || data.price <= 0) { req.flash('error', 'Thông tin chưa hợp lệ.'); return res.redirect(`/seller/products/${p._id}/edit`); }
+    const norm = (x) => String(x || '').trim().replace(/\r\n/g, '\n');
+    const before = { name: norm(p.name), description: norm(p.description), images: p.images.join('|'), partType: p.partType };
+    const typeChanged = p.partType !== cat.partType;
     Object.assign(p, data, { category: cat._id, partType: cat.partType });
-    if (!p.art.kind) p.art.kind = { kit: 'kit', prebuilt: 'kit', switch: 'switch', keycap: 'keycap', stabilizer: 'stab', accessory: 'cable' }[cat.partType];
+    // đổi loại linh kiện → vẽ lại ảnh minh hoạ theo loại mới
+    if (!p.art.kind || typeChanged) p.art.kind = ART_BY_TYPE[cat.partType];
     const removed = [].concat(req.body.removeImg || []);
     p.images = p.images.filter(i => !removed.includes(i)).concat((req.files || []).map(f => '/uploads/' + f.filename));
+    // Sản phẩm đang bán mà đổi tên / mô tả / ảnh / loại → sàn duyệt lại (đổi giá, kho thì không cần)
+    const contentChanged = before.name !== norm(p.name) || before.description !== norm(p.description) || before.images !== p.images.join('|') || typeChanged;
+    let reReview = false;
     if (p.status === 'rejected') p.status = 'pending';
+    else if (p.status === 'active' && contentChanged) { p.status = 'pending'; reReview = true; }
     await p.save();
-    req.flash('success', 'Đã cập nhật sản phẩm.');
+    req.flash('success', reReview ? 'Đã cập nhật. Sản phẩm thay đổi nội dung nên sẽ hiển thị lại sau khi sàn duyệt.' : 'Đã cập nhật sản phẩm.');
     res.redirect('/seller/products');
   } catch (e) { next(e); }
 });
@@ -381,6 +418,8 @@ router.post('/services/settings', async (req, res) => {
 });
 router.post('/services/:id', async (req, res) => {
   const data = readService(req.body);
+  delete data.active; // sửa gói không tự bật lại gói đang tạm dừng (bật/tắt dùng nút riêng)
+  if (!data.name || !data.price) { req.flash('error', 'Nhập tên gói và giá.'); return res.redirect('/seller/services'); }
   if (!data.stages.length) data.stages = CustomService.DEFAULT_STAGES;
   await CustomService.updateOne({ _id: req.params.id, shop: req.shop._id }, data);
   req.flash('success', 'Đã cập nhật gói gia công.');

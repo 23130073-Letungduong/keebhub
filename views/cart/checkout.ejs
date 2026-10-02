@@ -35,7 +35,7 @@
         <% cart.groups.forEach(function(g){ %>
           <div class="s13 w700" style="margin:8px 0 4px">🏪 <%= g.shop.name %> <span class="muted w500">· phí ship <%= g.ship ? h.money(g.ship) : 'miễn phí' %></span></div>
           <% g.items.forEach(function(i){ %><div class="mini2"><div class="th"><img src="<%= i.product.image %>" class="kb"></div><div style="flex:1"><b><%= i.product.name %></b><div class="s12 muted">×<%= i.qty %></div></div><b class="s13"><%= h.money(i.total) %></b></div><% }) %>
-          <% g.builds.forEach(function(b){ %><div class="mini2"><div class="th"><img src="<%= b.build.kit.image %>" class="kb"></div><div style="flex:1"><b>⚙ Build #<%= b.build.code %> + <%= b.build.service.name %></b><div class="s12 muted"><%= b.lines.map(function(l){return l.product.name}).join(' · ') %></div></div><b class="s13"><%= h.money(b.total) %></b></div><% }) %>
+          <% g.builds.forEach(function(b){ %><div class="mini2"><div class="th"><img src="<%= b.build.kit ? b.build.kit.image : '/img/hero.svg' %>" class="kb"></div><div style="flex:1"><b>⚙ Build #<%= b.build.code %> + <%= b.build.service.name %></b><div class="s12 muted"><%= b.lines.map(function(l){return l.product.name}).join(' · ') %></div></div><b class="s13"><%= h.money(b.total) %></b></div><% }) %>
         <% }) %>
       </div>
     </div>
