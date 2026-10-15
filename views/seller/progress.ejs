@@ -1,7 +1,7 @@
 <%- include('_top') %>
 <div class="split">
   <div>
-    <% if (!sel) { %><div class="card2"><div class="bd empty"><div class="s38">🛠</div><b>Chưa có đơn nào đang gia công</b><p class="s13 muted">Nhận yêu cầu tại mục "Đơn custom chờ xác nhận".</p></div></div>
+    <% if (!sel) { %><div class="card2"><div class="bd empty"><div class="s38"><%- h.catIcon('service', '1.1em') %></div><b>Chưa có đơn nào đang gia công</b><p class="s13 muted">Nhận yêu cầu tại mục "Đơn custom chờ xác nhận".</p></div></div>
     <% } else { var o = sel; %>
     <div class="card2">
       <div class="hd"><div style="flex:1"><h3>Đơn #<%= o.code %> · Build #<%= o.buildCode %></h3><p><%= o.user.name %> · Nhận <%= h.date(o.customRequest.respondedAt) %> · Cam kết bàn giao <%= h.date(o.customRequest.deadline) %></p></div><span class="bdg warn">Đang gia công · <%= o.progressPercent %>%</span></div>
@@ -20,7 +20,7 @@
                 <form method="post" action="/seller/progress/<%= o.code %>/stage/<%= s._id %>" enctype="multipart/form-data" style="margin-top:10px">
                   <div class="field2"><label>Ghi chú công đoạn (khách sẽ thấy)</label><textarea class="inp" name="note" rows="3" placeholder="Mô tả công việc đã làm…"><%= s.note %></textarea></div>
                   <% if (s.photos.length) { %><div class="ph" style="margin-bottom:10px"><% s.photos.forEach(function(p){ %><i><img src="<%= p %>" style="width:100%;height:100%;object-fit:cover"></i><% }) %></div><% } %>
-                  <div class="upl2"><label style="cursor:pointer">📷 <b>Thêm ảnh thực tế</b><input type="file" name="photos" accept="image/*" multiple hidden></label><div class="s12 muted filelbl" style="margin-top:4px">Ảnh giúp khách yên tâm và giảm khiếu nại.</div></div>
+                  <div class="upl2"><label style="cursor:pointer"><%- h.uiIcon('camera', 16) %> <b>Thêm ảnh thực tế</b><input type="file" name="photos" accept="image/*" multiple hidden></label><div class="s12 muted filelbl" style="margin-top:4px">Ảnh giúp khách yên tâm và giảm khiếu nại.</div></div>
                   <div class="f" style="gap:8px;margin-top:12px"><button class="btn pri" name="action" value="done">Lưu & hoàn thành bước này</button><button class="btn out" name="action" value="save">Chỉ lưu nháp</button></div>
                 </form>
               <% } %>
@@ -36,7 +36,7 @@
     <% if (sel) { %>
     <div class="card2"><div class="hd"><h3>Build Sheet</h3></div><div class="bd">
       <div class="bsheet2"><% sel.items.forEach(function(i){ %><div class="r"><span><%= ({kit:'Kit',switch:'Switch',keycap:'Keycap',stab:'Stab'})[i.role]||'' %></span><b><%= i.name %></b></div><% }) %><div class="r"><span>Gói</span><b><%= sel.service.name %></b></div></div>
-      <% if (sel.note) { %><div class="alert info s12" style="margin-top:10px">📝 <%= sel.note %></div><% } %>
+      <% if (sel.note) { %><div class="alert info s12" style="margin-top:10px"><%- h.uiIcon('note', 16) %> <%= sel.note %></div><% } %>
       <a class="btn out blk sm" style="margin-top:12px" href="/seller/orders/<%= sel.code %>">Xem chi tiết đơn</a>
     </div></div>
     <% } %>
@@ -44,7 +44,7 @@
       <tr><th>Đơn</th><th>Tiến độ</th><th>Hạn</th></tr>
       <% queue.forEach(function(o){ var late = o.customRequest.deadline && new Date(o.customRequest.deadline) < new Date(Date.now()+86400e3); %><tr style="<%= sel && sel.code===o.code ? 'background:var(--p50)' : '' %>"><td><a href="?code=<%= o.code %>"><b>#<%= o.code %></b><div class="sub"><%= o.user.name %></div></a></td><td><div class="cap" style="padding:0;min-width:90px"><div class="tk"><i style="width:<%= o.progressPercent %>%;background:var(--p500)"></i></div><b class="s12"><%= o.progressPercent %>%</b></div></td><td><span class="bdg <%= late?'err':'ok' %>"><%= h.date(o.customRequest.deadline).slice(0,5) %></span></td></tr><% }) %>
     </table></div></div>
-    <% if (done.length) { %><div class="card2"><div class="hd"><h3>Đã hoàn thành gần đây</h3></div><div class="bd" style="padding:6px 20px"><% done.forEach(function(o){ %><div class="todo"><em style="background:var(--s50);color:var(--s600)">✓</em><div><b>#<%= o.code %></b><span><%= o.user?o.user.name:'' %> · <%= STATUS[o.status].label %></span></div></div><% }) %></div></div><% } %>
+    <% if (done.length) { %><div class="card2"><div class="hd"><h3>Đã hoàn thành gần đây</h3></div><div class="bd" style="padding:6px 20px"><% done.forEach(function(o){ %><div class="todo"><em style="background:var(--s50);color:var(--s600)"><%- h.uiIcon('check', 18) %></em><div><b>#<%= o.code %></b><span><%= o.user?o.user.name:'' %> · <%= STATUS[o.status].label %></span></div></div><% }) %></div></div><% } %>
   </div>
 </div>
 <%- include('_bottom') %>

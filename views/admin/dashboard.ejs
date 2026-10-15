@@ -1,19 +1,19 @@
 <%- include('_top') %>
 <% var diff = y.total ? Math.round((t.total - y.total)/y.total*100) : null; %>
 <div class="kpis g4">
-  <div class="kpi"><div class="tp"><em style="background:var(--s50);color:var(--s600)">💰</em><span>GMV hôm nay</span></div><div class="v"><%= h.short(t.total) %>₫</div><div class="d <%= diff===null||diff>=0?'up':'down' %>"><%= diff===null ? 'Hôm qua: '+h.short(y.total)+'₫' : (diff>=0?'▲ ':'▼ ')+Math.abs(diff)+'% so với hôm qua' %></div></div>
-  <div class="kpi"><div class="tp"><em style="background:var(--p50);color:var(--p600)">📦</em><span>Đơn hôm nay</span></div><div class="v"><%= ordersToday %></div><div class="d up">▲ <%= customToday %> đơn custom</div></div>
-  <div class="kpi"><div class="tp"><em style="background:var(--w50);color:var(--w600)">👥</em><span>Người dùng mới (7 ngày)</span></div><div class="v"><%= newUsers %></div><div class="d t2">Tổng <%= health.totalUsers %> tài khoản</div></div>
-  <div class="kpi"><div class="tp"><em style="background:var(--a50);color:var(--a600)">💵</em><span>Phí sàn thu được (14 ngày)</span></div><div class="v"><%= h.short(chart.fee) %>₫</div><div class="d up">5% GMV</div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--s50);color:var(--s600)"><%- h.uiIcon('wallet', 18) %></em><span>GMV hôm nay</span></div><div class="v"><%= h.short(t.total) %>₫</div><div class="d <%= diff===null||diff>=0?'up':'down' %>"><%= diff===null ? 'Hôm qua: '+h.short(y.total)+'₫' : (diff>=0?'▲ ':'▼ ')+Math.abs(diff)+'% so với hôm qua' %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--p50);color:var(--p600)"><%- h.uiIcon('package', 18) %></em><span>Đơn hôm nay</span></div><div class="v"><%= ordersToday %></div><div class="d up">▲ <%= customToday %> đơn custom</div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--w50);color:var(--w600)"><%- h.uiIcon('users', 18) %></em><span>Người dùng mới (7 ngày)</span></div><div class="v"><%= newUsers %></div><div class="d t2">Tổng <%= health.totalUsers %> tài khoản</div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--a50);color:var(--a600)"><%- h.uiIcon('banknote', 18) %></em><span>Phí sàn thu được (14 ngày)</span></div><div class="v"><%= h.short(chart.fee) %>₫</div><div class="d up">5% GMV</div></div>
 </div>
 <div class="split3">
   <div class="card2"><div class="hd"><div style="flex:1"><h3>GMV 14 ngày qua</h3><p>Tổng <%= h.money(chart.total) %> · <%= chart.count %> đơn</p></div><a class="tchip" href="/admin/revenue">Chọn khoảng ngày →</a></div>
     <div class="bd"><div style="height:240px"><canvas data-chart="bar" data-labels="<%= JSON.stringify(chart.labels) %>" data-values="<%= JSON.stringify(chart.revenue) %>" data-label="GMV (₫)"></canvas></div></div></div>
   <div class="card2"><div class="hd"><h3>Cần xử lý ngay</h3><span class="bdg err mla"><%= badges.refunds + badges.pendingProducts + badges.pendingShops %> mục</span></div>
     <div class="bd" style="padding:6px 20px">
-      <div class="todo"><em style="background:var(--d50);color:var(--d600)">↩</em><div style="flex:1"><b><%= badges.refunds %> yêu cầu hoàn tiền</b><span>Đơn đã thanh toán bị huỷ</span></div><a class="btn out sm" href="/admin/refunds">Xử lý</a></div>
-      <div class="todo"><em style="background:var(--w50);color:var(--w600)">✓</em><div style="flex:1"><b><%= badges.pendingProducts %> sản phẩm chờ kiểm duyệt</b><span>Từ các shop</span></div><a class="btn out sm" href="/admin/products">Duyệt</a></div>
-      <div class="todo"><em style="background:var(--p50);color:var(--p600)">🏪</em><div style="flex:1"><b><%= badges.pendingShops %> shop chờ xác minh</b><span>Hồ sơ đăng ký bán hàng</span></div><a class="btn out sm" href="/admin/shops">Xem</a></div>
+      <div class="todo"><em style="background:var(--d50);color:var(--d600)"><%- h.uiIcon('undo', 18) %></em><div style="flex:1"><b><%= badges.refunds %> yêu cầu hoàn tiền</b><span>Đơn đã thanh toán bị huỷ</span></div><a class="btn out sm" href="/admin/refunds">Xử lý</a></div>
+      <div class="todo"><em style="background:var(--w50);color:var(--w600)"><%- h.uiIcon('check', 18) %></em><div style="flex:1"><b><%= badges.pendingProducts %> sản phẩm chờ kiểm duyệt</b><span>Từ các shop</span></div><a class="btn out sm" href="/admin/products">Duyệt</a></div>
+      <div class="todo"><em style="background:var(--p50);color:var(--p600)"><%- h.uiIcon('store', 18) %></em><div style="flex:1"><b><%= badges.pendingShops %> shop chờ xác minh</b><span>Hồ sơ đăng ký bán hàng</span></div><a class="btn out sm" href="/admin/shops">Xem</a></div>
     </div></div>
 </div>
 <div class="split2">
@@ -30,7 +30,7 @@
       <div class="sumrow" style="padding:6px 0"><span>Xưởng gia công</span><b><%= health.customShops %></b></div>
       <div class="sumrow" style="padding:6px 0"><span>Người dùng đăng ký</span><b><%= health.totalUsers %></b></div>
     </div></div>
-    <div class="card2"><div class="hd"><h3>Đơn mới nhất</h3></div><div class="bd" style="padding:6px 20px"><% recent.forEach(function(o){ %><a class="todo" href="/admin/orders/<%= o.code %>"><em style="background:var(--p50)">📦</em><div style="flex:1"><b>#<%= o.code %> · <%= h.money(o.total) %></b><span><%= o.user?o.user.name:'' %> → <%= o.shop?o.shop.name:'' %> · <%= h.timeAgo(o.createdAt) %></span></div><span class="bdg <%= STATUS[o.status].cls %>"><%= STATUS[o.status].label %></span></a><% }) %></div></div>
+    <div class="card2"><div class="hd"><h3>Đơn mới nhất</h3></div><div class="bd" style="padding:6px 20px"><% recent.forEach(function(o){ %><a class="todo" href="/admin/orders/<%= o.code %>"><em style="background:var(--p50)"><%- h.uiIcon('package', 18) %></em><div style="flex:1"><b>#<%= o.code %> · <%= h.money(o.total) %></b><span><%= o.user?o.user.name:'' %> → <%= o.shop?o.shop.name:'' %> · <%= h.timeAgo(o.createdAt) %></span></div><span class="bdg <%= STATUS[o.status].cls %>"><%= STATUS[o.status].label %></span></a><% }) %></div></div>
   </div>
 </div>
 <%- include('_bottom') %>

@@ -3,7 +3,7 @@
 <div class="ct" style="max-width:760px">
   <div class="crumb"><a href="/">Trang chủ</a><span>›</span><b>Đăng ký bán hàng</b></div>
   <form class="card p24" method="post" action="/seller/register">
-    <h1 class="s24 w800">🏪 Mở shop trên KeebHub</h1>
+    <h1 class="s24 w800"><%- h.uiIcon('store', 16) %> Mở shop trên KeebHub</h1>
     <p class="s14 t2" style="margin:6px 0 20px">Điền thông tin shop. Sau khi quản trị viên duyệt, bạn có thể đăng sản phẩm và nhận đơn gia công.</p>
     <div class="field" style="margin-bottom:14px"><label>Tên shop</label><input class="inp" name="name" value="<%= form.name||'' %>" required minlength="3"></div>
     <div class="field" style="margin-bottom:14px"><label>Giới thiệu</label><textarea class="inp" name="description" rows="3"><%= form.description||'' %></textarea></div>

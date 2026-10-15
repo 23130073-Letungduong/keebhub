@@ -1,9 +1,9 @@
 <%- include('_top') %>
 <div class="kpis g4">
-  <div class="kpi"><div class="tp"><em style="background:var(--p50)">👥</em><span>Khách hàng</span></div><div class="v"><%= rc.customer||0 %></div></div>
-  <div class="kpi"><div class="tp"><em style="background:var(--a50)">🏪</em><span>Người bán</span></div><div class="v"><%= rc.seller||0 %></div></div>
-  <div class="kpi"><div class="tp"><em style="background:var(--s50)">🛡</em><span>Quản trị</span></div><div class="v"><%= rc.admin||0 %></div></div>
-  <div class="kpi"><div class="tp"><em style="background:var(--d50)">🔍</em><span>Kết quả lọc</span></div><div class="v"><%= total %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--p50)"><%- h.uiIcon('users', 18) %></em><span>Khách hàng</span></div><div class="v"><%= rc.customer||0 %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--a50)"><%- h.uiIcon('store', 18) %></em><span>Người bán</span></div><div class="v"><%= rc.seller||0 %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--s50)"><%- h.uiIcon('shield', 18) %></em><span>Quản trị</span></div><div class="v"><%= rc.admin||0 %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--d50)"><%- h.uiIcon('search', 18) %></em><span>Kết quả lọc</span></div><div class="v"><%= total %></div></div>
 </div>
 <div class="card2">
   <form class="toolrow">

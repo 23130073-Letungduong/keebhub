@@ -3,7 +3,7 @@
 <div class="ct">
   <div class="crumb"><a href="/">Trang chủ</a><span>›</span><b>Tìm gian hàng</b></div>
   <div class="hero-cat">
-    <div style="flex:1"><h1>🏪 Tìm gian hàng</h1><p>Tìm shop theo tên, khu vực hoặc chuyên môn. Lọc riêng các xưởng nhận gia công custom.</p>
+    <div style="flex:1"><h1><%- h.uiIcon('store', 16) %> Tìm gian hàng</h1><p>Tìm shop theo tên, khu vực hoặc chuyên môn. Lọc riêng các xưởng nhận gia công custom.</p>
       <form class="f" style="gap:10px;margin-top:16px;max-width:560px" method="get">
         <input class="inp" name="q" value="<%= q %>" placeholder="Tên shop, thành phố…" style="border:0">
         <label class="f ac s13" style="gap:6px;white-space:nowrap"><input type="checkbox" name="custom" value="1" <%= query.custom==='1'?'checked':'' %>> Có gia công</label>
@@ -12,7 +12,7 @@
     </div>
   </div>
   <p class="s13 muted" style="margin-bottom:14px"><%= shops.length %> gian hàng</p>
-  <% if (!shops.length) { %><div class="card p24 empty"><div class="s38">🏪</div><b>Không tìm thấy gian hàng</b></div><% } %>
+  <% if (!shops.length) { %><div class="card p24 empty"><div class="s38"><%- h.uiIcon('store', 40) %></div><b>Không tìm thấy gian hàng</b></div><% } %>
   <div class="shops">
     <% shops.forEach(function(s){ %>
     <a class="shopc" href="/shop/<%= s.slug %>"><div class="lg" style="background:<%= s.color %>"><%= s.initials %></div>

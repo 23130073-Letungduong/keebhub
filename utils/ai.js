@@ -13,7 +13,7 @@ const FAQ = `
 - Đơn custom: shop có 24h để nhận/từ chối. Khi gia công, khách xem tiến độ từng công đoạn kèm ảnh trong "Đơn hàng của tôi".
 - Huỷ đơn: được huỷ khi đơn còn "Chờ xác nhận"/"Đã xác nhận" (đơn thường) hoặc khi shop chưa nhận đơn custom. Đơn đã thanh toán VNPay sẽ được hoàn tiền trong 3-5 ngày.
 - Đánh giá: chỉ đánh giá sản phẩm đã mua, sau khi đơn ở trạng thái Đã giao/Hoàn thành.
-- Hotline 1900 6868, email hotro@keebhub.vn.`;
+- Hotline 1900 6868, email letungduong.nvn@gmail.com.`;
 
 const STOP = new Set(['tôi', 'mình', 'cho', 'cần', 'muốn', 'mua', 'tìm', 'có', 'không', 'nào', 'gì', 'là', 'của', 'và', 'với', 'giá', 'bao', 'nhiêu', 'shop', 'bạn', 'ơi', 'được', 'cái', 'loại', 'một', 'những', 'các', 'về', 'hãy', 'giúp', 'gợi', 'ý', 'nên', 'tư', 'vấn', 'em', 'anh', 'chị', 'phím', 'bàn']);
 

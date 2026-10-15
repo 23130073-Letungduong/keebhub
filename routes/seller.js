@@ -27,7 +27,7 @@ router.post('/register', requireLogin, async (req, res, next) => {
     }
     let shop = req.shop || await Shop.findOne({ owner: req.user._id });
     // bị khoá (vi phạm) thì không tự mở lại; bị từ chối hồ sơ thì được sửa & gửi lại
-    if (shop && shop.status === 'locked' && !shop.rejectReason) { req.flash('error', 'Shop của bạn đang bị khoá. Liên hệ hotro@keebhub.vn.'); return res.redirect('/seller'); }
+    if (shop && shop.status === 'locked' && !shop.rejectReason) { req.flash('error', 'Shop của bạn đang bị khoá. Liên hệ letungduong.nvn@gmail.com.'); return res.redirect('/seller'); }
     if (!shop) shop = new Shop({ owner: req.user._id, slug: slugify(name) + '-' + Date.now().toString(36), color: COLORS[Math.floor(Math.random() * COLORS.length)] });
     Object.assign(shop, { name, description, address, city, phone, offersCustom: req.body.offersCustom === 'on' });
     if (shop.status !== 'active') { shop.status = 'pending'; shop.rejectReason = undefined; }
@@ -344,7 +344,7 @@ router.post('/products/:id', upload.array('images', 6), async (req, res, next) =
 router.post('/products/:id/toggle', async (req, res) => {
   const p = await Product.findOne({ _id: req.params.id, shop: req.shop._id });
   if (p && ['active', 'hidden'].includes(p.status)) { p.status = p.status === 'active' ? 'hidden' : 'active'; await p.save(); }
-  res.redirect('back');
+  res.back();
 });
 
 router.post('/products/:id/delete', async (req, res) => {

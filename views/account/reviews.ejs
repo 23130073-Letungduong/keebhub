@@ -6,7 +6,7 @@
     <% if (pending.length) { %>
     <div class="pnl"><div class="hd"><div><h2>Chờ đánh giá</h2><p>Các đơn đã giao có sản phẩm chưa đánh giá</p></div></div>
       <div class="bd" style="padding:0">
-        <% pending.forEach(function(o){ %><div class="oi" style="border-bottom:1px solid var(--border)"><div class="th"><img src="<%= o.items[0].image %>" class="kb"></div><div style="flex:1"><div class="nm">#<%= o.code %> · <%= o.shop.name %></div><div class="vr"><%= o.items.filter(function(i){return !i.reviewed}).length %> sản phẩm chưa đánh giá</div></div><a class="btn outp sm" href="/account/orders/<%= o.code %>/review">⭐ Đánh giá</a></div><% }) %>
+        <% pending.forEach(function(o){ %><div class="oi" style="border-bottom:1px solid var(--border)"><div class="th"><img src="<%= o.items[0].image %>" class="kb"></div><div style="flex:1"><div class="nm">#<%= o.code %> · <%= o.shop.name %></div><div class="vr"><%= o.items.filter(function(i){return !i.reviewed}).length %> sản phẩm chưa đánh giá</div></div><a class="btn outp sm" href="/account/orders/<%= o.code %>/review"><%- h.uiIcon('star', 16) %> Đánh giá</a></div><% }) %>
       </div></div>
     <% } %>
     <div class="pnl"><div class="hd"><h2>Đánh giá của tôi (<%= reviews.length %>)</h2></div>

@@ -48,7 +48,7 @@ Mọi tích hợp bên ngoài đều **tự chuyển sang chế độ demo** n�
 | Biến | Dùng cho | Để trống thì |
 |---|---|---|
 | `MONGODB_URI` | Kết nối MongoDB | mặc định `mongodb://127.0.0.1:27017/keebhub` |
-| `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS` | Gửi email xác nhận đăng ký, quên mật khẩu, đặt hàng | Email được lưu ở **Hộp thư dev** `/dev/mails` |
+| `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS` | Gửi email xác nhận đăng ký, quên mật khẩu, đặt hàng (Gmail + mật khẩu ứng dụng) | Email được lưu ở **Hộp thư dev** `/dev/mails` (link trên thanh trên cùng) để vẫn xác nhận / đặt lại mật khẩu được |
 | `VNP_TMNCODE`, `VNP_HASHSECRET` | Thanh toán VNPay sandbox | Dùng trang **Mô phỏng VNPay** |
 | `GOOGLE_CLIENT_ID/SECRET` | Đăng nhập Google | Nút Google báo chưa cấu hình |
 | `FACEBOOK_APP_ID/SECRET` | Đăng nhập Facebook | Nút Facebook báo chưa cấu hình |

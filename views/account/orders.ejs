@@ -10,7 +10,7 @@
         <a class="<%= tab===t[0]?'on':'' %>" href="?tab=<%= t[0] %>"><%= t[1] %><%= n ? ' ('+n+')' : '' %></a><% }) %>
       </div>
     </div>
-    <% if (!orders.length) { %><div class="card p24 empty"><div class="s38">📦</div><b>Chưa có đơn hàng</b><p class="s13 muted">Các đơn bạn đặt sẽ hiện ở đây.</p><a class="btn pri" style="margin-top:12px" href="/">Mua sắm ngay</a></div><% } %>
+    <% if (!orders.length) { %><div class="card p24 empty"><div class="s38"><%- h.uiIcon('package', 40) %></div><b>Chưa có đơn hàng</b><p class="s13 muted">Các đơn bạn đặt sẽ hiện ở đây.</p><a class="btn pri" style="margin-top:12px" href="/">Mua sắm ngay</a></div><% } %>
     <% orders.forEach(function(o){ %>
     <div class="ordc">
       <div class="oh"><div class="sh"><i style="background:<%= o.shop ? o.shop.color : '#999' %>"><%= h.initials(o.shop ? o.shop.name : '?') %></i><%= o.shop ? o.shop.name : '' %></div>
@@ -22,13 +22,13 @@
       <div class="oi"><div class="th"><img src="<%= i.image %>" class="kb"></div><div style="flex:1"><div class="nm"><%= i.name %></div><div class="vr"><%= i.role ? 'Linh kiện build · ' : '' %>×<%= i.qty %></div></div><b class="s14"><%= h.money(i.price*i.qty) %></b></div>
       <% }) %>
       <% if (o.items.length>3) { %><div class="s12 muted" style="padding:0 18px 12px">+ <%= o.items.length-3 %> sản phẩm khác</div><% } %>
-      <% if (o.isCustom && o.service && o.service.name) { %><div class="oi" style="padding-top:0"><div class="th" style="display:grid;place-items:center;font-size:28px;background:var(--p50)">🛠</div><div style="flex:1"><div class="nm"><%= o.service.name %></div><div class="vr">Gia công · ~<%= o.service.days %> ngày</div></div><b class="s14"><%= h.money(o.serviceFee) %></b></div><% } %>
+      <% if (o.isCustom && o.service && o.service.name) { %><div class="oi" style="padding-top:0"><div class="th" style="display:grid;place-items:center;font-size:28px;background:var(--p50)"><%- h.catIcon('service', '1.1em') %></div><div style="flex:1"><div class="nm"><%= o.service.name %></div><div class="vr">Gia công · ~<%= o.service.days %> ngày</div></div><b class="s14"><%= h.money(o.serviceFee) %></b></div><% } %>
       <div class="of">
         <span class="s13 t2">Thành tiền: <b class="s18" style="color:var(--a600)"><%= h.money(o.total) %></b></span>
         <div class="mla f" style="gap:8px;flex-wrap:wrap">
           <% if (o.paymentMethod==='vnpay' && ['unpaid','failed'].includes(o.paymentStatus) && o.status!=='cancelled') { %><form method="post" action="/payment/retry/<%= o._id %>"><button class="btn cta sm">Thanh toán</button></form><% } %>
           <% if (['shipping','delivered'].includes(o.status)) { %><form method="post" action="/account/orders/<%= o.code %>/received"><button class="btn pri sm">Đã nhận hàng</button></form><% } %>
-          <% if (['delivered','completed'].includes(o.status) && o.items.some(function(i){return !i.reviewed})) { %><a class="btn outp sm" href="/account/orders/<%= o.code %>/review">⭐ Đánh giá</a><% } %>
+          <% if (['delivered','completed'].includes(o.status) && o.items.some(function(i){return !i.reviewed})) { %><a class="btn outp sm" href="/account/orders/<%= o.code %>/review"><%- h.uiIcon('star', 16) %> Đánh giá</a><% } %>
           <a class="btn out sm" href="/account/orders/<%= o.code %>">Xem chi tiết</a>
         </div>
       </div>

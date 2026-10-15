@@ -6,7 +6,7 @@
       <%- include('../partials/order-progress', {o:o}) %></div>
     <div class="card2"><div class="hd"><h3>Sản phẩm</h3></div><div class="bd p0"><table class="tb">
       <% o.items.forEach(function(i){ %><tr><td style="width:60px"><div class="th"><img src="<%= i.image %>" class="kb"></div></td><td><div class="nm"><%= i.name %></div></td><td><%= h.money(i.price) %> × <%= i.qty %></td><td style="text-align:right"><b><%= h.money(i.price*i.qty) %></b></td></tr><% }) %>
-      <% if (o.isCustom) { %><tr><td>🛠</td><td><div class="nm"><%= o.service.name %></div></td><td></td><td style="text-align:right"><b><%= h.money(o.serviceFee) %></b></td></tr><% } %>
+      <% if (o.isCustom) { %><tr><td><%- h.catIcon('service', '1.1em') %></td><td><div class="nm"><%= o.service.name %></div></td><td></td><td style="text-align:right"><b><%= h.money(o.serviceFee) %></b></td></tr><% } %>
       <tr><td colspan="3" style="text-align:right">Phí ship</td><td style="text-align:right"><%= h.money(o.shippingFee) %></td></tr>
       <tr><td colspan="3" style="text-align:right"><b>Tổng</b></td><td style="text-align:right"><b style="color:var(--a600)"><%= h.money(o.total) %></b></td></tr>
     </table></div></div>

@@ -6,7 +6,7 @@
   <div class="top"><h1>Mật khẩu mới</h1><div class="sub">Tài khoản: <b><%= email %></b></div></div>
   <%- include('../partials/flash') %>
   <form method="post" action="/auth/reset/<%= token %>">
-    <div class="field"><label>Mật khẩu mới</label><div class="pw"><input class="inp" type="password" name="password" id="pw" minlength="8" required><button type="button" class="eye" tabindex="-1">👁</button></div><div class="strength" id="strength"><i></i><i></i><i></i><i></i></div></div>
+    <div class="field"><label>Mật khẩu mới</label><div class="pw"><input class="inp" type="password" name="password" id="pw" minlength="8" required><button type="button" class="eye" tabindex="-1"><%- h.uiIcon('eye', 18) %></button></div><div class="strength" id="strength"><i></i><i></i><i></i><i></i></div></div>
     <div class="field"><label>Nhập lại</label><input class="inp" type="password" name="confirm" minlength="8" required></div>
     <button class="btn pri blk lg">Lưu mật khẩu</button>
   </form>

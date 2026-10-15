@@ -138,7 +138,7 @@ router.post('/select', async (req, res, next) => {
     const field = map[role];
     if (!field) return res.redirect('/builder');
     const p = isValidObjectId(String(req.body.productId || '')) ? await Product.findOne({ _id: req.body.productId, status: 'active' }) : null;
-    if (!p) { req.flash('error', 'Sản phẩm không khả dụng.'); return res.redirect('back'); }
+    if (!p) { req.flash('error', 'Sản phẩm không khả dụng.'); return res.back(); }
     b[field] = p._id;
     if (field === 'kit') b.switchQty = Math.ceil((p.attrs.keyCount || 60) / 10) * 10;
     if (field === 'switch' && b.kit) {
@@ -160,7 +160,7 @@ router.post('/qty', async (req, res) => {
   b.switchQty = Math.max(10, Math.ceil((parseInt(req.body.qty) || 10) / 10) * 10);
   await b.save();
   await refresh(b);
-  res.redirect('back');
+  res.back();
 });
 
 router.post('/clear', async (req, res) => {
@@ -169,7 +169,7 @@ router.post('/clear', async (req, res) => {
   if (map[req.body.role]) b[map[req.body.role]] = undefined;
   await b.save();
   await refresh(b);
-  res.redirect('back');
+  res.back();
 });
 
 router.post('/service', async (req, res, next) => {
@@ -193,7 +193,7 @@ router.post('/save', async (req, res) => {
   await b.save();
   await refresh(b);
   req.flash('success', `Đã lưu cấu hình #${b.code}. Xem lại trong mục "Cấu hình đã lưu".`);
-  res.redirect('back');
+  res.back();
 });
 
 // Thêm build vào giỏ & đặt hàng

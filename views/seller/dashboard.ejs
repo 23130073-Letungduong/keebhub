@@ -1,10 +1,10 @@
 <%- include('_top') %>
 <% var diff = y.total ? Math.round((t.total - y.total) / y.total * 100) : null; %>
 <div class="kpis g4">
-  <div class="kpi"><div class="tp"><em style="background:var(--s50);color:var(--s600)">💰</em><span>Doanh thu hôm nay</span></div><div class="v"><%= h.short(t.total) %>₫</div><div class="d <%= diff===null||diff>=0?'up':'down' %>"><%= diff===null ? 'Hôm qua: ' + h.short(y.total) + '₫' : (diff>=0?'▲ ':'▼ ') + Math.abs(diff) + '% so với hôm qua' %></div></div>
-  <div class="kpi"><div class="tp"><em style="background:var(--p50);color:var(--p600)">📦</em><span>Đơn chờ xác nhận</span></div><div class="v"><%= newOrders %></div><div class="d up"><%= badges.waitingCustom %> đơn custom chờ nhận</div></div>
-  <div class="kpi"><div class="tp"><em style="background:var(--w50);color:var(--w600)">🛠</em><span>Đang gia công</span></div><div class="v"><%= processing %></div><div class="d <%= nearDue?'down':'up' %>"><%= nearDue ? '▼ ' + nearDue + ' đơn đã nhận > 3 ngày' : 'Đúng tiến độ' %></div></div>
-  <div class="kpi"><div class="tp"><em style="background:var(--a50);color:var(--a600)">⭐</em><span>Đánh giá trung bình</span></div><div class="v"><%= shop.rating ? shop.rating.toFixed(1) : '—' %></div><div class="d up"><%= unreplied %> đánh giá chưa phản hồi</div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--s50);color:var(--s600)"><%- h.uiIcon('wallet', 18) %></em><span>Doanh thu hôm nay</span></div><div class="v"><%= h.short(t.total) %>₫</div><div class="d <%= diff===null||diff>=0?'up':'down' %>"><%= diff===null ? 'Hôm qua: ' + h.short(y.total) + '₫' : (diff>=0?'▲ ':'▼ ') + Math.abs(diff) + '% so với hôm qua' %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--p50);color:var(--p600)"><%- h.uiIcon('package', 18) %></em><span>Đơn chờ xác nhận</span></div><div class="v"><%= newOrders %></div><div class="d up"><%= badges.waitingCustom %> đơn custom chờ nhận</div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--w50);color:var(--w600)"><%- h.catIcon('service', '1.1em') %></em><span>Đang gia công</span></div><div class="v"><%= processing %></div><div class="d <%= nearDue?'down':'up' %>"><%= nearDue ? '▼ ' + nearDue + ' đơn đã nhận > 3 ngày' : 'Đúng tiến độ' %></div></div>
+  <div class="kpi"><div class="tp"><em style="background:var(--a50);color:var(--a600)"><%- h.uiIcon('star', 18) %></em><span>Đánh giá trung bình</span></div><div class="v"><%= shop.rating ? shop.rating.toFixed(1) : '—' %></div><div class="d up"><%= unreplied %> đánh giá chưa phản hồi</div></div>
 </div>
 <div class="split3">
   <div class="card2">
@@ -14,11 +14,11 @@
   <div class="card2">
     <div class="hd"><h3>Việc cần làm</h3></div>
     <div class="bd" style="padding:6px 20px">
-      <div class="todo"><em style="background:var(--d50);color:var(--d600)">⚠</em><div style="flex:1"><b><%= badges.waitingCustom %> đơn custom chờ xác nhận</b><span>Phản hồi trong 24h kẻo khách huỷ</span></div><a class="btn out sm" href="/seller/custom">Xử lý</a></div>
-      <div class="todo"><em style="background:var(--w50);color:var(--w600)">🛠</em><div style="flex:1"><b><%= processing %> đơn đang gia công</b><span>Cập nhật tiến độ kèm ảnh</span></div><a class="btn out sm" href="/seller/progress">Xem</a></div>
-      <div class="todo"><em style="background:var(--p50);color:var(--p600)">📊</em><div style="flex:1"><b><%= lowStock %> sản phẩm sắp hết hàng</b><span>Tồn kho dưới ngưỡng cảnh báo</span></div><a class="btn out sm" href="/seller/inventory?low=1">Nhập</a></div>
-      <div class="todo"><em style="background:var(--a50);color:var(--a600)">⭐</em><div style="flex:1"><b><%= unreplied %> đánh giá chưa phản hồi</b><span>Trả lời để tăng uy tín shop</span></div><a class="btn out sm" href="/seller/reviews?f=unreplied">Trả lời</a></div>
-      <div class="todo"><em style="background:var(--s50);color:var(--s600)">✓</em><div style="flex:1"><b><%= pendingProducts %> sản phẩm chờ sàn duyệt</b><span>Sẽ hiển thị sau khi được duyệt</span></div><a class="btn out sm" href="/seller/products?status=pending">Xem</a></div>
+      <div class="todo"><em style="background:var(--d50);color:var(--d600)"><%- h.uiIcon('alert', 18) %></em><div style="flex:1"><b><%= badges.waitingCustom %> đơn custom chờ xác nhận</b><span>Phản hồi trong 24h kẻo khách huỷ</span></div><a class="btn out sm" href="/seller/custom">Xử lý</a></div>
+      <div class="todo"><em style="background:var(--w50);color:var(--w600)"><%- h.catIcon('service', '1.1em') %></em><div style="flex:1"><b><%= processing %> đơn đang gia công</b><span>Cập nhật tiến độ kèm ảnh</span></div><a class="btn out sm" href="/seller/progress">Xem</a></div>
+      <div class="todo"><em style="background:var(--p50);color:var(--p600)"><%- h.uiIcon('chart', 18) %></em><div style="flex:1"><b><%= lowStock %> sản phẩm sắp hết hàng</b><span>Tồn kho dưới ngưỡng cảnh báo</span></div><a class="btn out sm" href="/seller/inventory?low=1">Nhập</a></div>
+      <div class="todo"><em style="background:var(--a50);color:var(--a600)"><%- h.uiIcon('star', 18) %></em><div style="flex:1"><b><%= unreplied %> đánh giá chưa phản hồi</b><span>Trả lời để tăng uy tín shop</span></div><a class="btn out sm" href="/seller/reviews?f=unreplied">Trả lời</a></div>
+      <div class="todo"><em style="background:var(--s50);color:var(--s600)"><%- h.uiIcon('check', 18) %></em><div style="flex:1"><b><%= pendingProducts %> sản phẩm chờ sàn duyệt</b><span>Sẽ hiển thị sau khi được duyệt</span></div><a class="btn out sm" href="/seller/products?status=pending">Xem</a></div>
     </div>
   </div>
 </div>

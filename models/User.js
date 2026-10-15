@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
   emailVerified: { type: Boolean, default: false },
   verifyToken: String,
   verifyExpires: Date,
+  verifySentAt: Date, // lần gửi email xác nhận gần nhất (chống bấm Gửi lại liên tục)
   resetToken: String,
   resetExpires: Date,
   googleId: String,

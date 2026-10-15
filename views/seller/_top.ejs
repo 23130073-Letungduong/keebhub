@@ -3,30 +3,31 @@
   <div class="brand"><span class="mark">K</span><div><b>KeebHub Seller</b><span>Kênh người bán</span></div></div>
   <div class="shopbox"><span class="lg" style="background:<%= shop.color %>"><%= shop.initials %></span>
     <div><b><%= shop.name %></b><span><%= shop.verified ? 'Đã xác minh' : 'Chưa xác minh' %><%= shop.offersCustom ? ' · Xưởng gia công' : '' %></span></div></div>
-  <div class="gt">TỔNG QUAN</div><a class="<%= active==='dash'?'on':'' %>" href="/seller"><em>◎</em>Bảng điều khiển</a>
+  <div class="gt">TỔNG QUAN</div><a class="<%= active==='dash'?'on':'' %>" href="/seller"><em><%- h.uiIcon('dashboard', 18) %></em>Bảng điều khiển</a>
   <div class="gt">ĐƠN HÀNG</div>
-  <a class="<%= active==='orders'?'on':'' %>" href="/seller/orders"><em>📦</em>Quản lý đơn hàng<% if (badges.pendingOrders) { %><b><%= badges.pendingOrders %></b><% } %></a>
-  <a class="<%= active==='custom'?'on':'' %>" href="/seller/custom"><em>⚙</em>Đơn custom chờ xác nhận<% if (badges.waitingCustom) { %><b><%= badges.waitingCustom %></b><% } %></a>
-  <a class="<%= active==='progress'?'on':'' %>" href="/seller/progress"><em>🛠</em>Tiến độ gia công<% if (badges.processing) { %><b><%= badges.processing %></b><% } %></a>
+  <a class="<%= active==='orders'?'on':'' %>" href="/seller/orders"><em><%- h.uiIcon('package', 18) %></em>Quản lý đơn hàng<% if (badges.pendingOrders) { %><b><%= badges.pendingOrders %></b><% } %></a>
+  <a class="<%= active==='custom'?'on':'' %>" href="/seller/custom"><em><%- h.uiIcon('tool', 18) %></em>Đơn custom chờ xác nhận<% if (badges.waitingCustom) { %><b><%= badges.waitingCustom %></b><% } %></a>
+  <a class="<%= active==='progress'?'on':'' %>" href="/seller/progress"><em><%- h.catIcon('service', '1.1em') %></em>Tiến độ gia công<% if (badges.processing) { %><b><%= badges.processing %></b><% } %></a>
   <div class="gt">SẢN PHẨM</div>
-  <a class="<%= active==='products'?'on':'' %>" href="/seller/products"><em>▤</em>Danh sách sản phẩm</a>
-  <a class="<%= active==='new'?'on':'' %>" href="/seller/products/new"><em>＋</em>Thêm sản phẩm</a>
-  <a class="<%= active==='inventory'?'on':'' %>" href="/seller/inventory"><em>📊</em>Quản lý tồn kho</a>
-  <a class="<%= active==='services'?'on':'' %>" href="/seller/services"><em>🔧</em>Dịch vụ gia công</a>
+  <a class="<%= active==='products'?'on':'' %>" href="/seller/products"><em><%- h.uiIcon('list', 18) %></em>Danh sách sản phẩm</a>
+  <a class="<%= active==='new'?'on':'' %>" href="/seller/products/new"><em><%- h.uiIcon('plus', 18) %></em>Thêm sản phẩm</a>
+  <a class="<%= active==='inventory'?'on':'' %>" href="/seller/inventory"><em><%- h.uiIcon('chart', 18) %></em>Quản lý tồn kho</a>
+  <a class="<%= active==='services'?'on':'' %>" href="/seller/services"><em><%- h.uiIcon('wrench', 18) %></em>Dịch vụ gia công</a>
   <div class="gt">KHÁCH HÀNG</div>
-  <a class="<%= active==='reviews'?'on':'' %>" href="/seller/reviews"><em>⭐</em>Đánh giá & hỏi đáp</a>
+  <a class="<%= active==='reviews'?'on':'' %>" href="/seller/reviews"><em><%- h.uiIcon('star', 18) %></em>Đánh giá & hỏi đáp</a>
   <div class="gt">TÀI CHÍNH</div>
-  <a class="<%= active==='revenue'?'on':'' %>" href="/seller/revenue"><em>💰</em>Doanh thu & phí</a>
+  <a class="<%= active==='revenue'?'on':'' %>" href="/seller/revenue"><em><%- h.uiIcon('wallet', 18) %></em>Doanh thu & phí</a>
   <div class="gt">SHOP</div>
-  <a class="<%= active==='profile'?'on':'' %>" href="/seller/profile"><em>🏪</em>Hồ sơ shop</a>
-  <a href="/"><em>↗</em>Về trang mua sắm</a>
-  <form method="post" action="/auth/logout"><button class="railbtn"><em>⎋</em>Đăng xuất</button></form>
+  <a class="<%= active==='profile'?'on':'' %>" href="/seller/profile"><em><%- h.uiIcon('store', 18) %></em>Hồ sơ shop</a>
+  <a href="/"><em><%- h.uiIcon('external', 18) %></em>Về trang mua sắm</a>
+  <form method="post" action="/auth/logout"><button class="railbtn"><em><%- h.uiIcon('logout', 18) %></em>Đăng xuất</button></form>
 </div>
 <div style="min-width:0"><div class="tbar">
-  <button class="ib menu-tg" type="button" onclick="document.getElementById('rail').classList.toggle('open')">☰</button>
+  <button class="ib menu-tg" type="button" onclick="document.getElementById('rail').classList.toggle('open')"><%- h.uiIcon('menu', 20) %></button>
   <div><h1><%= title %></h1><div class="sub"><%= shop.name %> · <%= h.date(new Date()) %></div></div>
-  <form class="sbox" action="/seller/orders"><span class="i">⌕</span><input name="q" placeholder="Tìm mã đơn hàng…"></form>
+  <form class="sbox" action="/seller/orders"><span class="i"><%- h.uiIcon('search', 16) %></span><input name="q" placeholder="Tìm mã đơn hàng…"></form>
   <div class="who"><span class="av" style="background:<%= user.color %>"><%= user.initials %></span><span class="s13 w600"><%= user.name %> · Chủ shop</span></div>
+  <button type="button" class="thm-btn" data-theme-toggle title="Chuyển chế độ sáng / tối" aria-label="Chuyển chế độ sáng / tối"><span class="i-moon"><%- h.uiIcon('moon', 18) %></span><span class="i-sun"><%- h.uiIcon('sun', 18) %></span></button>
   <a class="btn pri sm" style="margin-left:10px" href="/seller/products/new">+ Thêm sản phẩm</a>
 </div>
 <div class="main">

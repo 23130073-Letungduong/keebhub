@@ -13,7 +13,7 @@
 
   <% if (services.length) { %>
   <div style="margin:26px 0 30px">
-    <div class="sechd"><h2>🛠 Dịch vụ gia công</h2><a href="/builder/new">Đặt qua Custom Builder →</a></div>
+    <div class="sechd"><h2><%- h.catIcon('service', '1.1em') %> Dịch vụ gia công</h2><a href="/builder/new">Đặt qua Custom Builder →</a></div>
     <div class="g3">
       <% services.forEach(function(sv){ %>
       <div class="pk"><h4><%= sv.name %></h4><div class="pr"><%= h.money(sv.price) %></div><div class="s12 muted">~<%= sv.days %> ngày · <%= sv.orders %> đơn đã nhận</div>

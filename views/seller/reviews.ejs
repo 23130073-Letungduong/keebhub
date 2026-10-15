@@ -1,8 +1,8 @@
 <%- include('_top') %>
 <% var total = [1,2,3,4,5].reduce(function(s,k){return s+dist[k]},0); %>
 <div class="card2"><div class="toolrow">
-  <a class="tchip <%= tab==='reviews'?'on':'' %>" href="?tab=reviews">⭐ Đánh giá (<%= total %>)</a>
-  <a class="tchip <%= tab==='qa'?'on':'' %>" href="?tab=qa">💬 Hỏi đáp (<%= comments.length %>)</a>
+  <a class="tchip <%= tab==='reviews'?'on':'' %>" href="?tab=reviews"><%- h.uiIcon('star', 16) %> Đánh giá (<%= total %>)</a>
+  <a class="tchip <%= tab==='qa'?'on':'' %>" href="?tab=qa"><%- h.uiIcon('message', 16) %> Hỏi đáp (<%= comments.length %>)</a>
   <% if (tab==='reviews') { %><span class="mla"></span><a class="tchip <%= query.f==='unreplied'?'on':'' %>" href="?f=unreplied">Chưa phản hồi</a><% [5,4,3,2,1].forEach(function(s){ %><a class="tchip <%= query.star==String(s)?'on':'' %>" href="?star=<%= s %>"><%= s %>★ (<%= dist[s] %>)</a><% }) %><% } %>
 </div>
 <div class="bd">

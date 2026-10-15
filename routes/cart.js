@@ -34,24 +34,24 @@ router.post('/cart/add', requireLogin, async (req, res, next) => {
     const wantsJson = req.xhr || (req.headers.accept || '').includes('json');
     if (!p || p.status !== 'active' || p.shop.status !== 'active') {
       if (wantsJson) return res.status(400).json({ error: 'Sản phẩm không khả dụng' });
-      req.flash('error', 'Sản phẩm không khả dụng.'); return res.redirect('back');
+      req.flash('error', 'Sản phẩm không khả dụng.'); return res.back();
     }
     if (req.shop && String(req.shop._id) === String(p.shop._id)) {
-      req.flash('error', 'Bạn không thể mua sản phẩm của chính shop mình.'); return res.redirect('back');
+      req.flash('error', 'Bạn không thể mua sản phẩm của chính shop mình.'); return res.back();
     }
     const qty = Math.max(1, parseInt(req.body.qty) || 1);
     const line = req.user.cart.find(i => i.product && String(i.product) === String(p._id));
     const newQty = (line ? line.qty : 0) + qty;
     if (newQty > p.stock) {
       if (wantsJson) return res.status(400).json({ error: `Chỉ còn ${p.stock} sản phẩm` });
-      req.flash('error', `Kho chỉ còn ${p.stock} sản phẩm.`); return res.redirect('back');
+      req.flash('error', `Kho chỉ còn ${p.stock} sản phẩm.`); return res.back();
     }
     if (line) line.qty = newQty; else req.user.cart.push({ product: p._id, qty });
     await req.user.save();
     if (req.body.buy) return res.redirect('/checkout');
     if (wantsJson) return res.json({ ok: true, count: req.user.cart.reduce((s, i) => s + (i.build ? 1 : i.qty), 0) });
     req.flash('success', 'Đã thêm vào giỏ hàng.');
-    res.redirect('back');
+    res.back();
   } catch (e) { next(e); }
 });
 

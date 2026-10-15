@@ -162,7 +162,7 @@ router.get('/p/:slug', async (req, res, next) => {
       .some(o => o.items.some(i => String(i.product) === String(product._id) && !i.reviewed)) : false;
     const wished = req.user ? req.user.wishlist.some(id => String(id) === String(product._id)) : false;
     res.render('shop/product', {
-      title: product.name, product, reviews, comments, related, services, distMap, compatList, canReview, wished,
+      title: product.name, product, isOwner, isAdmin, reviews, comments, related, services, distMap, compatList, canReview, wished,
       tab: ['desc', 'spec', 'reviews', 'qa'].concat(compatList.length ? ['compat'] : []).includes(req.query.tab) ? req.query.tab : 'desc'
     });
   } catch (e) { next(e); }
@@ -204,7 +204,7 @@ router.post('/wishlist/:id', requireLogin, async (req, res) => {
   else req.user.wishlist.push(id);
   await req.user.save();
   if (req.xhr || (req.headers.accept || '').includes('json')) return res.json({ wished: !has });
-  res.redirect('back');
+  res.back();
 });
 
 // Tìm kiếm gian hàng (Tự chọn 6)

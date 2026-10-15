@@ -3,7 +3,7 @@
 <% var p = product; var a = p.attrs || {}; var imgs = p.images && p.images.length ? p.images : [p.image]; %>
 <div class="ct">
   <div class="crumb"><a href="/">Trang chủ</a><span>›</span><a href="/c/<%= p.category.slug %>"><%= p.category.name %></a><span>›</span><b><%= p.name %></b></div>
-  <% if (p.status !== 'active') { %><div class="alert warn" style="margin-bottom:16px">⚠ Sản phẩm đang ở trạng thái "<%= p.status %>" — chỉ chủ shop/admin xem được. <%= p.rejectReason ? 'Lý do: '+p.rejectReason : '' %></div><% } %>
+  <% if (p.status !== 'active') { %><div class="alert warn" style="margin-bottom:16px"><%- h.uiIcon('alert', 16) %> Sản phẩm đang ở trạng thái "<%= p.status %>" — chỉ chủ shop/admin xem được. <%= p.rejectReason ? 'Lý do: '+p.rejectReason : '' %></div><% } %>
   <div class="pdp">
     <div class="gal">
       <div class="main"><img id="mainImg" src="<%= imgs[0] %>" alt="<%= p.name %>" class="kb" style="aspect-ratio:1/1;object-fit:cover"></div>
@@ -27,17 +27,28 @@
       <% if (chips.length) { %>
       <div class="optrow"><div class="lb">Thông số chính</div><div class="opts"><% chips.forEach(function(c){ %><span class="chip on" style="cursor:default"><span class="muted w500"><%= c[0] %>:</span> <%= c[1] %></span><% }) %></div></div>
       <% } %>
+      <% var canBuy = !isOwner && !isAdmin && p.status === 'active'; %>
+      <% if (!canBuy) { %>
+        <div class="alert info" style="margin-top:14px"><span>ℹ</span><div>
+          <% if (isOwner) { %>Đây là sản phẩm của shop bạn. <a href="/seller/products/<%= p._id %>/edit" class="w600" style="color:var(--p600)">Sửa sản phẩm →</a>
+          <% } else if (isAdmin) { %>Bạn đang xem với quyền quản trị (tài khoản admin không mua hàng). <a href="/admin/products?status=all&q=<%= encodeURIComponent(p.name.slice(0,30)) %>" class="w600" style="color:var(--p600)">Quản lý sản phẩm →</a>
+          <% } else { %>Sản phẩm hiện chưa mở bán.<% } %>
+          <% if (p.status !== 'active') { %><br><span class="s13">Trạng thái: <b><%= ({pending:'Chờ duyệt',hidden:'Đã ẩn',rejected:'Bị từ chối'})[p.status] || p.status %></b></span><% } %>
+        </div></div>
+      <% } else { %>
       <form method="post" action="/cart/add">
         <input type="hidden" name="productId" value="<%= p._id %>">
         <div class="optrow"><div class="lb">Số lượng</div>
           <div class="f ac" style="gap:12px"><div class="stepper qty"><b data-d="-1">−</b><input name="qty" type="number" value="1" min="1" max="<%= p.stock %>"><b data-d="1">+</b></div><span class="s13 t2">Kho còn <b><%= p.stock %></b> sản phẩm</span></div></div>
         <div class="buybar">
-          <button class="btn out" <%= p.stock<=0?'disabled':'' %>>🛒 Thêm vào giỏ</button>
+          <button class="btn out" <%= p.stock<=0?'disabled':'' %>><%- h.uiIcon('cart', 16) %> Thêm vào giỏ</button>
           <button class="btn cta" name="buy" value="1" <%= p.stock<=0?'disabled':'' %>>Mua ngay</button>
         </div>
+        <% if (p.stock<=0) { %><p class="s13 muted" style="margin-top:8px">Sản phẩm tạm hết hàng.</p><% } %>
       </form>
-      <% if (p.partType==='kit') { %><a class="btn outp blk" style="margin-top:12px" href="/builder/new?kit=<%= p._id %>">⚙ Dùng kit này để build custom trong Custom Builder</a><% } %>
-      <% if (user) { %><form method="post" action="/wishlist/<%= p._id %>" style="margin-top:10px"><button class="btn ghost sm"><%= wished ? '♥ Đã yêu thích' : '♡ Thêm vào yêu thích' %></button></form><% } %>
+      <% } %>
+      <% if (p.partType==='kit' && canBuy) { %><a class="btn outp blk" style="margin-top:12px" href="/builder/new?kit=<%= p._id %>"><%- h.uiIcon('tool', 16) %> Dùng kit này để build custom trong Custom Builder</a><% } %>
+      <% if (user && canBuy) { %><form method="post" action="/wishlist/<%= p._id %>" style="margin-top:10px"><button class="btn ghost sm"><%- h.uiIcon(wished ? 'heartFill' : 'heart', 16) %> <%= wished ? 'Đã yêu thích' : 'Thêm vào yêu thích' %></button></form><% } %>
       <div class="shopbar">
         <span class="lg" style="background:<%= p.shop.color %>"><%= p.shop.initials %></span>
         <div style="flex:1"><div class="f ac" style="gap:8px"><b><%= p.shop.name %></b><% if (p.shop.verified) { %><span class="bdg ok">Đã xác minh</span><% } %></div>
@@ -45,9 +56,9 @@
         <a class="btn out sm" href="/shop/<%= p.shop.slug %>">Xem shop</a>
       </div>
       <div class="trust">
-        <div class="it"><em>🚚</em><div><b>Giao 2-4 ngày</b><span>Miễn phí đơn từ 500k</span></div></div>
-        <div class="it"><em>🛡</em><div><b>Bảo hành 12 tháng</b><span>Đổi mới 7 ngày đầu</span></div></div>
-        <div class="it"><em>🔒</em><div><b>Thanh toán VNPay</b><span>Hoàn tiền khi huỷ</span></div></div>
+        <div class="it"><em><%- h.uiIcon('truck', 18) %></em><div><b>Giao 2-4 ngày</b><span>Miễn phí đơn từ 500k</span></div></div>
+        <div class="it"><em><%- h.uiIcon('shield', 18) %></em><div><b>Bảo hành 12 tháng</b><span>Đổi mới 7 ngày đầu</span></div></div>
+        <div class="it"><em><%- h.uiIcon('lock', 18) %></em><div><b>Thanh toán VNPay</b><span>Hoàn tiền khi huỷ</span></div></div>
       </div>
     </div>
   </div>
@@ -81,7 +92,7 @@
           <p class="s13 t2" style="margin-bottom:12px">Đối chiếu tự động với các linh kiện phổ biến theo quy tắc tương thích của sàn.</p>
           <div class="compat">
             <% compatList.forEach(function(c){ %>
-            <a class="it <%= c.ok ? (c.issue ? '' : 'yes') : 'no' %>" href="/p/<%= c.product.slug %>"><em><%= c.ok ? (c.issue ? '⚠' : '✓') : '✕' %></em><div><b><%= c.product.name %></b><span><%= c.issue ? c.issue.message : 'Lắp vừa, không có cảnh báo.' %></span></div></a>
+            <a class="it <%= c.ok ? (c.issue ? '' : 'yes') : 'no' %>" href="/p/<%= c.product.slug %>"><em><%- h.uiIcon(c.ok ? (c.issue ? 'alert' : 'check') : 'ban', 16) %></em><div><b><%= c.product.name %></b><span><%= c.issue ? c.issue.message : 'Lắp vừa, không có cảnh báo.' %></span></div></a>
             <% }) %>
           </div>
         </div>
@@ -91,7 +102,7 @@
             <div style="text-align:center"><div class="big"><%= p.rating ? p.rating.toFixed(1) : '0' %></div><div class="stars s16" style="margin:8px 0 4px"><%= h.stars(p.rating) %></div><div class="s12 muted"><%= p.reviewCount %> đánh giá</div></div>
             <div><% [5,4,3,2,1].forEach(function(s){ var n=distMap[s]; var pc = p.reviewCount ? Math.round(n/p.reviewCount*100) : 0; %><div class="bar"><span><%= s %> ★</span><div class="tk"><i style="width:<%= pc %>%"></i></div><span style="width:30px"><%= n %></span></div><% }) %></div>
           </div>
-          <% if (canReview) { %><div class="alert info" style="margin-top:16px">⭐ Bạn đã mua sản phẩm này. <a class="w700" href="/account/reviews" style="text-decoration:underline">Viết đánh giá ngay</a></div><% } %>
+          <% if (canReview) { %><div class="alert info" style="margin-top:16px"><%- h.uiIcon('star', 16) %> Bạn đã mua sản phẩm này. <a class="w700" href="/account/reviews" style="text-decoration:underline">Viết đánh giá ngay</a></div><% } %>
           <% if (!reviews.length) { %><p class="muted s14" style="padding:20px 0">Chưa có đánh giá nào. Chỉ khách đã mua mới có thể đánh giá.</p><% } %>
           <% reviews.forEach(function(r){ %>
           <div class="rv">
@@ -135,13 +146,13 @@
       </div>
       <% } %>
       <% if (services.length) { %>
-      <div class="bx" style="background:var(--p50);border-color:var(--p100)"><b class="s14" style="color:var(--p700)">🛠 Dịch vụ gia công của shop</b>
+      <div class="bx" style="background:var(--p50);border-color:var(--p100)"><b class="s14" style="color:var(--p700)"><%- h.catIcon('service', '1.1em') %> Dịch vụ gia công của shop</b>
         <% services.forEach(function(s){ %><div class="sumrow" style="padding:8px 0;border-bottom:1px dashed var(--p100)"><span><%= s.name %></span><b><%= h.money(s.price) %></b></div><% }) %>
         <a class="btn pri blk sm" style="margin-top:12px" href="/builder/new">Mở Custom Builder</a>
       </div>
       <% } %>
       <div class="bx"><b class="s14">Chính sách</b>
-        <p class="s13 t2" style="margin-top:9px;line-height:1.8">↩ Đổi trả 7 ngày nếu lỗi nhà sản xuất<br>🛡 Bảo hành 12 tháng tại xưởng<br>🔒 Hoàn tiền nếu đơn bị huỷ<br>📦 Kiểm tra hàng trước khi nhận (COD)</p>
+        <p class="s13 t2" style="margin-top:9px;line-height:1.8"><%- h.uiIcon('undo', 16) %> Đổi trả 7 ngày nếu lỗi nhà sản xuất<br><%- h.uiIcon('shield', 16) %> Bảo hành 12 tháng tại xưởng<br><%- h.uiIcon('lock', 16) %> Hoàn tiền nếu đơn bị huỷ<br><%- h.uiIcon('package', 16) %> Kiểm tra hàng trước khi nhận (COD)</p>
       </div>
     </div>
   </div>

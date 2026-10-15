@@ -21,7 +21,7 @@ if (!/test/i.test(DB)) throw new Error('TEST_MONGODB_URI phải là database tes
 // Môi trường chạy thử: tắt mọi tích hợp ngoài để dùng chế độ demo
 const ENV = {
   ...process.env, PORT: String(PORT), BASE_URL: BASE, MONGODB_URI: DB, SESSION_SECRET: 'test-secret',
-  SMTP_HOST: '', SMTP_USER: '', VNP_TMNCODE: '', VNP_HASHSECRET: '', GEMINI_API_KEY: '', ANTHROPIC_API_KEY: '',
+  SMTP_HOST: '', SMTP_USER: '', MAIL_DEV: '1', VNP_TMNCODE: '', VNP_HASHSECRET: '', GEMINI_API_KEY: '', ANTHROPIC_API_KEY: '',
   GOOGLE_CLIENT_ID: '', GOOGLE_CLIENT_SECRET: '', FACEBOOK_APP_ID: '', FACEBOOK_APP_SECRET: ''
 };
 
@@ -233,10 +233,14 @@ describe('2b. Thông báo "cần đăng nhập" cho khách', () => {
     const r = await new Client().get('/builder/new');
     assert.ok(r.url.startsWith('/auth/login')); assert.ok(has(r, 'Bạn cần đăng nhập để sử dụng tính năng này'));
   });
-  it('Đăng nhập từ ?next=/builder/new → quay lại đúng tính năng', async () => {
-    const c = new Client(); await c.get('/auth/login?next=' + encodeURIComponent('/builder/new'));
+  it('Bấm tính năng (Custom Builder) khi chưa đăng nhập rồi đăng nhập → về TRANG CHỦ, không tự vào Builder', async () => {
+    const c = new Client(); await c.get('/builder/new'); await c.get('/auth/login?next=' + encodeURIComponent('/builder/new'));
     const r = await c.login('khach@keebhub.vn', 'Khach@123');
-    assert.ok(r.url.startsWith('/builder'), r.url);
+    assert.equal(r.url, '/'); assert.ok(has(r, 'Chào mừng'));
+  });
+  it('Người bán đăng nhập → vào Kênh người bán', async () => {
+    const c = new Client(); await c.get('/cart');
+    assert.equal((await c.login('switchhouse@keebhub.vn', 'Seller@123')).url, '/seller');
   });
   it('?next trỏ ra web ngoài bị bỏ qua (chống chuyển hướng mở)', async () => {
     for (const n of ['//evil.com', 'https://evil.com', '/\\evil.com']) {
@@ -928,13 +932,13 @@ describe('12. Chat AI', () => {
 
 // =====================================================================
 describe('13. Hồi quy: các lỗi đã sửa sau đợt rà soát chức năng', () => {
-  it('Khách vãng lai bấm "Thêm vào giỏ" → đăng nhập xong quay lại trang sản phẩm (không 404)', async () => {
+  it('Khách vãng lai bấm "Thêm vào giỏ" → đăng nhập xong về trang chủ (không 404 / 500)', async () => {
     const p = await M.Product.findOne({ status: 'active', partType: 'accessory' });
     const c = new Client();
     const r1 = await c.post('/cart/add', { productId: String(p._id) }, { headers: { referer: BASE + '/p/' + p.slug } });
     assert.ok(r1.url.startsWith('/auth/login'));
     const r2 = await c.login('user8@keebhub.vn', 'Khach@123');
-    assert.equal(r2.status, 200); assert.equal(r2.url, '/p/' + p.slug);
+    assert.equal(r2.status, 200); assert.equal(r2.url, '/');
   });
   it('Đơn đã huỷ mà vẫn thanh toán VNPay → chuyển "Chờ hoàn tiền", không thành "Đã thanh toán"', async () => {
     const u = await M.User.findOne({ email: 'user8@keebhub.vn' });
@@ -1236,5 +1240,68 @@ describe('14. Kiểm thử mở rộng (đợt rà soát lần 2)', () => {
   it('Chat AI: tin nhắn rất dài vẫn trả lời', async () => {
     const r = await new Client().req('POST', '/api/chat', { json: { messages: [{ role: 'user', content: 'switch '.repeat(2000) }] } });
     assert.equal(r.status, 200); assert.ok(JSON.parse(r.text).reply);
+  });
+});
+
+// =====================================================================
+describe('15. Chế độ sáng / tối', () => {
+  it('Mọi trang nạp theme.css và script áp dụng chế độ trước khi vẽ', async () => {
+    const c = new Client();
+    for (const u of ['/', '/auth/login', '/admin/login', '/c/switch']) {
+      const r = await c.get(u);
+      assert.ok(has(r, '/css/theme.css') && has(r, "localStorage.getItem('kh-theme')"), u);
+    }
+    const css = await fetch(BASE + '/css/theme.css').then(r => r.text());
+    assert.ok(css.includes('html[data-theme="dark"]'));
+  });
+  it('Có nút chuyển sáng / tối ở header, kênh người bán và trang quản trị', async () => {
+    assert.ok(has(await new Client().get('/'), 'data-theme-toggle'));
+    const s = new Client(); await s.login('switchhouse@keebhub.vn', 'Seller@123');
+    assert.ok(has(await s.get('/seller'), 'data-theme-toggle'));
+    const a = new Client(); await a.login('admin@keebhub.vn', 'Admin@123', true);
+    assert.ok(has(await a.get('/admin'), 'data-theme-toggle'));
+  });
+});
+
+// =====================================================================
+describe('16. Luồng thao tác (rà soát QA lần 4)', () => {
+  it('Khách đăng nhập → trang chủ; seller → Kênh người bán; admin → Trang quản trị', async () => {
+    assert.equal((await new Client().login('user5@keebhub.vn', 'Khach@123')).url, '/');
+    assert.equal((await new Client().login('keeblab@keebhub.vn', 'Seller@123')).url, '/seller');
+    assert.equal((await new Client().login('admin@keebhub.vn', 'Admin@123', true)).url, '/admin');
+  });
+  it('Khách: vào sản phẩm → Thêm vào giỏ → Mua ngay → trang thanh toán (không lỗi)', async () => {
+    const c = new Client(); await c.login('user5@keebhub.vn', 'Khach@123');
+    for (const t of ['kit', 'switch', 'keycap', 'stabilizer', 'accessory']) {
+      const p = await M.Product.findOne({ status: 'active', partType: t, stock: { $gt: 2 } });
+      const page = await c.get('/p/' + p.slug); assert.equal(page.status, 200);
+      const r1 = await c.post('/cart/add', { productId: String(p._id), qty: '1' }, { headers: { referer: BASE + '/p/' + p.slug } });
+      assert.equal(r1.status, 200, t); assert.ok(has(r1, 'Đã thêm vào giỏ'), t); assert.equal(r1.url, '/p/' + p.slug);
+      const r2 = await c.post('/cart/add', { productId: String(p._id), qty: '1', buy: '1' });
+      assert.equal(r2.status, 200, t); assert.equal(r2.url, '/checkout');
+    }
+  });
+  it('Seller xem sản phẩm của chính shop → không có nút mua, có link Sửa sản phẩm', async () => {
+    const s = new Client(); await s.login('keeblab@keebhub.vn', 'Seller@123');
+    const shop = await M.Shop.findOne({ slug: 'keeblab-store' });
+    const p = await M.Product.findOne({ shop: shop._id, status: 'active' });
+    const r = await s.get('/p/' + p.slug);
+    assert.ok(!has(r, 'action="/cart/add"')); assert.ok(has(r, 'Sửa sản phẩm'));
+  });
+  it('Admin: trang sản phẩm không có nút mua; vào giỏ / Builder / checkout → về Trang quản trị kèm thông báo', async () => {
+    const a = new Client(); await a.login('admin@keebhub.vn', 'Admin@123', true);
+    const p = await M.Product.findOne({ status: 'active' });
+    assert.ok(!has(await a.get('/p/' + p.slug), 'action="/cart/add"'));
+    for (const u of ['/cart', '/checkout', '/builder/new']) {
+      const r = await a.get(u); assert.equal(r.status, 200, u); assert.equal(r.url, '/admin', u); assert.ok(has(r, 'không dùng để mua hàng'));
+    }
+    const r = await a.post('/cart/add', { productId: String(p._id) }); assert.equal(r.url, '/admin');
+  });
+  it('Sản phẩm chờ duyệt: chủ shop xem được nhưng không có nút mua', async () => {
+    const shop = await M.Shop.findOne({ slug: 'switchhouse' });
+    const p = await M.Product.findOne({ shop: shop._id, status: 'pending' });
+    if (!p) return;
+    const s = new Client(); await s.login('switchhouse@keebhub.vn', 'Seller@123');
+    const r = await s.get('/p/' + p.slug); assert.equal(r.status, 200); assert.ok(!has(r, 'action="/cart/add"')); assert.ok(has(r, 'Chờ duyệt'));
   });
 });

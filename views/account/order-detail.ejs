@@ -29,7 +29,7 @@
         <div class="hd"><h2><%= o.isCustom ? 'Build Sheet #' + (o.buildCode||'') : 'Sản phẩm' %></h2></div>
         <table class="tbl">
           <% o.items.forEach(function(i){ %><tr><td style="width:64px"><div style="width:52px;height:52px;border-radius:8px;overflow:hidden;border:1px solid var(--border)"><img src="<%= i.image %>" class="kb"></div></td><td><% if (i.role) { %><div class="s12 muted"><%= ({kit:'Kit',switch:'Switch',keycap:'Keycap',stab:'Stabilizer'})[i.role] %></div><% } %><b class="s13"><%= i.name %></b><div class="s12 muted">×<%= i.qty %> · <%= h.money(i.price) %></div></td><td style="text-align:right"><b><%= h.money(i.price*i.qty) %></b></td></tr><% }) %>
-          <% if (o.isCustom && o.service && o.service.name) { %><tr><td><div style="width:52px;height:52px;border-radius:8px;display:grid;place-items:center;background:var(--p50);font-size:22px">🛠</div></td><td><div class="s12 muted">Gia công</div><b class="s13"><%= o.service.name %></b></td><td style="text-align:right"><b><%= h.money(o.serviceFee) %></b></td></tr><% } %>
+          <% if (o.isCustom && o.service && o.service.name) { %><tr><td><div style="width:52px;height:52px;border-radius:8px;display:grid;place-items:center;background:var(--p50);font-size:22px"><%- h.catIcon('service', '1.1em') %></div></td><td><div class="s12 muted">Gia công</div><b class="s13"><%= o.service.name %></b></td><td style="text-align:right"><b><%= h.money(o.serviceFee) %></b></td></tr><% } %>
         </table>
       </div>
       <div>
@@ -41,7 +41,7 @@
             <div class="sumrow" style="padding:5px 0"><span>Vận chuyển</span><b><%= o.shippingFee ? h.money(o.shippingFee) : 'Miễn phí' %></b></div>
             <div class="divider" style="margin:10px 0"></div>
             <div class="sumrow"><b class="s16">Tổng thanh toán</b><b class="s20" style="color:var(--a600)"><%= h.money(o.total) %></b></div>
-            <div class="alert <%= o.paymentStatus==='paid'?'ok':'info' %> s13" style="margin-top:14px">🔒 <%= o.paymentMethod==='cod' ? 'Thanh toán khi nhận hàng (COD).' : 'VNPay — ' + PAY[o.paymentStatus].label + (o.paidAt ? ' lúc ' + h.dateTime(o.paidAt) : '') + (o.vnpTransactionNo ? ' · Mã GD ' + o.vnpTransactionNo : '') %></div>
+            <div class="alert <%= o.paymentStatus==='paid'?'ok':'info' %> s13" style="margin-top:14px"><%- h.uiIcon('lock', 16) %> <%= o.paymentMethod==='cod' ? 'Thanh toán khi nhận hàng (COD).' : 'VNPay — ' + PAY[o.paymentStatus].label + (o.paidAt ? ' lúc ' + h.dateTime(o.paidAt) : '') + (o.vnpTransactionNo ? ' · Mã GD ' + o.vnpTransactionNo : '') %></div>
           </div>
         </div>
         <div class="pnl">
@@ -63,7 +63,7 @@
               </form></details>
           <% } %>
           <% if (['shipping','delivered'].includes(o.status)) { %><form method="post" action="/account/orders/<%= o.code %>/received" style="margin-top:10px"><button class="btn pri blk">✓ Tôi đã nhận hàng</button></form><p class="s12 muted" style="text-align:center;margin-top:8px">Chỉ bấm khi đã nhận và kiểm tra hàng.</p><% } %>
-          <% if (['delivered','completed'].includes(o.status) && o.items.some(function(i){return !i.reviewed})) { %><a class="btn outp blk" style="margin-top:10px" href="/account/orders/<%= o.code %>/review">⭐ Đánh giá sản phẩm</a><% } %>
+          <% if (['delivered','completed'].includes(o.status) && o.items.some(function(i){return !i.reviewed})) { %><a class="btn outp blk" style="margin-top:10px" href="/account/orders/<%= o.code %>/review"><%- h.uiIcon('star', 16) %> Đánh giá sản phẩm</a><% } %>
           <a class="btn ghost blk" style="margin-top:6px" href="/account/orders">← Về danh sách đơn</a>
         </div></div>
       </div>

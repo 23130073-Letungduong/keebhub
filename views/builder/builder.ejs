@@ -9,7 +9,7 @@
       <a class="st <%= s.n===step?'on':done?'done':'' %>" href="<%= b.kit || s.n===1 ? '/builder?step='+s.n : '#' %>"><span class="n"><%= done && s.n!==step ? '✓' : s.n %></span><span class="lb"><%= s.label %></span></a>
     <% }) %>
   </div>
-  <form method="post" action="/builder/save" class="bh-save"><button class="btn ghost sm">💾 Lưu nháp</button></form>
+  <form method="post" action="/builder/save" class="bh-save"><button class="btn ghost sm"><%- h.uiIcon('save', 16) %> Lưu nháp</button></form>
   <a class="btn out sm" href="/">Thoát</a>
 </div></div>
 <%- include('../partials/flash') %>
@@ -27,7 +27,7 @@
       <% if (step===2 && kitA.keyCount) { %><span class="mla s12 muted">Cần <%= kitA.keyCount %> switch cho layout <%= kitA.layout %> → <%= Math.ceil(kitA.keyCount/10) %> bộ</span><% } %>
     </div>
     <% if (blocks.length) { %>
-    <div class="warnbox" style="margin-top:20px;border-color:#FECDCA;background:var(--d50)"><div class="ic" style="background:#FECDCA">⛔</div><div><h4 style="color:#912018"><%= blocks.length %> linh kiện trong cấu hình không lắp vừa</h4><% blocks.forEach(function(i){ %><p style="color:#912018"><%= i.message %></p><% }) %></div></div>
+    <div class="warnbox" style="margin-top:20px;border-color:#FECDCA;background:var(--d50)"><div class="ic" style="background:#FECDCA"><%- h.uiIcon('ban', 22) %></div><div><h4 style="color:#912018"><%= blocks.length %> linh kiện trong cấu hình không lắp vừa</h4><% blocks.forEach(function(i){ %><p style="color:#912018"><%= i.message %></p><% }) %></div></div>
     <% } %>
     <% groups.forEach(function(g){ var selId = g.role==='kit'?b.kit&&b.kit._id:g.role==='sw'?b.switch&&b.switch._id:g.role==='keycap'?b.keycap&&b.keycap._id:b.stab&&b.stab._id; %>
       <% if (groups.length>1) { %><div class="s14 w700" style="padding:18px 24px 0"><%= g.label %> <span class="muted w500 s12">· <%= g.total %> sản phẩm<%= g.blocked ? ', ' + g.blocked + ' không tương thích' : '' %></span><% if (selId) { %><form method="post" action="/builder/clear" style="display:inline"><input type="hidden" name="role" value="<%= g.role %>"><button class="btn ghost sm">Bỏ chọn</button></form><% } %></div><% } %>
@@ -46,7 +46,7 @@
               <% } else { %><form method="post" action="/builder/select"><input type="hidden" name="role" value="<%= g.role %>"><input type="hidden" name="productId" value="<%= p._id %>"><% if (step===3) { %><input type="hidden" name="stay" value="3"><% } %><button class="btn out sm blk">Chọn</button></form><% } %>
             </div>
           </div>
-          <% if (x.blocked) { %><div class="why"><span>✕</span><span><%= x.blocked.message %></span></div><% } else if (x.warn) { %><div class="why" style="background:var(--w50);color:#93370D;border-top-color:#FEDF89"><span>⚠</span><span><%= x.warn.message %></span></div><% } %>
+          <% if (x.blocked) { %><div class="why"><span>✕</span><span><%= x.blocked.message %></span></div><% } else if (x.warn) { %><div class="why" style="background:var(--w50);color:#93370D;border-top-color:#FEDF89"><span><%- h.uiIcon('alert', 18) %></span><span><%= x.warn.message %></span></div><% } %>
         </div>
         <% }) %>
       </div>
@@ -69,9 +69,9 @@
             <h4><%= s.name %> <span class="s12 muted w500">· <%= s.shop.name %> ★ <%= s.shop.rating ? s.shop.rating.toFixed(1) : '—' %></span></h4>
             <p class="s13 t2" style="margin-top:4px"><%= s.description %></p>
             <ul><% s.includes.forEach(function(i){ %><li><em>✓</em><%= i %></li><% }) %><% if (s.soldering) { %><li><em>✓</em>Có hàn / rã hàn PCB</li><% } %></ul>
-            <div class="s12 muted" style="margin-top:10px">⏱ ~<%= s.days %> ngày · Xưởng đang làm <%= x.load %>/<%= s.shop.capacityPerWeek %> đơn tuần này</div>
-            <% if (x.warn) { %><div class="alert warn s12" style="margin-top:10px">⚠ <%= x.warn.message %></div><% } %>
-            <% if (x.suggest) { %><div class="alert info s12" style="margin-top:10px">💡 <%= x.suggest.message %></div><% } %>
+            <div class="s12 muted" style="margin-top:10px"><%- h.uiIcon('clock', 16) %> ~<%= s.days %> ngày · Xưởng đang làm <%= x.load %>/<%= s.shop.capacityPerWeek %> đơn tuần này</div>
+            <% if (x.warn) { %><div class="alert warn s12" style="margin-top:10px"><%- h.uiIcon('alert', 16) %> <%= x.warn.message %></div><% } %>
+            <% if (x.suggest) { %><div class="alert info s12" style="margin-top:10px"><%- h.uiIcon('bulb', 16) %> <%= x.suggest.message %></div><% } %>
           </div>
           <div style="text-align:right">
             <div class="pr" style="margin:0 0 10px"><%= h.money(s.price) %></div>
@@ -87,7 +87,7 @@
     <div class="ptop"><div style="flex:1"><h2>Bước 5 · Xem lại cấu hình</h2><p>Kiểm tra lần cuối trước khi gửi yêu cầu gia công tới xưởng.</p></div></div>
     <div style="padding:20px 24px">
       <% if (result.ok && !warns.length) { %><div class="alert ok">✓ Tất cả linh kiện đã chọn đều tương thích với nhau.</div><% } %>
-      <% result.issues.forEach(function(i){ %><div class="alert <%= i.level==='block'?'err':i.level==='warn'?'warn':'info' %>" style="margin-bottom:8px"><span><%= i.level==='block'?'⛔':i.level==='warn'?'⚠':'💡' %></span><div><b><%= i.level==='block'?'Chặn':i.level==='warn'?'Cảnh báo':'Gợi ý' %>:</b> <%= i.message %></div></div><% }) %>
+      <% result.issues.forEach(function(i){ %><div class="alert <%= i.level==='block'?'err':i.level==='warn'?'warn':'info' %>" style="margin-bottom:8px"><span><%- h.uiIcon(i.level==='block'?'ban':i.level==='warn'?'alert':'bulb', 18) %></span><div><b><%= i.level==='block'?'Chặn':i.level==='warn'?'Cảnh báo':'Gợi ý' %>:</b> <%= i.message %></div></div><% }) %>
       <table class="tbl" style="margin-top:16px;border:1px solid var(--border);border-radius:12px;overflow:hidden">
         <tr><th>Hạng mục</th><th>Sản phẩm</th><th>SL</th><th style="text-align:right">Thành tiền</th><th></th></tr>
         <% lines.forEach(function(l){ %><tr><td class="t2"><%= l.label %></td><td><b><%= l.product.name %></b><div class="s12 muted"><%= l.note||'' %></div></td><td><%= l.qty %></td><td style="text-align:right"><b><%= h.money(l.product.price*l.qty) %></b></td><td><a class="s12" style="color:var(--p600)" href="?step=<%= l.role==='kit'?1:l.role==='switch'?2:3 %>">Sửa</a></td></tr><% }) %>
@@ -108,10 +108,10 @@
   <aside class="sum"><div class="sumcard">
     <div class="preview"><span class="lbl">Xem trước cấu hình</span><div class="art"><img src="<%= b.kit ? b.kit.image : '/img/hero.svg' %>" class="kb" style="background:#fff"></div></div>
     <div class="s14 w700" style="padding:14px 16px 6px">Cấu hình của bạn</div>
-    <% [['kit','⌨','Kit',b.kit,1],['switch','🔘','Switch',b.switch,2],['keycap','🎨','Keycap',b.keycap,3],['stab','⚖','Stabilizer',b.stab,3]].forEach(function(r){ var p=r[3]; %>
-      <div class="sline <%= p?'':'empty' %>"><span class="ic"><%= r[1] %></span><div style="min-width:0"><div class="nm"><%= p ? p.name + (r[0]==='switch' ? ' ×'+b.switchQty : '') : 'Chưa chọn ' + r[2].toLowerCase() %><% if (p) { %><a class="ed" href="?step=<%= r[4] %>">Sửa</a><% } %></div><div class="sub"><%= p ? r[2] : 'Bước ' + r[4] %></div></div><span class="pr"><%= p ? h.money(r[0]==='switch' ? p.price*Math.ceil(b.switchQty/10) : p.price) : '—' %></span></div>
+    <% [['kit','kit','Kit',b.kit,1,'#1B62F5'],['switch','switch','Switch',b.switch,2,'#E84708'],['keycap','keycap','Keycap',b.keycap,3,'#7C3AED'],['stab','stabilizer','Stabilizer',b.stab,3,'#079455']].forEach(function(r){ var p=r[3]; %>
+      <div class="sline <%= p?'':'empty' %>"><span class="ic" style="color:<%= r[5] %>"><%- h.catIcon(r[1], 18) %></span><div style="min-width:0"><div class="nm"><%= p ? p.name + (r[0]==='switch' ? ' ×'+b.switchQty : '') : 'Chưa chọn ' + r[2].toLowerCase() %><% if (p) { %><a class="ed" href="?step=<%= r[4] %>">Sửa</a><% } %></div><div class="sub"><%= p ? r[2] : 'Bước ' + r[4] %></div></div><span class="pr"><%= p ? h.money(r[0]==='switch' ? p.price*Math.ceil(b.switchQty/10) : p.price) : '—' %></span></div>
     <% }) %>
-    <div class="sline <%= b.service?'':'empty' %>"><span class="ic">🛠</span><div><div class="nm"><%= b.service ? b.service.name : 'Chưa chọn gói gia công' %><% if (b.service) { %><a class="ed" href="?step=4">Sửa</a><% } %></div><div class="sub"><%= b.service ? b.service.shop.name : 'Bước 4' %></div></div><span class="pr"><%= b.service ? h.money(b.service.price) : '—' %></span></div>
+    <div class="sline <%= b.service?'':'empty' %>"><span class="ic" style="color:#DC6803"><%- h.catIcon('service', 18) %></span><div><div class="nm"><%= b.service ? b.service.name : 'Chưa chọn gói gia công' %><% if (b.service) { %><a class="ed" href="?step=4">Sửa</a><% } %></div><div class="sub"><%= b.service ? b.service.shop.name : 'Bước 4' %></div></div><span class="pr"><%= b.service ? h.money(b.service.price) : '—' %></span></div>
     <div class="totals">
       <div class="r"><span>Linh kiện</span><b><%= h.money(totals.parts) %></b></div>
       <div class="r"><span>Phí gia công</span><b><%= totals.service ? h.money(totals.service) : 'Chưa chọn' %></b></div>
@@ -121,11 +121,11 @@
       <% if (!b.kit) { %><div class="stline muted">Chọn kit để bắt đầu kiểm tra tương thích.</div>
       <% } else if (result.ok) { %><div class="stline" style="color:var(--s600)">✓ <span>Không có xung đột chặn<%= warns.length ? ' · ' + warns.length + ' cảnh báo' : '' %><%= sugg.length ? ' · ' + sugg.length + ' gợi ý' : '' %></span></div>
       <% } else { %><div class="stline" style="color:var(--d600)">✕ <span><%= blocks.length %> linh kiện không tương thích</span></div><% } %>
-      <% if (b.service) { %><div class="stline t2">⏱ <span>Thời gian gia công dự kiến ~<%= b.service.days %> ngày</span></div><% } %>
+      <% if (b.service) { %><div class="stline t2"><%- h.uiIcon('clock', 16) %> <span>Thời gian gia công dự kiến ~<%= b.service.days %> ngày</span></div><% } %>
     </div>
     <div class="actions">
       <% if (step<5) { %><a class="btn cta blk lg" href="?step=5">Xem lại & đặt hàng</a><% } %>
-      <form method="post" action="/builder/save" class="f" style="gap:8px"><input class="inp" name="name" value="<%= b.name %>" style="padding:8px 10px;font-size:13px"><button class="btn out sm">💾 Lưu</button></form>
+      <form method="post" action="/builder/save" class="f" style="gap:8px"><input class="inp" name="name" value="<%= b.name %>" style="padding:8px 10px;font-size:13px"><button class="btn out sm"><%- h.uiIcon('save', 16) %> Lưu</button></form>
       <a class="s12 muted" style="text-align:center" href="/builder/new">↺ Bắt đầu build mới</a>
     </div>
   </div></aside>

@@ -3,8 +3,8 @@
 <div class="ct">
   <div class="hero">
     <div class="catrail">
-      <% categories.forEach(function(c,i){ %><a class="<%= i===0?'on':'' %>" href="/c/<%= c.slug %>"><em><%= c.icon %></em><%= c.name %><b><%= countMap[String(c._id)]||0 %></b></a><% }) %>
-      <a href="/shops"><em>🏪</em>Gian hàng<b>›</b></a>
+      <% categories.forEach(function(c,i){ %><a class="<%= i===0?'on':'' %>" href="/c/<%= c.slug %>"><em style="color:<%= c.fg %>"><%- h.catIcon(c.partType, 18) %></em><%= c.name %><b><%= countMap[String(c._id)]||0 %></b></a><% }) %>
+      <a href="/shops"><em style="color:var(--p500)"><%- h.catIcon('shop', 18) %></em>Gian hàng<b>›</b></a>
     </div>
     <div class="banner">
       <div class="glow"></div>
@@ -13,7 +13,7 @@
       <h1>Tự build bàn phím<br>đúng gu của bạn</h1>
       <p>Chọn kit, switch, keycap và gói gia công trong một luồng duy nhất. Hệ thống tự kiểm tra tương thích trước khi bạn đặt hàng.</p>
       <div class="acts">
-        <a class="btn cta lg" href="/builder/new">⚙ Bắt đầu build ngay</a>
+        <a class="btn cta lg" href="/builder/new"><%- h.uiIcon('tool', 16) %> Bắt đầu build ngay</a>
         <a class="btn lg" href="/huong-dan" style="background:rgba(255,255,255,.96);color:#0F2E6B;border-color:transparent">Xem hướng dẫn</a>
       </div>
       <div class="stats">
@@ -34,12 +34,12 @@
     </div>
   </div>
 
-  <div class="usp"><div class="it"><em>🚚</em><div><b>Miễn phí vận chuyển</b><span>Đơn từ 500.000₫ mỗi shop</span></div></div><div class="it"><em>🛡</em><div><b>Bảo hành 12 tháng</b><span>Đổi mới trong 7 ngày</span></div></div><div class="it"><em>🔒</em><div><b>Thanh toán VNPay</b><span>An toàn, hoàn tiền khi huỷ</span></div></div><div class="it"><em>🛠</em><div><b>Xưởng gia công thẩm định</b><span><%= shopCount %> shop đã xác minh</span></div></div></div>
+  <div class="usp"><div class="it"><em><%- h.uiIcon('truck', 18) %></em><div><b>Miễn phí vận chuyển</b><span>Đơn từ 500.000₫ mỗi shop</span></div></div><div class="it"><em><%- h.uiIcon('shield', 18) %></em><div><b>Bảo hành 12 tháng</b><span>Đổi mới trong 7 ngày</span></div></div><div class="it"><em><%- h.uiIcon('lock', 18) %></em><div><b>Thanh toán VNPay</b><span>An toàn, hoàn tiền khi huỷ</span></div></div><div class="it"><em><%- h.catIcon('service', '1.1em') %></em><div><b>Xưởng gia công thẩm định</b><span><%= shopCount %> shop đã xác minh</span></div></div></div>
 
   <div style="margin-top:44px">
     <div class="sechd"><h2>Danh mục nổi bật</h2><a href="/search">Xem tất cả →</a></div>
     <div class="catgrid">
-      <% categories.slice(0,6).forEach(function(c){ %><a class="it" href="/c/<%= c.slug %>"><div class="ic" style="background:<%= c.bg %>;color:<%= c.fg %>"><%= c.icon %></div><b><%= c.name %></b><span><%= countMap[String(c._id)]||0 %> sp</span></a><% }) %>
+      <% categories.slice(0,6).forEach(function(c){ %><a class="it" href="/c/<%= c.slug %>"><div class="ic" style="background:<%= c.bg %>;color:<%= c.fg %>"><%- h.catIcon(c.partType, 30) %></div><b><%= c.name %></b><span><%= countMap[String(c._id)]||0 %> sp</span></a><% }) %>
     </div>
   </div>
 

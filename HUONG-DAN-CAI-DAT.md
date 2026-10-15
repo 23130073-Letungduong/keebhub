@@ -117,7 +117,7 @@ SESSION_SECRET=chuoi-ngau-nhien-bat-ky-cua-ban-123
 
 - `MONGODB_URI`: giữ nguyên nếu cài MongoDB trên máy; dùng Atlas thì dán chuỗi `mongodb+srv://...`.
 - `SESSION_SECRET`: gõ một chuỗi ngẫu nhiên bất kỳ (dài khoảng 30 ký tự).
-- Các dòng còn lại **để trống vẫn chạy được**: email sẽ hiện ở *Hộp thư dev* `/dev/mails`, thanh toán dùng trang *Mô phỏng VNPay*, chat AI chạy chế độ trả lời theo luật. Muốn bật thật xem mục 8.
+- Các dòng còn lại **để trống vẫn chạy được** (chưa cấu hình email thì thư được lưu ở *Hộp thư dev* — link 📨 trên thanh trên cùng, hoặc <http://localhost:3000/dev/mails>), thanh toán dùng trang *Mô phỏng VNPay*, chat AI chạy chế độ trả lời theo luật. Muốn bật thật xem mục 8.
 
 > ⚠️ **Tuyệt đối không commit file `.env` lên GitHub** (đã có sẵn trong `.gitignore`). Muốn chia sẻ key thì gửi riêng qua Zalo/Messenger.
 
@@ -185,17 +185,25 @@ App Google/Facebook đã được trưởng nhóm tạo sẵn. Các thành viên
    - **Facebook:** <https://developers.facebook.com/apps> → app *KeebHub* → **App roles** → **Roles** → **Add People** → chọn **Testers** → nhập tên/ID Facebook của thành viên. Thành viên vào <https://developers.facebook.com/requests> để chấp nhận.
 3. Web phải chạy đúng địa chỉ `http://localhost:3000` (không đổi `PORT`), vì địa chỉ callback đã đăng ký là `http://localhost:3000/auth/google/callback` và `.../auth/facebook/callback`.
 
-### 8.2. Gửi email thật (Gmail)
+### 8.2. Gửi email thật (Gmail) — bắt buộc để đăng ký / quên mật khẩu hoạt động
 
-1. Bật **Xác minh 2 bước** cho tài khoản Gmail.
-2. Vào <https://myaccount.google.com/apppasswords> → tạo **App password** (16 ký tự).
+**Cách nhanh (Windows):** bấm đúp `D:\TMDT\cau-hinh-email.bat` → làm theo hướng dẫn trên màn hình → file tự lưu vào `.env` và gửi 1 email thử.
+
+**Cách thủ công:**
+
+1. Đăng nhập Gmail dùng để gửi (nên tạo Gmail riêng cho shop) → bật **Xác minh 2 bước** tại <https://myaccount.google.com/security>.
+2. Vào <https://myaccount.google.com/apppasswords> → đặt tên `KeebHub` → **Tạo** → copy **16 ký tự** Google hiện ra (đây là *mật khẩu ứng dụng*, không phải mật khẩu Gmail).
 3. Điền vào `.env`:
    ```ini
    SMTP_HOST=smtp.gmail.com
    SMTP_PORT=465
-   SMTP_USER=email-cua-ban@gmail.com
+   SMTP_USER=email-cua-shop@gmail.com
    SMTP_PASS=abcdefghijklmnop
+   MAIL_FROM="KeebHub <email-cua-shop@gmail.com>"
    ```
+4. Kiểm tra: `node scripts/thu-gui-email.js` → thấy `✓ Đã gửi email thử` là xong. Khởi động lại web.
+
+> Chưa cấu hình email thì mọi email (xác nhận, đặt lại mật khẩu, đơn hàng) được lưu ở **Hộp thư dev** — bấm 📨 *Hộp thư dev* trên thanh trên cùng để mở và bấm link. Cấu hình Gmail xong thì Hộp thư dev tự biến mất.
 
 ### 8.3. VNPay sandbox
 
@@ -222,7 +230,7 @@ MongoDB phải đang chạy. Tại thư mục `keebhub`:
 npm test
 ```
 
-- Bộ kiểm thử gồm **217 ca**, chạy khoảng 1–2 phút, kết quả cuối là `ℹ pass 217` / `ℹ fail 0`.
+- Bộ kiểm thử gồm **225 ca**, chạy khoảng 1–2 phút, kết quả cuối là `ℹ pass 225` / `ℹ fail 0`.
 - Kiểm thử dùng database riêng **`keebhub_test`** và cổng **3100**, **không** ảnh hưởng dữ liệu demo ở database `keebhub`, cũng không cần tắt web đang chạy.
 - Dùng MongoDB Atlas thì đặt thêm biến môi trường trước khi chạy: `set TEST_MONGODB_URI=mongodb+srv://.../keebhub_test` (tên database bắt buộc chứa chữ `test`).
 - Chi tiết từng ca xem file Excel *KeebHub-Danh-sach-ca-kiem-thu.xlsx*.
@@ -293,7 +301,7 @@ Lưu ý:
 | Google báo `Error 403: access_denied` | Gmail chưa được thêm vào Test users | Trưởng nhóm thêm theo mục 8.1 |
 | Google báo `redirect_uri_mismatch` | Web không chạy ở `http://localhost:3000` | Giữ `PORT=3000`, `BASE_URL=http://localhost:3000` |
 | Bấm "Đăng nhập Google/Facebook" báo chưa cấu hình | Thiếu key trong `.env` | Dán key theo mục 8.1, rồi chạy lại web |
-| Đăng ký xong không thấy email | Chưa cấu hình SMTP | Vào <http://localhost:3000/dev/mails> để xem email |
+| Đăng ký xong không thấy email | Chưa cấu hình Gmail, hoặc email rơi vào Spam | Chưa cấu hình: mở **📨 Hộp thư dev** trên thanh trên cùng. Đã cấu hình: xem cả mục Thư rác/Spam |
 | Giao diện không đổi sau khi `git pull` | Trình duyệt giữ bản cũ | Tắt web, chạy lại, rồi bấm **Ctrl + F5** |
 | `npm install` báo lỗi mạng / timeout | Mạng chặn hoặc chậm | Thử lại, đổi mạng khác, hoặc chạy `npm cache clean --force` rồi `npm install` |
 | Đăng nhập admin ở trang thường báo sai mật khẩu | Admin chỉ đăng nhập ở trang riêng | Vào <http://localhost:3000/admin/login> |

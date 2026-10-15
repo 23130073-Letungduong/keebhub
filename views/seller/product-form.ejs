@@ -5,7 +5,7 @@
     <div class="card2"><div class="hd"><h3>Thông tin cơ bản</h3></div><div class="bd">
       <div class="field2"><label>Tên sản phẩm <span class="req">*</span></label><input class="inp" name="name" value="<%= P.name||'' %>" required maxlength="160"></div>
       <div class="g2">
-        <div class="field2"><label>Danh mục <span class="req">*</span></label><select class="inp" name="category" id="catSel" required><% categories.forEach(function(c){ %><option value="<%= c._id %>" data-type="<%= c.partType %>" <%= P.category && String(P.category._id||P.category)===String(c._id)?'selected':'' %>><%= c.icon %> <%= c.name %></option><% }) %></select></div>
+        <div class="field2"><label>Danh mục <span class="req">*</span></label><select class="inp" name="category" id="catSel" required><% categories.forEach(function(c){ %><option value="<%= c._id %>" data-type="<%= c.partType %>" <%= P.category && String(P.category._id||P.category)===String(c._id)?'selected':'' %>><%= c.name %></option><% }) %></select></div>
         <div class="field2"><label>Mã SKU</label><input class="inp" name="sku" value="<%= P.sku||'' %>"></div>
       </div>
       <div class="field2"><label>Mô tả</label><textarea class="inp" name="description" rows="6"><%= P.description||'' %></textarea></div>
@@ -43,7 +43,7 @@
     </div></div>
     <div class="card2"><div class="hd"><h3>Hình ảnh</h3></div><div class="bd">
       <% if (P.images.length) { %><div class="ph" style="flex-wrap:wrap;margin:0 0 12px"><% P.images.forEach(function(i){ %><label style="text-align:center"><i><img src="<%= i %>" style="width:100%;height:100%;object-fit:cover"></i><span class="s12"><input type="checkbox" name="removeImg" value="<%= i %>"> Xoá</span></label><% }) %></div><% } %>
-      <div class="upl2"><label style="cursor:pointer">📷 <b>Tải ảnh lên</b> (tối đa 6)<input type="file" name="images" accept="image/*" multiple hidden></label><div class="s12 muted filelbl" style="margin-top:4px">Không có ảnh → hệ thống vẽ ảnh minh hoạ theo màu bên dưới</div></div>
+      <div class="upl2"><label style="cursor:pointer"><%- h.uiIcon('camera', 16) %> <b>Tải ảnh lên</b> (tối đa 6)<input type="file" name="images" accept="image/*" multiple hidden></label><div class="s12 muted filelbl" style="margin-top:4px">Không có ảnh → hệ thống vẽ ảnh minh hoạ theo màu bên dưới</div></div>
       <div class="g3" style="margin-top:12px">
         <div class="field2"><label>Màu chính</label><input type="color" name="artColor" value="<%= P.art.color||'#4B5563' %>" class="inp" style="padding:2px;height:38px"></div>
         <div class="field2"><label>Màu nhấn</label><input type="color" name="artAccent" value="<%= P.art.accent||'#1B62F5' %>" class="inp" style="padding:2px;height:38px"></div>

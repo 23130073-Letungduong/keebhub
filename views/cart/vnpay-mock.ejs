@@ -3,7 +3,29 @@
   <div class="card" style="max-width:520px;width:100%;overflow:hidden">
     <div style="background:#005BAA;color:#fff;padding:18px 24px;display:flex;align-items:center;gap:12px"><b style="font-size:22px;letter-spacing:.02em">VN<span style="color:#ED1C24">PAY</span></b><span class="s13" style="opacity:.85">Cổng thanh toán — MÔ PHỎNG</span></div>
     <div style="padding:24px">
-      <div class="alert warn s13">🧪 Server chưa có <b>VNP_TMNCODE</b> / <b>VNP_HASHSECRET</b> nên đang dùng trang mô phỏng để demo. Điền khoá sandbox trong <code>.env</code> để chuyển sang VNPay thật.</div>
+      <%
+        /* Mã QR minh hoạ (không quét được) — vẽ theo mã giao dịch nên mỗi đơn một hình */
+        var N = 25, cell = 8, seed = 0, rects = '';
+        String(group).split('').forEach(function (c) { seed = (seed * 31 + c.charCodeAt(0)) >>> 0; });
+        function rnd() { seed = (seed * 1103515245 + 12345) >>> 0; return (seed >>> 16) & 1; }
+        function finder(x, y) { return x < 8 && y < 8 || x >= N - 8 && y < 8 || x < 8 && y >= N - 8; }
+        function fill(x, y) {
+          var fx = x >= N - 8 ? x - (N - 7) : x, fy = y >= N - 8 ? y - (N - 7) : y;
+          if (fx === 7 || fy === 7 || fx < 0 || fy < 0) return false;
+          return fx === 0 || fx === 6 || fy === 0 || fy === 6 || (fx >= 2 && fx <= 4 && fy >= 2 && fy <= 4);
+        }
+        for (var y = 0; y < N; y++) for (var x = 0; x < N; x++) {
+          var on = finder(x, y) ? fill(x, y) : (y === 6 || x === 6) ? (x + y) % 2 === 0 : rnd();
+          if (on) rects += '<rect x="' + x * cell + '" y="' + y * cell + '" width="' + cell + '" height="' + cell + '"/>';
+        }
+      %>
+      <div style="text-align:center;margin-bottom:18px">
+        <div class="s14 w700">Quét mã QR để thanh toán</div>
+        <div style="display:inline-block;margin-top:12px;padding:14px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--sh1)">
+          <svg width="200" height="200" viewBox="-8 -8 216 216" role="img" aria-label="Mã QR thanh toán (minh hoạ)" style="display:block" shape-rendering="crispEdges"><rect x="-8" y="-8" width="216" height="216" fill="#fff"/><g fill="#101828"><%- rects %></g><rect x="80" y="80" width="40" height="40" rx="8" fill="#fff"/><text x="100" y="105" text-anchor="middle" font-size="11" font-weight="800" fill="#005BAA" font-family="sans-serif">VN<tspan fill="#ED1C24">PAY</tspan></text></svg>
+        </div>
+        <div class="s12 muted" style="margin-top:8px">Mở ứng dụng ngân hàng → Quét QR · Mã hình minh hoạ cho bản demo</div>
+      </div>
       <div class="resrow"><span>Nhà cung cấp</span><b>KeebHub</b></div>
       <div class="resrow"><span>Mã giao dịch</span><b><%= group %></b></div>
       <div class="resrow"><span>Nội dung</span><b class="s13" style="text-align:right;max-width:280px"><%= info %></b></div>

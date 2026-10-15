@@ -161,9 +161,8 @@
       toast.addEventListener('click', function (e) { if (e.target.closest('.x')) hide(); });
     }
     var name = featureName(el, path);
-    var back = el.tagName === 'A' ? path : location.pathname + location.search;
-    toast.innerHTML = '<span class="ic">🔒</span><div>Bạn cần đăng nhập để sử dụng tính năng ' + (name ? '<b>' + esc(name) + '</b>' : 'này') +
-      '. <a href="/auth/login?next=' + encodeURIComponent(back) + '">Đăng nhập</a></div><button type="button" class="x" aria-label="Đóng">×</button><span class="bar"></span>';
+    toast.innerHTML = '<span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3M12 14.5v2.5"/></svg></span><div>Bạn cần đăng nhập để sử dụng tính năng ' + (name ? '<b>' + esc(name) + '</b>' : 'này') +
+      '. <a href="/auth/login">Đăng nhập</a></div><button type="button" class="x" aria-label="Đóng">×</button><span class="bar"></span>';
     toast.classList.remove('show'); void toast.offsetWidth; // chạy lại hiệu ứng khi bấm liên tiếp
     toast.classList.add('show');
     startTimer();
@@ -188,4 +187,30 @@
     e.preventDefault();
     show(f, path);
   }, true);
+})();
+
+// ---------- Chế độ sáng / tối ----------
+(function () {
+  var root = document.documentElement;
+  function setTheme(t) {
+    root.classList.add('thm-anim');
+    root.setAttribute('data-theme', t);
+    try { localStorage.setItem('kh-theme', t); } catch (e) { /* trình duyệt chặn lưu → chỉ áp dụng trang này */ }
+    setTimeout(function () { root.classList.remove('thm-anim'); }, 350);
+    if (window.khChartsTheme) window.khChartsTheme();
+  }
+  // Trang không có header (đăng nhập, đăng ký, VNPay…) → thêm nút nổi ở góc trái dưới
+  if (!document.querySelector('[data-theme-toggle]')) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'thm-btn thm-float'; b.setAttribute('data-theme-toggle', '');
+    b.title = 'Chuyển chế độ sáng / tối'; b.setAttribute('aria-label', b.title);
+    var ic = function (d) { return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>'; };
+    b.innerHTML = '<span class="i-moon">' + ic('<path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/>') + '</span><span class="i-sun">' + ic('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>') + '</span>';
+    document.body.appendChild(b);
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-theme-toggle]');
+    if (!btn) return;
+    setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
 })();

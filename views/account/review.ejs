@@ -11,7 +11,7 @@
       <form class="bd" method="post" action="/account/orders/<%= order.code %>/review/<%= i._id %>" enctype="multipart/form-data">
         <div class="starsel" data-stars><% for (var s=1;s<=5;s++){ %><label><input type="radio" name="rating" value="<%= s %>" <%= s===5?'checked':'' %> hidden><span>★</span></label><% } %><span class="s14 t2 w600 starlbl" style="letter-spacing:0;margin-left:10px;align-self:center">Tuyệt vời</span></div>
         <div class="field" style="margin-top:14px"><label>Nhận xét</label><textarea class="inp" name="content" rows="4" placeholder="Cảm giác gõ, âm thanh, chất lượng gia công, đóng gói…"></textarea></div>
-        <div class="f ac" style="gap:12px;margin-top:12px;flex-wrap:wrap"><label class="btn out sm">📷 Thêm ảnh (tối đa 5)<input type="file" name="images" accept="image/*" multiple hidden></label><span class="s12 muted filelbl"></span><button class="btn pri mla">Gửi đánh giá</button></div>
+        <div class="f ac" style="gap:12px;margin-top:12px;flex-wrap:wrap"><label class="btn out sm"><%- h.uiIcon('camera', 16) %> Thêm ảnh (tối đa 5)<input type="file" name="images" accept="image/*" multiple hidden></label><span class="s12 muted filelbl"></span><button class="btn pri mla">Gửi đánh giá</button></div>
       </form>
       <% } %>
     </div>

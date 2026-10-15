@@ -1,6 +1,6 @@
 <%- include('_top') %>
 <form class="card2" method="post" action="/seller/inventory">
-  <div class="toolrow"><a class="tchip <%= query.low!=='1'?'on':'' %>" href="/seller/inventory">Tất cả</a><a class="tchip <%= query.low==='1'?'on':'' %>" href="?low=1">Sắp hết hàng</a><button class="btn pri sm mla">💾 Lưu tồn kho</button></div>
+  <div class="toolrow"><a class="tchip <%= query.low!=='1'?'on':'' %>" href="/seller/inventory">Tất cả</a><a class="tchip <%= query.low==='1'?'on':'' %>" href="?low=1">Sắp hết hàng</a><button class="btn pri sm mla"><%- h.uiIcon('save', 16) %> Lưu tồn kho</button></div>
   <div class="bd p0 tblx"><table class="tb">
     <tr><th>Sản phẩm</th><th>Loại</th><th>Đã bán</th><th>Tồn kho</th><th>Ngưỡng cảnh báo</th><th>Tình trạng</th></tr>
     <% products.forEach(function(p){ var low = p.stock<=p.lowStock; %>

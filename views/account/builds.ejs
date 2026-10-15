@@ -4,7 +4,7 @@
   <%- include('_nav') %>
   <div>
     <div class="pnl"><div class="hd"><div style="flex:1"><h2>Cấu hình đã lưu</h2><p>Các build bạn tạo trong Custom Builder</p></div><a class="btn pri sm" href="/builder/new">+ Build mới</a></div></div>
-    <% if (!builds.length) { %><div class="card p24 empty"><div class="s38">⚙</div><b>Chưa có cấu hình nào</b><a class="btn pri" style="margin-top:12px" href="/builder/new">Mở Custom Builder</a></div><% } %>
+    <% if (!builds.length) { %><div class="card p24 empty"><div class="s38"><%- h.uiIcon('builds', 40) %></div><b>Chưa có cấu hình nào</b><a class="btn pri" style="margin-top:12px" href="/builder/new">Mở Custom Builder</a></div><% } %>
     <div class="grid2">
     <% builds.forEach(function(b){ var t = buildTotal(b); %>
       <div class="pnl" style="margin:0">

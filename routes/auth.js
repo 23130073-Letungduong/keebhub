@@ -5,6 +5,7 @@ const mailer = require('../utils/mailer');
 const { token } = require('../utils/helpers');
 
 const BASE = () => process.env.BASE_URL || 'http://localhost:3000';
+const RESEND_WAIT = 30; // giây phải chờ giữa 2 lần gửi email xác nhận
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function landing(user) {
@@ -21,21 +22,18 @@ function signIn(req, user, remember = true) {
   });
 }
 async function mergeAndGo(req, res, user, remember) {
-  const returnTo = req.session.returnTo;
   user.lastLogin = new Date();
   await user.save();
   await signIn(req, user, remember);
   req.flash('success', `Chào mừng ${user.name}!`);
   // (flash đặt sau khi regenerate session để không bị mất)
-  res.redirect(returnTo && !returnTo.startsWith('/auth') ? returnTo : landing(user));
+  // Đăng nhập xong luôn về trang chính của vai trò: khách → trang chủ, người bán → Kênh người bán
+  res.redirect(landing(user));
 }
 
 // ---------- Đăng nhập ----------
 router.get('/login', (req, res) => {
   if (req.user) return res.redirect(landing(req.user));
-  // ?next=/builder/new → sau khi đăng nhập quay lại đúng tính năng (chỉ nhận đường dẫn nội bộ)
-  const nxt = typeof req.query.next === 'string' ? req.query.next : '';
-  if (/^\/(?![\/\\])/.test(nxt) && !nxt.startsWith('/auth') && nxt.length < 300) req.session.returnTo = nxt;
   res.render('auth/login', { title: 'Đăng nhập', email: '' });
 });
 
@@ -47,7 +45,7 @@ router.post('/login', async (req, res, next) => {
       return res.render('auth/login', { title: 'Đăng nhập', email, flash: { error: ['Email hoặc mật khẩu không đúng.'], success: [], info: [] } });
     }
     if (user.status === 'locked') {
-      return res.render('auth/login', { title: 'Đăng nhập', email, flash: { error: ['Tài khoản đã bị khoá. Liên hệ hotro@keebhub.vn.'], success: [], info: [] } });
+      return res.render('auth/login', { title: 'Đăng nhập', email, flash: { error: ['Tài khoản đã bị khoá. Liên hệ letungduong.nvn@gmail.com.'], success: [], info: [] } });
     }
     // Tài khoản quản trị chỉ được đăng nhập ở trang riêng /admin/login
     if (user.role === 'admin') {
@@ -82,11 +80,11 @@ router.post('/register', async (req, res, next) => {
     if (form.phone && await User.exists({ phone: form.phone })) errors.push('Số điện thoại đã được sử dụng.');
     if (errors.length) return res.render('auth/register', { title: 'Đăng ký', form, flash: { error: errors, success: [], info: [] } });
 
-    const user = new User({ ...form, verifyToken: token(), verifyExpires: Date.now() + 24 * 3600e3 });
+    const user = new User({ ...form, verifyToken: token(), verifyExpires: Date.now() + 24 * 3600e3, verifySentAt: new Date() });
     await user.setPassword(password);
     await user.save();
-    await mailer.sendVerify(user, `${BASE()}/auth/verify/${user.verifyToken}`);
-    res.render('auth/check-email', { title: 'Kiểm tra email', email: user.email, kind: 'verify' });
+    const sent = await mailer.sendVerify(user, `${BASE()}/auth/verify/${user.verifyToken}`);
+    res.render('auth/check-email', { title: 'Kiểm tra email', email: user.email, kind: 'verify', mailFailed: !sent.ok, cooldown: RESEND_WAIT });
   } catch (e) { next(e); }
 });
 
@@ -110,13 +108,23 @@ router.get('/verify/:token', async (req, res, next) => {
 router.post('/resend', async (req, res, next) => {
   try {
     const user = await User.findOne({ email: String(req.body.email || '').toLowerCase().trim() });
+    let sent = { ok: true }, cooldown = RESEND_WAIT, flash;
     if (user && !user.emailVerified) {
-      user.verifyToken = token();
-      user.verifyExpires = Date.now() + 24 * 3600e3;
-      await user.save();
-      await mailer.sendVerify(user, `${BASE()}/auth/verify/${user.verifyToken}`);
+      const passed = user.verifySentAt ? (Date.now() - user.verifySentAt) / 1000 : Infinity;
+      if (passed < RESEND_WAIT) {
+        // Bấm Gửi lại quá nhanh → không gửi, báo số giây còn phải chờ
+        cooldown = Math.ceil(RESEND_WAIT - passed);
+        flash = { info: [`Vui lòng đợi ${cooldown} giây rồi bấm Gửi lại email.`], error: [], success: [] };
+      } else {
+        user.verifyToken = token();
+        user.verifyExpires = Date.now() + 24 * 3600e3;
+        user.verifySentAt = new Date();
+        await user.save();
+        sent = await mailer.sendVerify(user, `${BASE()}/auth/verify/${user.verifyToken}`);
+        flash = { success: ['Đã gửi lại email xác nhận.'], error: [], info: [] };
+      }
     }
-    res.render('auth/check-email', { title: 'Kiểm tra email', email: req.body.email, kind: 'verify' });
+    res.render('auth/check-email', { title: 'Kiểm tra email', email: String(req.body.email || ''), kind: 'verify', mailFailed: !sent.ok, cooldown, ...(flash ? { flash } : {}) });
   } catch (e) { next(e); }
 });
 
@@ -126,14 +134,15 @@ router.post('/forgot', async (req, res, next) => {
   try {
     const email = String(req.body.email || '').toLowerCase().trim();
     const user = await User.findOne({ email });
+    let sent = { ok: true };
     if (user) {
       user.resetToken = token();
       user.resetExpires = Date.now() + 30 * 60e3;
       await user.save();
-      await mailer.sendReset(user, `${BASE()}/auth/reset/${user.resetToken}`);
+      sent = await mailer.sendReset(user, `${BASE()}/auth/reset/${user.resetToken}`);
     }
     // Không tiết lộ email có tồn tại hay không
-    res.render('auth/check-email', { title: 'Kiểm tra email', email, kind: 'reset' });
+    res.render('auth/check-email', { title: 'Kiểm tra email', email, kind: 'reset', mailFailed: !sent.ok });
   } catch (e) { next(e); }
 });
 router.get('/reset/:token', async (req, res) => {

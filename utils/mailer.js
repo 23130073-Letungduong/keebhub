@@ -1,5 +1,7 @@
-// Gửi email qua SMTP (nodemailer). Nếu chưa cấu hình SMTP thì in ra console
-// và lưu vào hộp thư dev (xem tại /dev/mails) để vẫn demo được luồng xác nhận email.
+// Gửi email qua SMTP (nodemailer) — cấu hình SMTP_* trong .env (Gmail + mật khẩu ứng dụng).
+// Hộp thư dev (/dev/mails): TỰ BẬT khi chưa cấu hình Gmail (SMTP_USER/SMTP_PASS trống) hoặc khi MAIL_DEV=1;
+// cấu hình Gmail xong thì tự tắt, email gửi thẳng tới hộp thư thật.
+// Gửi lỗi (sai mật khẩu ứng dụng, mất mạng…) không làm sập trang: ghi log và trả về { ok:false }.
 const nodemailer = require('nodemailer');
 
 const devOutbox = [];
@@ -30,20 +32,36 @@ function button(href, text) {
   <p style="font-size:12px;color:#98A2B3">Nếu nút không bấm được, mở liên kết: <br><a href="${href}">${href}</a></p>`;
 }
 
+const devMode = () => process.env.MAIL_DEV === '1' || !transporter;
+
 async function send(to, subject, html) {
-  const from = process.env.MAIL_FROM || 'KeebHub <no-reply@keebhub.vn>';
-  if (!transporter) {
+  const from = process.env.MAIL_FROM || (process.env.SMTP_USER ? `KeebHub <${process.env.SMTP_USER}>` : 'KeebHub <no-reply@keebhub.vn>');
+  if (devMode()) {
     devOutbox.unshift({ to, subject, html, at: new Date() });
     if (devOutbox.length > 50) devOutbox.pop();
-    console.log(`\n[MAIL - chế độ dev] Tới: ${to} | ${subject}\n  → Xem nội dung tại ${process.env.BASE_URL || 'http://localhost:3000'}/dev/mails\n`);
-    return { dev: true };
+    return { ok: true, dev: true };
   }
-  return transporter.sendMail({ from, to, subject, html });
+  if (!transporter) {
+    // Chưa cấu hình email: in link ra cửa sổ chạy web để quản trị viên xử lý (hoặc bấm "Xác minh" trong trang admin)
+    const link = (html.match(/href="(http[^"]+\/auth\/[^"]+)"/) || [])[1] || '';
+    console.warn(`[EMAIL] Chưa cấu hình gửi email (SMTP_* trong .env) → không gửi được tới ${to}: ${subject}${link ? '\n        Link: ' + link : ''}`);
+    return { ok: false, reason: 'not_configured' };
+  }
+  try {
+    await transporter.sendMail({ from, to, subject, html });
+    return { ok: true };
+  } catch (e) {
+    console.error(`[EMAIL] Gửi tới ${to} thất bại: ${e.message}`);
+    return { ok: false, reason: e.code === 'EAUTH' ? 'auth' : 'send', error: e.message };
+  }
 }
 
 module.exports = {
   devOutbox,
   isConfigured: () => !!transporter,
+  isDev: devMode,
+  verifyConnection: () => (transporter ? transporter.verify() : Promise.reject(new Error('Chưa cấu hình SMTP_HOST / SMTP_USER'))),
+  sendTest: (to) => send(to, 'KeebHub — Email thử cấu hình', layout('Gửi email thành công 🎉', '<p>Web KeebHub đã gửi được email qua Gmail. Từ giờ email xác nhận tài khoản, đặt lại mật khẩu và đơn hàng sẽ đến hộp thư thật của người dùng.</p>')),
   sendVerify: (user, link) => send(user.email, 'Xác nhận tài khoản KeebHub',
     layout('Xác nhận email của bạn', `<p>Chào ${user.name},</p><p>Cảm ơn bạn đã đăng ký KeebHub. Bấm nút dưới đây để kích hoạt tài khoản (liên kết có hiệu lực 24 giờ).</p>${button(link, 'Xác nhận tài khoản')}`)),
   sendReset: (user, link) => send(user.email, 'Đặt lại mật khẩu KeebHub',

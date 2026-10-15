@@ -95,12 +95,12 @@ router.post('/users/:id/status', async (req, res) => {
     if (u.role === 'seller' && u.status === 'active') await Shop.updateOne({ owner: u._id, status: 'locked' }, { status: 'active' });
     req.flash('success', `${u.status === 'locked' ? 'Đã khoá' : 'Đã mở khoá'} tài khoản ${u.email}.`);
   }
-  res.redirect('back');
+  res.back();
 });
 router.post('/users/:id/verify', async (req, res) => {
   await User.updateOne({ _id: req.params.id }, { emailVerified: true, $unset: { verifyToken: 1 } });
   req.flash('success', 'Đã xác minh email thủ công.');
-  res.redirect('back');
+  res.back();
 });
 
 // ---------- Shop ----------
@@ -124,7 +124,7 @@ router.post('/shops/:id/:action', async (req, res) => {
     await s.save();
     req.flash('success', `Đã cập nhật shop ${s.name}.`);
   }
-  res.redirect('back');
+  res.back();
 });
 
 // ---------- Sản phẩm: kiểm duyệt & quản lý ----------
@@ -150,12 +150,12 @@ router.post('/products/:id/:action', async (req, res) => {
     if (a === 'hide') p.status = 'hidden';
     if (a === 'delete') {
       if (await Order.exists({ 'items.product': p._id })) { p.status = 'hidden'; req.flash('info', 'Sản phẩm có đơn hàng nên chỉ được ẩn.'); }
-      else { await p.deleteOne(); req.flash('success', 'Đã xoá sản phẩm.'); return res.redirect('back'); }
+      else { await p.deleteOne(); req.flash('success', 'Đã xoá sản phẩm.'); return res.back(); }
     }
     await p.save();
     req.flash('success', `Đã cập nhật "${p.name}".`);
   }
-  res.redirect('back');
+  res.back();
 });
 
 // ---------- Đơn hàng ----------

@@ -203,3 +203,32 @@ html,body{overflow-x:hidden}
 .kh-toast:hover .bar{animation-play-state:paused}
 @keyframes khbar{to{width:0}}
 @media (max-width:600px){.kh-toast{left:16px;right:16px;top:12px;max-width:none}}
+
+/* Biểu tượng danh mục (SVG) */
+.cat-ic{display:inline-block;vertical-align:middle;flex:none}
+.catlink{display:inline-flex;align-items:center;gap:6px}
+html[data-theme="dark"] .catgrid .it .ic{background:color-mix(in srgb,currentColor 16%,transparent) !important}
+
+/* Biểu tượng nét mảnh ở thanh đầu trang + menu tài khoản: căn thẳng hàng */
+.ui-ic{display:inline-block;vertical-align:-.2em;flex-shrink:0}
+/* Trong các ô biểu tượng (menu bên, thẻ số liệu, việc cần làm…) icon nằm chính giữa */
+em>.ui-ic,.ic>.ui-ic,.cav>.ui-ic,.alert>span>.ui-ic,.eye>.ui-ic,.thm-btn .ui-ic,.menu-tg>.ui-ic,.sbox .i>.ui-ic,.s38>.ui-ic{display:block;margin:auto}
+.snav a em,.rail a em{display:flex;align-items:center;justify-content:center;width:20px}
+.snav a em{color:var(--muted)} .snav a.on em,.snav a:hover em{color:var(--p500)}
+.snav-btn em,.railbtn em{font-style:normal;display:flex;width:20px}
+.s38{line-height:1;color:var(--muted)} .s38>.ui-ic{margin-bottom:6px}
+.hdr .hact{display:flex;align-items:center;gap:4px}
+.hdr .iconbtn{color:var(--text2)}
+.hdr .iconbtn:hover{color:var(--p500)}
+.hdr .iconbtn .ui-ic{width:22px;height:22px}
+.thm-btn .i-moon,.thm-btn .i-sun{align-items:center;justify-content:center}
+.thm-btn .i-moon{display:flex}
+html[data-theme="dark"] .thm-btn .i-sun{display:flex}
+.hdr .search .ico{display:flex;align-items:center;top:50%;transform:translateY(-50%)}
+.user .caret{display:flex;align-items:center}
+.ddm a,.ddm button{display:flex;align-items:center;gap:10px;line-height:1.3}
+.ddm a .ui-ic,.ddm button .ui-ic{color:var(--text2)}
+.ddm a:hover .ui-ic,.ddm button:hover .ui-ic{color:var(--p500)}
+.ddm form{margin:4px 0 0;padding-top:4px;border-top:1px solid var(--border)}
+.nav .cat{display:flex;align-items:center;gap:8px}
+.nav a.mla{display:inline-flex;align-items:center;gap:6px}

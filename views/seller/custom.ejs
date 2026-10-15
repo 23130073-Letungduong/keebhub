@@ -7,7 +7,7 @@
       <div class="hd"><div style="flex:1"><h3>Yêu cầu gia công #<%= o.code %> · Build #<%= o.buildCode %></h3><p><%= o.user.name %> · gửi <%= h.timeAgo(o.createdAt) %> · hạn phản hồi <%= h.dateTime(o.customRequest.deadline) %></p></div>
         <span class="bdg <%= waitH>18?'err':'warn' %>">Chờ <%= waitH %>h</span></div>
       <div class="bd">
-        <% if (o.paymentStatus!=='paid') { %><div class="alert warn" style="margin-bottom:14px">⏳ Khách chưa hoàn tất thanh toán VNPay. Bạn chỉ có thể nhận đơn sau khi khách thanh toán.</div><% } else { %><div class="alert ok" style="margin-bottom:14px">✓ Khách đã thanh toán <%= h.money(o.total) %> qua VNPay — sàn giữ tiền tới khi đơn hoàn thành.</div><% } %>
+        <% if (o.paymentStatus!=='paid') { %><div class="alert warn" style="margin-bottom:14px"><%- h.uiIcon('hourglass', 16) %> Khách chưa hoàn tất thanh toán VNPay. Bạn chỉ có thể nhận đơn sau khi khách thanh toán.</div><% } else { %><div class="alert ok" style="margin-bottom:14px">✓ Khách đã thanh toán <%= h.money(o.total) %> qua VNPay — sàn giữ tiền tới khi đơn hoàn thành.</div><% } %>
         <div class="bsheet2">
           <% o.items.forEach(function(i){ %><div class="r"><span><%= ({kit:'Kit',switch:'Switch',keycap:'Keycap',stab:'Stab'})[i.role]||'' %></span><b><%= i.name %> ×<%= i.qty %></b></div><% }) %>
           <div class="r"><span>Gói gia công</span><b><%= o.service.name %> · <%= h.money(o.serviceFee) %></b></div>
@@ -32,7 +32,7 @@
   </div>
   <div>
     <div class="card2"><div class="hd"><h3>Hàng chờ (<%= orders.length %>)</h3></div><div class="bd" style="padding:6px 20px">
-      <% orders.forEach(function(o){ %><a class="todo" href="?code=<%= o.code %>" style="<%= sel && sel.code===o.code ? 'background:var(--p50);margin:0 -20px;padding-left:20px;padding-right:20px' : '' %>"><em style="background:var(--w50);color:var(--w600)">⚙</em><div style="flex:1"><b>#<%= o.code %> · <%= o.user.name %></b><span><%= h.money(o.total) %> · <%= h.timeAgo(o.createdAt) %> · <%= o.paymentStatus==='paid'?'đã TT':'chưa TT' %></span></div></a><% }) %>
+      <% orders.forEach(function(o){ %><a class="todo" href="?code=<%= o.code %>" style="<%= sel && sel.code===o.code ? 'background:var(--p50);margin:0 -20px;padding-left:20px;padding-right:20px' : '' %>"><em style="background:var(--w50);color:var(--w600)"><%- h.uiIcon('tool', 18) %></em><div style="flex:1"><b>#<%= o.code %> · <%= o.user.name %></b><span><%= h.money(o.total) %> · <%= h.timeAgo(o.createdAt) %> · <%= o.paymentStatus==='paid'?'đã TT':'chưa TT' %></span></div></a><% }) %>
       <% if (!orders.length) { %><p class="muted s13" style="padding:10px 0">Trống.</p><% } %>
     </div></div>
     <div class="card2"><div class="hd"><h3>Đã phản hồi gần đây</h3></div><div class="bd" style="padding:6px 20px">

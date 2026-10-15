@@ -18,7 +18,7 @@
         <div class="hd"><span class="n">2</span><h3>Phương thức vận chuyển</h3></div>
         <div class="shipopt" style="grid-template-columns:repeat(2,1fr)">
           <% Object.keys(SHIP).forEach(function(k){ %>
-          <a class="it <%= method===k?'on':'' %>" href="/checkout?ship=<%= k %>"><b><%= SHIP[k].label %></b><span><%= SHIP[k].desc %></span><div class="p"><%= k==='standard' ? h.money(SHIP[k].fee)+' · miễn phí từ 500k/shop' : h.money(SHIP[k].fee) %></div></a>
+          <a class="it <%= method===k?'on':'' %>" href="/checkout?ship=<%= k %>"><b><%= SHIP[k].label %></b><div class="p"><%= k==='standard' ? h.money(SHIP[k].fee)+' · miễn phí từ 500k/shop' : h.money(SHIP[k].fee) %></div></a>
           <% }) %>
         </div>
         <input type="hidden" name="ship" value="<%= method %>">
@@ -33,9 +33,9 @@
       <div class="blk-sec">
         <div class="hd"><span class="n">4</span><h3>Sản phẩm (<%= cart.groups.length %> shop → <%= cart.groups.reduce(function(s,g){return s + (g.items.length?1:0) + g.builds.length},0) %> đơn hàng)</h3><a href="/cart">Sửa giỏ</a></div>
         <% cart.groups.forEach(function(g){ %>
-          <div class="s13 w700" style="margin:8px 0 4px">🏪 <%= g.shop.name %> <span class="muted w500">· phí ship <%= g.ship ? h.money(g.ship) : 'miễn phí' %></span></div>
+          <div class="s13 w700" style="margin:8px 0 4px"><%- h.uiIcon('store', 16) %> <%= g.shop.name %> <span class="muted w500">· phí ship <%= g.ship ? h.money(g.ship) : 'miễn phí' %></span></div>
           <% g.items.forEach(function(i){ %><div class="mini2"><div class="th"><img src="<%= i.product.image %>" class="kb"></div><div style="flex:1"><b><%= i.product.name %></b><div class="s12 muted">×<%= i.qty %></div></div><b class="s13"><%= h.money(i.total) %></b></div><% }) %>
-          <% g.builds.forEach(function(b){ %><div class="mini2"><div class="th"><img src="<%= b.build.kit ? b.build.kit.image : '/img/hero.svg' %>" class="kb"></div><div style="flex:1"><b>⚙ Build #<%= b.build.code %> + <%= b.build.service.name %></b><div class="s12 muted"><%= b.lines.map(function(l){return l.product.name}).join(' · ') %></div></div><b class="s13"><%= h.money(b.total) %></b></div><% }) %>
+          <% g.builds.forEach(function(b){ %><div class="mini2"><div class="th"><img src="<%= b.build.kit ? b.build.kit.image : '/img/hero.svg' %>" class="kb"></div><div style="flex:1"><b><%- h.uiIcon('tool', 16) %> Build #<%= b.build.code %> + <%= b.build.service.name %></b><div class="s12 muted"><%= b.lines.map(function(l){return l.product.name}).join(' · ') %></div></div><b class="s13"><%= h.money(b.total) %></b></div><% }) %>
         <% }) %>
       </div>
     </div>
