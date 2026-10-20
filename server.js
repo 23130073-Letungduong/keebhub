@@ -93,6 +93,11 @@ app.use(async (req, res, next) => {
   } catch (e) { next(e); }
 });
 app.use(loadUser);
+// Trang cần đăng nhập không cho trình duyệt lưu lại → đăng xuất rồi bấm "Quay lại" không còn thấy trang quản trị / tài khoản cũ
+app.use(['/admin', '/seller', '/account', '/cart', '/checkout'], (req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  next();
+});
 
 // Routes
 // Tài khoản quản trị không dùng để mua hàng / build → đưa về trang quản trị kèm thông báo
@@ -151,6 +156,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 
 mongoose.connect(MONGODB_URI).then(() => {
   console.log('✓ Đã kết nối MongoDB:', MONGODB_URI);
+  require('./utils/cleanup').batDauDonDep(); // xoá tài khoản không xác nhận email sau 7 ngày
   app.listen(PORT, () => console.log(`✓ KeebHub chạy tại ${process.env.BASE_URL || 'http://localhost:' + PORT}`));
 }).catch(err => {
   console.error('✗ Không kết nối được MongoDB. Kiểm tra MONGODB_URI trong .env\n', err.message);

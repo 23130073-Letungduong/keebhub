@@ -43,8 +43,33 @@ describe('BB01. Đăng ký (gửi email xác nhận)', () => {
     assert.ok(has(list, email), 'email gửi đúng người nhận');
   });
   it('Email / SĐT đã dùng → báo lỗi', async () => {
-    assert.ok(has(await c.post('/auth/register', form), 'Email đã được sử dụng'));
+    assert.ok(has(await c.post('/auth/register', { ...form, email: 'khach@keebhub.vn', phone: '' }), 'Email đã được sử dụng'));
     assert.ok(has(await c.post('/auth/register', { ...form, email: 'x' + email }), 'Số điện thoại đã được sử dụng'));
+  });
+  it('Đăng ký lại bằng email CHƯA xác nhận → không báo trùng, cập nhật thông tin + gửi email xác nhận mới, link cũ hết hiệu lực', async () => {
+    const { link: oldLink } = await T.lastMailLink('verify');
+    await M.User.updateOne({ email }, { verifySentAt: new Date(Date.now() - 3600e3) }); // giả lập 1 tiếng sau mới quay lại
+    const r = ok(await c.post('/auth/register', { ...form, name: 'Tên Mới', password: 'Moi@12345', confirm: 'Moi@12345' }));
+    assert.ok(has(r, 'Xác nhận email của bạn') && has(r, 'chưa xác nhận') && !has(r, 'Email đã được sử dụng'));
+    const u = await M.User.findOne({ email });
+    assert.equal(u.name, 'Tên Mới'); assert.ok(await u.checkPassword('Moi@12345'));
+    assert.equal(await M.User.countDocuments({ email }), 1, 'không tạo tài khoản trùng');
+    const { link } = await T.lastMailLink('verify');
+    assert.notEqual(link, oldLink);
+    assert.ok(has(ok(await new Client().get(oldLink)), 'không hợp lệ'), 'link cũ không dùng được nữa');
+    // Bấm đăng ký lần nữa ngay lập tức → không gửi thêm email (chờ 30 giây)
+    assert.ok(has(ok(await c.post('/auth/register', { ...form, password: 'Test@1234' })), 'đợi'));
+    assert.equal((await T.lastMailLink('verify')).link, link);
+  });
+  it('Tài khoản không xác nhận quá 7 ngày → tự xoá, tài khoản đã xác nhận giữ nguyên', async () => {
+    const old = `cu${Date.now()}@example.com`;
+    await M.User.collection.insertOne({ name: 'Bỏ dở', email: old, role: 'customer', emailVerified: false, createdAt: new Date(Date.now() - 8 * 864e5), updatedAt: new Date(Date.now() - 8 * 864e5) });
+    await M.User.collection.updateOne({ email: KH[0] }, { $set: { updatedAt: new Date(Date.now() - 30 * 864e5) } });
+    const { xoaTaiKhoanChuaXacNhan } = require('../utils/cleanup');
+    await xoaTaiKhoanChuaXacNhan();
+    assert.equal(await M.User.countDocuments({ email: old }), 0);
+    assert.equal(await M.User.countDocuments({ email: KH[0] }), 1);
+    assert.equal(await M.User.countDocuments({ email }), 1, 'tài khoản mới đăng ký (chưa quá 7 ngày) vẫn còn');
   });
   it('Chưa xác nhận → không đăng nhập được; Gửi lại email xác nhận được', async () => {
     assert.ok(has(await new Client().login(email, 'Test@1234'), 'chưa xác nhận email'));
