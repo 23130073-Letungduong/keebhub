@@ -463,7 +463,7 @@ describe('6. Custom Builder & kiểm tra tương thích', () => {
   });
   it('Builder: các bước hiển thị', async () => {
     await c.get('/builder/new');
-    for (const s of [1, 2, 3, 4, 5]) assert.equal((await c.get('/builder?step=' + s)).status, 200);
+    for (const s of [1, 2, 3, 4, 5, 6]) assert.equal((await c.get('/builder?step=' + s)).status, 200);
   });
   it('Builder: chọn KBD67 → switch 5 pin hiện "Không lắp vừa" kèm lý do', async () => {
     await c.post('/builder/select', { role: 'kit', productId: String(kbd._id) });
@@ -494,12 +494,13 @@ describe('6. Custom Builder & kiểm tra tương thích', () => {
     await c.get('/builder/new');
     await c.post('/builder/select', { role: 'kit', productId: String(tofu._id) });
     await c.post('/builder/select', { role: 'sw', productId: String(sw5._id) });
-    await c.post('/builder/select', { role: 'keycap', productId: String(kc._id), stay: '3' });
-    await c.post('/builder/select', { role: 'stab', productId: String(stabPcb._id), stay: '3' });
+    // chọn xong 1 linh kiện → tự sang bước kế tiếp
+    assert.ok((await c.post('/builder/select', { role: 'keycap', productId: String(kc._id) }, { follow: false })).status === 302);
+    assert.ok((await c.post('/builder/select', { role: 'stab', productId: String(stabPcb._id) })).url.includes('step=5'));
     const svc = await M.CustomService.findOne({ name: 'Full lube + tune' });
     await c.post('/builder/service', { serviceId: String(svc._id) });
-    assert.ok(has(await c.post('/builder/save', { name: 'Build test' }, { headers: { referer: BASE + '/builder?step=5' } }), 'Đã lưu cấu hình'));
-    const r5 = await c.get('/builder?step=5');
+    assert.ok(has(await c.post('/builder/save', { name: 'Build test' }, { headers: { referer: BASE + '/builder?step=6' } }), 'Đã lưu cấu hình'));
+    const r5 = await c.get('/builder?step=6');
     assert.ok(has(r5, 'Tất cả linh kiện đã chọn đều tương thích'));
     assert.ok(has(await c.post('/builder/cart', { note: 'test' }), 'vào giỏ hàng'));
     assert.ok(has(await c.get('/checkout'), 'Không áp dụng cho đơn gia công custom'));

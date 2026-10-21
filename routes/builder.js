@@ -11,10 +11,13 @@ router.use(requireLogin);
 const STEPS = [
   { n: 1, key: 'kit', label: 'Kit' },
   { n: 2, key: 'switch', label: 'Switch' },
-  { n: 3, key: 'keycap', label: 'Keycap & Stab' },
-  { n: 4, key: 'service', label: 'Gia công' },
-  { n: 5, key: 'review', label: 'Xem lại' }
+  { n: 3, key: 'keycap', label: 'Keycap' },
+  { n: 4, key: 'stab', label: 'Stabilizer' },
+  { n: 5, key: 'service', label: 'Gia công' },
+  { n: 6, key: 'review', label: 'Xem lại' }
 ];
+// Chọn xong 1 linh kiện → tự chuyển sang bước kế tiếp
+const NEXT_STEP = { kit: 2, switch: 3, keycap: 4, stab: 5 };
 
 async function currentBuild(req) {
   let b = null;
@@ -33,7 +36,7 @@ function partsOf(b, step) {
 }
 async function refresh(b) {
   const p = await populated(b);
-  const res = await compat.check(partsOf(p, 5));
+  const res = await compat.check(partsOf(p, 6));
   p.compat = res;
   p.total = buildTotal(p).total;
   await p.save();
@@ -66,14 +69,15 @@ router.get('/edit/:id', async (req, res) => {
   const b = isValidObjectId(req.params.id) ? await Build.findOne({ _id: req.params.id, user: req.user._id, status: { $ne: 'ordered' } }) : null;
   if (!b) { req.flash('error', 'Không tìm thấy cấu hình.'); return res.redirect('/account/builds'); }
   req.session.buildId = String(b._id);
-  res.redirect('/builder?step=5');
+  res.redirect('/builder?step=6');
 });
 
 router.get('/', async (req, res, next) => {
   try {
     const raw = await currentBuild(req);
     const b = await populated(raw);
-    let step = parseInt(req.query.step) || (b.kit ? (b.switch ? (b.keycap ? (b.service ? 5 : 4) : 3) : 2) : 1);
+    let step = parseInt(req.query.step) || (b.kit ? (b.switch ? (b.keycap ? (b.service ? 6 : (b.stab ? 5 : 4)) : 3) : 2) : 1);
+    if (step < 1 || step > 6) step = 1;
     if (step > 1 && !b.kit) step = 1;
     const onlyOk = req.query.all !== '1';
     const f = req.query.f || '';
@@ -106,11 +110,12 @@ router.get('/', async (req, res, next) => {
       const extra = {};
       if (f) extra['attrs.profile'] = f;
       await options('keycap', 'keycap', extra, 'Keycap');
+    } else if (step === 4) {
       await options('stab', 'stabilizer', {}, 'Stabilizer');
     }
 
     let services = [];
-    if (step === 4) {
+    if (step === 5) {
       const shops = await Shop.find({ status: 'active', offersCustom: true });
       const svc = await CustomService.find({ active: true, shop: { $in: shops.map(s => s._id) } }).populate('shop', 'name slug color capacityPerWeek rating');
       const load = await Order.aggregate([{ $match: { isCustom: true, status: { $in: ['pending', 'processing'] } } }, { $group: { _id: '$shop', n: { $sum: 1 } } }]);
@@ -147,11 +152,11 @@ router.post('/select', async (req, res, next) => {
     }
     await b.save();
     const fresh = await refresh(b);
-    const nextStep = { kit: 2, switch: 3, keycap: 3, stab: 3 }[field];
+    const nextStep = NEXT_STEP[field];
     const blocking = fresh.compat.issues.filter(i => i.level === 'block');
     if (blocking.length) req.flash('error', 'Cấu hình hiện có linh kiện không tương thích: ' + blocking[0].message);
     const stay = parseInt(req.body.stay);
-    res.redirect(`/builder?step=${stay >= 1 && stay <= 5 ? stay : nextStep}`);
+    res.redirect(`/builder?step=${stay >= 1 && stay <= 6 ? stay : nextStep}`);
   } catch (e) { next(e); }
 });
 
@@ -176,12 +181,12 @@ router.post('/service', async (req, res, next) => {
   try {
     const b = await currentBuild(req);
     const s = isValidObjectId(String(req.body.serviceId || '')) ? await CustomService.findOne({ _id: req.body.serviceId, active: true }).populate('shop') : null;
-    if (!s || !s.shop || s.shop.status !== 'active' || !s.shop.offersCustom) { req.flash('error', 'Gói gia công không khả dụng.'); return res.redirect('/builder?step=4'); }
-    if ((await shopLoad(s.shop._id)) >= (s.shop.capacityPerWeek || 10)) { req.flash('error', `Xưởng ${s.shop.name} đã kín lịch tuần này, vui lòng chọn xưởng khác.`); return res.redirect('/builder?step=4'); }
+    if (!s || !s.shop || s.shop.status !== 'active' || !s.shop.offersCustom) { req.flash('error', 'Gói gia công không khả dụng.'); return res.redirect('/builder?step=5'); }
+    if ((await shopLoad(s.shop._id)) >= (s.shop.capacityPerWeek || 10)) { req.flash('error', `Xưởng ${s.shop.name} đã kín lịch tuần này, vui lòng chọn xưởng khác.`); return res.redirect('/builder?step=5'); }
     b.service = s._id;
     await b.save();
     await refresh(b);
-    res.redirect('/builder?step=5');
+    res.redirect('/builder?step=6');
   } catch (e) { next(e); }
 });
 
@@ -207,10 +212,10 @@ router.post('/cart', async (req, res, next) => {
     if (!b.switch) missing.push('switch');
     if (!b.keycap) missing.push('keycap');
     if (!b.service) missing.push('gói gia công');
-    else if (!b.service.active || !b.service.shop || b.service.shop.status !== 'active') { req.flash('error', 'Gói gia công đã chọn hiện tạm ngưng, vui lòng chọn gói khác.'); return res.redirect('/builder?step=4'); }
-    if (missing.length) { req.flash('error', 'Bạn còn thiếu: ' + missing.join(', ')); return res.redirect('/builder?step=5'); }
-    if (!b.compat.ok) { req.flash('error', 'Cấu hình còn linh kiện không tương thích, vui lòng sửa trước khi đặt.'); return res.redirect('/builder?step=5'); }
-    if (req.shop && String(req.shop._id) === String(b.service.shop._id)) { req.flash('error', 'Không thể đặt gia công tại chính shop của bạn.'); return res.redirect('/builder?step=4'); }
+    else if (!b.service.active || !b.service.shop || b.service.shop.status !== 'active') { req.flash('error', 'Gói gia công đã chọn hiện tạm ngưng, vui lòng chọn gói khác.'); return res.redirect('/builder?step=5'); }
+    if (missing.length) { req.flash('error', 'Bạn còn thiếu: ' + missing.join(', ')); return res.redirect('/builder?step=6'); }
+    if (!b.compat.ok) { req.flash('error', 'Cấu hình còn linh kiện không tương thích, vui lòng sửa trước khi đặt.'); return res.redirect('/builder?step=6'); }
+    if (req.shop && String(req.shop._id) === String(b.service.shop._id)) { req.flash('error', 'Không thể đặt gia công tại chính shop của bạn.'); return res.redirect('/builder?step=5'); }
     if (b.status === 'draft') b.status = 'saved';
     await b.save();
     if (!req.user.cart.some(i => String(i.build) === String(b._id))) req.user.cart.push({ build: b._id, qty: 1 });

@@ -99,7 +99,7 @@ const CHECKS = {
     description: 'Phím dài (Space, Shift, Enter) cần stabilizer.',
     level: 'suggest',
     message: 'Bạn chưa chọn stabilizer — phím Space/Shift/Enter sẽ bị lệch và kêu lạch cạch.',
-    test: ({ kit, stab, step }) => (kit && !stab && step >= 4 ? {} : null)
+    test: ({ kit, stab, step }) => (kit && !stab && step >= 5 ? {} : null)
   }
 };
 
