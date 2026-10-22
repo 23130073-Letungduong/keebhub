@@ -128,8 +128,19 @@ describe('BB03. Đăng xuất', () => {
   it('Người bán và admin đăng xuất được', async () => {
     const s = new Client(); await s.login(...SELLER); await s.post('/auth/logout', {});
     assert.ok((await s.get('/seller')).url.startsWith('/auth/login'));
-    const a = new Client(); await a.login(ADMIN[0], ADMIN[1], true); await a.post('/auth/logout', {});
+    const a = new Client(); await a.login(ADMIN[0], ADMIN[1], true); await a.post('/admin/logout', {});
     assert.ok((await a.get('/admin')).url.startsWith('/admin/login'));
+  });
+  it('Cùng 1 trình duyệt: đăng nhập khách + admin song song không đè nhau; đăng xuất bên nào chỉ thoát bên đó', async () => {
+    const c = new Client();
+    await c.login('khach@keebhub.vn', 'Khach@123');
+    await c.login(ADMIN[0], ADMIN[1], true);
+    assert.ok((await c.get('/account')).url.startsWith('/account'));   // vẫn là khách
+    assert.ok((await c.get('/admin')).url.startsWith('/admin'));   // vẫn là admin
+    assert.ok(!(await c.get('/admin')).url.startsWith('/admin/login'));
+    await c.post('/admin/logout', {});
+    assert.ok((await c.get('/admin')).url.startsWith('/admin/login'));
+    assert.ok((await c.get('/account')).url.startsWith('/account'));   // khách vẫn còn đăng nhập
   });
 });
 

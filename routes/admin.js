@@ -27,6 +27,14 @@ router.post('/login', async (req, res, next) => {
   } catch (e) { next(e); }
 });
 
+// Đăng xuất quản trị: chỉ xoá phiên admin, tab khách (nếu có) vẫn đăng nhập bình thường
+router.post('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.clearCookie('keebhub.admin');
+    res.redirect('/');
+  });
+});
+
 router.use((req, res, next) => {
   if (!req.user) return res.redirect('/admin/login');
   next();

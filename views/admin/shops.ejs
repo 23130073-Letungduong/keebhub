@@ -7,7 +7,7 @@
   <div class="bd p0 tblx"><table class="tb">
     <tr><th>Shop</th><th>Chủ shop</th><th>Loại</th><th>Sản phẩm</th><th>Đánh giá</th><th>Ngày đăng ký</th><th>Trạng thái</th><th></th></tr>
     <% shops.forEach(function(s){ %>
-    <tr><td><div class="f ac" style="gap:10px"><span class="av2" style="background:<%= s.color %>;border-radius:9px"><%= s.initials %></span><div><a class="nm" href="/shop/<%= s.slug %>" target="_blank"><%= s.name %></a><div class="sub"><%= s.city||'' %> · <%= s.phone||'' %></div></div></div></td>
+    <tr><td><div class="f ac" style="gap:10px"><span class="av2" style="background:<%= s.color %>;border-radius:9px"><%= s.initials %></span><div><a class="nm" href="/shop/<%= s.slug %>?admin=1" target="_blank"><%= s.name %></a><div class="sub"><%= s.city||'' %> · <%= s.phone||'' %></div></div></div></td>
       <td><div class="nm"><%= s.owner ? s.owner.name : '' %></div><div class="sub"><%= s.owner ? s.owner.email : '' %></div></td>
       <td><%= s.offersCustom ? 'Xưởng gia công' : 'Bán lẻ' %></td><td><%= pc[String(s._id)]||0 %></td><td><%= s.rating ? s.rating+' ★' : '—' %></td><td class="muted"><%= h.date(s.createdAt) %></td>
       <td><span class="bdg <%= s.status==='active'?'ok':s.status==='pending'?'warn':'err' %>"><%= ({active:'Hoạt động',pending:'Chờ duyệt',locked:'Đã khoá'})[s.status] %></span><% if (s.rejectReason) { %><div class="sub"><%= s.rejectReason %></div><% } %></td>

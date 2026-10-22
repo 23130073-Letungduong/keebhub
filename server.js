@@ -63,13 +63,25 @@ app.use((req, res, next) => {
 });
 app.use(methodOverride('_method'));
 
-app.use(session({
+// 2 phiên đăng nhập tách riêng trong cùng 1 trình duyệt:
+//  - connect.sid    : khách / người bán (toàn bộ web)
+//  - keebhub.admin  : quản trị viên (chỉ dùng cho /admin/...)
+// → mở 1 tab đăng nhập khách và 1 tab đăng nhập admin cùng lúc, không đè lên nhau.
+const sessionStore = MongoStore.create({ mongoUrl: MONGODB_URI, ttl: 7 * 24 * 3600 });
+const sessionOpts = name => session({
+  name,
   secret: process.env.SESSION_SECRET || 'keebhub-secret',
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl: MONGODB_URI, ttl: 7 * 24 * 3600 }),
-  cookie: { maxAge: 7 * 24 * 3600 * 1000, httpOnly: true }
-}));
+  store: sessionStore,
+  cookie: { maxAge: 7 * 24 * 3600 * 1000, httpOnly: true, sameSite: 'lax' }
+});
+const userSession = sessionOpts('connect.sid');
+const adminSession = sessionOpts('keebhub.admin');
+const isAdminArea = req => req.path === '/admin' || req.path.startsWith('/admin/') ||
+  // admin bấm xem trước sản phẩm / gian hàng từ trang quản trị (link có ?admin=1)
+  (req.query.admin === '1' && (req.path.startsWith('/p/') || req.path.startsWith('/shop/')));
+app.use((req, res, next) => (isAdminArea(req) ? adminSession : userSession)(req, res, next));
 app.use(flash());
 app.use(passport.initialize());
 

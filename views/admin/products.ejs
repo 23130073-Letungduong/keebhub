@@ -11,7 +11,7 @@
     <% products.forEach(function(p){ var a = p.attrs||{}; %>
     <div class="appr">
       <div class="top"><div class="th"><img src="<%= p.image %>" class="kb"></div>
-        <div style="flex:1"><a class="s16 w700" href="/p/<%= p.slug %>" target="_blank"><%= p.name %></a>
+        <div style="flex:1"><a class="s16 w700" href="/p/<%= p.slug %>?admin=1" target="_blank"><%= p.name %></a>
           <div class="s12 muted" style="margin:4px 0 8px"><%= p.shop ? p.shop.name : '' %> · <%= p.category ? p.category.name : '' %> · gửi <%= h.timeAgo(p.createdAt) %></div>
           <div class="f" style="gap:16px;flex-wrap:wrap"><b style="color:var(--a600)"><%= h.money(p.price) %></b><span class="s13">Kho: <%= p.stock %></span><span class="s13">Ảnh: <%= p.images.length || 'minh hoạ' %></span></div>
           <div class="chkline2">✓ Thuộc tính kỹ thuật: <%= Object.keys(a).filter(function(k){ var v=a[k]; return v!==undefined && v!==null && !(Array.isArray(v)&&!v.length) }).join(', ') || '(chưa khai báo)' %></div>
@@ -26,7 +26,7 @@
   <% } else { %>
   <div class="bd p0 tblx"><table class="tb">
     <tr><th>Sản phẩm</th><th>Shop</th><th>Giá</th><th>Kho</th><th>Đã bán</th><th>Trạng thái</th><th></th></tr>
-    <% products.forEach(function(p){ %><tr><td><div class="f ac" style="gap:10px"><div class="th"><img src="<%= p.image %>" class="kb"></div><div><a class="nm" href="/p/<%= p.slug %>" target="_blank"><%= p.name %></a><div class="sub"><%= p.category?p.category.name:'' %></div></div></div></td><td><%= p.shop?p.shop.name:'' %></td><td><b><%= h.money(p.price) %></b></td><td><%= p.stock %></td><td><%= p.sold %></td><td><span class="bdg <%= SL[p.status][1] %>"><%= SL[p.status][0] %></span></td>
+    <% products.forEach(function(p){ %><tr><td><div class="f ac" style="gap:10px"><div class="th"><img src="<%= p.image %>" class="kb"></div><div><a class="nm" href="/p/<%= p.slug %>?admin=1" target="_blank"><%= p.name %></a><div class="sub"><%= p.category?p.category.name:'' %></div></div></div></td><td><%= p.shop?p.shop.name:'' %></td><td><b><%= h.money(p.price) %></b></td><td><%= p.stock %></td><td><%= p.sold %></td><td><span class="bdg <%= SL[p.status][1] %>"><%= SL[p.status][0] %></span></td>
       <td style="white-space:nowrap;text-align:right"><% if (p.status!=='active') { %><form method="post" action="/admin/products/<%= p._id %>/approve" style="display:inline"><button class="btn ghost sm">Hiển thị</button></form><% } else { %><form method="post" action="/admin/products/<%= p._id %>/hide" style="display:inline"><button class="btn ghost sm">Ẩn</button></form><% } %><form method="post" action="/admin/products/<%= p._id %>/delete" style="display:inline" onsubmit="return confirm('Xoá sản phẩm?')"><button class="btn ghost sm" style="color:var(--d600)">Xoá</button></form></td></tr><% }) %>
   </table></div>
   <% } %>
