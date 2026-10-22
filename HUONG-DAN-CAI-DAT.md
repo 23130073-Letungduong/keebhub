@@ -207,11 +207,22 @@ App Google/Facebook đã được trưởng nhóm tạo sẵn. Các thành viên
 
 > Chưa cấu hình email thì mọi email (xác nhận, đặt lại mật khẩu, đơn hàng) được lưu ở **Hộp thư dev** — bấm 📨 *Hộp thư dev* trên thanh trên cùng để mở và bấm link. Cấu hình Gmail xong thì Hộp thư dev tự biến mất.
 
-### 8.3. VNPay sandbox
+### 8.3. VNPay sandbox (thanh toán qua cổng VNPay thật, dùng thẻ test)
 
-1. Đăng ký tài khoản test tại <https://sandbox.vnpayment.vn/devreg/> → VNPay gửi email có `vnp_TmnCode` và `vnp_HashSecret`.
-2. Điền `VNP_TMNCODE` và `VNP_HASHSECRET` vào `.env` (giữ nguyên `VNP_URL`, `VNP_RETURN_URL`).
-3. Thẻ test (ngân hàng **NCB**): số thẻ `9704198526191432198`, tên `NGUYEN VAN A`, ngày phát hành `07/15`, OTP `123456`.
+Chưa cấu hình thì bấm thanh toán VNPay sẽ ra **trang mô phỏng** (vẫn demo được). Cấu hình xong thì chuyển sang **cổng VNPay sandbox**.
+
+**Cách A — dùng chung mã của trưởng nhóm (khuyên dùng):**
+1. Xin trưởng nhóm `vnp_TmnCode` và `vnp_HashSecret` (gửi riêng qua Zalo/Messenger, **không đăng lên GitHub / nhóm chat công khai**).
+2. Bấm đúp `cau-hinh-vnpay.bat` trong thư mục dự án → dán 2 giá trị (HashSecret không hiện khi dán) → script tự ghi vào `.env` và khởi động lại web.
+
+**Cách B — tự đăng ký mã riêng:**
+1. Đăng ký tại <https://sandbox.vnpayment.vn/devreg/> (Tên website `KeebHub`, URL `http://localhost:3000`, email của bạn) → VNPay gửi email có `vnp_TmnCode` (Terminal ID) và `vnp_HashSecret` (Secret Key).
+2. Bấm đúp `cau-hinh-vnpay.bat` → dán 2 giá trị.
+
+**Lưu ý:**
+- Web phải chạy ở `http://localhost:3000` (giữ `VNP_RETURN_URL=http://localhost:3000/payment/vnpay_return`) để VNPay trả kết quả về đúng máy.
+- Muốn quay lại trang mô phỏng: chạy lại `cau-hinh-vnpay.bat`, để trống cả 2 ô.
+- Thẻ test (chọn **Thẻ nội địa → NCB**): số thẻ `9704198526191432198`, tên `NGUYEN VAN A`, ngày phát hành `07/15`, OTP `123456`.
 
 ### 8.4. Chat AI
 
