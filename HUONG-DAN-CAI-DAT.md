@@ -173,7 +173,9 @@ Tất cả đều ghi vào file `.env`, sửa xong phải **tắt web (Ctrl + C)
 
 App Google/Facebook đã được trưởng nhóm tạo sẵn. Các thành viên **không cần tạo app mới**, chỉ cần:
 
-1. Xin trưởng nhóm 4 giá trị (gửi riêng, không đăng lên GitHub) và dán vào `.env`:
+1. Xin trưởng nhóm 4 giá trị (gửi riêng qua Zalo/Messenger, **không đăng lên GitHub**) rồi điền vào `.env` theo 1 trong 2 cách:
+   - **Cách nhanh (Windows):** bấm đúp `cau-hinh-dang-nhap-mxh.bat` trong thư mục dự án → dán lần lượt 4 giá trị (Secret không hiện khi dán) → script tự ghi vào `.env` (tự tạo `.env` từ `.env.example` nếu chưa có).
+   - **Cách thủ công:** mở `.env`, dán vào 4 dòng:
    ```ini
    GOOGLE_CLIENT_ID=...
    GOOGLE_CLIENT_SECRET=...
@@ -187,7 +189,7 @@ App Google/Facebook đã được trưởng nhóm tạo sẵn. Các thành viên
 
 ### 8.2. Gửi email thật (Gmail) — bắt buộc để đăng ký / quên mật khẩu hoạt động
 
-**Cách nhanh (Windows):** bấm đúp `D:\TMDT\cau-hinh-email.bat` → làm theo hướng dẫn trên màn hình → file tự lưu vào `.env` và gửi 1 email thử.
+**Cách nhanh (Windows):** bấm đúp `cau-hinh-email.bat` trong thư mục dự án → làm theo hướng dẫn trên màn hình → file tự lưu vào `.env` và gửi 1 email thử.
 
 **Cách thủ công:**
 
