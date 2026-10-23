@@ -1,6 +1,6 @@
 // Tạo dữ liệu mẫu cho KeebHub:  npm run seed
 // CẢNH BÁO: xoá toàn bộ dữ liệu cũ trong database MONGODB_URI
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 const mongoose = require('mongoose');
 const { User, Shop, Category, Product, CustomService, Order, Review, Comment, Build } = require('../models');
 const { slugify } = require('../utils/helpers');

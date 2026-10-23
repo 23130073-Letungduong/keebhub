@@ -1,6 +1,6 @@
 // Đổi tên các tài khoản demo thành thành viên nhóm — KHÔNG xoá dữ liệu
 // Chạy: node seed/rename-team.js
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 const mongoose = require('mongoose');
 const { User, Order } = require('../models');
 

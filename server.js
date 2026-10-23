@@ -1,4 +1,8 @@
-require('dotenv').config();
+// Luôn đọc .env nằm CẠNH server.js (không phụ thuộc thư mục đang đứng khi chạy lệnh).
+// Trước đây dùng .config() → chạy web từ thư mục khác (VD mở D:\TMDT trong VS Code rồi chạy
+// node keebhub/server.js, hoặc bấm Run/Debug) thì KHÔNG đọc được .env → web không nhận Gmail / VNPay.
+const ENV_FILE = require('path').join(__dirname, '.env');
+require('dotenv').config({ path: ENV_FILE });
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
@@ -169,7 +173,14 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 mongoose.connect(MONGODB_URI).then(() => {
   console.log('✓ Đã kết nối MongoDB:', MONGODB_URI);
   require('./utils/cleanup').batDauDonDep(); // xoá tài khoản không xác nhận email sau 7 ngày
-  app.listen(PORT, () => console.log(`✓ KeebHub chạy tại ${process.env.BASE_URL || 'http://localhost:' + PORT}`));
+  app.listen(PORT, () => {
+    console.log(`✓ KeebHub chạy tại ${process.env.BASE_URL || 'http://localhost:' + PORT}`);
+    // In ra cấu hình đang dùng để dễ kiểm tra web đã nhận .env chưa
+    console.log(`  • File cấu hình : ${fs.existsSync(ENV_FILE) ? ENV_FILE : 'KHÔNG TÌM THẤY ' + ENV_FILE + ' (đang dùng mặc định)'}`);
+    console.log(`  • Email         : ${mailer.isDev() ? 'Hộp thư dev /dev/mails (chưa cấu hình Gmail)' : 'Gmail ' + process.env.SMTP_USER}`);
+    console.log(`  • VNPay         : ${vnpay.isConfigured() ? 'cổng VNPay sandbox (TmnCode ' + process.env.VNP_TMNCODE + ')' : 'trang MÔ PHỎNG (chưa cấu hình VNPay)'}`);
+    console.log(`  • Google / FB   : ${oauthEnabled.google ? 'Google ✓' : 'Google ✗'} · ${oauthEnabled.facebook ? 'Facebook ✓' : 'Facebook ✗'}`);
+  });
 }).catch(err => {
   console.error('✗ Không kết nối được MongoDB. Kiểm tra MONGODB_URI trong .env\n', err.message);
   process.exit(1);
