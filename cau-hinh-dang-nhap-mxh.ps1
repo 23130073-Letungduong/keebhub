@@ -32,5 +32,8 @@ $utf8 = New-Object System.Text.UTF8Encoding($false)
 $srv = Join-Path $PSScriptRoot 'server.js'
 if (Test-Path $srv) { (Get-Item $srv).LastWriteTime = Get-Date }
 Write-Host "`nDa luu vao .env (file nay KHONG duoc day len GitHub)." -ForegroundColor Green
-Write-Host 'Neu web dang chay bang nodemon thi tu khoi dong lai; neu khong, tat web roi chay lai.' -ForegroundColor Green
+Write-Host ''
+Write-Host '>>> QUAN TRONG: cau hinh chi co hieu luc sau khi KHOI DONG LAI web <<<' -ForegroundColor Yellow
+Write-Host '    - Dang chay "npm run dev" (nodemon): web tu khoi dong lai, doi 2-3 giay.' -ForegroundColor Yellow
+Write-Host '    - Dang chay "npm start" / "node server.js": bam Ctrl+C trong cua so web roi chay lai.' -ForegroundColor Yellow
 Read-Host 'Nhan Enter de thoat'

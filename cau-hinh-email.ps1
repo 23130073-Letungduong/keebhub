@@ -8,6 +8,11 @@ if (-not (Test-Path $envFile)) { Copy-Item (Join-Path $App '.env.example') $envF
 $portable = Join-Path $App '..\tools\node'
 if (Test-Path (Join-Path $portable 'node.exe')) { $env:Path = $portable + ';' + $env:Path }
 if (-not (Get-Command node -ErrorAction SilentlyContinue)) { Write-Host 'Chua cai Node.js (https://nodejs.org).' -ForegroundColor Red; Read-Host 'Nhan Enter de thoat'; exit 1 }
+# Nguoi moi clone thuong chua chay npm install -> buoc gui email thu se loi 'Cannot find module'
+if (-not (Test-Path (Join-Path $App 'node_modules\nodemailer'))) {
+  Write-Host 'Chua cai thu vien (node_modules) -> dang chay npm install, doi 1-2 phut...' -ForegroundColor Yellow
+  Push-Location $App; $ErrorActionPreference = 'Continue'; npm install; $ErrorActionPreference = 'Stop'; Pop-Location
+}
 
 Write-Host '================================================================' -ForegroundColor Cyan
 Write-Host ' CAU HINH GUI EMAIL QUA GMAIL' -ForegroundColor Cyan
@@ -51,7 +56,11 @@ node scripts\thu-gui-email.js
 if ($LASTEXITCODE -eq 0) {
   # cham vao server.js de web dang chay (nodemon) tu khoi dong lai voi cau hinh moi
   (Get-Item (Join-Path $App 'server.js')).LastWriteTime = Get-Date
-  Write-Host "`nXONG! Web dang chay se tu khoi dong lai de ap dung (neu chua chay thi chay lai web: npm run dev hoac start-keebhub.bat)." -ForegroundColor Green
+  Write-Host "`nXONG! Gmail da gui duoc." -ForegroundColor Green
+Write-Host ''
+Write-Host '>>> QUAN TRONG: cau hinh chi co hieu luc sau khi KHOI DONG LAI web <<<' -ForegroundColor Yellow
+Write-Host '    - Dang chay "npm run dev" (nodemon): web tu khoi dong lai, doi 2-3 giay.' -ForegroundColor Yellow
+Write-Host '    - Dang chay "npm start" / "node server.js": bam Ctrl+C trong cua so web roi chay lai.' -ForegroundColor Yellow
 } else {
   Write-Host "`nChua gui duoc. Chay lai file nay va nhap lai Gmail / mat khau ung dung." -ForegroundColor Red
 }
