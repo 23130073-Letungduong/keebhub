@@ -8,6 +8,7 @@ const { uniqueSlug, slugify, escapeRegex } = require('../utils/helpers');
 const { cancelOrder, NEXT } = require('../utils/orders');
 const stats = require('../utils/stats');
 const returns = require('../utils/returns');
+const guard = require('../utils/guard');
 
 const COLORS = ['#1B62F5', '#E84708', '#7C3AED', '#079455', '#DC6803', '#0E7490', '#BE185D'];
 
@@ -133,7 +134,7 @@ router.post('/orders/:code/status', async (req, res, next) => {
       await order.save();
     }
     req.flash('success', `Đã cập nhật đơn #${order.code}: ${Order.STATUS[order.status].label}.`);
-    res.redirect(req.body.back || `/seller/orders/${order.code}`);
+    res.redirect(guard.safePath(req.body.back, `/seller/orders/${order.code}`));
   } catch (e) { next(e); }
 });
 
@@ -158,7 +159,7 @@ router.post('/returns/:code/:action(approve|reject|receive)', async (req, res, n
       : a === 'reject' ? await returns.rejectReturn(order, 'seller', req.body.reason)
       : await returns.receiveReturn(order, 'seller');
     req.flash(r.ok ? 'success' : 'error', `Đơn #${order.code}: ${r.message}`);
-    res.redirect(req.body.back || '/seller/returns');
+    res.redirect(guard.safePath(req.body.back, '/seller/returns'));
   } catch (e) { next(e); }
 });
 
@@ -226,6 +227,11 @@ router.post('/progress/:code/stage/:sid', upload.array('photos', 6), async (req,
     st.note = String(req.body.note || st.note || '').slice(0, 1000);
     st.photos.push(...(req.files || []).map(f => '/uploads/' + f.filename));
     st.updatedAt = new Date();
+    const idx0 = order.progress.findIndex(s => String(s._id) === String(st._id));
+    if (req.body.action === 'done' && (st.status === 'done' || order.progress.slice(0, idx0).some(s => s.status !== 'done'))) {
+      req.flash('error', st.status === 'done' ? 'Công đoạn này đã hoàn thành.' : 'Cần hoàn thành các công đoạn trước theo đúng thứ tự.');
+      return res.redirect(`/seller/progress?code=${order.code}`);
+    }
     if (req.body.action === 'done') {
       st.status = 'done';
       st.doneAt = new Date();
@@ -370,7 +376,8 @@ router.post('/products/:id', upload.array('images', 6), async (req, res, next) =
 
 router.post('/products/:id/toggle', async (req, res) => {
   const p = await Product.findOne({ _id: req.params.id, shop: req.shop._id });
-  if (p && ['active', 'hidden'].includes(p.status)) { p.status = p.status === 'active' ? 'hidden' : 'active'; await p.save(); }
+  if (p && p.hiddenByAdmin) req.flash('error', 'Sản phẩm đã bị quản trị viên ẩn do vi phạm — liên hệ quản trị viên để được xem xét mở lại.');
+  else if (p && ['active', 'hidden'].includes(p.status)) { p.status = p.status === 'active' ? 'hidden' : 'active'; await p.save(); }
   res.back();
 });
 
@@ -499,10 +506,17 @@ router.get('/revenue', async (req, res, next) => {
 // ---------- Hồ sơ shop ----------
 router.get('/profile', (req, res) => res.render('seller/profile', { title: 'Hồ sơ shop', active: 'profile' }));
 router.post('/profile', async (req, res) => {
-  const { name, description, address, city, phone, color } = req.body;
-  if (name && name.trim().length >= 3) req.shop.name = name.trim();
-  Object.assign(req.shop, { description, address, city, phone });
-  if (/^#[0-9a-fA-F]{6}$/.test(color || '')) req.shop.color = color;
+  const s = guard.str;
+  const name = s(req.body.name, 80), color = s(req.body.color, 7);
+  if (name.length >= 3 && name.toLowerCase() !== String(req.shop.name).toLowerCase()) {
+    // không cho đổi trùng tên shop khác (mạo danh)
+    if (await Shop.exists({ name: new RegExp('^' + escapeRegex(name) + '$', 'i'), _id: { $ne: req.shop._id } })) {
+      req.flash('error', 'Tên shop đã được shop khác sử dụng.'); return res.redirect('/seller/profile');
+    }
+    req.shop.name = name;
+  }
+  Object.assign(req.shop, { description: s(req.body.description, 2000), address: s(req.body.address, 300), city: s(req.body.city, 60), phone: s(req.body.phone, 20) });
+  if (/^#[0-9a-fA-F]{6}$/.test(color)) req.shop.color = color;
   await req.shop.save();
   req.flash('success', 'Đã lưu hồ sơ shop.');
   res.redirect('/seller/profile');

@@ -37,6 +37,7 @@ function assetVersion() {
   } catch (e) { /* giữ mã cũ */ }
   return assetV;
 }
+process.on('unhandledRejection', e => console.error('[unhandledRejection]', e && e.message));
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/keebhub';
 
@@ -44,6 +45,11 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('trust proxy', 1);
 
+// Header bảo mật cơ bản: chống đoán kiểu file (nosniff), chống nhúng trang vào iframe web khác (clickjacking)
+app.use((req, res, next) => {
+  res.set({ 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'Referrer-Policy': 'same-origin' });
+  next();
+});
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1h' }));
 app.use(express.urlencoded({ extended: true, limit: '2mb' }));
 app.use(express.json({ limit: '2mb' }));

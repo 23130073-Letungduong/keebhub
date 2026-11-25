@@ -39,6 +39,7 @@ const productSchema = new mongoose.Schema({
   },
   status: { type: String, enum: ['pending', 'active', 'hidden', 'rejected'], default: 'pending' },
   rejectReason: String,
+  hiddenByAdmin: { type: Boolean, default: false }, // admin ẩn do vi phạm → shop không tự bật lại
   rating: { type: Number, default: 0 },
   reviewCount: { type: Number, default: 0 }
 }, { timestamps: true });

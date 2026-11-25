@@ -1,0 +1,162 @@
+text,intent
+chào keebhub,greet
+xin chao ban,greet
+alo alo có ai ở đây không,greet
+chào bạn nha mình mới vào web,greet
+hello keeby,greet
+bạn là bot hả,greet
+chào buổi tối,greet
+hi ad,greet
+ê có ai không vậy,greet
+keeby giúp được những gì,greet
+xin chào shop nhé,greet
+chao ad,greet
+cảm ơn bạn nhiều nha,thanks
+ok tks,thanks
+cam on nhieu,thanks
+thank shop,thanks
+vậy nhé cảm ơn,thanks
+ok mình rõ rồi,thanks
+bye bye,thanks
+tạm biệt keeby,thanks
+được rồi thanks bạn,thanks
+cảm ơn vì đã giúp,thanks
+oki cam on,thanks
+hiểu rồi cảm ơn nha,thanks
+có switch nào gõ êm mà rẻ không,find_product
+tìm keycap pbt tầm 700k,find_product
+cho xin vài mẫu kit 75% nhôm,find_product
+mình cần bàn phím chơi game dưới 2 triệu,find_product
+switch tactile nào ngon,find_product
+kit nao dang mua nhat,find_product
+gợi ý giúp mình bộ keycap đẹp,find_product
+shop có bán stab không,find_product
+tu van switch linear duoi 200k,find_product
+có kê tay gỗ không,find_product
+phím nào cho dân lập trình,find_product
+mua dây cáp xoắn,find_product
+keycap gmk giá bao nhiêu,find_product
+cho mình xem mấy cái kit gasket,find_product
+đơn của mình giao tới đâu rồi,order_status
+don hang cua toi sao roi,order_status
+kiểm tra giúp mình đơn mới đặt,order_status
+bao giờ mình nhận được phím,order_status
+tiến độ build của mình thế nào rồi,order_status
+shop xác nhận đơn của tôi chưa vậy,order_status
+xem trạng thái đơn KH-0099887,order_status
+đơn của tôi đang giao phải không,order_status
+mình muốn tra mã vận đơn,order_status
+lâu quá chưa thấy hàng tới,order_status
+don gia cong toi buoc nao roi,order_status
+lịch sử đơn hàng xem ở đâu,order_status
+có trả tiền mặt khi nhận được không,payment
+thanh toan bang the duoc ko,payment
+mình muốn trả bằng vnpay,payment
+có hỗ trợ quét qr không,payment
+dùng số dư ví để thanh toán được không,payment
+sao đơn build không cho chọn cod,payment
+thanh toán thất bại phải làm sao,payment
+có chuyển khoản ngân hàng không,payment
+trả tiền bằng visa được ko,payment
+các phương thức thanh toán,payment
+thanh toán khi nhận hàng được không,payment
+mất bao nhiêu tiền ship,shipping
+ship ra hà nội nhiêu tiền,shipping
+freeship từ bao nhiêu,shipping
+có giao nhanh trong ngày không,shipping
+phi van chuyen tinh sao,shipping
+mua ở 2 shop thì ship tính sao,shipping
+có ship toàn quốc không ạ,shipping
+đơn vị vận chuyển là gì,shipping
+giao hỏa tốc bao nhiêu tiền,shipping
+có miễn phí giao hàng không,shipping
+ship tiêu chuẩn mấy ngày,shipping
+mình lỡ đặt sai muốn hủy,cancel_refund
+huy don o dau,cancel_refund
+huỷ đơn đã thanh toán thì tiền về đâu,cancel_refund
+tại sao mình không bấm huỷ được,cancel_refund
+shop tự huỷ đơn của mình,cancel_refund
+không cần nữa cho mình hủy đơn,cancel_refund
+hủy đơn gia công có được không,cancel_refund
+huỷ đơn bao lâu thì nhận lại tiền,cancel_refund
+muốn bỏ đơn vừa đặt,cancel_refund
+hủy đơn có bị phạt không,cancel_refund
+don bi huy tien di dau,cancel_refund
+phím mình nhận bị liệt mấy nút,return_item
+giao nhầm keycap màu khác,return_item
+hàng tới bị bể góc,return_item
+tra hang nhu the nao,return_item
+mình muốn trả lại hàng lỗi,return_item
+thiếu cáp trong hộp,return_item
+shop không cho trả hàng,return_item
+chính sách bảo hành đổi trả,return_item
+được trả hàng trong bao nhiêu ngày,return_item
+switch kêu rè muốn đổi,return_item
+khiếu nại shop ở đâu,return_item
+nhận hàng không đúng mô tả,return_item
+ví của mình còn bao nhiêu,wallet
+so du vi keebhub,wallet
+tiền trong ví rút về ngân hàng được không,wallet
+ví keebhub dùng để làm gì,wallet
+xem lịch sử ví,wallet
+mình có tiền trong ví chưa,wallet
+nạp tiền ví được không,wallet
+vi keebhub o dau,wallet
+kiểm tra số dư giúp mình,wallet
+tại sao ví bị trừ tiền,wallet
+chuyển tiền ví sang tài khoản khác,wallet
+switch 5 pin có cắm vào mạch 3 pin được không,builder_compat
+kit 65% hợp với keycap nào,builder_compat
+muốn nhờ shop lắp phím hộ,builder_compat
+custom builder dùng thế nào,builder_compat
+có dịch vụ lube switch không,builder_compat
+build một bộ phím gõ êm,builder_compat
+gasket mount khác gì tray mount,builder_compat
+kiem tra tuong thich linh kien,builder_compat
+xưởng nào nhận hàn mạch,builder_compat
+gói gia công bao gồm gì,builder_compat
+mở lại cấu hình đã lưu,builder_compat
+build xong mất mấy ngày,builder_compat
+quen mat khau roi,account
+không vào được tài khoản,account
+chưa nhận được mail xác nhận đăng ký,account
+tạo tài khoản mới ở đâu,account
+đổi mật khẩu ở đâu,account
+login bằng google được không,account
+tài khoản mình bị khóa,account
+cập nhật địa chỉ giao hàng,account
+đổi số điện thoại tài khoản,account
+link reset mật khẩu không dùng được,account
+dang ky tai khoan,account
+mình muốn bán phím trên sàn,seller
+dang ky mo shop,seller
+phí sàn thu bao nhiêu phần trăm,seller
+shop mới bao lâu được duyệt,seller
+làm sao để đăng sản phẩm,seller
+muốn trở thành xưởng gia công trên keebhub,seller
+sản phẩm của shop mình bị từ chối,seller
+vào kênh người bán ở đâu,seller
+hợp tác bán hàng với keebhub,seller
+mở gian hàng có mất phí không,seller
+cho mình gặp nhân viên tư vấn,contact
+số hotline của keebhub,contact
+email liên hệ là gì,contact
+lien he admin,contact
+có cửa hàng ở hcm không,contact
+mình cần người thật hỗ trợ,contact
+xin số điện thoại chăm sóc khách hàng,contact
+giờ làm việc của shop,contact
+web bị lỗi báo ai,contact
+cho xin zalo shop,contact
+hôm nay trời mưa không,other
+kể chuyện vui đi,other
+1 cộng 1 bằng mấy,other
+viết giúp mình bài văn,other
+bạn thích màu gì,other
+tối nay xem phim gì,other
+giá bitcoin hôm nay,other
+shop có bán laptop không,other
+dạy mình nấu ăn,other
+qwerty uiop,other
+bạn có buồn không,other
+mua tai nghe bluetooth,other

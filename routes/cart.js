@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const crypto = require('crypto');
 const mongoose = require('mongoose');
-const { Product, Order, Build, CustomService } = require('../models');
+const { Product, Order, Build, CustomService, User, Shop } = require('../models');
 const { requireLogin } = require('../middleware/auth');
 const { loadCart, shipFee, SHIP, FREE_SHIP_FROM } = require('../utils/cart');
 const compat = require('../utils/compat');
@@ -101,12 +101,23 @@ router.get('/checkout', requireLogin, async (req, res, next) => {
 });
 
 router.post('/checkout', requireLogin, async (req, res, next) => {
+  // Khoá đặt hàng theo tài khoản (nguyên tử): bấm "Đặt hàng" 2 lần / mở 2 tab cùng gửi → chỉ 1 yêu cầu được xử lý
+  const lock = await User.updateOne({ _id: req.user._id, $or: [{ checkoutAt: null }, { checkoutAt: { $lt: new Date(Date.now() - 60e3) } }] }, { $set: { checkoutAt: new Date() } });
+  if (!lock.modifiedCount) { req.flash('info', 'Đơn hàng của bạn đang được xử lý, vui lòng đợi trong giây lát.'); return res.redirect('/account/orders'); }
+  try { await placeOrder(req, res, next); } finally { await User.updateOne({ _id: req.user._id }, { $unset: { checkoutAt: 1 } }); }
+});
+async function placeOrder(req, res, next) {
   const created = [];
   const decremented = [];
   let debited = 0; // số tiền đã trừ ví (để hoàn lại nếu lỗi giữa chừng)
   try {
     const cart = await loadCart(req.user._id);
     if (!cart.groups.length) return res.redirect('/cart');
+    // Người bán không tự mua hàng / đặt gia công của chính shop mình (vd. hàng đã nằm sẵn trong giỏ từ trước khi mở shop)
+    if (req.shop && cart.groups.some(g => String(g.shop._id) === String(req.shop._id))) {
+      req.flash('error', 'Giỏ hàng có sản phẩm của chính shop bạn — không thể tự đặt mua. Vui lòng xoá khỏi giỏ.');
+      return res.redirect('/cart');
+    }
     const f = (k, n = 300) => String(req.body[k] == null ? '' : req.body[k]).trim().slice(0, n);
     const fullName = f('fullName', 80), phone = f('phone', 15), address = f('address'), note = f('note', 500);
     const method = req.body.ship === 'express' ? 'express' : 'standard';
@@ -124,6 +135,11 @@ router.post('/checkout', requireLogin, async (req, res, next) => {
       for (const i of g.items) if (i.qty > i.product.stock) { req.flash('error', `"${i.product.name}" chỉ còn ${i.product.stock} sản phẩm.`); return res.redirect('/cart'); }
       for (const b of g.builds) {
         if (b.outOfStock) { req.flash('error', `Build #${b.build.code} có linh kiện đã hết hàng.`); return res.redirect('/cart'); }
+        // linh kiện thuộc shop đã bị khoá / ngừng hoạt động → không bán
+        const partShops = [...new Set(b.lines.map(l => String(l.product.shop)))];
+        if ((await Shop.countDocuments({ _id: { $in: partShops }, status: 'active' })) !== partShops.length) {
+          req.flash('error', `Build #${b.build.code} có linh kiện của shop đang tạm ngừng bán. Mở lại Custom Builder để đổi linh kiện.`); return res.redirect('/cart');
+        }
         const r = await compat.check({ kit: b.build.kit, sw: b.build.switch, keycap: b.build.keycap, stab: b.build.stab, service: b.build.service, qty: b.build.switchQty, step: 5 });
         if (!r.ok) { req.flash('error', `Build #${b.build.code} có linh kiện không tương thích. Mở lại Custom Builder để sửa.`); return res.redirect('/cart'); }
       }
@@ -209,6 +225,6 @@ router.post('/checkout', requireLogin, async (req, res, next) => {
     if (e.message === 'WALLET_LOW') { req.flash('error', 'Số dư Ví KeebHub không đủ để thanh toán đơn này. Vui lòng chọn phương thức khác.'); return res.redirect('/checkout'); }
     next(e);
   }
-});
+}
 
 module.exports = router;

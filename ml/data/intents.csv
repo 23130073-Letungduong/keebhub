@@ -1,0 +1,3817 @@
+text,intent
+keeby ơi ê bot ạ?,greet
+cho em hỏi tư vấn viên đâu?,contact
+ad ơi thế thôi nhé nha,thanks
+xin hoi ban giup dc gi cho mik a?,greet
+mấy ngày được trả hàng,return_item
+Lien he cham soc khach hang,contact
+mình muốn hỏi keycap gmk nào hợp để gõ văn bản ạ,find_product
+Cho mình hỏi kit gasket dùng keycap gì,builder_compat
+Cần hỗ trợ gấp zậy,contact
+xin hỏi mấy giờ rồi ạ,other
+xin hỏi đổi trả ra sao vậy shop,return_item
+shop ơi có ship ra Cần Thơ k ạ,shipping
+cho em hoi ship tieu chuan gia bao nhieu vay,shipping
+kiểm tra giúp đơn #KH-0012345 v shop,order_status
+làm người bán sao thế,seller
+cho em hoi co keycap pbt nao tam 3 trieu khong a,find_product
+Keeby oi gui lai email xac nhan a,account
+minh muon hoi co ai ko the,greet
+shop ơi gặp nhân viên,contact
+shop ơi hotline là gì zậy shop,contact
+Trang thai don hang a?,order_status
+cho mình hỏi đơn custom hủy được hông?,cancel_refund
+kể chuyện cười đi?,other
+shop ơi mình biết rồi thanks ạ?,thanks
+trả hàng cần những gì với,return_item
+shop ơi oke,thanks
+shop ơi hàn mạch có không,builder_compat
+xin hoi khi nao nhan duoc hang nhe,order_status
+hàng giao chưa zậy shop,order_status
+Xin hỏi email hỗ trợ,contact
+hàng bị lỗi thì làm sao,return_item
+Xin hỏi số dư tài khoản?,wallet
+hi bạn ạ?,greet
+xin hỏi thế thôi nhé?,thanks
+Xin hoi lam sao de huy don nhe,cancel_refund
+Cho minh hoi bao loi web,contact
+ban oi co keycap nao hong a,find_product
+bạn ơi nhập sai mật khẩu bị khoá thế,account
+chuyen tien vi cho ban duoc khong a?,wallet
+keeby oi bao loi web,contact
+chọn switch cho kit 65% zậy,builder_compat
+Xin hỏi bán hàng trên keebhub,seller
+shop ơi có cod ko vậy shop,payment
+switch kailh box co lap vua kit 60% ko a,builder_compat
+ad ơi tìm bàn phím dưới 200 nghìn v,find_product
+xin hỏi kit 75% dùng keycap gì thế,builder_compat
+Ban oi don sao roi,order_status
+cho mk nói chuyện với người thật ạ,contact
+xin hỏi đăng nhập facebook được không,account
+Cho mik hoi huy don vnpay co hoan tien hong nha,cancel_refund
+shop ơi shop thu phí gì?,seller
+shop ơi ship hoả tốc giá sao vậy,shipping
+quẹt thẻ được không,payment
+mk muon hoi ban bao nhieu tuoi nha,other
+Cho mình hỏi thanh toán xong chưa thấy cập nhật nha,payment
+bán switch trên sàn được không vậy shop,seller
+thiếu keycap,return_item
+đặt nhầm muốn huỷ,cancel_refund
+dang ky xuong gia cong the,seller
+hoan tien khi huy don a,cancel_refund
+hủy đơn thế nào nha,cancel_refund
+cho em hoi xem vi a?,wallet
+Keeby ơi sao ví có tiền,wallet
+cam on ban nha,thanks
+cho em hỏi thế thôi nhé?,thanks
+Shop ơi mấy ngày được trả hàng vậy,return_item
+có ai trực không ạ,greet
+ad oi tien hoan trong vi rut ra ngan hang duoc khong nha,wallet
+keycap pbt nào tốt tiếng thocky,find_product
+có keycap nào hot không,find_product
+cho em hoi huy don duoc khong nhe,cancel_refund
+cho em hoi bao gio don toi,order_status
+Mik muốn hỏi kênh người bán ở đâu?,seller
+Mk muốn hỏi cách nấu phở nha,other
+xin hoi stab plate mount hay pcb mount,builder_compat
+mk muốn hỏi sp bị từ chối duyệt với,seller
+switch akko có lắp vừa kit tkl không,builder_compat
+cho em hỏi switch gateron có lắp vừa kit 75% không,builder_compat
+tin tức hôm nay,other
+list bo phim 60% duoi 1 trieu,find_product
+cho em hỏi phí giao hàng ạ,shipping
+shop ơi cho xin số zalo zậy,contact
+Shop oi kit gasket dung keycap gi a,builder_compat
+Ad ơi đơn đã thanh toán hủy có được hoàn không,cancel_refund
+Ok cam on a?,thanks
+cho em hỏi huỷ đơn có mất phí không?,cancel_refund
+lưu cấu hình build thế,builder_compat
+bạn ơi chính sách đổi trả thế,return_item
+Keeby ơi đăng ký bán hàng ạ?,seller
+ad ơi đăng nhập bằng google,account
+tu lap phim dc k the,builder_compat
+ad ơi viết code python,other
+cho mk hoi chao ad,greet
+keeby ơi k đăng nhập đc ạ?,account
+v la xong cam on nhe,thanks
+Xin hỏi nhận được hàng bị móp zậy shop,return_item
+cảm ơn đã hỗ trợ,thanks
+nên mua switch tactile gì tầm 150k,find_product
+ban oi tam biet voi,thanks
+bạn ơi có ship ra Hà Nội k ạ,shipping
+shop ơi đơn custom có cod không?,payment
+xin hỏi khiếu nại lên sàn thế nào,return_item
+mình muốn hỏi đăng nhập bằng google,account
+ban oi vi con bao nhieu tien the,wallet
+xin hỏi freeship hông nha,shipping
+Keeby ơi thế thôi nhé nha,thanks
+Huy don thi tien hoan ve dau nhe,cancel_refund
+tuyệt vời cảm ơn?,thanks
+mik muon hoi alo a,greet
+keeby oi may ngay duoc tra hang a,return_item
+xin hoi hi the,greet
+cho mình hỏi switch bị kẹt muốn trả lại nhé,return_item
+Minh muon hoi co thanh toan khi nhan hang khong vay shop,payment
+Ad ơi kit nào đáng mua nhất ạ,find_product
+bạn ơi giao hàng toàn quốc không vậy,shipping
+bạn ơi khi nào nhận đc hàng với,order_status
+ad ơi không nhận được email xác nhận nhé,account
+Cho mk hỏi mua phím full size ở đâu ạ?,find_product
+mở gian hàng,seller
+Ban bn tuoi a?,other
+minh muon hoi de xuat ke tay nhe tay the,find_product
+phí sàn bao nhiêu,seller
+nhan dc hang bi mop,return_item
+Mik muốn hỏi ok cảm ơn,thanks
+bạn ơi kit nhôm giá bao nhiêu,find_product
+mk muon hoi ship ve Hai Phong bnh vay shop,shipping
+làm việc giờ nào ạ?,contact
+cho em hỏi shop ơi,greet
+Bạn ơi cập nhật thông tin cá nhân ạ?,account
+ad oi xin chao a?,greet
+mik muốn hỏi mik biết rồi thanks?,thanks
+Mk muon hoi phi ship moi shop tinh sao the,shipping
+cho minh hoi bai bai the,thanks
+Bạn làm đc gì v shop,greet
+cho em hoi lich su giao dich vi vay shop,wallet
+Khieu nai shop vay,return_item
+keeby ơi quên mật khẩu với,account
+mình muốn hỏi cảm ơn đã hỗ trợ,thanks
+Mk muon hoi tra hang duoc hoan tien ko nha,return_item
+ban oi hi voi,greet
+Cam on shop nhieu vay,thanks
+cho minh hoi so du tai khoan?,wallet
+ke chuyen cuoi di v shop,other
+keeby ơi ăn cơm chưa,other
+ad oi lam nguoi ban tn,seller
+Bạn ơi nhận gia công trên sàn,seller
+Thanh toan xong chua thay cap nhat nha,payment
+Cho em hoi ti gia do nhe,other
+cho em hỏi oke,thanks
+tien vi dung mua hang duoc k vay,wallet
+keeby oi thieu keycap,return_item
+xin hỏi cảm ơn bạn vậy,thanks
+xin hoi choi game gi vui nha,other
+cho em hỏi thanh toán bằng gì thế,payment
+bạn ơi làm việc giờ nào ạ?,contact
+ship về Cần Thơ bn,shipping
+bye,thanks
+ad ơi mua kit 65% ở đâu,find_product
+Cho minh hoi chinh sach doi tra,return_item
+trả hàng được hoàn tiền không,return_item
+cho mk hỏi tôi đổi ý muốn huỷ ạ?,cancel_refund
+cho em hỏi bạn giúp được gì cho mk với,greet
+Cho mình hỏi trả hàng cần những gì?,return_item
+ad ơi giao sai hàng thì sao vậy,return_item
+Cho mình hỏi mua 2 shop có tính 2 lần phí ship hông,shipping
+cho em hỏi làm sao để hủy đơn,cancel_refund
+xin hoi co ai khong a,greet
+cập nhật thông tin cá nhân,account
+xin hỏi shop huỷ đơn của tôi thì sao nhé,cancel_refund
+mình muốn hỏi bạn là ai v nhé,greet
+cho em hỏi ví của mình bao nhiêu,wallet
+số dư ví của tôi với,wallet
+có ship ra Đà Nẵng không?,shipping
+ad ơi kit hotswap là gì,builder_compat
+keeby ơi gửi hàng trả về ở đâu với,return_item
+quên mật khẩu,account
+Ad ơi có ai trực không,greet
+cho mk hỏi sao không chọn được cod,payment
+ad oi ok minh hieu roi,thanks
+tạo tài khoản thế,account
+bạn ơi kiểm tra giúp đơn KH-1234567 nha,order_status
+mua phím full size ở đâu,find_product
+xin hoi ok minh hieu roi voi,thanks
+shop co phim full size hong the,find_product
+ad oi ship ve tinh bao nhieu v shop,shipping
+cho em hỏi lắp ráp giúp mình đc không?,builder_compat
+co phim hotswap nao duoi 500k hong zay shop,find_product
+keeby oi co ai truc hong vay shop,greet
+ban oi shop o dau?,contact
+mik muốn hỏi có ship ra TP.HCM hông ạ,shipping
+tiền trong ví dùng làm gì vậy shop,wallet
+ad oi quen mat khau voi,account
+bạn ơi xin chào vậy,greet
+mấy ngày đc trả hàng ạ?,return_item
+cho mình hỏi thanh toán bằng ví keebhub được không nha,payment
+keeby oi ship ve tinh bao nhieu vay,shipping
+ship tiêu chuẩn giá bao nhiêu,shipping
+shop ơi switch gateron có lắp vừa kit 60% không thế,builder_compat
+Kit hotswap là gì v,builder_compat
+thanh toán bằng gì,payment
+Ad ơi đăng nhập bằng google nha,account
+ship về Huế bao nhiêu,shipping
+phím không lên đèn muốn đổi vậy shop,return_item
+trả tiền bằng cách nào v shop,payment
+thanh toán visa được không,payment
+ad ơi huỷ đơn bao lâu được hoàn tiền?,cancel_refund
+tìm giúp stab nhẹ tay,find_product
+tu van vien dau voi,contact
+chọn switch cho kit 60%,builder_compat
+Keeby ơi dùng ví để trả tiền đơn hàng?,payment
+cho em hoi sao hong chon dc cod a?,payment
+lol ạ,other
+cho em hoi thanh toan loi thi sao a,payment
+có cod không ạ?,payment
+keeby ơi cho mình nói chuyện với người thật,contact
+ad ơi thời tiết hôm nay thế nào ạ?,other
+dia chi cua hang,contact
+xin hoi doi anh dai dien,account
+chuyển tiền ví cho bạn đc hông ạ,wallet
+cho em hỏi keycap này có hợp kit full k ạ?,builder_compat
+cho em hỏi bỏ đơn đc ko với,cancel_refund
+hotline là gì,contact
+shop ơi đăng nhập bằng google nha,account
+Ma van don la gi voi,order_status
+Sửa địa chỉ nhận hàng,account
+keeby ơi sao ví có tiền,wallet
+Shop oi lol?,other
+cho em hỏi đơn gia công tới bước nào rồi thế,order_status
+minh muon hoi khong nhan duoc email xac nhan,account
+cho minh hoi bai bai,thanks
+tài khoản bị khoá nha,account
+sao bị đăng xuất?,account
+stab plate mount hay pcb mount nhé,builder_compat
+ad oi dat build custom voi,builder_compat
+ad oi tien ship tinh the nao nhe,shipping
+Ban oi kit 60% dung keycap gi vay,builder_compat
+cho mik hoi muon mo shop a,seller
+Keeby oi tien hoan trong vi rut ra ngan hang duoc ko a?,wallet
+cho em hỏi khiếu nại shop,return_item
+list switch akko rẻ rẻ,find_product
+cho mình hỏi huỷ đơn sao,cancel_refund
+thanh toan vnpay bi loi,payment
+mk muốn hỏi thanh toán bằng thẻ atm vậy shop,payment
+shop ơi kiểm tra đơn hàng vậy,order_status
+cho em hỏi dc rồi cảm ơn vậy shop,thanks
+bạn ơi phí giao hàng nhé,shipping
+xin hỏi email hỗ trợ nha,contact
+ok cảm ơn nhé,thanks
+Cho minh hoi huy don the nao,cancel_refund
+Shop ơi đặt nhầm muốn huỷ vậy shop,cancel_refund
+cho mình hỏi thanh toán vnpay bị lỗi vậy,payment
+cho em hoi bai bai nha,thanks
+helo shop,greet
+mở gian hàng?,seller
+shop ơi hotline là gì thế,contact
+ok cảm ơn,thanks
+cho em hỏi ví có hết hạn k với,wallet
+cho mk hỏi hôm nay ăn gì vậy,other
+cho mik hoi shipper giao chua a?,order_status
+mua kit gasket ở đâu với,find_product
+gửi hàng trả về ở đâu thế,return_item
+mik muốn hỏi nhận được hàng bị móp?,return_item
+ban oi don KH-1234567 sao roi,order_status
+shop ơi vận chuyển bằng gì nhé,shipping
+Bạn ơi chào bạn,greet
+Ban oi switch kailh box co lap vua kit tkl khong,builder_compat
+Ban oi thoi tiet hom nay tn a,other
+giao nhầm switch,return_item
+Ban oi huy don thi tien hoan ve dau voi,cancel_refund
+Ad ơi đề xuất phím cơ nhẹ tay vậy shop,find_product
+shop ơi hello ạ?,greet
+hang bi loi thi lam sao?,return_item
+cho em hỏi mua điện thoại iphone ạ?,other
+co ai khong the,greet
+cho em hoi switch 5 pin co lap vua kit tkl ko a?,builder_compat
+Làm việc giờ nào nhé,contact
+shop ơi số điện thoại shop,contact
+xin hỏi đơn custom có cod không vậy,payment
+Cho minh hoi thanh toan visa duoc k voi,payment
+Shop ơi đơn hàng của tôi tới đâu rồi thế,order_status
+ad ơi hủy đơn được không nha,cancel_refund
+Tra cứu đơn zậy shop,order_status
+mình muốn hỏi khiếu nại lên sàn thế nào,return_item
+có ship ra Hải Phòng k thế,shipping
+ad oi oke thanks nha a,thanks
+cho em hỏi switch 5 pin có lắp vừa kit 60% hông,builder_compat
+Bạn ơi bán switch trên sàn được không,seller
+kit nào đáng mua nhất,find_product
+đăng nhập bằng số điện thoại,account
+ad ơi ok nha ạ,thanks
+thanh toan nhu tn nhe,payment
+ad ơi hủy đơn vnpay có hoàn tiền hông,cancel_refund
+thanh toán vnpay bị lỗi ạ?,payment
+cho em hỏi kiểm tra tương thích nha,builder_compat
+minh muon hoi ship ve Da Nang bao nhieu,shipping
+keeby ơi cần kê tay tiếng thocky dưới 300k nhé,find_product
+ad ơi bạn có người yêu chưa nha,other
+cho mk hoi vi con bao nhieu tien nhe,wallet
+Cho em hoi kiem tra giup don moi dat a,order_status
+switch gateron nào đáng mua nhất,find_product
+ad oi dang ky tai khoan zay shop,account
+thanh toán vnpay dc không nha,payment
+cho mik hỏi đăng ký tài khoản nhé,account
+keeby ơi keeby là gì vậy shop,greet
+Keeby oi cho minh noi chuyen voi nguoi that,contact
+Shop ơi tks nha,thanks
+Shop ơi kiểm tra ví zậy,wallet
+shop huy don cua toi thi sao v shop,cancel_refund
+shop ơi rút tiền từ ví dc không vậy,wallet
+thanh toán như thế nào ạ,payment
+ship hoả tốc giá sao,shipping
+Xin hỏi tôi muốn huỷ đơn hàng với,cancel_refund
+cho em hỏi thanh toán lỗi thì sao với,payment
+lien he cham soc khach hang nha,contact
+ad oi giao bang don vi nao voi,shipping
+xin hỏi keycap gmk dưới 500k có không zậy,find_product
+shop ơi có bán cáp không với,find_product
+hotline la gi voi,contact
+keeby ơi cấu hình phím chơi game,builder_compat
+bạn ơi có ai ko,greet
+ad ơi có ship ra Hải Phòng không?,shipping
+freeship không,shipping
+Xin hỏi ăn cơm chưa với,other
+cách nấu phở,other
+đăng sản phẩm lên bán vậy shop,seller
+Bạn ơi có cửa hàng offline k ạ?,contact
+chào shop,greet
+Ad oi huy don vnpay co hoan tien ko a,cancel_refund
+cám ơn shop nhiều,thanks
+Switch akko bán chạy nhất?,find_product
+ban oi thanh toan xong chua thay cap nhat?,payment
+cho mình hỏi có cod không ạ?,payment
+tìm giúp keycap gmk tiếng thocky,find_product
+cho mk hỏi chuyển khoản được k,payment
+mk muốn hỏi có cáp nào tầm 150k ko vậy,find_product
+thời tiết hôm nay thế nào,other
+keeby ơi chuyện tình cảm nha,other
+cho mình hỏi asdfgh vậy,other
+cho minh hoi trang thai don hang nha,order_status
+ship hoả tốc giá sao vậy,shipping
+keeby ơi mik muốn mua dây cáp tầm 1 tr ạ,find_product
+mua switch gateron ở đâu,find_product
+shop ơi shop không đồng ý trả hàng ạ?,return_item
+shop oi cam on nhe a,thanks
+cho mk hỏi đơn gia công tới bước nào rồi với,order_status
+rut tien tu vi dc khong?,wallet
+số dư tài khoản?,wallet
+Ban oi don bi huy tien di dau voi,cancel_refund
+keycap pbt nào tốt tiếng thocky thế,find_product
+keeby oi phim gi hay,other
+Xin hỏi thanks,thanks
+xin hỏi giá vàng hôm nay thế,other
+Co ke tay nao khong voi,find_product
+cho mình hỏi phim gì hay với,other
+cho em hoi huy don the nao?,cancel_refund
+shop oi co mien phi ship khong vay,shipping
+cho mình hỏi stab dưới 500k có ko,find_product
+ad ơi muốn mở shop,seller
+có cod hông ạ?,payment
+cho mik hoi lam tho di,other
+keeby ơi tìm giúp phím cơ làm văn phòng,find_product
+xin chào,greet
+thanh toan vnpay dc khong zay,payment
+don custom huy duoc ko nha,cancel_refund
+ban co nguoi yeu chua the,other
+cho em hỏi ko nhận được email xác nhận ạ,account
+mik muon hoi hi,greet
+ad ơi huỷ đơn sao ạ?,cancel_refund
+ship về Hà Nội bao nhiêu,shipping
+ad oi tra tien sau duoc khong,payment
+cho mình hỏi có thanh toán khi nhận hàng k nhé,payment
+Cho em hoi vi keebhub la gi,wallet
+keeby oi san pham bi tu choi duyet a?,seller
+bạn ơi phí giao hàng với,shipping
+keycap khoảng 2tr có không,find_product
+minh muon hoi shop tu choi tra hang thi sao,return_item
+cho em hoi tien hoan trong vi rut ra ngan hang duoc khong?,wallet
+cho mik hoi thanh toan bang gi voi,payment
+cho em hỏi đơn mới đặt sao rồi nhé,order_status
+shop ơi huỷ đơn có mất phí không nhé,cancel_refund
+phí ship mỗi shop tính sao,shipping
+cho em hỏi báo lỗi web vậy shop,contact
+keeby oi don gia cong toi buoc nao roi a?,order_status
+đặt build custom,builder_compat
+keeby oi ban lam duoc gi,greet
+ad oi dang ky ban hang nhe,seller
+keycap này có hợp kit gasket không,builder_compat
+bạn ơi ê bot thế,greet
+mik muốn hỏi thanh toán bằng ví keebhub được ko thế,payment
+Shop ko đồng ý trả hàng,return_item
+bao lâu shop đc duyệt nhé,seller
+cho em hoi shop thu phi gi,seller
+ad ơi cách giảm cân vậy,other
+dây cáp nào hợp để gõ văn bản,find_product
+ship ve Ha Noi bao nhieu the,shipping
+cho em hoi shop cua toi bi khoa nhe,seller
+nên mua keycap gì,find_product
+bạn ơi có cod không,payment
+Cho minh hoi gap nhan vien the,contact
+có bán kit 75% hông?,find_product
+Tiền ship tính thế nào với,shipping
+Bo don dc khong v,cancel_refund
+shop oi kiem tra vi vay,wallet
+tiến độ gia công phím của mình,order_status
+bạn ơi số dư tài khoản nhé,wallet
+Cho em hỏi bóng đá tối nay,other
+bạn ơi chào shop với,greet
+cho em hỏi quét mã qr thanh toán,payment
+đăng sản phẩm lên bán ạ,seller
+Noi chuyen voi quan tri vien voi,contact
+sao không chọn dc cod,payment
+shop oi tu van vien dau the,contact
+ban oi bao loi web the,contact
+xin hỏi hàng giao chưa,order_status
+ad ơi huỷ đơn có mất phí ko?,cancel_refund
+mấy giờ rồi,other
+còn hàng switch tactile không,find_product
+sao không huỷ dc đơn thế,cancel_refund
+mk muốn hỏi huỷ đơn bao lâu được hoàn tiền ạ?,cancel_refund
+khi nào nhận được hàng,order_status
+cho minh hoi so du vi cua toi,wallet
+ad ơi xổ số hôm nay,other
+cho mk nói chuyện với người thật,contact
+hello với,greet
+có những hình thức thanh toán nào,payment
+keeby oi hi,greet
+Cho mình hỏi bạn bao nhiêu tuổi,other
+cho em hoi don sao roi the,order_status
+phí giao hàng,shipping
+xin hoi gui lai email xac nhan voi,account
+Shop cua toi bi khoa nha,seller
+thanh toán xong chưa thấy cập nhật,payment
+ad ơi huỷ đơn bao lâu được hoàn tiền vậy,cancel_refund
+cho em hoi shop co keycap cherry profile hong a?,find_product
+cho mk hoi chon stabilizer the nao de go van ban nhe,find_product
+Xin hỏi cho xin số zalo?,contact
+mình muốn hỏi chào ad với,greet
+ban oi so du tai khoan,wallet
+shop ơi ê bot,greet
+ad ơi hi bạn nhé,greet
+bạn ơi lắp ráp giúp mik được không,builder_compat
+lịch sử giao dịch ví ạ?,wallet
+nạp tiền vào ví ạ,wallet
+cho em hoi huy don tn the,cancel_refund
+cho em hoi huy don the nao nha,cancel_refund
+keeby ơi đơn hàng của tôi tới đâu rồi?,order_status
+khiếu nại shop ạ?,return_item
+cho mik hoi nap tien vao vi nhe,wallet
+Bạn ơi sửa địa chỉ nhận hàng với,account
+keeby ơi kiểm tra giúp đơn hôm qua nhé,order_status
+cho em hoi hom nay an gi vay shop,other
+keeby ơi đổi email đc không?,account
+keeby oi de xuat kit 65% go em the,find_product
+Xin hỏi keeby là gì,greet
+Keeby oi cho xem kit re re zay shop,find_product
+Cho em hỏi keeby là gì nha,greet
+cho minh hoi don hang cua toi toi dau roi,order_status
+shop của tôi bị khoá v,seller
+mik muon hoi shop o dau nha,contact
+Cho em hoi dang nhap bang google,account
+Cho mình hỏi kiểm tra ví nha,wallet
+shop ơi bao lâu shop được duyệt v,seller
+can kit ban phim choi game duoi 1 tr a,find_product
+Bo don duoc k nha,cancel_refund
+thoi tiet hom nay the nao a,other
+xin hỏi có ship ra TP.HCM hông vậy,shipping
+shop ơi có keycap nào không nha,find_product
+ad oi thanh toan xong chua thay cap nhat,payment
+lol nha,other
+Ad oi thanh toan xong chua thay cap nhat?,payment
+ad ơi cảm ơn đã hỗ trợ,thanks
+bạn ơi stab nào đáng mua nhất,find_product
+Shop oi muon hop tac ban phim?,seller
+cho em hoi tai nghe nao tot,other
+chuyen khoan duoc khong,payment
+Ad oi lam viec gio nao nha,contact
+keeby oi hang loi co duoc doi hong v shop,return_item
+shop oi co ai truc khong a,greet
+Huỷ đơn thì tiền hoàn về đâu,cancel_refund
+Cho em hoi hang bi vo khi van chuyen the,return_item
+chuyển khoản dc không nha,payment
+bán switch trên sàn được hông v,seller
+cho em hoi thanks a?,thanks
+hey keeby thế,greet
+ban oi co mien phi ship khong nha,shipping
+co giao tan nha hong nhe,shipping
+cho mk hỏi zậy là xong cảm ơn,thanks
+shop oi kiem tra tuong thich,builder_compat
+giải thích thuyết tương đối,other
+Minh muon hoi phim bi liet nut muon tra vay,return_item
+Sao không huỷ dc đơn,cancel_refund
+Thieu phu kien trong hop nha,return_item
+dc rồi cảm ơn nhé,thanks
+cho mình hỏi shop ơi nha,greet
+cho em hỏi viết code python nhé,other
+ban oi mua 2 shop co tinh 2 lan phi ship ko nha,shipping
+ad ơi build của mình làm tới đâu rồi ạ?,order_status
+mua chuột gaming,other
+bạn ơi tư vấn viên đâu,contact
+Shop ơi shop ở đâu thế,contact
+ad oi hey keeby?,greet
+hàng bị vỡ khi vận chuyển ạ?,return_item
+cho mình hỏi đơn custom có cod không thế,payment
+xin hỏi ship về Cần Thơ bao nhiêu vậy,shipping
+ad oi cam on?,thanks
+chính sách đổi trả,return_item
+xin hoi thanh toan vnpay bi loi,payment
+bạn ơi switch akko có lắp vừa kit 60% không vậy shop,builder_compat
+xin hỏi liên hệ chăm sóc khách hàng với,contact
+gợi ý kit,find_product
+Cho mình hỏi ví keebhub là gì thế,wallet
+bạn ơi xin chào với,greet
+bạn ơi mã vận đơn là gì vậy shop,order_status
+ban oi chao em the,greet
+mình muốn hỏi kênh người bán ở đâu thế,seller
+bạn ơi làm người bán thế nào vậy,seller
+tra tien sau duoc ko a,payment
+đơn bnh thì free ship?,shipping
+Ban oi hay qua cam on the,thanks
+Keeby ơi bye,thanks
+cho minh hoi don cua em sao roi?,order_status
+cho em hỏi đăng nhập facebook đc k ạ,account
+keeby ơi địa chỉ cửa hàng vậy,contact
+xin hỏi rút tiền từ ví dc không nhé,wallet
+cho em hỏi ok mk hiểu rồi với,thanks
+chào ad,greet
+shop oi cap nhat thong tin ca nhan a,account
+Thời tiết hôm nay thế nào thế,other
+cho em hỏi email hỗ trợ với,contact
+Trả góp được không,payment
+cho em hoi phim full size nao dang mua nhat,find_product
+có những hình thức thanh toán nào ạ,payment
+Gui lai email xac nhan the,account
+keeby ơi xổ số hôm nay,other
+xem lịch sử mua hàng,order_status
+Xin hoi kiem tra vi vay shop,wallet
+shop oi email ho tro,contact
+lưu cấu hình build,builder_compat
+cap nhat thong tin ca nhan a,account
+cho em hoi thanh toan nhu tn the,payment
+bạn ơi tôi đổi ý muốn huỷ,cancel_refund
+cho em hoi sua dia chi nhan hang,account
+xin hỏi báo lỗi web nha,contact
+cho mình hỏi muốn mở shop?,seller
+cho em hoi kiem tra giup don,order_status
+cho em hoi email ho tro,contact
+shop ơi tôi muốn huỷ đơn hàng,cancel_refund
+Ad oi phim gi hay?,other
+minh muon hoi hang loi co dc doi hong a,return_item
+keeby oi xin chao keebhub a?,greet
+Ad oi tra hang can nhung gi a?,return_item
+ad ơi chào bạn nhé,greet
+Ban oi ban lam duoc gi?,greet
+kit tkl dùng keycap gì,builder_compat
+Cho em hỏi switch kailh box có lắp vừa kit 60% ko ạ,builder_compat
+đơn bị huỷ tiền đi đâu ạ,cancel_refund
+vi bi tru tien,wallet
+phí ship bao nhiêu ạ?,shipping
+dang nhap facebook duoc k,account
+Gọi cho ai với,contact
+đăng nhập bằng google v,account
+cho minh hoi don bi huy tien di dau?,cancel_refund
+keeby oi ban giup duoc gi cho mk,greet
+Keeby oi tks nha,thanks
+Khong nhan duoc email xac nhan vay,account
+Xin hoi phi van chuyen tn nha,shipping
+minh muon hoi thanh toan bang the atm nhe,payment
+cho mk hoi may gio roi,other
+shop oi don cua toi bao gio giao?,order_status
+cho em hoi thieu phu kien trong hop voi,return_item
+bạn ơi gửi hàng trả về ở đâu,return_item
+Mik muon hoi can ho tro gap,contact
+Lam bai tap tieng anh giup a?,other
+cho minh hoi doi anh dai dien vay shop,account
+list kit 75% khoảng 2tr,find_product
+xin hỏi xoá tài khoản,account
+ban oi thanh toan vnpay dc hong nha,payment
+Xin hỏi hế lô với,greet
+cho em hoi phi giao hang voi,shipping
+nút hủy đơn ở đâu,cancel_refund
+trả tiền sau được ko v,payment
+Đơn kh-1234567 sao rồi?,order_status
+cho mik hỏi bao lâu shop được duyệt nha,seller
+giải thích thuyết tương đối với,other
+Cho em hoi don custom huy dc k,cancel_refund
+bao hanh the nao zay,return_item
+Keeby ơi xem ví,wallet
+xin hoi co ship ra Da Nang khong,shipping
+ad oi lien he admin the,contact
+giải bài toán này giúp,other
+ad oi cam on ban a?,thanks
+cho minh hoi nap tien vao vi vay,wallet
+có ship ra tỉnh không,shipping
+Shop oi huy don thi tien hoan ve dau?,cancel_refund
+Cho mk hỏi xem lịch sử mua hàng thế,order_status
+Shop oi hang bi vo khi van chuyen nha,return_item
+ban oi shop thu phi gi the,seller
+cho em hỏi có ship ra Hải Phòng hông ạ?,shipping
+mo gian hang,seller
+trả hàng thế nào vậy,return_item
+tìm keycap pbt khoảng 2tr,find_product
+mik muon hoi link dat lai mat khau het han,account
+mua chuot gaming the,other
+bạn ơi thanh toán vnpay dc hông nha,payment
+Shop ơi quét mã qr thanh toán,payment
+keeby oi phi ship bao nhieu,shipping
+minh muon hoi sao khong huy duoc don vay shop,cancel_refund
+cho xem keycap cherry profile khoảng 800k?,find_product
+Shop ơi ví bị trừ tiền ạ,wallet
+ad oi don gia cong toi buoc nao roi,order_status
+ad oi ban giup dc gi cho minh,greet
+xin hoi so sanh cac loai phim full size,find_product
+Cho em hỏi ví của mình bn ạ,wallet
+bạn ơi đc rồi cảm ơn vậy shop,thanks
+Cho minh hoi quen mat khau,account
+chuyen tien vi cho ban duoc ko the,wallet
+ad ơi ví của mk bnh ạ,wallet
+bạn ơi có ai trực ko nha,greet
+xin hoi tai khoan bi khoa,account
+đổi trả ra sao?,return_item
+cho em hỏi muốn mở shop,seller
+Cap nhat thong tin ca nhan the,account
+cho minh hoi thanh toan vnpay bi loi a?,payment
+xin hỏi list keycap cherry profile dưới 300k?,find_product
+Ad oi doi mat khau tn,account
+cho em hoi kenh nguoi ban o dau a?,seller
+Keeby ơi số dư ví của tôi,wallet
+switch akko có lắp vừa kit 60% không,builder_compat
+minh muon hoi dang san pham len ban zay,seller
+bạn ơi viết code python ạ?,other
+Keeby ơi gọi cho ai,contact
+chọn switch cho kit 65%,builder_compat
+xin hỏi tiền hoàn trong ví rút ra ngân hàng dc hông ạ?,wallet
+mình muốn hỏi bạn bnh tuổi với,other
+cho em hỏi thanh toán bằng ví keebhub đc không nhé,payment
+ban oi giao nham switch the,return_item
+cho mk hỏi giải thích thuyết tương đối,other
+minh muon hoi custom builder la gi?,builder_compat
+so sánh các loại phím cơ,find_product
+có bán kit không,find_product
+shop ơi hủy đơn được hông nha,cancel_refund
+Xin hỏi đăng ký tài khoản,account
+hàng giao chưa,order_status
+ad oi tai nghe nao tot voi,other
+kiểm tra đơn hàng,order_status
+bạn ơi huỷ đơn dc không nha,cancel_refund
+mình muốn hỏi thanh toán online có an toàn hông vậy shop,payment
+ad oi doi mat khau tn,account
+mik muốn hỏi phí sàn bao nhiêu,seller
+bảo hành thế nào,return_item
+cho mik hỏi cần hỗ trợ gấp ạ?,contact
+cho em hoi shop thu phi gi a?,seller
+cho em hoi asdfgh zay,other
+ad oi hang bi loi thi lam sao,return_item
+đổi trả ra sao,return_item
+Shop oi don kh-1234567 sao roi a,order_status
+keeby ơi shop thu phí gì nha,seller
+Shop oi tim giup kit gasket choi game?,find_product
+Duoc roi cam on,thanks
+đổi số điện thoại?,account
+ad oi switch 3 pin lap mach 5 pin duoc hong a?,builder_compat
+keeby ơi xem số dư với,wallet
+muon hop tac ban phim nhe,seller
+cảm ơn bạn,thanks
+Cho mik hoi chao em nhe,greet
+keeby là gì thế,greet
+cho mik hỏi sao ví có tiền?,wallet
+keeby ơi đăng ký xưởng gia công vậy,seller
+thanks?,thanks
+Cho mình hỏi bao giờ đơn tới,order_status
+cam on ban the,thanks
+shop ơi đơn hôm qua sao rồi với,order_status
+shop ơi đăng ký tài khoản,account
+keeby ơi huỷ đơn thì tiền hoàn về đâu,cancel_refund
+Xin hoi sao vi co tien vay,wallet
+không nhận được email xác nhận với,account
+ban oi tai nghe nao tot voi,other
+Mk muon hoi shop tu choi tra hang thi sao,return_item
+dang ky ban hang the,seller
+lol,other
+shop oi doi tra ra sao,return_item
+mình muốn hỏi có giao hoả tốc không thế,shipping
+cho mk hỏi thanh toán vnpay được k với,payment
+nạp tiền vào ví vậy shop,wallet
+hông muốn mua nữa huỷ sao,cancel_refund
+xin hoi chao keeby nhe voi,greet
+xin hỏi có thanh toán khi nhận hàng không nha,payment
+cho em hoi co giao tan nha khong,shipping
+tư vấn switch tactile tiếng lách cách,find_product
+minh muon hoi don custom co cod k nha,payment
+keeby ơi mấy ngày được trả hàng?,return_item
+bạn ơi thanh toán online có an toàn ko,payment
+ad oi custom builder la gi a?,builder_compat
+Mình muốn hỏi kiểm tra giúp đơn của em ạ?,order_status
+tìm bàn phím dưới 200 nghìn,find_product
+xin hỏi đặt vé máy bay,other
+có ai không,greet
+cho minh hoi tuyet voi cam on nhe,thanks
+shop ơi lịch sử giao dịch ví,wallet
+cập nhật thông tin cá nhân nha,account
+cho em hỏi stab plate mount hay pcb mount vậy shop,builder_compat
+cho mình hỏi nhập sai mật khẩu bị khoá vậy shop,account
+xin chào nha,greet
+lien he cham soc khach hang,contact
+xin hỏi mua 2 shop có tính 2 lần phí ship không vậy shop,shipping
+mk muon hoi ship tieu chuan gia bao nhieu the,shipping
+keeby oi mik muon mua ban phim gia sinh vien v shop,find_product
+shop oi don custom co cod khong voi,payment
+cho em hỏi chuyển tiền ví cho bạn được hông zậy shop,wallet
+Mình muốn hỏi bán switch trên sàn được k ạ,seller
+ban oi hang giao chua nha,order_status
+ad oi hang giao chua nhe,order_status
+xin hoi don moi dat sao roi vay,order_status
+keeby ơi đơn của mình đang ở đâu ạ?,order_status
+Cho em hoi cam on nha,thanks
+xin hỏi xin chào keebhub ạ?,greet
+keeby ơi cho mình nói chuyện với người thật ạ?,contact
+cho mình hỏi đơn bị huỷ tiền đi đâu vậy shop,cancel_refund
+kit full dùng keycap gì,builder_compat
+cho em hỏi có thanh toán khi nhận hàng k,payment
+bạn ơi kể chuyện cười đi vậy shop,other
+cho em hoi tu van vien dau v,contact
+tôi muốn huỷ đơn hàng,cancel_refund
+mk muốn hỏi đăng ký tài khoản zậy,account
+bạn ơi cần hỗ trợ gấp nha,contact
+bai bai,thanks
+vi con bao nhieu tien,wallet
+Ad oi rut tien tu vi duoc khong vay,wallet
+ship ve Hai Phong bn v,shipping
+bạn ơi huỷ nhiều đơn có sao hông vậy shop,cancel_refund
+shop oi sua lai build da luu vay,builder_compat
+Shop ơi phí sàn bn ạ,seller
+Minh muon hoi hang loi co duoc doi khong the,return_item
+thanh toán lỗi thì sao thế,payment
+Xin hoi tin tuc hom nay nhe,other
+ad oi ok nha,thanks
+ad ơi đăng sp lên bán,seller
+tao tai khoan nha,account
+ad oi switch akko co lap vua kit tkl khong voi,builder_compat
+bóng đá tối nay vậy,other
+xin hỏi thanh toán như thế nào thế,payment
+xin hoi muon tra hang?,return_item
+cho em hỏi bye,thanks
+gói gia công gồm những gì zậy,builder_compat
+mình muốn hỏi hát một bài đi ạ,other
+keeby oi cam on nhe?,thanks
+bạn ơi ship về Hải Phòng bn nha,shipping
+cho em hoi nut huy don o dau a,cancel_refund
+lịch sử giao dịch ví nhé,wallet
+bạn ơi tài khoản bị khoá,account
+giao bang don vi nao nha,shipping
+cho mik hỏi dịch sang tiếng anh ạ?,other
+cho minh hoi lam nguoi ban the nao,seller
+mình muốn hỏi địa chỉ cửa hàng vậy,contact
+Ban oi cam on shop nhieu the,thanks
+keycap nay co hop kit tkl khong,builder_compat
+kit bàn phím dưới 300k có không,find_product
+ad ơi mã vận đơn là gì với,order_status
+cho em hỏi mua kit 65% ở đâu,find_product
+xin hoi vi keebhub la gi,wallet
+ad ơi huỷ nhiều đơn có sao không nha,cancel_refund
+bạn ơi bảo hành thế nào vậy,return_item
+hủy đơn thế nào vậy,cancel_refund
+ban oi kit 65% gia bn?,find_product
+xin hoi dang nhap facebook duoc hong?,account
+So du vi cua toi,wallet
+ad oi bao lau shop duoc duyet the,seller
+bạn ơi chính sách đổi trả với,return_item
+ko nhan dc email xac nhan,account
+Xin hỏi thanh toán visa dc hông ạ,payment
+tiền trong ví dùng làm gì nhé,wallet
+Đổi số điện thoại nha,account
+keycap này có hợp kit 60% không,builder_compat
+keeby ơi đổi trả ra sao v shop,return_item
+xin hỏi shop của tôi bị khoá,seller
+cho mk hỏi ship tiêu chuẩn giá bao nhiêu ạ?,shipping
+ad ơi có ship ra Đà Nẵng hông v shop,shipping
+kiểm tra ví nhé,wallet
+Tra tien bang cach nao the,payment
+Cho mình hỏi trả hàng thế nào zậy shop,return_item
+phí ship bao nhiêu thế,shipping
+ad ơi helo shop ạ?,greet
+mik muốn hỏi cám ơn keeby?,thanks
+đơn custom có cod không,payment
+Cho mình hỏi đơn của em sao rồi với,order_status
+có keycap gmk nào hot không,find_product
+cho mik hỏi xoá tài khoản nha,account
+cho em hỏi lube switch giá bao nhiêu thế,builder_compat
+shop ơi ship có nhanh không với,shipping
+ad ơi trả hàng được hoàn tiền không vậy,return_item
+bạn ơi ship về Hải Phòng bao nhiêu v shop,shipping
+đăng nhập bằng google,account
+cho mik hoi don hom qua sao roi nha,order_status
+Minh muon hoi switch 3 pin co lap vua kit tkl khong vay,builder_compat
+keeby oi trang thai don hang vay shop,order_status
+ad oi don bi huy tien di dau nhe,cancel_refund
+keeby ơi kiểm tra giúp đơn KH-1234567 ạ,order_status
+So sanh cac loai kit nhom?,find_product
+keeby oi muon tra hang,return_item
+mk muốn hỏi muốn mở shop vậy,seller
+bao loi web a,contact
+nhận gia công trên sàn?,seller
+Ship về hà nội bao nhiêu,shipping
+switch gateron co lap vua kit 65% khong vay shop,builder_compat
+shop ơi thiếu keycap với,return_item
+ad ơi sao ko hủy đc đơn,cancel_refund
+kit gasket dùng keycap gì,builder_compat
+xin hoi don da thanh toan huy co dc hoan hong,cancel_refund
+cho em hỏi mk biết rồi thanks ạ,thanks
+cho em hỏi tra cứu đơn vậy,order_status
+keeby ơi trả góp được không vậy shop,payment
+keeby ơi mua 2 shop có tính 2 lần phí ship ko,shipping
+mua điện thoại iphone ạ,other
+Don custom co cod hong a,payment
+cập nhật thông tin cá nhân nhé,account
+ad ơi hủy đơn có mất phí không,cancel_refund
+shop oi dang ky ban hang,seller
+shop oi nap tien vao vi vay,wallet
+Xin hoi ship hoa toc gia sao nhe,shipping
+chao keeby nhe a?,greet
+cho mk hỏi bán hàng trên keebhub thế,seller
+xin hỏi chuyện tình cảm v shop,other
+xin hỏi đổi mật khẩu thế nào ạ?,account
+Cho mình hỏi giới thiệu kit gasket nhẹ tay ạ?,find_product
+keeby ơi asdfgh,other
+mình muốn hỏi có kit bàn phím nào khoảng 2tr không thế,find_product
+Cho mk hoi tien vi dung mua hang dc khong?,wallet
+bạn là ai vậy shop,greet
+xin hoi gia vang hom nay nha,other
+ban oi tin tuc hom nay,other
+Mình muốn hỏi có ai không,greet
+đổi ảnh đại diện,account
+keycap nay co hop kit 65% khong voi,builder_compat
+kit 75% dùng keycap gì,builder_compat
+nhập sai mật khẩu bị khoá,account
+huỷ đơn vnpay có hoàn tiền hông?,cancel_refund
+Chon switch cho kit gasket v,builder_compat
+xin hỏi hàng lỗi có được đổi hông ạ,return_item
+ad oi dung vi de tra tien don hang the,payment
+ban oi tra tien sau dc khong nhe,payment
+xin hỏi số điện thoại shop với,contact
+dang nhap facebook duoc ko the,account
+keeby oi chao shop a?,greet
+cho em hoi xem lich su mua hang nha,order_status
+tiền ví dùng mua hàng dc không vậy,wallet
+Cho mình hỏi có ship ra tp.hcm không nha,shipping
+ad ơi cảm ơn thế,thanks
+ad oi doi so dien thoai the,account
+cach nau pho,other
+xin hỏi tiền trong ví dùng làm gì ạ,wallet
+đề xuất stab gõ cho đã tay,find_product
+build của mình làm tới đâu rồi ạ,order_status
+mk muon hoi dat nham muon huy vay shop,cancel_refund
+xin hoi may ngay duoc tra hang a?,return_item
+cho mình hỏi trả hàng được hoàn tiền hông thế,return_item
+bảo hành sao ạ?,return_item
+lịch sử giao dịch ví,wallet
+Ad ơi đơn mình đã giao chưa nhé,order_status
+cho em hoi dat build custom voi,builder_compat
+Cho em hoi mau switch akko moi nhat the,find_product
+Cho mik hoi lien he cham soc khach hang?,contact
+Keeby oi doi so dien thoai a?,account
+bạn ơi đăng nhập facebook đc ko nha,account
+mình muốn hỏi làm sao để huỷ đơn vậy shop,cancel_refund
+kiểm tra giúp đơn #KH-0012345 với,order_status
+cho em hỏi tin tức hôm nay với,other
+bạn ơi kiểm tra giúp đơn #KH-0012345 với,order_status
+sao don chua duoc xac nhan vay shop,order_status
+shop oi co thanh toan khi nhan hang khong a,payment
+keeby oi huy don bao lau duoc hoan tien the,cancel_refund
+Ad ơi bạn bao nhiêu tuổi?,other
+bạn ơi gợi ý phím cơ dưới 1 triệu?,find_product
+tìm keycap cherry profile dưới 300k,find_product
+minh muon hoi don #KH-0012345 sao roi a?,order_status
+cho mình hỏi tuyệt vời cảm ơn,thanks
+cho mik hỏi có giao tận nhà ko vậy shop,shipping
+kiểm tra giúp đơn KH-1234567,order_status
+ad oi tuyet voi cam on v shop,thanks
+chao nha a,greet
+Shop ở đâu thế,contact
+phí ship mỗi shop tính sao?,shipping
+mình muốn hỏi xoá tài khoản ạ?,account
+Keeby ơi trả hàng tn vậy,return_item
+đơn hàng gần nhất của tôi,order_status
+cho em hỏi bảo hành sao với,return_item
+shop ơi bạn là ai vậy,greet
+Hang giao chua v shop,order_status
+khi nào nhận được hàng v shop,order_status
+Thanks thế,thanks
+ad oi phi ship moi shop tinh sao nha,shipping
+cho em hoi nhap sai mat khau bi khoa?,account
+cho mik hỏi học lập trình ở đâu ạ?,other
+Shop ơi sửa địa chỉ nhận hàng thế,account
+shop ơi có ship ra TP.HCM k,shipping
+cho minh hoi mua switch linear o dau a?,find_product
+tỉ giá đô nha,other
+Xin hỏi cảm ơn bạn v,thanks
+freeship hông v,shipping
+cho em hoi bao lau shop duoc duyet nhe,seller
+xin hỏi helo shop nha,greet
+shop ơi gasket mount là gì nha,builder_compat
+tra cứu đơn,order_status
+mình muốn hỏi thanh toán vnpay bị lỗi ạ,payment
+nút huỷ đơn ở đâu,cancel_refund
+keeby oi kit 65% nao hop tieng thocky v,find_product
+xin hỏi đơn mình đã giao chưa nhé,order_status
+ad ơi so sánh các loại kê tay zậy shop,find_product
+xin hoi vi co het han khong voi,wallet
+cho mk hoi muon tra hang vay shop,return_item
+Cho mình hỏi momo được không zậy shop,payment
+Shop oi ok nha,thanks
+shop ơi xem số dư nhé,wallet
+shipper giao chua,order_status
+xin hỏi hello với,greet
+ad ơi hủy đơn vnpay có hoàn tiền không nha,cancel_refund
+xin hỏi có ship ra Cần Thơ ko ạ?,shipping
+shop oi viet code python voi,other
+mình muốn hỏi bàn phím tkl nào đáng mua nhất với,find_product
+bạn ơi ví của mik bn,wallet
+Ban oi don bi ket a a?,order_status
+huỷ đơn thế nào,cancel_refund
+tin tức hôm nay ạ,other
+Dịch sang tiếng anh với,other
+hey keeby zậy shop,greet
+keeby oi dang nhap bang google,account
+minh muon hoi tien hoan trong vi rut ra ngan hang duoc khong nhe,wallet
+mình muốn mua bàn phím giá sinh viên,find_product
+cho em hoi ship ve Hai Phong bao nhieu,shipping
+sua lai build da luu,builder_compat
+shop ơi đổi mật khẩu tn vậy shop,account
+Cho mình hỏi quẹt thẻ được ko thế,payment
+alo a,greet
+cho em hỏi lắp ráp giúp mình dc không với,builder_compat
+Kenh nguoi ban o dau vay,seller
+Cho em hỏi dây cáp bán chạy nhất,find_product
+phim co ban chay nhat nha,find_product
+mình muốn mua keycap cherry profile tầm 1 triệu,find_product
+Keeby oi hey keeby,greet
+cho mình hỏi helo shop vậy,greet
+ban oi lien he admin,contact
+nut huy don o dau nhe,cancel_refund
+shop oi don gia cong toi buoc nao roi nhe,order_status
+bạn ơi bảo hành sao với,return_item
+huỷ đơn vnpay có hoàn tiền không?,cancel_refund
+bao giờ đơn tới nha,order_status
+trạng thái đơn hàng,order_status
+switch kailh box có lắp vừa kit 60% không,builder_compat
+tỉ giá đô,other
+ban oi ban switch tren san dc k zay shop,seller
+bạn ơi stabilizer giá bnh,find_product
+cho em hỏi thanh toán vnpay bị lỗi ạ?,payment
+ship về Đà Nẵng bao nhiêu,shipping
+keeby ơi sao bị đăng xuất thế,account
+shop ơi thanh toán bằng thẻ atm với,payment
+không đăng nhập được,account
+Bạn ơi tìm giúp phím cơ làm văn phòng ạ,find_product
+Cho mik hỏi liên hệ admin?,contact
+bạn ơi cập nhật thông tin cá nhân ạ,account
+ad oi shop tu choi tra hang thi sao a?,return_item
+vi keebhub o dau the,wallet
+ad ơi kiểm tra giúp đơn,order_status
+shop ơi quên mật khẩu ạ?,account
+ad ơi chào ad với,greet
+bạn ơi cập nhật thông tin cá nhân thế,account
+Cập nhật thông tin cá nhân ạ?,account
+mk muốn hỏi trả hàng được hoàn tiền hông ạ?,return_item
+đơn của tôi bao giờ giao nha,order_status
+xin hỏi trả hàng thế nào nha,return_item
+trả hàng được hoàn tiền không nha,return_item
+xổ số hôm nay,other
+keeby ơi đơn mới đặt sao rồi?,order_status
+keeby ơi liên hệ admin?,contact
+mik muốn hỏi có bán stabilizer ko với,find_product
+Bạn ơi build của mình làm tới đâu rồi nha,order_status
+cho minh hoi co ship ra tinh khong?,shipping
+ad oi he lo?,greet
+xin hỏi trở thành người bán nhé,seller
+xin hỏi bạn là ai vậy với,greet
+ban oi xem vi?,wallet
+Kiem tra giup don kh-1234567,order_status
+bán laptop ko,other
+chon switch cho kit 60% nha,builder_compat
+cho mk hỏi đơn đang ở trạng thái nào v shop,order_status
+cho em hỏi xoá tài khoản ạ,account
+keeby oi chon switch cho kit 60% a,builder_compat
+cho em hoi vi keebhub o dau a,wallet
+Keeby oi shop cua toi bi khoa a,seller
+Bạn ơi muốn hợp tác bán phím vậy shop,seller
+linh kiện có tương thích không,builder_compat
+ad ơi làm người bán thế nào,seller
+đơn hôm qua sao rồi,order_status
+cho mk hỏi shop ơi,greet
+xem số dư với,wallet
+ad ơi phí vận chuyển thế nào,shipping
+switch linear có lắp vừa kit gasket không,builder_compat
+nhan gia cong tren san,seller
+Keeby ơi ví còn bnh tiền nha,wallet
+thanh toán bằng ví keebhub được không,payment
+bạn ơi làm bài tập tiếng anh giúp,other
+đề xuất cáp gõ cho đã tay,find_product
+Bạn ơi có ship ra hà nội không với,shipping
+Bạn ơi đơn hôm qua sao rồi nhé,order_status
+bye ạ,thanks
+xin hỏi cần switch clicky chơi game tầm 1 triệu,find_product
+làm việc giờ nào,contact
+keeby oi thieu phu kien trong hop,return_item
+shop oi bao gio don toi,order_status
+keeby oi thanks,thanks
+cho mình hỏi gửi hàng trả về ở đâu nha,return_item
+hey keeby vay,greet
+làm thơ đi thế,other
+keeby ơi mấy ngày đc trả hàng?,return_item
+ban oi mua chuot gaming a?,other
+cho minh hoi keycap nay co hop kit 60% ko a?,builder_compat
+kit 65% bán chạy nhất,find_product
+cho mk hỏi dùng ví để trả tiền đơn hàng,payment
+bạn ơi bao lâu shop được duyệt ạ?,seller
+Mình muốn hỏi thời tiết hôm nay thế nào nha,other
+xin hoi sao bi dang xuat nhe,account
+shop ơi switch bị kẹt muốn trả lại,return_item
+đổi ảnh đại diện ạ?,account
+chao keeby nhe the,greet
+keeby oi thanh toan online co an toan k a,payment
+hello ạ?,greet
+bạn ơi switch 3 pin có lắp vừa kit tkl ko vậy,builder_compat
+co giao tan nha ko,shipping
+kiểm tra giúp đơn hôm qua,order_status
+mình muốn hỏi báo lỗi web ạ,contact
+Minh muon hoi co ai khong a,greet
+cho em hỏi xem ví,wallet
+keeby ơi không nhận được email xác nhận?,account
+Cho em hỏi đơn bị kẹt à vậy,order_status
+switch 3 pin có lắp vừa kit tkl không,builder_compat
+Cam on ban vay shop,thanks
+ví có hết hạn không vậy shop,wallet
+xin hoi tien hoan trong vi rut ra ngan hang duoc khong,wallet
+ok mình hiểu rồi,thanks
+đăng ký tài khoản với,account
+cho mk nói chuyện với người thật với,contact
+Cho mk hỏi kit 65% dùng keycap gì,builder_compat
+cho minh hoi khong thich nua tra duoc khong,return_item
+shop ơi có thanh toán khi nhận hàng ko?,payment
+Mình muốn hỏi thanh toán bằng gì ạ,payment
+ad ơi nói chuyện với quản trị viên thế,contact
+Quẹt thẻ đc không ạ,payment
+huy nhieu don co sao khong nhe,cancel_refund
+vi keebhub o dau?,wallet
+xin hoi vi keebhub o dau a,wallet
+keeby ơi bạn làm được gì nhé,greet
+Xin hỏi switch 5 pin có lắp vừa kit tkl không ạ,builder_compat
+ad oi chuyen khoan dc khong,payment
+hàn mạch có không,builder_compat
+cho em hỏi thanks,thanks
+cho mk hỏi đơn bị kẹt à thế,order_status
+ban oi don KH-1234567 sao roi a,order_status
+gasket mount là gì với,builder_compat
+ship co nhanh khong,shipping
+có ship ra Hà Nội không,shipping
+cho em hoi cam on shop nhieu,thanks
+bạn ơi tự lắp phím dc hông ạ,builder_compat
+đơn #KH-0012345 sao rồi,order_status
+Shop ơi có miễn phí ship ko thế,shipping
+có bán kit bàn phím k nhé,find_product
+bán switch trên sàn được không,seller
+Xin hỏi cách nấu phở vậy,other
+ban oi mo gian hang a?,seller
+bạn ơi keycap này có hợp kit tkl k thế,builder_compat
+switch 5 pin có lắp vừa kit tkl không,builder_compat
+Bạn ơi trở thành người bán vậy,seller
+huỷ đơn thì tiền hoàn về đâu v,cancel_refund
+keeby ơi tiền ship tính thế nào,shipping
+keeby ơi switch gateron có lắp vừa kit 65% k với,builder_compat
+mk muốn hỏi đơn bao nhiêu thì free ship thế,shipping
+nhận được hàng bị móp,return_item
+cho mình hỏi thanh toán như tn với,payment
+ad ơi cám ơn keeby,thanks
+don #KH-0012345 sao roi,order_status
+xin hoi trang thai don hang voi,order_status
+cần kit bàn phím chơi game dưới 1 triệu nha,find_product
+xin hỏi phí ship mỗi shop tính sao ạ?,shipping
+shop ơi vậy shop,greet
+bạn ơi xoá tài khoản,account
+hi,greet
+Mình muốn hỏi quẹt thẻ được không?,payment
+shop oi keycap nay co hop kit 60% khong vay,builder_compat
+tiền ví dùng mua hàng được không,wallet
+Ban oi cam on ban zay shop,thanks
+xin hỏi rút tiền từ ví được k nha,wallet
+vi cua mk bn voi,wallet
+keeby oi dat nham muon huy a?,cancel_refund
+keeby ơi nhập sai mật khẩu bị khoá nha,account
+ban oi kit hotswap la gi a,builder_compat
+Cho em hoi momo duoc khong a,payment
+Ship về hải phòng bao nhiêu,shipping
+đơn hàng của tôi tới đâu rồi,order_status
+cho minh hoi dang nhap facebook dc hong nha,account
+vận chuyển bằng gì,shipping
+cho mình hỏi hay quá cảm ơn?,thanks
+Shop ơi oke nhé,thanks
+keeby ơi kiểm tra giúp đơn với,order_status
+ad oi khong thich nua tra duoc khong voi,return_item
+địa chỉ cửa hàng,contact
+doi so dien thoai nha,account
+cho em hoi kiem tra don hang?,order_status
+shop ơi ví keebhub ở đâu,wallet
+minh muon hoi cam on?,thanks
+ad ơi làm sao để hủy đơn nha,cancel_refund
+cảm ơn ạ,thanks
+bạn ơi làm việc giờ nào nhé,contact
+bạn ơi ok nha ạ?,thanks
+đăng ký tài khoản,account
+keeby ơi đăng nhập bằng số điện thoại vậy,account
+xin hỏi dịch sang tiếng anh thế,other
+xin hoi thanh toan online co an toan khong voi,payment
+xin hỏi ship về Huế bn với,shipping
+cho em hoi kiem tra giup don cua em a?,order_status
+Xin hỏi chơi game gì vui,other
+bạn ơi switch linear có lắp vừa kit gasket k nhé,builder_compat
+Shop oi chao nha vay shop,greet
+Xin hoi link dat lai mat khau het han?,account
+cho em hỏi tiền ví dùng mua hàng đc không?,wallet
+cho mk hỏi gửi hàng trả về ở đâu ạ,return_item
+switch tactile nào hợp nhẹ tay,find_product
+ad oi quen mat khau a,account
+dang ky xuong gia cong a,seller
+co nhung hinh thuc thanh toan nao voi,payment
+shop oi gui lai email xac nhan the,account
+shop oi mua 2 shop co tinh 2 lan phi ship khong the,shipping
+minh muon hoi nhan gia cong tren san voi,seller
+cho minh hoi nhan gia cong tren san,seller
+mik muon hoi don custom co cod khong vay shop,payment
+Keeby là gì ạ?,greet
+xin hỏi stabilizer giá bn ạ?,find_product
+phim bi liet nut muon tra the,return_item
+cho minh hoi dich sang tieng anh nha,other
+K nhận được email xác nhận nhé,account
+bạn ơi switch akko có lắp vừa kit 75% không,builder_compat
+phím bị liệt nút muốn trả,return_item
+cách giảm cân,other
+bạn ơi thanh toán bằng thẻ atm nhé,payment
+cho mình hỏi freeship k ạ,shipping
+báo lỗi web,contact
+có miễn phí ship không,shipping
+hang giao chua nha,order_status
+chào em vậy,greet
+Bạn ơi sp bị từ chối duyệt vậy shop,seller
+Tạo tài khoản nhé,account
+Switch akko nao dang mua nhat vay,find_product
+Shop ơi nhờ shop lube switch,builder_compat
+đơn hàng gần nhất của tôi ạ,order_status
+kit full dùng keycap gì nhé,builder_compat
+cho minh hoi xin chao keebhub,greet
+cho em hỏi vậy là xong cảm ơn?,thanks
+Cho em hoi don bi ket a vay,order_status
+cho mik hoi cam on keeby vay shop,thanks
+huỷ đơn được không,cancel_refund
+mình muốn hỏi số dư tài khoản zậy shop,wallet
+Ad oi mua chuot gaming zay,other
+ad oi doi email duoc khong a,account
+được rồi cảm ơn,thanks
+Shop oi shop co kit 75% ko vay shop,find_product
+mik muon hoi thanh toan vnpay bi loi,payment
+shop ơi kiểm tra ví zậy,wallet
+bạn ơi quét mã qr thanh toán,payment
+shop từ chối trả hàng thì sao,return_item
+shop ơi cập nhật thông tin cá nhân,account
+cho em hỏi list bàn phím tkl rẻ rẻ nhé,find_product
+keeby ơi link đặt lại mật khẩu hết hạn,account
+liên hệ chăm sóc khách hàng với,contact
+Cho em hỏi đơn của tôi bao giờ giao,order_status
+mình muốn hỏi giải thích thuyết tương đối v shop,other
+shop oi giao hang mat may ngay,shipping
+kiểm tra giúp đơn của em,order_status
+minh muon hoi switch bi ket muon tra lai,return_item
+chào shop?,greet
+mình muốn hỏi có ship ra Hải Phòng không ạ?,shipping
+Ad ơi tạm biệt vậy,thanks
+shop ơi kit hotswap là gì?,builder_compat
+bàn phím tkl tầm 1 triệu có không vậy,find_product
+Mk muon hoi mau keycap cherry profile moi nhat,find_product
+Keeby oi cho xin so zalo nha,contact
+keeby oi chon switch cho kit 65% nhe,builder_compat
+cho mk hỏi switch kailh box có lắp vừa kit 60% k thế,builder_compat
+cho mình hỏi giao hàng toàn quốc ko,shipping
+mk muon hoi muon hop tac ban phim nhe,seller
+ad ơi hế lô,greet
+huỷ đơn đc không,cancel_refund
+shop đã xác nhận đơn chưa,order_status
+Cho mik hoi quet the dc hong a?,payment
+xin hỏi trả hàng được hoàn tiền không ạ?,return_item
+Cho em hoi stab plate mount hay pcb mount,builder_compat
+keeby ơi hàng lỗi có được đổi không với,return_item
+ví của mk bn ạ?,wallet
+ban oi hoc lap trinh o dau,other
+tạm biệt,thanks
+keeby ơi phí sàn bao nhiêu v shop,seller
+mình muốn hỏi helo shop ạ,greet
+cho minh hoi phim bi liet nut muon tra nha,return_item
+Chào keeby nhé vậy,greet
+ad ơi không muốn mua nữa hủy sao nhé,cancel_refund
+lam viec gio nao nhe,contact
+ví keebhub là gì,wallet
+có giao hoả tốc không,shipping
+Cho minh hoi e bot,greet
+ban oi chon ban phim tkl sao tieng lach cach nha,find_product
+cho em hoi doi email duoc khong a,account
+Ad oi viet code python nha,other
+đơn bao nhiêu thì free ship,shipping
+gặp nhân viên,contact
+bán switch trên sàn được không với,seller
+tam biet the,thanks
+Cách nấu phở ạ,other
+cho mik hỏi helo shop nhé,greet
+keeby oi kit gasket dung keycap gi,builder_compat
+dat ve may bay,other
+shop ơi có ai trực ko,greet
+build mất bao lâu,builder_compat
+shop ơi kiểm tra giúp đơn của em ạ,order_status
+cho mik hỏi chào nha nha,greet
+shop ơi kiểm tra tương thích với,builder_compat
+mik muon hoi mik biet roi thanks,thanks
+có keycap pbt nào hot không,find_product
+shop có cáp không,find_product
+Gap nhan vien a,contact
+mình muốn hỏi helo shop với,greet
+bạn ơi hàn mạch có hông,builder_compat
+cho em hoi don KH-1234567 sao roi,order_status
+Cho em hỏi bạn giúp dc gì cho mình với,greet
+tài khoản bị khoá,account
+tư vấn viên đâu,contact
+ad ơi giao nhầm switch vậy shop,return_item
+ban oi thanh toan online co an toan k voi,payment
+ban oi giai thich thuyet tuong doi nha,other
+bạn ơi muốn hủy đơn gia công,cancel_refund
+keeby ơi đơn hàng gần nhất của tôi nhé,order_status
+keeby oi thanh toan vnpay dc k voi,payment
+bạn ơi gặp nhân viên nhé,contact
+xin hỏi đăng ký tài khoản,account
+Ad ơi có cửa hàng offline ko nhé,contact
+Cho em hỏi ví còn bao nhiêu tiền ạ,wallet
+minh muon hoi phi san bao nhieu zay,seller
+mik muốn hỏi chơi game gì vui ạ?,other
+tuyet voi cam on v shop,thanks
+cho minh hoi keycap pbt nao tot tieng thocky the,find_product
+ad oi mua phim hotswap o dau zay,find_product
+ví keebhub ở đâu nhé,wallet
+ad oi minh biet roi thanks vay,thanks
+Cho minh hoi kiem tra don hang v,order_status
+keeby ơi trở thành người bán thế,seller
+cho mình hỏi đăng sp lên bán vậy,seller
+muốn trả hàng,return_item
+cần phím full size gõ êm dưới 1 triệu v,find_product
+cho em hỏi tiền trong ví dùng làm gì nha,wallet
+ad ơi mình muốn mua dây cáp giá sinh viên ạ?,find_product
+cho mk hoi phim bi liet nut muon tra nha,return_item
+khi nào nhận được hàng vậy shop,order_status
+cho em hỏi đơn đã thanh toán huỷ có được hoàn ko ạ,cancel_refund
+Cho mk hỏi có thanh toán khi nhận hàng không?,payment
+cho em hoi huy don co mat phi hong v,cancel_refund
+shop oi giao hang toan quoc khong,shipping
+nói chuyện với quản trị viên nha,contact
+keeby ơi nói chuyện với quản trị viên,contact
+cho em hỏi thanks với,thanks
+đơn của tôi bao giờ giao,order_status
+Trả góp đc hông ạ?,payment
+mik muốn hỏi tư vấn viên đâu nha,contact
+xin hỏi linh kiện có tương thích không nhé,builder_compat
+keeby oi kiem tra giup don KH-1234567?,order_status
+ad ơi khiếu nại lên sàn tn?,return_item
+dịch sang tiếng anh ạ,other
+huỷ đơn có mất phí không,cancel_refund
+shop oi lam tho di,other
+ban oi ban giup dc gi cho minh vay,greet
+cho em hỏi link đặt lại mật khẩu hết hạn ạ,account
+dat nham muon huy zay shop,cancel_refund
+Bạn ơi muốn hủy đơn gia công vậy shop,cancel_refund
+Ad oi ship ve hue bao nhieu a,shipping
+bạn ơi phím bị liệt nút muốn trả zậy shop,return_item
+khong thich nua tra duoc khong a,return_item
+hàng lỗi có đc đổi ko ạ,return_item
+Mik muốn hỏi muốn mở shop,seller
+bạn ơi tư vấn viên đâu nhé,contact
+Shop ơi liên hệ admin v,contact
+ad oi tam biet a,thanks
+xin hoi co keycap nao khoang 800k ko,find_product
+keeby ơi phím cơ nào tốt chơi game nha,find_product
+bạn ơi liên hệ chăm sóc khách hàng thế,contact
+bạn ơi đơn bị hủy tiền đi đâu,cancel_refund
+cho em hoi switch gateron co lap vua kit 75% ko a,builder_compat
+cho minh hoi ban phim nao hop nhe tay nhe,find_product
+Mình muốn hỏi huỷ đơn bao lâu được hoàn tiền ạ,cancel_refund
+tra tien bang cach nao nha,payment
+cho mình hỏi muốn build bàn phím,builder_compat
+ship tiêu chuẩn giá bao nhiêu nhé,shipping
+đổi mật khẩu thế nào,account
+xin hỏi đăng nhập bằng số điện thoại thế,account
+minh muon hoi dung vi de tra tien don hang,payment
+ad oi tra hang can nhung gi?,return_item
+bạn giúp được gì cho mình,greet
+hát một bài đi,other
+kiểm tra giúp đơn mới đặt,order_status
+cho em hỏi được rồi cảm ơn ạ?,thanks
+shop ơi ví bị trừ tiền vậy,wallet
+tai nghe nao tot?,other
+cho em hoi helo shop a,greet
+ad oi ship ve Can Tho bao nhieu,shipping
+so sánh các loại kit nhôm?,find_product
+xin hỏi cách giảm cân với,other
+mẫu keycap gmk mới nhất,find_product
+shop o dau,contact
+ban oi cap nao tot lap trinh nha,find_product
+Xin hỏi quên mật khẩu thế,account
+keeby ơi làm việc giờ nào với,contact
+keeby ơi đổi số điện thoại ạ?,account
+keeby oi gasket mount la gi?,builder_compat
+keeby oi keycap nay co hop kit 75% k voi,builder_compat
+switch akko co lap vua kit 75% k zay shop,builder_compat
+ship có nhanh không,shipping
+Cho em hỏi nói chuyện với quản trị viên nhé,contact
+cho em hoi cam on da ho tro vay shop,thanks
+Mình muốn hỏi tạo tài khoản nhé,account
+shop ơi kit 75% dùng keycap gì,builder_compat
+mình muốn hỏi helo shop vậy shop,greet
+ad oi xem lich su mua hang nhe,order_status
+ad ơi mở gian hàng,seller
+keeby ơi sao đơn chưa được xác nhận ạ?,order_status
+cho mình hỏi shipper giao chưa với,order_status
+ad ơi keycap dưới 500k có không ạ,find_product
+ad ơi bạn có người yêu chưa vậy shop,other
+shop ơi giao nhầm switch,return_item
+Shop ơi vận chuyển bằng gì?,shipping
+keeby ơi muốn hợp tác bán phím,seller
+bong da toi nay,other
+Ad ơi ship về huế bnh,shipping
+cho mình hỏi trạng thái đơn hàng vậy,order_status
+minh muon hoi kit nhom nao tot go em nha,find_product
+xin hỏi hoàn tiền khi huỷ đơn v shop,cancel_refund
+mình muốn hỏi kể chuyện cười đi ạ?,other
+ad ơi đăng ký xưởng gia công ạ?,seller
+ad ơi freeship không,shipping
+Keeby oi ban switch tren san duoc ko nhe,seller
+ban oi lam tho di,other
+ad oi xem tinh trang don vay,order_status
+cho em hoi thanh toan vnpay duoc hong a?,payment
+keeby ơi gửi hàng trả về ở đâu nhé,return_item
+huỷ nhiều đơn có sao không,cancel_refund
+Ad ơi nên mua phím hotswap gì tầm 3 triệu nhé,find_product
+giao bằng đơn vị nào với,shipping
+còn hàng dây cáp không,find_product
+mik muon hoi co ship ra Da Nang khong a?,shipping
+ad oi phim bi liet nut muon tra vay,return_item
+xin hoi mo gian hang voi,seller
+ship về TP.HCM bnh với,shipping
+minh muon hoi dat nham muon huy nhe,cancel_refund
+xin hoi han mach co khong the,builder_compat
+ad oi dat build custom,builder_compat
+ad oi doi so dien thoai nha,account
+liên hệ admin vậy shop,contact
+ad oi don moi dat sao roi a?,order_status
+đặt build custom nha,builder_compat
+cho em hoi phim ko len den muon doi,return_item
+keeby oi tien vi dung mua hang dc k a?,wallet
+bạn ơi ship về Huế bn nha,shipping
+quen mat khau nhe,account
+Ad oi theo doi don hang,order_status
+ban oi ban giup dc gi cho minh a?,greet
+đăng nhập bằng số điện thoại ạ,account
+switch 3 pin lắp mạch 5 pin được không,builder_compat
+Mình muốn hỏi gọi cho ai vậy shop,contact
+cho em hỏi bán laptop không ạ?,other
+cho mik hoi phim co nao tot tieng thocky,find_product
+bạn ơi dùng ví để trả tiền đơn hàng?,payment
+minh muon hoi cam on keeby a,thanks
+ăn cơm chưa ạ,other
+sao bị đăng xuất thế,account
+switch gateron giá bao nhiêu,find_product
+keeby oi choi game gi vui the,other
+xin hỏi có cửa hàng offline không,contact
+mk muon hoi ok nha a?,thanks
+Ban oi muon huy don gia cong zay shop,cancel_refund
+mik muon hoi kit 65% ban chay nhat,find_product
+keeby oi so sanh cac loai switch clicky voi,find_product
+mk muốn hỏi đổi mật khẩu sao nhé,account
+ad oi huy don thi tien hoan ve dau a?,cancel_refund
+cho mình hỏi sao đơn chưa được xác nhận ạ,order_status
+Cho mình hỏi không nhận dc email xác nhận,account
+có kit bàn phím nào khoảng 2tr không,find_product
+Shop ơi bao lâu shop được duyệt,seller
+cho em hỏi bóng đá tối nay zậy shop,other
+mk muốn hỏi gặp nhân viên,contact
+Bạn ơi bạn là ai,greet
+Xin hỏi build phím thế nào nha,builder_compat
+cho em hoi dia chi cua hang?,contact
+quên mật khẩu vậy,account
+switch akko có lắp vừa kit 75% k,builder_compat
+keeby ơi quẹt thẻ được không vậy shop,payment
+kit 65% dùng keycap gì,builder_compat
+Bạn ơi có ai trực không ạ,greet
+giao hàng mất mấy ngày,shipping
+Shop ơi bán hàng trên keebhub nha,seller
+Shop ơi số điện thoại shop,contact
+link đặt lại mật khẩu hết hạn ạ,account
+Shop oi vi keebhub la gi nhe,wallet
+minh muon hoi tks nha,thanks
+Tam biet nha,thanks
+Sao ko chon dc cod,payment
+tro thanh nguoi ban a?,seller
+chuyển khoản được không,payment
+cho mk hỏi tạo tài khoản,account
+ok cảm ơn ạ,thanks
+switch akko co lap vua kit tkl khong nha,builder_compat
+Shop ơi switch gateron có lắp vừa kit 60% k nha,builder_compat
+minh muon hoi tra hang tn a,return_item
+cho mik hoi tim keycap pbt re re nhe,find_product
+ad ơi shop có kit nhôm không,find_product
+Ad oi tks a,thanks
+Switch akko co lap vua kit 60% khong,builder_compat
+keeby oi dia chi cua hang,contact
+cho em hoi phoi phim custom,builder_compat
+nói chuyện với quản trị viên thế,contact
+bạn ơi thanh toán bằng gì,payment
+tiền ship tính thế nào,shipping
+ad ơi được rồi cảm ơn v,thanks
+mình muốn hỏi build mất bao lâu ạ?,builder_compat
+bạn là ai vậy,greet
+mik muốn hỏi mua chuột gaming vậy shop,other
+ban oi zay la xong cam on,thanks
+cho minh hoi chao em,greet
+ad oi huy don co mat phi khong zay,cancel_refund
+Xin hỏi bạn làm đc gì thế,greet
+minh muon hoi giao hang mat may ngay vay,shipping
+ban oi keycap nay co hop kit 60% k nha,builder_compat
+Bạn ơi liên hệ admin ạ,contact
+bạn ơi chuyện tình cảm nhé,other
+shop của tôi bị khoá ạ?,seller
+tra tien bang cach nao,payment
+Phim co nao dang mua nhat vay,find_product
+co ship ra TP.HCM khong,shipping
+momo dc khong,payment
+cho em hoi alo nha,greet
+Shop oi sua dia chi nhan hang the,account
+keeby oi ship ve Ha Noi bn,shipping
+ok nha,thanks
+keeby ơi hi bạn zậy,greet
+bạn ơi tài khoản bị khoá ạ,account
+chọn switch cho kit tkl,builder_compat
+cho em hỏi sao bị đăng xuất vậy shop,account
+minh muon hoi muon huy don gia cong a?,cancel_refund
+ad oi huy don vnpay co hoan tien k?,cancel_refund
+đơn của mình đang ở đâu nha,order_status
+mau kit 75% moi nhat nhe,find_product
+Xin hỏi xem ví,wallet
+ad ơi xin chào keebhub,greet
+cho em hỏi đơn hôm qua sao rồi,order_status
+ban oi chon switch cho kit 65%,builder_compat
+mình muốn hỏi tư vấn phím cơ gõ cho đã tay nhé,find_product
+keeby la gi vay shop,greet
+cho em hỏi chọn switch cho kit 65% vậy,builder_compat
+keeby ơi ko thích nữa trả được ko?,return_item
+shop ơi gửi hàng trả về ở đâu với,return_item
+Shop oi sao khong huy dc don,cancel_refund
+xin hoi build phim the nao,builder_compat
+xin hoi mo gian hang v,seller
+trả tiền sau được không nhé,payment
+xin hỏi chọn switch cho kit 60%,builder_compat
+Keeby oi phim khong len den muon doi v,return_item
+cho mk hỏi đơn custom huỷ đc không zậy,cancel_refund
+xin hoi dung vi de tra tien don hang a,payment
+Cho em hoi tien trong vi dung lam gi,wallet
+keeby ơi đặt nhầm muốn hủy ạ?,cancel_refund
+cho em hỏi tuyệt vời cảm ơn,thanks
+cho em hoi sao khong chon duoc cod the,payment
+bạn ơi địa chỉ cửa hàng nha,contact
+cho em hỏi build của mik làm tới đâu rồi?,order_status
+cho em hỏi ship về Hà Nội bao nhiêu ạ,shipping
+số dư ví của tôi ạ?,wallet
+shop oi lam sao de huy don,cancel_refund
+keeby ơi gợi ý kit bàn phím tầm 150k,find_product
+Bạn ơi hay quá cảm ơn với,thanks
+shop ơi bán laptop hông ạ,other
+shop ơi,greet
+kênh người bán ở đâu,seller
+ship về Hải Phòng bao nhiêu,shipping
+xin hỏi muốn trả hàng vậy,return_item
+kiem tra giup don cua em nhe,order_status
+cho mik hỏi có ship ra Hải Phòng ko?,shipping
+mk muon hoi hi,greet
+mình muốn hỏi số dư ví của tôi,wallet
+shop ơi đơn bị huỷ tiền đi đâu thế,cancel_refund
+ad ơi tiền ship tính thế nào,shipping
+cho em hoi so du tai khoan voi,wallet
+xin hỏi làm người bán thế nào thế,seller
+ad oi he lo,greet
+Ad oi muon hop tac ban phim v shop,seller
+Mik muốn hỏi cám ơn shop nhiều ạ?,thanks
+Keeby ơi ok mk hiểu rồi với,thanks
+xin hỏi xổ số hôm nay,other
+ad ơi muốn trả hàng vậy shop,return_item
+Thanh toán bằng gì vậy shop,payment
+Mình muốn hỏi shop có switch không ạ,find_product
+Shop ơi thanh toán lỗi thì sao vậy shop,payment
+cho em hỏi đổi mật khẩu sao,account
+cho em hoi vi co het han khong nha,wallet
+cho mik hỏi nhận gia công trên sàn,seller
+đơn đã thanh toán huỷ có được hoàn ko,cancel_refund
+bạn ơi switch gateron có lắp vừa kit 75% k ạ?,builder_compat
+shop huỷ đơn của tôi thì sao,cancel_refund
+làm bài tập tiếng anh giúp,other
+mình muốn hỏi lube switch giá bnh nha,builder_compat
+shop oi muon build ban phim,builder_compat
+chào ad nha,greet
+shop oi huy don dc khong a,cancel_refund
+freeship khong voi,shipping
+shop ơi đơn hôm qua sao rồi thế,order_status
+ví có hết hạn ko nha,wallet
+bạn ơi có ship ra Đà Nẵng không ạ,shipping
+Cho em hỏi giải bài toán này giúp thế,other
+Bạn ơi gọi cho ai vậy,contact
+hotline la gi?,contact
+hang bi vo khi van chuyen nhe,return_item
+ad ơi gặp nhân viên?,contact
+có ship ra tỉnh hông vậy shop,shipping
+chuyển tiền ví cho bạn được không,wallet
+ad ơi có những hình thức thanh toán nào,payment
+mình muốn hỏi báo lỗi web nha,contact
+shop ơi asdfgh vậy,other
+keeby ơi tài khoản bị khoá,account
+mau stab moi nhat,find_product
+shop ơi cần stabilizer lập trình tầm 3 triệu ạ,find_product
+Ad ơi bạn là ai vậy,greet
+cho mình hỏi huỷ đơn có mất phí ko,cancel_refund
+có ai trực không,greet
+mik muon hoi xem so du v,wallet
+ad ơi cảm ơn đã hỗ trợ thế,thanks
+Minh muon hoi hay qua cam on vay shop,thanks
+cho mình hỏi kê tay nào tốt gõ cho đã tay ạ?,find_product
+sửa địa chỉ nhận hàng vậy shop,account
+gọi cho ai,contact
+nut huy don o dau a,cancel_refund
+ví keebhub là gì ạ,wallet
+keycap này có hợp kit tkl không,builder_compat
+khiếu nại lên sàn thế nào,return_item
+shop oi kiem tra vi,wallet
+cho minh hoi build cua minh lam toi dau roi,order_status
+cho em hỏi hoàn tiền khi hủy đơn zậy shop,cancel_refund
+build phim the nao a?,builder_compat
+co giao hoa toc ko?,shipping
+tỉ giá đô thế,other
+shop oi vi bi tru tien,wallet
+ví keebhub ở đâu,wallet
+mik muốn hỏi bán switch trên sàn đc không với,seller
+ad ơi thank you,thanks
+mk muốn hỏi xem số dư,wallet
+Bạn ơi sao bị đăng xuất ạ,account
+shop oi may gio roi v,other
+ê bot ạ?,greet
+ad ơi có ship ra Huế hông,shipping
+shop ơi mấy giờ rồi,other
+mik muốn hỏi shop ơi vậy shop,greet
+xin hoi doi anh dai dien a?,account
+gói gia công gồm những gì,builder_compat
+Cho em hoi switch tactile nao hop nhe tay vay shop,find_product
+co thanh toan khi nhan hang khong a?,payment
+cho em hỏi lol ạ?,other
+shop oi oke,thanks
+dang nhap bang so dien thoai a,account
+shop oi giao hang toan quoc ko voi,shipping
+shop ơi có keycap pbt nào hot ko zậy shop,find_product
+có phím cơ nào dưới 1 triệu không,find_product
+Cho em hỏi keycap này có hợp kit full ko,builder_compat
+muốn build bàn phím,builder_compat
+cho em hỏi sao bị đăng xuất với,account
+keeby ơi hủy đơn vnpay có hoàn tiền không v shop,cancel_refund
+Mình muốn hỏi momo đc không thế,payment
+cần hỗ trợ gấp?,contact
+ship ve Da Nang bn voi,shipping
+ad ơi keycap này có hợp kit full k nha,builder_compat
+ad oi xem so du,wallet
+Mình muốn hỏi rút tiền từ ví được không nha,wallet
+xin hoi tu van vien dau voi,contact
+bạn ơi hàn mạch có không với,builder_compat
+minh muon hoi kiem tra giup don,order_status
+Gợi ý bàn phím dưới 500k?,find_product
+dat ve may bay voi,other
+shop ơi gặp nhân viên ạ,contact
+rut tien tu vi duoc khong a,wallet
+sửa lại build đã lưu ạ?,builder_compat
+Shop ơi cảm ơn đã hỗ trợ,thanks
+khiếu nại lên sàn sao,return_item
+shop ơi đăng nhập bằng google với,account
+Ad oi co ship ra tinh khong nha,shipping
+cho em hỏi chào ad?,greet
+xin hỏi thế thôi nhé thế,thanks
+cho mk hỏi đăng sp lên bán ạ,seller
+xưởng gia công nào uy tín,builder_compat
+Có ship ra huế k vậy,shipping
+shop ơi bạn là ai,greet
+doi email duoc khong,account
+bạn ơi mở gian hàng vậy shop,seller
+Cách nấu phở với,other
+có bán phím full size không nha,find_product
+bạn ơi thời tiết hôm nay thế nào thế,other
+keeby ơi ví có hết hạn không với,wallet
+ad oi tro thanh nguoi ban,seller
+keeby ơi đơn bị kẹt à ạ,order_status
+shop huy don cua toi thi sao zay shop,cancel_refund
+shop thu phí gì,seller
+keeby oi switch 5 pin co lap vua kit full k vay shop,builder_compat
+shop khong dong y tra hang a?,return_item
+shop ơi nạp tiền vào ví,wallet
+Ad ơi ê bot nhé,greet
+noi chuyen voi quan tri vien nhe,contact
+Keeby ơi switch gateron có lắp vừa kit 60% không vậy,builder_compat
+ăn cơm chưa,other
+cho em hỏi switch gateron có lắp vừa kit 65% không?,builder_compat
+mk muốn hỏi làm người bán sao?,seller
+thanh toán bằng ví keebhub được ko với,payment
+v là xong cảm ơn với,thanks
+Cho em hỏi sản phẩm bị từ chối duyệt nha,seller
+keeby oi ship ve tinh bao nhieu a,shipping
+cho em hỏi chào bạn?,greet
+xin hỏi rút tiền từ ví dc ko nha,wallet
+bai bai v,thanks
+keeby oi vi keebhub o dau nhe,wallet
+Ad ơi hello v shop,greet
+shop oi tai khoan bi khoa voi,account
+bạn ơi quét mã qr thanh toán ạ?,payment
+bạn bao nhiêu tuổi,other
+minh muon hoi phi van chuyen sao,shipping
+oke,thanks
+Shop ơi tạo tài khoản nha,account
+Cho minh hoi chon bo phim 60% the nao lap trinh,find_product
+Switch akko có lắp vừa kit tkl không,builder_compat
+Tu van vien dau v,contact
+cho mình hỏi học lập trình ở đâu với,other
+ad oi tien hoan trong vi rut ra ngan hang duoc khong voi,wallet
+có giao hoả tốc không nha,shipping
+vi bi tru tien nhe,wallet
+khi nào nhận được hàng với,order_status
+cho em hỏi tìm stab dưới 200 nghìn,find_product
+xoa tai khoan?,account
+shop oi shop oi,greet
+cho em hỏi có bán keycap pbt ko,find_product
+xin hoi cach giam can?,other
+Ad oi co nhung hinh thuc thanh toan nao voi,payment
+so dien thoai shop zay,contact
+keeby ơi bạn là ai vậy ạ?,greet
+mk muon hoi nap tien vao vi,wallet
+tự lắp phím được không,builder_compat
+don cua minh dang o dau,order_status
+xoá tài khoản?,account
+Ban oi quet the duoc ko,payment
+ad ơi hi bạn?,greet
+shop ơi kiểm tra giúp đơn KH-1234567 với,order_status
+Ad ơi có thanh toán khi nhận hàng không ạ?,payment
+shop ơi trả hàng dc hoàn tiền không,return_item
+cho em hoi sao vi co tien voi,wallet
+Xin hỏi đăng nhập bằng google nhé,account
+Ad oi ok nha a,thanks
+Co ship ra hue khong vay shop,shipping
+mik muốn hỏi keeby là gì,greet
+sua dia chi nhan hang?,account
+Mik muon hoi oke thanks nha nha,thanks
+keeby oi sao bi dang xuat zay,account
+cho minh hoi bye,thanks
+Cho minh hoi tien do gia cong phim cua minh voi,order_status
+đơn hàng gần nhất của tôi nhé,order_status
+shop ơi chào shop,greet
+shop oi hotline la gi voi,contact
+Cho em hoi an com chua nha,other
+kiểm tra tương thích,builder_compat
+vay la xong cam on vay,thanks
+cho em hoi shop cua toi bi khoa,seller
+có cửa hàng offline k?,contact
+đặt vé máy bay,other
+bạn ơi ok cảm ơn,thanks
+Chính sách đổi trả thế,return_item
+mk muốn hỏi đơn hàng gần nhất của tôi với,order_status
+cho em hỏi chào ad với,greet
+shop ơi gửi lại email xác nhận vậy shop,account
+nhận gia công trên sàn thế,seller
+shop oi bao loi web nhe,contact
+kit nhom gia bn,find_product
+Cho em hỏi theo dõi đơn hàng nha,order_status
+Cho mình hỏi thiếu phụ kiện trong hộp v shop,return_item
+còn hàng phím full size ko?,find_product
+ad ơi hủy đơn có mất phí ko nha,cancel_refund
+ad oi gasket mount la gi,builder_compat
+keeby oi lam nguoi ban the nao a?,seller
+cho mk hoi lien he cham soc khach hang the,contact
+mình muốn hỏi làm việc giờ nào nha,contact
+ad ơi nhận gia công trên sàn vậy shop,seller
+xin hoi hoan tien khi huy don a,cancel_refund
+gasket mount là gì,builder_compat
+cho mik hoi khong muon mua nua huy sao,cancel_refund
+minh muon hoi mo gian hang nhe,seller
+keeby ơi số điện thoại shop,contact
+xin hoi switch akko co lap vua kit 60% ko,builder_compat
+Shop oi thanh toan xong chua thay cap nhat,payment
+cho em hỏi shop từ chối trả hàng thì sao,return_item
+bạn ơi hế lô ạ?,greet
+don custom co cod ko?,payment
+kit nao hop go em vay shop,find_product
+cho mik hoi don cua toi bao gio giao,order_status
+Shop ơi hế lô vậy shop,greet
+shop oi tra hang duoc hoan tien khong,return_item
+shop ở đâu,contact
+ban oi so dien thoai shop nha,contact
+shop ơi cáp nào hợp để gõ văn bản vậy shop,find_product
+Cho minh hoi giao bang don vi nao a,shipping
+shop oi nhan duoc hang bi mop the,return_item
+Ad ơi mình muốn mua keycap cherry profile tầm 1 triệu nha,find_product
+tìm giúp keycap pbt nhẹ tay,find_product
+kit gasket khoảng 2tr có không zậy,find_product
+Shop ơi bạn có người yêu chưa với,other
+shop oi vi bi tru tien?,wallet
+cho mk hỏi hi bạn thế,greet
+cho em hỏi sao ko huỷ dc đơn thế,cancel_refund
+hàng bị vỡ khi vận chuyển nhé,return_item
+mik muốn hỏi hello v,greet
+ban oi cam on keeby,thanks
+Cho em hỏi trả tiền sau đc không,payment
+Cho mình hỏi switch akko có lắp vừa kit tkl không,builder_compat
+cho em hỏi momo được không zậy,payment
+cho em hoi kiem tra giup don nha,order_status
+cho mình hỏi nút huỷ đơn ở đâu,cancel_refund
+ad oi khong muon mua nua huy sao a,cancel_refund
+bán switch trên sàn được k nha,seller
+shop oi huy don bao lau dc hoan tien vay shop,cancel_refund
+mình muốn hỏi quẹt thẻ được không,payment
+chào em,greet
+Ban oi vi keebhub o dau voi,wallet
+mk muon hoi shop o dau nha,contact
+xin hoi huy don bao lau duoc hoan tien vay,cancel_refund
+v là xong cảm ơn ạ?,thanks
+keeby ơi email hỗ trợ nha,contact
+chuyện tình cảm,other
+ad oi xin chao keebhub zay,greet
+Ad ơi gasket mount là gì thế,builder_compat
+Kit bàn phím nào đáng mua nhất,find_product
+kiem tra don hang,order_status
+xổ số hôm nay thế,other
+cho em hoi co ship ra Ha Noi hong nha,shipping
+lưu cấu hình build v shop,builder_compat
+ad ơi keycap này có hợp kit full không,builder_compat
+mik muốn hỏi shop có kit hông thế,find_product
+keeby oi xin chao zay,greet
+minh muon hoi theo doi don hang nha,order_status
+Shop ơi muốn mở shop,seller
+ban oi ship ve Da Nang bao nhieu?,shipping
+ad ơi số dư tài khoản,wallet
+đơn đang ở trạng thái nào,order_status
+shop oi thieu keycap,return_item
+Keeby ơi chuyển tiền ví cho bạn được k ạ?,wallet
+tìm kit bàn phím dưới 500k v,find_product
+co giao hoa toc k,shipping
+ví keebhub là gì thế,wallet
+dùng ví để trả tiền đơn hàng,payment
+minh muon hoi kit full dung keycap gi vay,builder_compat
+Keeby oi kenh nguoi ban o dau a,seller
+shop ơi mua điện thoại iphone v shop,other
+ad ơi bán hàng trên keebhub vậy shop,seller
+ad oi ship ve TP.HCM bao nhieu a,shipping
+Cho em hỏi hello thế,greet
+Keeby oi phi san bnh vay shop,seller
+sao không huỷ được đơn,cancel_refund
+đơn custom huỷ được không,cancel_refund
+cho minh hoi tim giup kit 65% de go van ban vay shop,find_product
+Shop ơi cấu hình phím chơi game,builder_compat
+Oke thanks nha a?,thanks
+keeby ơi cho xin số zalo?,contact
+Ad oi cho minh noi chuyen voi nguoi that nha,contact
+cho em hoi vi keebhub la gi voi,wallet
+hat mot bai di the,other
+Keeby ơi nhập sai mật khẩu bị khoá v shop,account
+Tự lắp phím dc không ạ,builder_compat
+ví keebhub là gì vậy shop,wallet
+Ship về huế bao nhiêu vậy,shipping
+minh muon hoi alo,greet
+Cho em hoi dang ky ban hang a,seller
+xin hỏi ship hoả tốc giá sao nhé,shipping
+cho em hỏi lắp ráp giúp mik được hông,builder_compat
+Shop ơi phối phím custom,builder_compat
+shop oi co ship ra Hai Phong hong a,shipping
+Keeby oi huy don thi tien hoan ve dau,cancel_refund
+minh muon hoi so du vi cua toi nha,wallet
+keeby oi tien ship tinh sao voi,shipping
+cho mình hỏi shop hủy đơn của tôi thì sao thế,cancel_refund
+Keycap này có hợp kit 75% ko nhé,builder_compat
+xin hỏi keycap gmk dưới 500k có ko nha,find_product
+minh muon hoi ma van don la gi vay,order_status
+so sánh các loại phím cơ nha,find_product
+shop ơi tạo tài khoản ạ,account
+chuyển tiền ví cho bạn được k ạ?,wallet
+ban oi don hom qua sao roi,order_status
+shop oi chao em a?,greet
+keeby oi xo so hom nay voi,other
+Cho mình hỏi link đặt lại mật khẩu hết hạn nha,account
+cho mk hoi thieu keycap?,return_item
+lam viec gio nao vay,contact
+nhờ shop lube switch,builder_compat
+ad oi keycap ban chay nhat?,find_product
+Mua điện thoại iphone,other
+shop ơi bán hàng trên keebhub ạ,seller
+ban oi nhan duoc hang bi mop nhe,return_item
+ban oi freeship khong,shipping
+Ad ơi trả hàng cần những gì nha,return_item
+keeby ơi mình biết rồi thanks nhé,thanks
+cho em hỏi phí ship bao nhiêu với,shipping
+bỏ đơn đc k,cancel_refund
+Chọn phím cơ thế nào làm văn phòng zậy shop,find_product
+cho em hỏi đổi mật khẩu thế nào,account
+bạn ơi momo đc không nhé,payment
+shop oi tien hoan trong vi rut ra ngan hang duoc khong,wallet
+shop oi choi game gi vui a,other
+bạn ơi dùng ví để trả tiền đơn hàng ạ,payment
+Minh muon hoi gia vang hom nay,other
+mẫu keycap mới nhất ạ,find_product
+cho em hỏi cho mình nói chuyện với người thật zậy,contact
+mình muốn hỏi chuyển tiền ví cho bạn được k nha,wallet
+cho mik hoi lam tho di voi,other
+minh muon hoi de xuat stab go cho da tay,find_product
+phi van chuyen sao the,shipping
+mình muốn hỏi còn hàng dây cáp ko zậy shop,find_product
+cho mik hỏi mua stab ở đâu nhé,find_product
+Mk muon hoi ship ve tinh bao nhieu vay,shipping
+nói chuyện với quản trị viên với,contact
+ban co nguoi yeu chua,other
+bai bai nhé,thanks
+bán hàng trên keebhub nha,seller
+kiem tra giup don hom qua a,order_status
+Keeby oi shop o dau,contact
+bạn ơi làm người bán sao nhé,seller
+Ad ơi nhờ shop lube switch?,builder_compat
+Keeby oi lam bai tap tieng anh giup a?,other
+thanks,thanks
+san pham bi tu choi duyet?,seller
+ad oi ok nha nhe,thanks
+xin hỏi ship về Hà Nội bnh với,shipping
+ad oi lich su giao dich vi a?,wallet
+bạn ơi tiền hoàn trong ví rút ra ngân hàng được không thế,wallet
+cho minh hoi cam on keeby the,thanks
+shop oi vi co het han k a,wallet
+keeby ơi phối phím custom với,builder_compat
+ví có hết hạn không,wallet
+minh muon hoi giao nham switch?,return_item
+keeby oi ok nha?,thanks
+ad oi lich su giao dich vi a,wallet
+thank you vậy,thanks
+cho em hỏi shop thu phí gì với,seller
+ad ơi đơn KH-1234567 sao rồi,order_status
+Xin hỏi đơn bao nhiêu thì free ship ạ,shipping
+cho em hoi xin chao keebhub vay,greet
+switch gateron co lap vua kit full hong zay shop,builder_compat
+Ad ơi phí sàn bao nhiêu ạ?,seller
+Xin hỏi asdfgh ạ,other
+shop ơi nhận gia công trên sàn,seller
+keeby ơi switch akko có lắp vừa kit 60% không ạ,builder_compat
+shop từ chối trả hàng thì sao zậy,return_item
+ban oi bye the,thanks
+mình muốn hỏi xem lịch sử mua hàng ạ?,order_status
+xin hỏi phí ship mỗi shop tính sao với,shipping
+cho em hoi cau hinh phim choi game v shop,builder_compat
+minh muon hoi ok cam on,thanks
+mk muon hoi dang san pham len ban,seller
+keycap này có hợp kit 75% không,builder_compat
+xin hỏi chọn switch cho kit 65% thế,builder_compat
+cho minh hoi thanh toan visa dc khong a,payment
+Shop oi bao lau shop dc duyet voi,seller
+Mua 2 shop co tinh 2 lan phi ship khong,shipping
+chọn switch cho kit 75%,builder_compat
+switch gateron có lắp vừa kit 75% không,builder_compat
+ê bot,greet
+ship về tỉnh bao nhiêu,shipping
+link đặt lại mật khẩu hết hạn ạ?,account
+ad ơi dùng ví để trả tiền đơn hàng?,payment
+Tien hoan trong vi rut ra ngan hang dc khong nha,wallet
+Cho em hoi tien do gia cong phim cua minh the,order_status
+xin hỏi số điện thoại shop,contact
+nạp tiền vào ví,wallet
+cho em hoi co ship ra Hue khong nhe,shipping
+phí ship bao nhiêu,shipping
+switch gateron có lắp vừa kit 60% không,builder_compat
+lam sao de huy don nha,cancel_refund
+xin hỏi hàng lỗi có được đổi k?,return_item
+Cho mình hỏi thank you với,thanks
+ban oi doi so dien thoai a,account
+shop ơi tư vấn viên đâu nhé,contact
+Không đăng nhập được nha,account
+Ví keebhub ở đâu v shop,wallet
+cho em hỏi phím full size bán chạy nhất với,find_product
+xin hỏi ko thích nữa trả được ko,return_item
+kiểm tra ví với,wallet
+ad oi doi email duoc ko v shop,account
+cho minh hoi doi anh dai dien a,account
+Xoa tai khoan vay shop,account
+cho em hỏi trả tiền sau được không vậy shop,payment
+shop oi shop co ban phim tkl khong a?,find_product
+cho mik hỏi giải thích thuyết tương đối zậy,other
+ban oi doi anh dai dien nha,account
+ad ơi phí sàn bn nhé,seller
+xin hoi tai nghe nao tot?,other
+shop ơi huỷ đơn thì tiền hoàn về đâu?,cancel_refund
+Mình muốn hỏi có ship ra đà nẵng không?,shipping
+cho em hoi kenh nguoi ban o dau nhe,seller
+ad oi co ai khong,greet
+bán laptop không,other
+cho em hoi doi so dien thoai,account
+Cho em hỏi momo đc ko?,payment
+ban hang tren keebhub a?,seller
+ad ơi tạm biệt zậy,thanks
+Keeby ơi nút huỷ đơn ở đâu,cancel_refund
+sao khong chon duoc cod the,payment
+ad oi cho xin so zalo?,contact
+xin hoi cam on nhe a?,thanks
+cho em hỏi giao nhầm switch nhé,return_item
+shop của tôi bị khoá,seller
+có những hình thức thanh toán nào thế,payment
+Build của mik làm tới đâu rồi ạ?,order_status
+số dư tài khoản nhé,wallet
+cho minh hoi huy don tn a,cancel_refund
+keeby ơi lịch sử giao dịch ví vậy,wallet
+Chơi game gì vui với,other
+shop ơi quét mã qr thanh toán nha,payment
+xin hỏi hay quá cảm ơn?,thanks
+cho em hỏi làm người bán thế nào vậy shop,seller
+tạo tài khoản,account
+doi anh dai dien nhe,account
+minh muon hoi can stabilizer lap trinh tam 3 trieu a,find_product
+tu van vien dau vay shop,contact
+Ví bị trừ tiền?,wallet
+cho em hỏi ăn cơm chưa,other
+shop ơi nhận được hàng bị móp v,return_item
+keeby oi dia chi cua hang nhe,contact
+bạn ơi đơn hàng của tôi tới đâu rồi vậy,order_status
+Don da thanh toan huy co duoc hoan khong?,cancel_refund
+bạn ơi so sánh các loại keycap cherry profile v,find_product
+kiểm tra ví,wallet
+ad oi phim gi hay?,other
+minh muon hoi don cua toi bao gio giao?,order_status
+Đơn bị huỷ tiền đi đâu,cancel_refund
+thanh toán online có an toàn không,payment
+Keeby oi ship ve tp.hcm bao nhieu the,shipping
+quen mat khau vay,account
+xin hỏi so sánh các loại switch gateron nha,find_product
+minh muon hoi ma van don la gi the,order_status
+cho em hỏi số dư tài khoản nha,wallet
+Keycap này có hợp kit 75% ko nha,builder_compat
+bạn ơi phím ko lên đèn muốn đổi ạ?,return_item
+Ad ơi nhập sai mật khẩu bị khoá ạ,account
+cho mik hỏi switch linear có lắp vừa kit gasket k nha,builder_compat
+mik muốn hỏi thanks,thanks
+mik muốn hỏi dịch sang tiếng anh ạ?,other
+có ship ra Huế không,shipping
+chào keeby nhé vậy shop,greet
+phi ship moi shop tinh sao,shipping
+bạn ơi có ship ra Hà Nội không với,shipping
+xin hỏi thanh toán như thế nào vậy shop,payment
+Thanh toán online có an toàn không ạ,payment
+xin hoi muon hop tac ban phim vay,seller
+shop ở đâu với,contact
+Ad ơi trả hàng thế nào,return_item
+keeby ơi đơn sao rồi với,order_status
+don da thanh toan huy co dc hoan ko v,cancel_refund
+shop oi gioi thieu switch linear choi game,find_product
+thanh toan bang gi the,payment
+kit tkl dùng keycap gì?,builder_compat
+bạn ơi phím bị liệt nút muốn trả với,return_item
+Ad ơi switch bị kẹt muốn trả lại,return_item
+nên mua kit 75% gì dưới 300k,find_product
+bảo hành tn nha,return_item
+Bạn ơi zậy là xong cảm ơn,thanks
+xin chào ạ,greet
+cho mk noi chuyen voi nguoi that a?,contact
+cho em hỏi tôi đổi ý muốn hủy v,cancel_refund
+bạn ơi chuyển khoản được không nha,payment
+Ad oi xem so du,wallet
+link đặt lại mật khẩu hết hạn,account
+linh kien co tuong thich khong v,builder_compat
+cho mình hỏi chào bạn ạ,greet
+bạn ơi có cửa hàng offline không ạ?,contact
+xin hỏi xin chào keebhub,greet
+cho mình nói chuyện với người thật,contact
+keeby oi co ship ra Can Tho khong vay,shipping
+keeby ơi địa chỉ cửa hàng vậy shop,contact
+mua keycap cherry profile ở đâu,find_product
+shop oi chon keycap sao nhe,find_product
+mik muốn hỏi chào shop vậy,greet
+keeby ơi không muốn mua nữa hủy sao,cancel_refund
+huỷ đơn sao vậy,cancel_refund
+keeby ơi còn hàng bàn phím tkl không ạ,find_product
+bạn ơi có ai không nhé,greet
+kiểm tra ví ạ?,wallet
+ad ơi giao sai hàng thì sao,return_item
+cho mik hoi linh kien co tuong thich khong,builder_compat
+shop oi nut huy don o dau zay,cancel_refund
+Shop oi thanh toan visa dc khong?,payment
+Keeby ơi kiểm tra giúp đơn #kh-0012345 nha,order_status
+bạn ơi được rồi cảm ơn?,thanks
+ad oi don cua em sao roi,order_status
+rút tiền từ ví được không,wallet
+ad ơi viết code python thế,other
+bạn ơi switch 5 pin có lắp vừa kit 60% không vậy shop,builder_compat
+cho em hỏi shop k đồng ý trả hàng,return_item
+đăng sản phẩm lên bán,seller
+minh muon hoi ti gia do the,other
+shop oi chao buoi sang vay shop,greet
+đơn mình đã giao chưa,order_status
+cho minh hoi vi con bn tien the,wallet
+shop ơi recommend dây cáp dưới 1 triệu ạ?,find_product
+ship ve TP.HCM bn nha,shipping
+Cho em hoi co giao hoa toc khong,shipping
+ship có nhanh k?,shipping
+kiểm tra giúp đơn,order_status
+Cho em hỏi tạm biệt ạ?,thanks
+shop ơi phí vận chuyển thế nào thế,shipping
+ad oi huy nhieu don co sao khong a?,cancel_refund
+cho em hoi cam on nhe,thanks
+cho mình hỏi liên hệ admin ạ,contact
+Mik muốn hỏi bán hàng trên keebhub với,seller
+kit hotswap là gì,builder_compat
+Keeby ơi đơn hàng của tôi tới đâu rồi,order_status
+cho mình hỏi tiền ví dùng mua hàng được k thế,wallet
+hi bạn vậy,greet
+ad ơi bỏ đơn được không thế,cancel_refund
+sao ví có tiền,wallet
+Xin hoi chao buoi sang voi,greet
+kể chuyện cười đi,other
+cho em hoi cach giam can,other
+trả hàng thế nào,return_item
+keeby ơi cảm ơn?,thanks
+cho minh hoi sao don chua duoc xac nhan a?,order_status
+mình muốn hỏi bán switch trên sàn được ko,seller
+Xem lịch sử mua hàng,order_status
+thank you,thanks
+minh muon hoi xin chao nha,greet
+xin hỏi ví bị trừ tiền với,wallet
+shop oi ke chuyen cuoi di voi,other
+Xin hỏi ship tiêu chuẩn giá bnh zậy shop,shipping
+Bạn ơi quên mật khẩu,account
+shop đã xác nhận đơn chưa nhé,order_status
+Shop ơi đăng ký bán hàng ạ,seller
+đơn sao rồi,order_status
+shop ơi shop thu phí gì,seller
+Vận chuyển bằng gì vậy,shipping
+nen mua kit 75% gi duoi 300k a?,find_product
+bạn ơi kênh người bán ở đâu nhé,seller
+cho mình hỏi quẹt thẻ dc không nhé,payment
+alo,greet
+shop oi tra tien sau duoc khong a?,payment
+sản phẩm bị từ chối duyệt vậy,seller
+shop oi so du vi cua toi a?,wallet
+Lam nguoi ban the nao vay shop,seller
+ban oi khieu nai len san the nao,return_item
+ad ơi đăng nhập facebook được không v,account
+tư vấn keycap pbt,find_product
+đặt build custom ạ,builder_compat
+ad ơi so sánh các loại cáp vậy shop,find_product
+cho em hỏi ví còn bao nhiêu tiền?,wallet
+Xin chao,greet
+xin hoi can switch clicky choi game tam 1 tr nha,find_product
+bạn ơi sao ví có tiền,wallet
+Co ban cap khong a?,find_product
+ban oi kiem tra giup don KH-1234567 vay,order_status
+keeby ơi hàng bị lỗi thì làm sao nhé,return_item
+mình muốn hỏi build phím thế nào nha,builder_compat
+tiến độ gia công phím của mình vậy shop,order_status
+bạn ơi không thích nữa trả được không thế,return_item
+đơn của em sao rồi,order_status
+cho mình hỏi đơn của em sao rồi với,order_status
+shop oi thanh toan online co an toan khong,payment
+Mik muốn hỏi chào shop nha,greet
+Mk muốn hỏi chuyện tình cảm,other
+cho em hỏi stab plate mount hay pcb mount?,builder_compat
+cho minh hoi dang ky xuong gia cong v,seller
+gửi lại email xác nhận vậy shop,account
+bao giờ đơn tới,order_status
+cho mình hỏi ok mình hiểu rồi nhé,thanks
+xin hỏi lịch sử giao dịch ví ạ,wallet
+cho em hỏi sp bị từ chối duyệt với,seller
+Chọn switch cho kit gasket,builder_compat
+shop cua toi bi khoa,seller
+bạn ơi quét mã qr thanh toán với,payment
+Tra tien sau dc hong,payment
+bạn ơi học lập trình ở đâu,other
+cho em hỏi chào shop thế,greet
+trả tiền bằng cách nào với,payment
+shop oi dang nhap bang so dien thoai nha,account
+don bi huy tien di dau?,cancel_refund
+mình muốn hỏi kiểm tra giúp đơn #KH-0012345 ạ,order_status
+cho em hoi shop da xac nhan don chua voi,order_status
+cho mik hoi co cod khong,payment
+Shop ơi có ship ra tỉnh không với,shipping
+keeby ơi kiểm tra giúp đơn hôm qua?,order_status
+recommend keycap pbt giá sinh viên,find_product
+ban lam duoc gi v,greet
+cho mình hỏi mẫu stab mới nhất ạ?,find_product
+shop oi vi bi tru tien vay shop,wallet
+co ship ra Hai Phong khong,shipping
+xin hỏi bảo hành thế nào ạ,return_item
+shop oi tao tai khoan?,account
+mk muốn hỏi chào shop,greet
+mik muốn hỏi quét mã qr thanh toán nha,payment
+đơn bị kẹt à,order_status
+keeby ơi gợi ý kê tay dưới 300k vậy shop,find_product
+ad ơi kit 65% dùng keycap gì vậy shop,builder_compat
+Bạn ơi rút tiền từ ví đc ko ạ,wallet
+goi cho ai a?,contact
+thanh toán bằng ví keebhub được không ạ,payment
+Mik muon hoi keycap cherry profile ban chay nhat?,find_product
+cho mình hỏi cảm ơn nhé vậy,thanks
+mk muon hoi switch akko co lap vua kit 75% ko,builder_compat
+Chính sách đổi trả,return_item
+mua chuot gaming vay shop,other
+cho em hỏi chào em nha,greet
+shop oi hat mot bai di,other
+xin hoi vi co het han hong,wallet
+Cho em hỏi đăng ký xưởng gia công thế,seller
+bạn ơi gửi lại email xác nhận thế,account
+Mình muốn hỏi chính sách đổi trả nhé,return_item
+chào keeby nhé,greet
+Cho mình hỏi oke thế,thanks
+keycap gmk nào hợp chơi game,find_product
+mình muốn hỏi sao ví có tiền,wallet
+ban oi don custom huy duoc khong?,cancel_refund
+shop oi doi mat khau the nao?,account
+mình muốn hỏi switch gateron giá bn với,find_product
+toi muon huy don hang the,cancel_refund
+Cho mk hoi khieu nai shop,return_item
+Keeby oi kiem tra giup don hom qua nhe,order_status
+kit ban phim nao dang mua nhat zay,find_product
+ad ơi thế thôi nhé với,thanks
+Dat ve may bay voi,other
+mk muon hoi shop cua toi bi khoa nha,seller
+cho mik hỏi switch akko có lắp vừa kit 75% ko với,builder_compat
+thiếu keycap với,return_item
+chuyen tien vi cho ban duoc khong a,wallet
+xin hoi dang nhap bang google v,account
+Cho mình hỏi vận chuyển bằng gì,shipping
+keeby oi giai bai toan nay giup,other
+bạn ơi ship có nhanh k,shipping
+shop ơi đăng nhập facebook được hông,account
+dang san pham len ban a?,seller
+bao gio don toi a?,order_status
+shop oi cho xin so zalo,contact
+Ban oi nut huy don o dau,cancel_refund
+nut huy don o dau,cancel_refund
+mik muon hoi co ban phim tkl nao hot k the,find_product
+Giao hàng toàn quốc không nhé,shipping
+mik muốn hỏi bạn giúp đc gì cho mik,greet
+nhận gia công trên sàn,seller
+keeby ơi nói chuyện với quản trị viên ạ,contact
+alo nha,greet
+xin hỏi ship về Cần Thơ bao nhiêu v shop,shipping
+cho em hoi mua dien thoai iphone?,other
+liên hệ admin ạ,contact
+chào buổi sáng nha,greet
+muốn huỷ đơn gia công,cancel_refund
+xin hỏi hàng lỗi có đc đổi hông nhé,return_item
+xin hoi ban phim ban chay nhat the,find_product
+theo dõi đơn hàng,order_status
+nút hủy đơn ở đâu vậy,cancel_refund
+có ship ra Hà Nội k với,shipping
+minh muon hoi switch gateron co lap vua kit full khong a?,builder_compat
+ad oi tra tien sau dc khong,payment
+minh muon hoi link dat lai mat khau het han vay shop,account
+mua dien thoai iphone?,other
+xin hỏi bai bai,thanks
+gợi ý phím hotswap tầm 3 triệu,find_product
+cho em hoi bo don duoc khong vay,cancel_refund
+Xin hoi tai khoan bi khoa nhe,account
+bạn ơi sửa địa chỉ nhận hàng,account
+Cho em hỏi k đăng nhập đc nha,account
+mik muốn hỏi switch kailh box có lắp vừa kit 60% k,builder_compat
+cho em hoi mua 2 shop co tinh 2 lan phi ship khong a,shipping
+don custom huy dc k,cancel_refund
+Xin hoi co cua hang offline k nha,contact
+Xin hoi giao sai hang thi sao vay shop,return_item
+Cho minh hoi thanh toan bang vi keebhub dc khong voi,payment
+Ví của mình bao nhiêu,wallet
+tuyet voi cam on voi,thanks
+xin hỏi hi v,greet
+Mình muốn hỏi gói gia công gồm những gì nhé,builder_compat
+xuong gia cong nao uy tin?,builder_compat
+bạn ơi khiếu nại lên sàn tn nhé,return_item
+xin hỏi tài khoản bị khoá nha,account
+ad ơi nhận gia công trên sàn thế,seller
+ad ơi cho xin số zalo vậy,contact
+cho mình hỏi gọi cho ai vậy shop,contact
+làm người bán thế nào,seller
+Cho mk hỏi thank you,thanks
+Cho em hỏi cám ơn shop nhiều ạ,thanks
+ad oi phim gi hay nhe,other
+ban oi shop o dau voi,contact
+mình muốn hỏi phí giao hàng ạ?,shipping
+mik muốn hỏi momo được ko,payment
+thanh toan online co an toan khong a?,payment
+Cam on shop nhieu,thanks
+shop oi the,greet
+mik muốn hỏi bán hàng trên keebhub thế,seller
+cho em hỏi xổ số hôm nay nha,other
+ban oi co mien phi ship khong a,shipping
+cho em hoi ship co nhanh khong,shipping
+mình muốn hỏi có ai trực không?,greet
+Cho mik hỏi ví còn bao nhiêu tiền ạ,wallet
+ad oi tien trong vi dung lam gi,wallet
+kit giá bao nhiêu nha,find_product
+muốn hợp tác bán phím thế,seller
+đơn KH-1234567 sao rồi,order_status
+giao sai hàng thì sao,return_item
+cho em hỏi bạn làm được gì v shop,greet
+cho mik hoi doi mat khau tn a,account
+cho em hỏi thank you?,thanks
+Xin hỏi nạp tiền vào ví,wallet
+cho em hỏi chọn switch cho kit tkl ạ?,builder_compat
+Bạn ơi trả hàng dc hoàn tiền hông thế,return_item
+cho em hỏi bao lâu shop dc duyệt nha,seller
+switch bị kẹt muốn trả lại,return_item
+hế lô,greet
+xin hỏi bán hàng trên keebhub v,seller
+có cod không,payment
+nút hủy đơn ở đâu nha,cancel_refund
+cho minh hoi tao tai khoan a,account
+Cho em hỏi cho xin số zalo thế,contact
+tuyệt vời cảm ơn,thanks
+cho mk hoi muon mo shop,seller
+xin hỏi sao bị đăng xuất zậy,account
+mik muốn hỏi link đặt lại mật khẩu hết hạn vậy shop,account
+cho mk hoi toi muon huy don hang a,cancel_refund
+chọn switch cho kit gasket,builder_compat
+Cho mik hỏi link đặt lại mật khẩu hết hạn?,account
+đổi số điện thoại zậy,account
+có bán kit nhôm không,find_product
+shop ơi kiểm tra ví ạ,wallet
+Xin hỏi bạn là ai với,greet
+ad ơi cấu hình phím chơi game,builder_compat
+kiem tra tuong thich nha,builder_compat
+có bán keycap pbt k nha,find_product
+Thanh toán visa đc k?,payment
+thế thôi nhé,thanks
+ad oi thanh toan nhu the nao a?,payment
+shop oi list kit gasket tam 1 trieu v shop,find_product
+cho mình hỏi gặp nhân viên?,contact
+liên hệ chăm sóc khách hàng,contact
+Xin hoi lam viec gio nao a?,contact
+bạn ơi lol vậy shop,other
+cho em hỏi tai nghe nào tốt với,other
+thanh toán vnpay bị lỗi,payment
+cho mk hỏi phối phím custom,builder_compat
+keeby oi cau hinh phim choi game the,builder_compat
+minh muon hoi hoc lap trinh o dau,other
+Doi email dc k voi,account
+ban oi tro thanh nguoi ban nhe,seller
+co giao hoa toc hong?,shipping
+xin hỏi chào keeby nhé?,greet
+cho mk hỏi sao ko huỷ dc đơn vậy,cancel_refund
+cho mk hoi cach giam can a?,other
+Co cua hang offline k?,contact
+keeby ơi chào bạn ạ?,greet
+Shop oi thanh toan visa dc khong the,payment
+Cho em hỏi thanh toán lỗi thì sao,payment
+ban oi dat ve may bay the,other
+mình muốn hỏi phí sàn bnh ạ,seller
+ê bot nhé,greet
+minh muon hoi chon switch cho kit gasket nha,builder_compat
+có ship ra Đà Nẵng không,shipping
+phím không lên đèn muốn đổi ạ?,return_item
+keeby ơi keycap này có hợp kit 65% không với,builder_compat
+can ho tro gap?,contact
+dùng ví để trả tiền đơn hàng nha,payment
+có phím full size nào dưới 200 nghìn không,find_product
+sửa địa chỉ nhận hàng,account
+ad ơi xem ví?,wallet
+cho minh hoi nap tien vao vi vay shop,wallet
+mk muon hoi recommend ban phim tkl duoi 500k voi,find_product
+Mk muốn hỏi hey keeby nhé,greet
+shop khong dong y tra hang?,return_item
+cho minh hoi ship ve Can Tho bao nhieu,shipping
+cach giam can,other
+Cho mk hỏi phím hông lên đèn muốn đổi thế,return_item
+shop ko đồng ý trả hàng vậy shop,return_item
+ad ơi số dư tài khoản ạ,wallet
+xin hoi keycap nay co hop kit gasket khong nhe,builder_compat
+ad oi tai khoan bi khoa voi,account
+mình muốn hỏi hủy đơn vnpay có hoàn tiền không vậy shop,cancel_refund
+minh muon hoi muon huy don gia cong zay shop,cancel_refund
+có bán kit bàn phím không,find_product
+xin hỏi tiền ship tính thế nào,shipping
+xin hỏi lưu cấu hình build,builder_compat
+cam on shop nhieu?,thanks
+Bạn ơi chào bạn thế,greet
+hom nay an gi?,other
+Keeby ơi làm sao để hủy đơn,cancel_refund
+ban laptop ko nha,other
+momo được không vậy shop,payment
+ship có nhanh không ạ?,shipping
+xin hỏi đăng ký bán hàng vậy shop,seller
+mk muon hoi giao hang mat may ngay a?,shipping
+mình muốn hỏi cho mình nói chuyện với người thật?,contact
+keeby oi mk muon mua cap duoi 1 trieu nha,find_product
+ad ơi đơn mới đặt sao rồi?,order_status
+xoa tai khoan vay,account
+ban oi co mien phi ship khong,shipping
+bạn ơi build phím thế nào?,builder_compat
+switch akko có lắp vừa kit 75% không,builder_compat
+giao hàng toàn quốc không,shipping
+xin hoi khieu nai shop vay,return_item
+xin hỏi tiền ví dùng mua hàng được không nha,wallet
+nhận đc hàng bị móp?,return_item
+keycap này có hợp kit 65% không zậy shop,builder_compat
+bạn ơi cảm ơn đã hỗ trợ với,thanks
+đơn bị kẹt à ạ,order_status
+còn hàng phím full size không,find_product
+cho mk hỏi phí ship mỗi shop tính sao vậy,shipping
+Mình muốn hỏi số điện thoại shop,contact
+keeby ơi mã vận đơn là gì?,order_status
+toi doi y muon huy,cancel_refund
+ad ơi oke vậy shop,thanks
+hay qua cam on nhe,thanks
+ad ơi trả hàng sao?,return_item
+so du tai khoan nha,wallet
+cho em hỏi không đăng nhập được nhé,account
+keeby ơi trở thành người bán vậy shop,seller
+cám ơn keeby,thanks
+Xin hỏi khiếu nại lên sàn tn,return_item
+liên hệ admin,contact
+Shop ơi oke?,thanks
+kiem tra giup don hom qua voi,order_status
+ad oi luu cau hinh build,builder_compat
+hey keeby,greet
+nhận đc hàng bị móp ạ?,return_item
+shop oi tien do gia cong phim cua minh,order_status
+bạn ơi gửi lại email xác nhận,account
+ad oi may gio roi,other
+ship ve TP.HCM bao nhieu voi,shipping
+Ad oi chao nha,greet
+Cho mk hỏi đơn gia công tới bước nào rồi vậy,order_status
+ban oi tu van vien dau v shop,contact
+cho mk hỏi shop ở đâu vậy shop,contact
+kiem tra giup don moi dat,order_status
+Xin hỏi ko đăng nhập được nhé,account
+Xin hỏi muốn mở shop?,seller
+đơn đã thanh toán huỷ có được hoàn không,cancel_refund
+bảo hành thế nào với,return_item
+shop oi choi game gi vui a?,other
+doi tra ra sao the,return_item
+dich sang tieng anh a,other
+bạn làm được gì,greet
+ad ơi xưởng gia công nào uy tín ạ?,builder_compat
+ad ơi hủy nhiều đơn có sao không,cancel_refund
+Muon mo shop zay shop,seller
+ad oi goi y ban phim khoang 800k a,find_product
+ko muon mua nua huy sao nha,cancel_refund
+so sánh các loại kit 65%,find_product
+ban oi xoa tai khoan a,account
+keeby ơi tài khoản bị khoá ạ?,account
+keeby ơi đổi ảnh đại diện,account
+Lol,other
+bạn ơi chào nha nhé,greet
+Đơn hàng gần nhất của tôi vậy shop,order_status
+bỏ đơn được không,cancel_refund
+ban oi co nhung hinh thuc thanh toan nao a?,payment
+ban oi nhap sai mat khau bi khoa,account
+Keeby ơi keycap này có hợp kit 65% ko ạ?,builder_compat
+mình muốn hỏi bao lâu shop đc duyệt thế,seller
+xin hỏi ship về Cần Thơ bn vậy,shipping
+keeby ơi khiếu nại shop với,return_item
+xin hoi gap nhan vien v shop,contact
+mik muốn hỏi mấy giờ rồi ạ?,other
+ad oi khong dang nhap duoc voi,account
+ad ơi đặt nhầm muốn huỷ,cancel_refund
+ad oi switch linear co lap vua kit gasket hong the,builder_compat
+switch kailh box co lap vua kit tkl khong vay,builder_compat
+xin hỏi có ship ra Đà Nẵng k với,shipping
+bye thế,thanks
+Sản phẩm bị từ chối duyệt thế,seller
+xin hỏi có bán keycap gmk ko ạ?,find_product
+cho em hỏi liên hệ admin vậy,contact
+xin hỏi muốn mở shop thế,seller
+nhan gia cong tren san a,seller
+có ship ra TP.HCM không,shipping
+mình muốn hỏi chào keeby nhé,greet
+xin hỏi chọn switch cho kit 75%,builder_compat
+bạn ơi switch 5 pin có lắp vừa kit 60% không nhé,builder_compat
+mình muốn hỏi chính sách đổi trả,return_item
+xin hoi thanh toan visa duoc ko,payment
+xin hỏi phí sàn bao nhiêu nha,seller
+ad oi cam on keeby nha,thanks
+keeby ơi vậy là xong cảm ơn với,thanks
+Keeby ơi được rồi cảm ơn nhé,thanks
+Xin hỏi mik biết rồi thanks vậy shop,thanks
+shop ơi chào keeby nhé,greet
+có ai ko?,greet
+xin hỏi ăn cơm chưa ạ,other
+Ad ơi chào bạn ạ?,greet
+Ok cảm ơn vậy shop,thanks
+Shop oi dat ve may bay,other
+keeby ơi hoàn tiền khi huỷ đơn thế,cancel_refund
+mình muốn hỏi đơn bao nhiêu thì free ship vậy,shipping
+xin hỏi nói chuyện với quản trị viên,contact
+Cho em hoi bao hanh tn,return_item
+sao ví có tiền nha,wallet
+shop oi nap tien vao vi voi,wallet
+Keeby ơi nói chuyện với quản trị viên,contact
+bạn ơi làm bài tập tiếng anh giúp nhé,other
+cho minh hoi bao gio don toi,order_status
+đơn bị huỷ tiền đi đâu,cancel_refund
+Thanh toán vnpay được ko nhé,payment
+ship về TP.HCM bao nhiêu,shipping
+Bạn ơi switch gateron có lắp vừa kit 75% không,builder_compat
+Ad ơi làm người bán tn thế,seller
+Cho em hoi thanh toan xong chua thay cap nhat,payment
+keeby ơi bạn là ai vậy vậy shop,greet
+ad ơi thanh toán bằng gì,payment
+cho xin so zalo,contact
+tks,thanks
+shop ơi quên mật khẩu zậy,account
+keeby ơi lịch sử giao dịch ví,wallet
+Ban oi cam on da ho tro?,thanks
+bạn ơi tuyệt vời cảm ơn nhé,thanks
+đơn của mình đang ở đâu,order_status
+shop ơi tôi muốn huỷ đơn hàng thế,cancel_refund
+cho em hoi ok mik hieu roi nha,thanks
+keeby ơi bai bai zậy,thanks
+cho em hoi gui lai email xac nhan,account
+shop oi lol nha,other
+cho mk hỏi mua chuột gaming ạ?,other
+keeby oi huy don thi tien hoan ve dau nha,cancel_refund
+cho em hoi xem vi,wallet
+xin hỏi bye,thanks
+keeby ơi rút tiền từ ví được hông ạ,wallet
+gợi ý kit nhôm dưới 300k nhé,find_product
+cho mk hỏi đơn custom huỷ được không thế,cancel_refund
+mình muốn hỏi tôi đổi ý muốn huỷ với,cancel_refund
+cho em hoi toi doi y muon huy a?,cancel_refund
+cho mik hoi hoan tien khi huy don,cancel_refund
+Mik muon hoi list switch duoi 500k nha,find_product
+cho mik hoi kiem tra don hang nhe,order_status
+cho mk hoi kiem tra vi a?,wallet
+nên mua phím hotswap gì dưới 200 nghìn,find_product
+xin hỏi kit bàn phím dưới 300k có không vậy,find_product
+Cho xem switch clicky giá sinh viên ạ,find_product
+mk muốn hỏi switch linear có lắp vừa kit gasket k,builder_compat
+keeby ơi khiếu nại lên sàn thế nào với,return_item
+Cho minh hoi co ban kit 75% hong,find_product
+phim gi hay nha,other
+ví còn bao nhiêu tiền,wallet
+mình muốn hỏi cảm ơn ạ?,thanks
+xin hỏi chuyển khoản được ko với,payment
+minh muon hoi doi email dc hong voi,account
+ban oi don dang o trang thai nao voi,order_status
+Lam bai tap tieng anh giup a,other
+keeby ơi xem số dư thế,wallet
+Cho mình hỏi hey keeby với,greet
+tư vấn viên đâu?,contact
+cho em hỏi build mất bao lâu?,builder_compat
+kit gasket nào đáng mua nhất,find_product
+xin hoi xem vi,wallet
+không thích nữa trả được không,return_item
+ad oi dat ve may bay,other
+cho em hỏi kit gasket dùng keycap gì ạ?,builder_compat
+shop ơi đề xuất switch linear để gõ văn bản vậy,find_product
+keeby ơi đổi mật khẩu sao với,account
+keeby ơi nên mua phím full size gì tầm 150k nhé,find_product
+tôi đổi ý muốn hủy,cancel_refund
+Shop oi can ho tro gap,contact
+cho em hỏi đăng nhập bằng số điện thoại với,account
+Cho mik hỏi keycap này có hợp kit tkl hông,builder_compat
+Ad oi chao em a,greet
+cho minh hoi bong da toi nay the,other
+xin hoi cam on nhe voi,thanks
+Mk muốn hỏi chọn switch cho kit tkl,builder_compat
+phí ship bao nhiêu?,shipping
+xin hoi dang nhap bang google the,account
+Cho mik hoi thanh toan online co an toan khong the,payment
+Cho em hỏi tra cứu đơn?,order_status
+keeby ơi tìm kit bàn phím dưới 500k,find_product
+sao k huỷ đc đơn?,cancel_refund
+cho em hoi tien trong vi dung lam gi?,wallet
+shop ơi tạm biệt,thanks
+mik muon hoi ma van don la gi the,order_status
+bóng đá tối nay,other
+Keeby ơi cập nhật thông tin cá nhân với,account
+mik muốn hỏi vậy là xong cảm ơn thế,thanks
+xin hỏi đơn sao rồi ạ?,order_status
+Keeby ơi switch 5 pin có lắp vừa kit tkl không nha,builder_compat
+xin hỏi kiểm tra ví,wallet
+ad ơi đăng ký xưởng gia công,seller
+mình muốn hỏi gặp nhân viên với,contact
+Cho em hoi tam biet vay,thanks
+mình muốn hỏi đăng ký xưởng gia công thế,seller
+cho mik hỏi ship về Huế bn nha,shipping
+Cho mình hỏi build mất bao lâu?,builder_compat
+cho mk hỏi thanh toán bằng thẻ atm vậy shop,payment
+ad oi email ho tro nhe,contact
+xin hỏi kiểm tra giúp đơn mới đặt?,order_status
+làm sao để huỷ đơn,cancel_refund
+Keeby oi co cua hang offline khong zay,contact
+có bán keycap pbt không,find_product
+bạn ơi mấy ngày được trả hàng ạ,return_item
+ban oi don da thanh toan huy co duoc hoan khong nha,cancel_refund
+ke chuyen cuoi di a,other
+Shop oi ok nha a,thanks
+Keeby ơi muốn trả hàng vậy shop,return_item
+cho em hỏi tiền hoàn trong ví rút ra ngân hàng dc k,wallet
+Ad oi khong nhan duoc email xac nhan the,account
+xin hỏi trả tiền bằng cách nào?,payment
+xin hỏi gói gia công gồm những gì thế,builder_compat
+hoan tien khi huy don nhe,cancel_refund
+Mình muốn hỏi cảm ơn đã hỗ trợ nhé,thanks
+mk muon hoi goi y ban phim duoi 500k?,find_product
+keeby oi lien he admin,contact
+trở thành người bán,seller
+trả góp dc không nha,payment
+chào bạn,greet
+ví của mình bao nhiêu nhé,wallet
+ban oi kit full dung keycap gi voi,builder_compat
+có ship ra Cần Thơ không,shipping
+Sao hong huy duoc don zay shop,cancel_refund
+keeby oi shop huy don cua toi thi sao?,cancel_refund
+Mk muon hoi ship ve ha noi bao nhieu the,shipping
+đổi email được không,account
+viết code python,other
+xin hỏi hế lô v,greet
+bạn là ai,greet
+Cho em hỏi tiền trong ví dùng làm gì nha,wallet
+shop ơi hey keeby?,greet
+cho em hoi gia vang hom nay nhe,other
+cho mik hỏi ví bị trừ tiền,wallet
+stab nào đáng mua nhất,find_product
+thoi tiet hom nay the nao vay,other
+ad ơi tìm giúp bộ phím 60% thế,find_product
+Cho xem stabilizer,find_product
+cach nau pho voi,other
+keeby ơi huỷ đơn có mất phí không,cancel_refund
+ban oi doi tra ra sao voi,return_item
+cho minh hoi khong thich nua tra duoc khong voi,return_item
+ban oi gap nhan vien vay shop,contact
+bạn ơi thiếu phụ kiện trong hộp vậy shop,return_item
+mình biết rồi thanks,thanks
+cảm ơn nhé nha,thanks
+cho em hỏi ví keebhub là gì,wallet
+switch bi ket muon tra lai a?,return_item
+Bạn ơi xem lịch sử mua hàng,order_status
+keeby ơi đăng nhập bằng số điện thoại?,account
+minh muon hoi co ship ra Ha Noi k,shipping
+Cho mik hỏi momo được ko,payment
+Keeby là gì nha,greet
+keeby ơi switch 5 pin có lắp vừa kit full không thế,builder_compat
+sao không chọn được cod với,payment
+cho em hỏi hotline là gì nhé,contact
+keeby ơi ship về Đà Nẵng bn ạ,shipping
+cho em hỏi cho mk nói chuyện với người thật,contact
+keeby ơi mình muốn mua kê tay dưới 200 nghìn?,find_product
+cho em hoi phim full size nao dang mua nhat vay,find_product
+Mình muốn hỏi có ai trực không vậy shop,greet
+Ad ơi bàn phím tkl nào tốt tiếng thocky,find_product
+cho em hỏi hủy đơn thì tiền hoàn về đâu vậy shop,cancel_refund
+ti gia do nhe,other
+hang bi loi thi lam sao nha,return_item
+Phí sàn bn,seller
+Xin hoi san pham bi tu choi duyet?,seller
+Cho em hỏi tiền hoàn trong ví rút ra ngân hàng được k với,wallet
+cho mk hỏi chọn kit gasket thế nào để gõ văn bản nha,find_product
+Tra cứu đơn ạ,order_status
+keeby ơi shop đã xác nhận đơn chưa ạ,order_status
+Mk muốn hỏi giao hàng mất mấy ngày ạ?,shipping
+keeby ơi giao nhầm switch thế,return_item
+Switch 3 pin lắp mạch 5 pin được không,builder_compat
+Shop oi thanh toan bang vi keebhub duoc hong nha,payment
+cho mình hỏi huỷ đơn bao lâu được hoàn tiền ạ?,cancel_refund
+ad ơi kit 75% dùng keycap gì,builder_compat
+cho em hỏi hủy đơn dc không ạ,cancel_refund
+ban oi co ship ra TP.HCM khong voi,shipping
+thanh toán bằng thẻ atm,payment
+cho mk hỏi liên hệ chăm sóc khách hàng nhé,contact
+hat mot bai di,other
+shipper giao chưa nha,order_status
+Keeby oi doi anh dai dien?,account
+cho em hoi thank you nhe,thanks
+Xoá tài khoản vậy shop,account
+cho mk hỏi sửa địa chỉ nhận hàng với,account
+keeby ơi ví có hết hạn ko nhé,wallet
+Vi cua minh bnh nhe,wallet
+chào buổi sáng,greet
+ship về tỉnh bao nhiêu nhé,shipping
+Bạn ơi switch linear có lắp vừa kit gasket không vậy,builder_compat
+phí vận chuyển sao ạ,shipping
+mik muon hoi nen mua keycap gi,find_product
+rút tiền từ ví dc không zậy shop,wallet
+cho minh hoi shop huy don cua toi thi sao nha,cancel_refund
+cho em hoi lien he admin a?,contact
+keeby oi co ai truc khong vay shop,greet
+con hang keycap khong nhe,find_product
+xin hoi co ship ra tinh ko a?,shipping
+Kiem tra giup don moi dat nhe,order_status
+cho minh hoi hang bi loi thi lam sao,return_item
+chinh sach doi tra vay,return_item
+san pham bi tu choi duyet,seller
+ship về Cần Thơ bao nhiêu,shipping
+cho mik hỏi nạp tiền vào ví,wallet
+keeby oi co ship ra Can Tho hong a?,shipping
+đăng nhập bằng số điện thoại với,account
+mik muon hoi chao buoi sang vay,greet
+Bạn ơi kể chuyện cười đi với,other
+shop ơi thanh toán visa được hông,payment
+hàng bị vỡ khi vận chuyển,return_item
+Minh muon hoi ban la ai vay vay shop,greet
+Lam viec gio nao vay,contact
+đề xuất stab chơi game,find_product
+ban oi gap nhan vien nhe,contact
+minh muon hoi switch 5 pin co lap vua kit tkl k,builder_compat
+đổi email dc không,account
+keycap khoang 2tr co khong a?,find_product
+Minh muon hoi ban switch tren san duoc khong zay shop,seller
+số dư ví của tôi ạ,wallet
+shop ơi giải bài toán này giúp thế,other
+mình muốn hỏi bán hàng trên keebhub ạ,seller
+mình muốn hỏi oke,thanks
+Ban laptop khong?,other
+cho mk hỏi oke thanks nha nhé,thanks
+keeby ơi thanh toán online có an toàn hông?,payment
+ad ơi thanh toán vnpay được không?,payment
+mình muốn hỏi đổi ảnh đại diện vậy shop,account
+shop ơi đổi mật khẩu thế nào ạ,account
+bạn ơi phim gì hay,other
+Cho em hỏi không đăng nhập được vậy,account
+Mk muon hoi tks a?,thanks
+ad oi tien vi dung mua hang duoc khong,wallet
+xin hỏi giao nhầm switch thế,return_item
+cho mình hỏi trả hàng thế nào ạ,return_item
+địa chỉ cửa hàng vậy shop,contact
+shop ơi đăng sản phẩm lên bán ạ,seller
+minh muon hoi vi con bao nhieu tien nhe,wallet
+bạn ơi xin chào keebhub với,greet
+Shop oi chao ad,greet
+mik muon hoi tks a,thanks
+kit tkl dùng keycap gì vậy shop,builder_compat
+ad oi thanh toan bang vi keebhub duoc khong,payment
+Mình muốn hỏi ship có nhanh không,shipping
+Minh muon hoi tin tuc hom nay nhe,other
+xin chào keebhub,greet
+bạn ơi tiền trong ví dùng làm gì,wallet
+thanh toán vnpay được không,payment
+Cho em hỏi tiền ví dùng mua hàng được không thế,wallet
+ban oi phim khong len den muon doi,return_item
+mình muốn hỏi shop thu phí gì nha,seller
+Cho em hỏi oke thanks nha,thanks
+cho em hỏi thanh toán bằng ví keebhub được k ạ?,payment
+Đổi trả ra sao?,return_item
+Cho em hoi shop o dau nhe,contact
+bạn ơi liên hệ chăm sóc khách hàng,contact
+mk muốn hỏi số dư ví của tôi ạ?,wallet
+gửi hàng trả về ở đâu,return_item
+cho minh hoi tao tai khoan,account
+keeby oi hey keeby,greet
+còn hàng stabilizer không với,find_product
+cho em hỏi nhận dc hàng bị móp nha,return_item
+cho mik hỏi cần hỗ trợ gấp ạ,contact
+mk muon hoi co nhung hinh thuc thanh toan nao nha,payment
+Cho em hoi ban laptop khong?,other
+shop oi hang bi vo khi van chuyen,return_item
+xin hoi sao vi co tien?,wallet
+cho xin số zalo,contact
+keeby oi co giao tan nha khong,shipping
+shop ơi shop đã xác nhận đơn chưa,order_status
+Keeby ơi muốn huỷ đơn gia công?,cancel_refund
+kit 60% dùng keycap gì,builder_compat
+xin hoi thanh toan ntn a?,payment
+cho mk hỏi chuyển khoản đc không,payment
+mik muon hoi switch 3 pin co lap vua kit tkl ko a?,builder_compat
+Xin hỏi shop huỷ đơn của tôi thì sao nha,cancel_refund
+bạn ơi làm thơ đi zậy,other
+ad oi dang ky xuong gia cong voi,seller
+Ad ơi shop từ chối trả hàng thì sao zậy shop,return_item
+shop ơi switch akko có lắp vừa kit 60% ko nhé,builder_compat
+Cho em hỏi kiểm tra giúp đơn mới đặt v shop,order_status
+shop ơi ví còn bao nhiêu tiền thế,wallet
+cho em hỏi bạn làm được gì?,greet
+minh muon hoi shop thu phi gi nhe,seller
+cho minh hoi van chuyen bang gi,shipping
+cho mk hoi cam on vay shop,thanks
+bạn ơi chào nha v shop,greet
+cho em hỏi cảm ơn vậy,thanks
+keeby ơi gọi cho ai thế,contact
+Ban oi don cua minh dang o dau voi,order_status
+keeby oi cap nhat thong tin ca nhan,account
+email ho tro nhe,contact
+keeby oi mo gian hang a?,seller
+Bạn ơi có giao tận nhà không?,shipping
+bạn ơi sửa địa chỉ nhận hàng thế,account
+phí vận chuyển thế nào,shipping
+keeby ơi shop ở đâu,contact
+xin hoi toi muon huy don hang vay shop,cancel_refund
+cam on da ho tro,thanks
+xin hỏi đặt nhầm muốn hủy,cancel_refund
+cho em hoi chinh sach doi tra,return_item
+Cho em hỏi đơn custom huỷ được ko ạ,cancel_refund
+cho mình hỏi ví bị trừ tiền thế,wallet
+thanh toán bằng gì nha,payment
+có ship ra Hải Phòng không,shipping
+keeby oi nho shop lube switch voi,builder_compat
+ad oi dang ky tai khoan nhe,account
+phi giao hang?,shipping
+ban oi ship ve Can Tho bao nhieu,shipping
+bạn ơi đơn của tôi bao giờ giao,order_status
+cho mình hỏi bye?,thanks
+asdfgh nha,other
+cho em hoi tien do gia cong phim cua mk,order_status
+lien he admin nha,contact
+Cho em hoi the thoi nhe v shop,thanks
+sao bị đăng xuất,account
+cam on ban voi,thanks
+thiếu phụ kiện trong hộp,return_item
+có thanh toán khi nhận hàng k,payment
+đăng ký bán hàng ạ?,seller
+kiểm tra tương thích zậy,builder_compat
+cho mình hỏi đăng ký bán hàng nha,seller
+bạn ơi hàng giao chưa ạ,order_status
+cho minh hoi can kit nhom lam van phong tam 3 trieu zay shop,find_product
+ban oi don dang o trang thai nao,order_status
+ad oi ok nha a?,thanks
+sao ví có tiền?,wallet
+mình muốn hỏi kiểm tra đơn hàng nhé,order_status
+ad ơi cần hỗ trợ gấp?,contact
+minh muon hoi chao em the,greet
+cho em hỏi giải thích thuyết tương đối,other
+mình muốn hỏi phí ship mỗi shop tính sao thế,shipping
+don hang gan nhat cua toi,order_status
+keeby ơi đăng ký tài khoản thế,account
+Bạn ơi quét mã qr thanh toán,payment
+cho em hỏi freeship không,shipping
+keeby oi switch gateron co lap vua kit 65% khong voi,builder_compat
+mình muốn hỏi ship về tỉnh bnh nha,shipping
+ad oi bye nhe,thanks
+Cho em hoi shop cua toi bi khoa?,seller
+minh muon hoi toi muon huy don hang a?,cancel_refund
+bạn ơi so sánh các loại kit 65% v shop,find_product
+mình muốn hỏi gửi lại email xác nhận nha,account
+Ad ơi tiền trong ví dùng làm gì ạ,wallet
+Bạn ơi oke với,thanks
+đơn #KH-0012345 sao rồi ạ,order_status
+xin hoi ship tieu chuan gia bao nhieu vay shop,shipping
+ad ơi phím không lên đèn muốn đổi thế,return_item
+co kit gasket nao hot hong,find_product
+Cho minh hoi dang ky xuong gia cong a,seller
+đơn bị huỷ tiền đi đâu?,cancel_refund
+xin hoi dang ky tai khoan v shop,account
+bạn ơi tin tức hôm nay nhé,other
+ad ơi báo lỗi web?,contact
+ad ơi list switch tactile tầm 3 tr nha,find_product
+bo don duoc khong,cancel_refund
+cho em hỏi cho mk nói chuyện với người thật?,contact
+ban oi tim giup kit nhom choi game,find_product
+mk muốn hỏi switch kailh box có lắp vừa kit tkl ko thế,builder_compat
+giao bằng đơn vị nào?,shipping
+cho mình hỏi ví keebhub ở đâu,wallet
+shop ơi kiểm tra giúp đơn #KH-0012345,order_status
+hoàn tiền khi huỷ đơn,cancel_refund
+shop oi ko muon mua nua huy sao?,cancel_refund
+keeby oi ban la ai a?,greet
+mẫu cáp mới nhất,find_product
+mik muốn hỏi mua 2 shop có tính 2 lần phí ship không với,shipping
+số dư tài khoản,wallet
+shop ơi ship về TP.HCM bao nhiêu vậy,shipping
+cho mik hỏi thiếu keycap nhé,return_item
+cho mình hỏi đăng ký xưởng gia công zậy shop,seller
+shop oi goi gia cong gom nhung gi,builder_compat
+Lam nguoi ban the nao zay,seller
+shop ơi mua điện thoại iphone,other
+shop ơi cảm ơn với,thanks
+Keeby oi huy don vnpay co hoan tien khong v,cancel_refund
+Ad oi may gio roi vay,other
+Đơn của em sao rồi với,order_status
+co thanh toan khi nhan hang hong,payment
+hang bi vo khi van chuyen?,return_item
+shop ơi ví có hết hạn không ạ,wallet
+shop ơi có miễn phí ship ko với,shipping
+Minh muon hoi dang ky ban hang a?,seller
+tiền trong ví dùng làm gì,wallet
+shop ơi kiểm tra giúp đơn hôm qua,order_status
+mo gian hang?,seller
+Cam on nhe nha,thanks
+keeby ơi trở thành người bán nhé,seller
+minh muon hoi shop huy don cua toi thi sao nhe,cancel_refund
+cho minh hoi shipper giao chua zay shop,order_status
+Alo vay,greet
+đơn mới đặt sao rồi,order_status
+ban oi so dien thoai shop,contact
+keeby ơi gửi lại email xác nhận với,account
+bạn ơi trả hàng cần những gì vậy,return_item
+the thoi nhe nha,thanks
+ad oi nhap sai mat khau bi khoa nhe,account
+keeby oi vi keebhub o dau?,wallet
+số điện thoại shop,contact
+cho mk hỏi đơn #KH-0012345 sao rồi với,order_status
+xin hỏi linh kiện có tương thích không vậy,builder_compat
+bạn ơi chào buổi sáng thế,greet
+bạn ơi đăng sản phẩm lên bán ạ,seller
+xin hỏi giải bài toán này giúp zậy,other
+quet ma qr thanh toan?,payment
+Hello,greet
+Xin hỏi số dư tài khoản ạ?,wallet
+Shop oi hang bi loi thi lam sao the,return_item
+ad ơi shop đã xác nhận đơn chưa vậy shop,order_status
+xin hoi chao em vay shop,greet
+xin hỏi đơn của mk đang ở đâu thế,order_status
+shop ơi oke thanks nha zậy shop,thanks
+Bạn ơi lịch sử giao dịch ví?,wallet
+kiểm tra giúp đơn #KH-0012345 ạ,order_status
+cho minh hoi ti gia do?,other
+keeby oi xin chao keebhub voi,greet
+cho em hỏi chào shop?,greet
+cho mình hỏi quên mật khẩu nha,account
+cho mình hỏi ship về TP.HCM bao nhiêu nha,shipping
+giá vàng hôm nay nha,other
+chao ad?,greet
+báo lỗi web vậy shop,contact
+xin hỏi đơn bị huỷ tiền đi đâu vậy,cancel_refund
+tự lắp phím được hông thế,builder_compat
+tai nghe nào tốt,other
+có cod không?,payment
+cho em hoi co nhung hinh thuc thanh toan nao vay shop,payment
+ad oi dang ky xuong gia cong,seller
+xin chào keebhub nhé,greet
+shop oi xem lich su mua hang a?,order_status
+mk muốn hỏi làm sao để hủy đơn với,cancel_refund
+vậy là xong cảm ơn,thanks
+Ad oi giao nham switch,return_item
+cho em hoi lam sao de huy don v shop,cancel_refund
+cho mik hỏi quẹt thẻ được không ạ,payment
+Xin hỏi đơn mk đã giao chưa thế,order_status
+cho mik hỏi ko muốn mua nữa hủy sao nhé,cancel_refund
+thanh toan vnpay dc ko nha,payment
+keeby ơi ko muốn mua nữa huỷ sao nha,cancel_refund
+cho minh hoi lam sao de huy don voi,cancel_refund
+Ad ơi báo lỗi web,contact
+đề xuất phím hotswap tiếng lách cách,find_product
+cho em hoi xem vi the,wallet
+xin hoi doi mat khau sao a?,account
+ad oi chao ban,greet
+cho mình hỏi chuyển khoản được không,payment
+build cua minh lam toi dau roi voi,order_status
+huy nhieu don co sao khong,cancel_refund
+Cho mk hoi chuyen tien vi cho ban dc khong,wallet
+ship hoả tốc giá sao thế,shipping
+bạn ơi chuyển khoản được ko?,payment
+Keeby oi muon tra hang,return_item
+Xin hỏi bán switch trên sàn dc hông vậy shop,seller
+cho em hoi tra gop duoc khong,payment
+xin hỏi cho xin số zalo nhé,contact
+shop ơi bạn giúp dc gì cho mình,greet
+lien he cham soc khach hang zay,contact
+xin hỏi cách nấu phở thế,other
+keeby ơi thanh toán xong chưa thấy cập nhật,payment
+cho minh hoi mua ke tay o dau,find_product
+ad ơi cho xem kit gasket tầm 150k vậy,find_product
+có ship ra TP.HCM ko zậy,shipping
+list kit gasket tầm 1 tr?,find_product
+Keeby ơi sao không chọn được cod ạ?,payment
+xin hoi gui hang tra ve o dau,return_item
+xin hoi so du vi cua toi,wallet
+cho em hỏi bỏ đơn được k ạ?,cancel_refund
+Ad ơi chào ad?,greet
+Mik muốn hỏi phí ship bao nhiêu zậy shop,shipping
+cho em hỏi bạn là ai vậy ạ,greet
+Sửa địa chỉ nhận hàng?,account
+hi bạn vậy shop,greet
+cho em hỏi liên hệ chăm sóc khách hàng,contact
+mình muốn hỏi xem tình trạng đơn,order_status
+chọn phím cơ thế nào nhẹ tay,find_product
+hay quá cảm ơn,thanks
+không đăng nhập dc?,account
+Bạn ơi tạm biệt thế,thanks
+shop ơi viết code python,other
+ad oi cam on nhe,thanks
+ban oi bo don duoc khong?,cancel_refund
+Hủy đơn đc không,cancel_refund
+shop ơi xoá tài khoản nhé,account
+ad oi goi cho ai,contact
+dang ky ban hang?,seller
+Cho mình hỏi bán laptop không ạ?,other
+Mk muon hoi tam biet voi,thanks
+cho mik hỏi tự lắp phím dc không v,builder_compat
+Ad ơi muốn huỷ đơn gia công,cancel_refund
+minh muon hoi muon build ban phim a,builder_compat
+đơn sao rồi vậy shop,order_status
+keeby ơi tôi muốn hủy đơn hàng ạ,cancel_refund
+shop oi phim gi hay voi,other
+cho minh hoi ban la ai vay vay,greet
+ad oi thanh toan bang the atm a,payment
+ok mik hiểu rồi nhé,thanks
+giao hàng mất mấy ngày vậy shop,shipping
+shop oi bao loi web?,contact
+shop ơi huỷ nhiều đơn có sao ko ạ,cancel_refund
+Xin hỏi bai bai zậy shop,thanks
+keeby ơi bao lâu shop dc duyệt thế,seller
+Thanh toán bằng gì với,payment
+cho mình hỏi ship về Đà Nẵng bao nhiêu,shipping
+sửa lại build đã lưu,builder_compat
+can ho tro gap,contact
+cho em hoi lol vay shop,other
+keeby ơi bạn là ai,greet
+shop ơi trở thành người bán,seller
+keeby ơi bán hàng trên keebhub vậy,seller
+kiem tra vi a,wallet
+bạn ơi còn hàng keycap pbt không với,find_product
+ad oi huy don bao lau duoc hoan tien a?,cancel_refund
+tien trong vi dung lam gi nhe,wallet
+keeby ơi gửi lại email xác nhận nhé,account
+Ban oi chao buoi sang vay,greet
+xin hoi shop huy don cua toi thi sao a?,cancel_refund
+keeby oi ship ve tinh bn?,shipping
+cho mik hỏi mở gian hàng thế,seller
+muốn hợp tác bán phím ạ?,seller
+bàn phím tkl giá sinh viên có không,find_product
+xin hoi huy nhieu don co sao hong voi,cancel_refund
+xin hỏi thanh toán visa đc hông ạ,payment
+cho em hoi asdfgh,other
+Phím không lên đèn muốn đổi nha,return_item
+mua điện thoại iphone,other
+cho mik hỏi xưởng gia công nào uy tín ạ?,builder_compat
+bạn ơi thiếu phụ kiện trong hộp?,return_item
+Cho em hỏi hay quá cảm ơn ạ?,thanks
+Ban oi xem tinh trang don a,order_status
+minh muon hoi chao buoi sang a?,greet
+oke thanks nha?,thanks
+Xin hỏi hàng bị lỗi thì làm sao thế,return_item
+Chon switch cho kit 75% vay,builder_compat
+shop oi bao lau shop duoc duyet,seller
+Ban oi huy don bao lau dc hoan tien nhe,cancel_refund
+kiem tra giup don moi dat the,order_status
+mình muốn hỏi trở thành người bán,seller
+mik muốn hỏi k thích nữa trả được k,return_item
+tôi đổi ý muốn huỷ nhé,cancel_refund
+đơn đang ở trạng thái nào ạ?,order_status
+phím không lên đèn muốn đổi,return_item
+trở thành người bán thế,seller
+có ship ra tỉnh ko,shipping
+Bạn ơi keycap này có hợp kit 60% ko vậy shop,builder_compat
+Cho em hỏi tư vấn stabilizer tiếng thocky v shop,find_product
+cho mik hỏi mik biết rồi thanks ạ,thanks
+nhận gia công trên sàn ạ,seller
+keeby ơi momo được k,payment
+xem tình trạng đơn,order_status
+cho em hoi ban co nguoi yeu chua,other
+bạn ơi ship về TP.HCM bao nhiêu ạ,shipping
+ban oi kit hotswap la gi vay shop,builder_compat
+Thank you thế,thanks
+cảm ơn,thanks
+shop ơi cảm ơn đã hỗ trợ nha,thanks
+doi mat khau the nao nha,account
+shop ơi tin tức hôm nay v shop,other
+chọn switch cho kit full nha,builder_compat
+hủy đơn vnpay có hoàn tiền hông nha,cancel_refund
+cho em hỏi số điện thoại shop vậy,contact
+trả tiền sau được k nha,payment
+mk muốn hỏi hủy đơn dc hông nha,cancel_refund
+Sao đơn chưa được xác nhận với,order_status
+cho em hỏi địa chỉ cửa hàng nha,contact
+xin hoi kenh nguoi ban o dau the,seller
+hang bi vo khi van chuyen,return_item
+Ok cảm ơn,thanks
+xin hoi tin tuc hom nay vay,other
+cho em hoi gap nhan vien nha,contact
+shop không đồng ý trả hàng,return_item
+shop oi cho xem ban phim duoi 200 nghin,find_product
+Mik muốn hỏi custom builder là gì ạ?,builder_compat
+shop ơi trả hàng cần những gì thế,return_item
+phí sàn bao nhiêu nhé,seller
+lắp ráp giúp mình được không,builder_compat
+thanh toán lỗi thì sao,payment
+đăng ký bán hàng,seller
+minh muon hoi shop cua toi bi khoa a,seller
+Cho em hỏi sao bị đăng xuất vậy shop,account
+bạn ơi dc rồi cảm ơn nha,thanks
+mình muốn hỏi sửa địa chỉ nhận hàng nha,account
+cho em hoi giao sai hang thi sao voi,return_item
+Keeby oi tai khoan bi khoa,account
+Keeby ơi đơn đang ở trạng thái nào?,order_status
+cho mình hỏi cảm ơn bạn với,thanks
+mk muốn hỏi giao hàng toàn quốc ko,shipping
+shop có switch clicky không,find_product
+giá vàng hôm nay,other
+shop oi tra tien bang cach nao a?,payment
+Ban oi tien trong vi dung lam gi nha,wallet
+cho mk hoi tien hoan trong vi rut ra ngan hang duoc khong a?,wallet
+cho minh hoi tra cuu don zay shop,order_status
+So dien thoai shop a?,contact
+ad oi dang nhap bang so dien thoai nhe,account
+e bot a,greet
+cho em hỏi đơn custom huỷ dc hông ạ,cancel_refund
+shop ơi cần hỗ trợ gấp ạ,contact
+ban oi doi anh dai dien,account
+bạn ơi trả góp được không với,payment
+Xin hỏi shop thu phí gì với,seller
+cho em hoi goi cho ai?,contact
+Cho em hỏi cảm ơn bạn nhé,thanks
+ad oi tra hang the nao voi,return_item
+nhap sai mat khau bi khoa voi,account
+Ad ơi ví còn bn tiền,wallet
+xin hỏi xem số dư,wallet
+switch 3 pin lap mach 5 pin duoc ko v,builder_compat
+xin hoi vi cua mik bn zay shop,wallet
+Cho em hỏi bạn là ai vậy,greet
+ad oi tuyet voi cam on a,thanks
+cho mk hoi chuyen tien vi cho ban duoc ko nha,wallet
+Xin hỏi đơn custom có cod hông nha,payment
+Mik muon hoi bao loi web nhe,contact
+keeby ơi xem ví vậy,wallet
+keeby oi may ngay duoc tra hang,return_item
+khiếu nại shop,return_item
+xin hỏi shop không đồng ý trả hàng ạ,return_item
+shop ơi đơn đã thanh toán hủy có đc hoàn k vậy shop,cancel_refund
+làm thơ đi,other
+shop oi hom nay an gi,other
+trang thai don hang voi,order_status
+cho mình hỏi tiền hoàn trong ví rút ra ngân hàng được không thế,wallet
+mik muon hoi stabilizer ban chay nhat,find_product
+xin hỏi shop của tôi bị khoá ạ?,seller
+keeby ơi dịch sang tiếng anh vậy,other
+cho em hỏi oke thanks nha,thanks
+keeby oi email ho tro,contact
+Switch 5 pin có lắp vừa kit 60% không zậy,builder_compat
+goi cho ai?,contact
+xin hoi noi chuyen voi quan tri vien a?,contact
+cho mình hỏi chào buổi sáng ạ?,greet
+xin hoi dung vi de tra tien don hang nhe,payment
+Minh muon hoi khieu nai shop a?,return_item
+đăng ký bán hàng ạ,seller
+Mik muon hoi don mik da giao chua,order_status
+mình muốn hỏi mua chuột gaming ạ?,other
+mik muon hoi tra tien bang cach nao a,payment
+xin hoi xem tinh trang don vay,order_status
+muốn hợp tác bán phím,seller
+mik muốn hỏi hôm nay ăn gì ạ,other
+bạn có người yêu chưa,other
+xin hoi ban la ai vay,greet
+Phí vận chuyển thế nào với,shipping
+xin hỏi hàng bị vỡ khi vận chuyển nhé,return_item
+cho minh hoi quet ma qr thanh toan,payment
+xin hỏi shop thu phí gì v,seller
+bạn ơi nên mua kit gì dưới 200 nghìn zậy,find_product
+keeby oi huy don co mat phi khong vay shop,cancel_refund
+cho mk hoi hi nha,greet
+xin chào nhé,greet
+keeby ơi giải bài toán này giúp nha,other
+Cho em hỏi ship về hà nội bao nhiêu với,shipping
+ad oi so sanh cac loai ke tay nha,find_product
+bạn ơi build mất bao lâu ạ?,builder_compat
+ban oi email ho tro zay shop,contact
+keeby ơi sao hông hủy đc đơn?,cancel_refund
+switch 5 pin có lắp vừa kit full không,builder_compat
+đề xuất switch linear để gõ văn bản,find_product
+Keeby ơi gợi ý cáp khoảng 2tr thế,find_product
+mik muon hoi co ban kit nhom k nha,find_product
+minh muon hoi goi cho ai nhe,contact
+Chuyển tiền ví cho bạn được không,wallet
+cho em hỏi chuyện tình cảm v,other
+Huỷ đơn bao lâu được hoàn tiền thế,cancel_refund
+build của mình làm tới đâu rồi,order_status
+ban oi gui hang tra ve o dau nhe,return_item
+ok mình hiểu rồi nha,thanks
+trả tiền sau được không,payment
+minh muon hoi co giao tan nha khong vay shop,shipping
+custom builder là gì,builder_compat
+cho em hoi ship ve Hue bnh a,shipping
+có kit nhôm nào hot không,find_product
+keeby ơi xem số dư nhé,wallet
+Shop ơi hi nha,greet
+mình muốn hỏi hotline là gì với,contact
+keeby ơi oke ạ,thanks
+switch 5 pin có lắp vừa kit full không thế,builder_compat
+kiểm tra giúp đơn #KH-0012345,order_status
+Shop ơi đơn của mình đang ở đâu?,order_status
+keeby ơi shipper giao chưa ạ,order_status
+ad ơi sửa lại build đã lưu với,builder_compat
+xin hoi don sao roi?,order_status
+ad oi muon huy don gia cong,cancel_refund
+có kit nào tầm 150k không,find_product
+tài khoản bị khoá vậy,account
+cách giảm cân nha,other
+cho mình hỏi học lập trình ở đâu ạ,other
+ban oi sao khong chon dc cod vay,payment
+cho em hoi gia vang hom nay,other
+huỷ đơn bao lâu được hoàn tiền,cancel_refund
+cho em hoi ti gia do the,other
+can kit gasket choi game re re a,find_product
+shop ơi tiến độ gia công phím của mình,order_status
+co ban phim full size hong,find_product
+cho em hỏi chào bạn thế,greet
+shop thu phí gì?,seller
+bạn ơi đăng nhập facebook đc không?,account
+cho mình hỏi thanh toán vnpay bị lỗi,payment
+Cho mik hỏi ok nha với,thanks
+đơn custom huỷ được ko vậy,cancel_refund
+cho em hỏi đơn bị hủy tiền đi đâu ạ,cancel_refund
+ad oi co giao hoa toc khong a,shipping
+ad ơi hay quá cảm ơn ạ,thanks
+bán switch trên sàn đc không?,seller
+mik muốn hỏi ví keebhub là gì,wallet
+mẫu bàn phím tkl mới nhất nhé,find_product
+Ban oi hi,greet
+shop ơi phí vận chuyển thế nào v,shipping
+Xin hỏi đơn đã thanh toán huỷ có được hoàn hông,cancel_refund
+Bạn ơi switch bị kẹt muốn trả lại thế,return_item
+Cho mik hoi ban laptop ko a,other
+thanh toán bằng thẻ atm thế,payment
+thank you vậy shop,thanks
+đơn custom có cod k,payment
+Shop oi co ship ra hue ko,shipping
+mik muon hoi ban switch tren san duoc khong v,seller
+ad oi tien vi dung mua hang dc khong voi,wallet
+Minh muon hoi nho shop lube switch vay,builder_compat
+chọn switch cho kit tkl thế,builder_compat
+Ad ơi báo lỗi web?,contact
+ad oi rut tien tu vi duoc k nha,wallet
+Hotline là gì thế,contact
+ship về Hải Phòng bao nhiêu ạ?,shipping
+switch gateron có lắp vừa kit 60% hông?,builder_compat
+có cửa hàng offline không?,contact
+ad oi hey keeby the,greet
+Cam on shop nhieu v,thanks
+ad ơi tai nghe nào tốt với,other
+Ban la ai v nhe,greet
+shop ơi kênh người bán ở đâu vậy,seller
+momo được không,payment
+cho em hoi quet the dc khong vay shop,payment
+shop ơi tôi muốn huỷ đơn hàng nhé,cancel_refund
+bạn ơi bạn có người yêu chưa vậy shop,other
+Shop oi vi co het han khong,wallet
+Ad oi chao keeby nhe vay shop,greet
+minh muon hoi don hang cua toi toi dau roi?,order_status
+có cửa hàng offline không,contact
+mình muốn hỏi cho mình nói chuyện với người thật,contact
+doi email duoc hong?,account
+ad ơi oke nhé,thanks
+cho mik hỏi chọn switch gateron sao lập trình nhé,find_product
+ad oi lam nguoi ban the nao a?,seller
+xem số dư zậy,wallet
+shop huy don cua toi thi sao zay,cancel_refund
+cho em hỏi đăng nhập bằng số điện thoại vậy,account
+xin hỏi tiền trong ví dùng làm gì,wallet
+so sánh các loại phím cơ với,find_product
+switch bi ket muon tra lai voi,return_item
+nói chuyện với quản trị viên,contact
+Shop ơi keycap cherry profile nào hợp gõ êm?,find_product
+cho mk hoi chuyen tinh cam a?,other
+keeby ơi cám ơn keeby nhé,thanks
+keeby oi toi doi y muon huy,cancel_refund
+keeby ơi sao đơn chưa dc xác nhận thế,order_status
+shop ơi chơi game gì vui thế,other
+tư vấn viên đâu vậy shop,contact
+cho mik hoi chao nha nha,greet
+cho mk hỏi tôi đổi ý muốn huỷ vậy shop,cancel_refund
+chọn bàn phím tkl thế nào tiếng lách cách,find_product
+Cho minh hoi khong muon mua nua huy sao the,cancel_refund
+shipper giao chưa,order_status
+keeby oi switch kailh box co lap vua kit 60% khong a,builder_compat
+trả góp được ko zậy,payment
+cho minh hoi muon hop tac ban phim a,seller
+minh muon hoi giao hang toan quoc khong nha,shipping
+ban oi giao nham switch,return_item
+ad oi ban co nguoi yeu chua nhe,other
+mik muốn hỏi tạo tài khoản vậy shop,account
+mình muốn hỏi shop hủy đơn của tôi thì sao?,cancel_refund
+Cho em hoi day cap ban chay nhat a,find_product
+xem ví zậy shop,wallet
+keeby ơi đăng sp lên bán nhé,seller
+khieu nai len san the nao,return_item
+chơi game gì vui,other
+cho em hoi tien ship tinh the nao a?,shipping
+keeby oi ban hang tren keebhub voi,seller
+Cho minh hoi hoc lap trinh o dau nha,other
+huỷ đơn đc không ạ,cancel_refund
+ad oi keycap nay co hop kit 65% khong a,builder_compat
+cho em hoi can ho tro gap vay,contact
+còn hàng switch không,find_product
+Keeby oi ban bn tuoi nhe,other
+minh muon hoi goi cho ai vay shop,contact
+có thanh toán khi nhận hàng không,payment
+đăng nhập facebook được không,account
+keeby ơi switch kailh box có lắp vừa kit tkl không ạ?,builder_compat
+shop ơi cho xin số zalo với,contact
+cần hỗ trợ gấp,contact
+Ad oi cho xin so zalo,contact
+xin hỏi có cod không?,payment
+Ad ơi switch akko có lắp vừa kit tkl hông nhé,builder_compat
+ban oi mau switch akko moi nhat,find_product
+cho em hoi co giao tan nha ko,shipping
+cho em hỏi hotline là gì vậy shop,contact
+cám ơn shop nhiều với,thanks
+keeby oi ship ve Hai Phong bnh nha,shipping
+cho mình hỏi tài khoản bị khoá ạ?,account
+bạn ơi trở thành người bán vậy shop,seller
+bao lau shop dc duyet vay,seller
+xin hoi the thoi nhe nhe,thanks
+tra hang can nhung gi the,return_item
+bạn ơi bao lâu shop được duyệt vậy shop,seller
+giới thiệu kit gasket nhẹ tay,find_product
+xoá tài khoản,account
+Thanh toán lỗi thì sao v,payment
+bạn ơi trạng thái đơn hàng ạ,order_status
+Cho minh hoi thanks,thanks
+cho minh hoi toi muon huy don hang vay shop,cancel_refund
+kenh nguoi ban o dau nha,seller
+giao hang mat may ngay nhe,shipping
+mik muon hoi switch 3 pin co lap vua kit tkl khong the,builder_compat
+lich su giao dich vi a,wallet
+kiem tra giup don cua em vay,order_status
+shop ơi số điện thoại shop?,contact
+ad oi don bao nhieu thi free ship vay shop,shipping
+bạn ơi bao giờ đơn tới,order_status
+có ship ra Đà Nẵng không ạ,shipping
+Cho em hỏi xin chào với,greet
+email hỗ trợ ạ?,contact
+minh muon hoi cho minh noi chuyen voi nguoi that nhe,contact
+list switch tactile tầm 3 triệu,find_product
+Giao sai hàng thì sao ạ?,return_item
+asdfgh,other
+shop ơi switch 5 pin có lắp vừa kit full ko?,builder_compat
+mik muon hoi co cod hong,payment
+Mik muốn hỏi sao bị đăng xuất ạ,account
+mình muốn hỏi chuyển khoản được k zậy,payment
+Shop khong dong y tra hang nhe,return_item
+ban oi xem tinh trang don?,order_status
+sản phẩm bị từ chối duyệt,seller
+keeby ơi làm người bán thế nào,seller
+Shop oi email ho tro?,contact
+keeby oi co cod khong,payment
+xin hoi shop thu phi gi vay shop,seller
+cho mk hỏi bảo hành thế nào,return_item
+cho mình hỏi có ship ra Huế k ạ,shipping
+cho minh hoi co phim full size nao duoi 200 nghin khong,find_product
+Mk muốn hỏi tìm giúp kit nhôm chơi game ạ?,find_product
+bạn ơi trở thành người bán ạ?,seller
+Shop oi nhap sai mat khau bi khoa voi,account
+xin hoi ship tieu chuan gia bao nhieu the,shipping
+tôi muốn huỷ đơn hàng nhé,cancel_refund
+keeby oi thank you,thanks
+xin hoi ship tieu chuan gia bn?,shipping
+Cảm ơn bạn thế,thanks
+shop oi tao tai khoan,account
+bạn ơi hàng bị lỗi thì làm sao thế,return_item
+chào nha,greet
+Bạn ơi có ai k?,greet
+keeby ơi gửi lại email xác nhận,account
+cho em hoi van chuyen bang gi the,shipping
+hi bạn,greet
+ban oi toi muon huy don hang?,cancel_refund
+keeby oi link dat lai mat khau het han nha,account
+cho em hỏi thiếu keycap ạ?,return_item
+ví bị trừ tiền,wallet
+xin hỏi quên mật khẩu?,account
+shop ơi trả tiền bằng cách nào nhé,payment
+mình muốn hỏi đơn custom huỷ đc hông nhé,cancel_refund
+Shop huy don cua toi thi sao,cancel_refund
+đơn mình đã giao chưa vậy,order_status
+xin hỏi hotline là gì với,contact
+bạn ơi helo shop v,greet
+shop ơi mình muốn mua keycap pbt tầm 1 tr?,find_product
+keeby ơi cảm ơn đã hỗ trợ nha,thanks
+cho em hỏi sp bị từ chối duyệt nhé,seller
+hotline la gi vay,contact
+cho em hỏi hàng bị lỗi thì làm sao nha,return_item
+thanh toán bằng gì thế,payment
+Cho minh hoi dia chi cua hang vay shop,contact
+Mình muốn hỏi địa chỉ cửa hàng,contact
+ban oi ban bao nhieu tuoi,other
+Keeby ơi ví bị trừ tiền nha,wallet
+dang ky tai khoan a,account
+cho em hoi dat nham muon huy,cancel_refund
+thanh toán visa được hông vậy shop,payment
+cho em hỏi theo dõi đơn hàng nha,order_status
+xin hoi giao bang don vi nao,shipping
+bạn ơi giao bằng đơn vị nào nha,shipping
+minh muon hoi ke tay nao tot go cho da tay,find_product
+ad ơi thanh toán bằng thẻ atm nhé,payment
+dịch sang tiếng anh,other
+hàng lỗi có được đổi không,return_item
+cho minh hoi ship ve tinh bao nhieu,shipping
+shop oi e bot nhe,greet
+email hỗ trợ,contact
+không muốn mua nữa huỷ sao,cancel_refund
+đơn gia công tới bước nào rồi,order_status
+Tuyet voi cam on nha,thanks
+ad oi dang nhap facebook duoc ko zay shop,account
+trả hàng được hoàn tiền hông thế,return_item
+keeby ơi đăng ký tài khoản vậy,account
+Don cua mk dang o dau,order_status
+cho em hỏi có cod không,payment
+mình muốn hỏi chuyển tiền ví cho bạn dc hông?,wallet
+hat mot bai di nhe,other
+build phím thế nào,builder_compat
+ad oi keycap nay co hop kit gasket k,builder_compat
+Cho mk hoi keycap nay co hop kit 75% ko a?,builder_compat
+keeby ơi shop ở đâu ạ,contact
+xem số dư,wallet
+cho minh hoi lam viec gio nao,contact
+đề xuất cáp nhẹ tay v shop,find_product
+cho minh hoi vi keebhub la gi,wallet
+Minh muon hoi khong thich nua tra duoc khong voi,return_item
+Ví có hết hạn k nha,wallet
+alo nhé,greet
+cho mk hỏi mấy ngày đc trả hàng thế,return_item
+shop ơi mua phím cơ ở đâu,find_product
+Switch gateron có lắp vừa kit full hông?,builder_compat
+keeby ơi có cửa hàng offline không nhé,contact
+shop ơi muốn hủy đơn gia công zậy shop,cancel_refund
+mk muốn hỏi tiền ví dùng mua hàng được không,wallet
+keeby ơi chào nha?,greet
+cho minh hoi sp bi tu choi duyet nhe,seller
+xin hoi co ship ra tinh khong zay shop,shipping
+phím full size dưới 1 triệu có không,find_product
+recommend keycap cherry profile,find_product
+cho mình hỏi xem ví,wallet
+sao không chọn được cod,payment
+Ban oi so du tai khoan nhe,wallet
+xin hoi thanh toan xong chua thay cap nhat voi,payment
+khong dang nhap duoc,account
+ban oi switch akko tam 3 tr co khong,find_product
+Ad ơi gặp nhân viên zậy,contact
+shop oi switch gateron co lap vua kit full khong a?,builder_compat
+Keeby la gi zay shop,greet
+Cho em hoi bye,thanks
+ad ơi nhận gia công trên sàn,seller
+cho em hỏi ví còn bao nhiêu tiền vậy,wallet
+cho em hỏi shop của tôi bị khoá nhé,seller
+xin hoi dang nhap facebook dc khong nhe,account
+phím bị liệt nút muốn trả zậy shop,return_item
+gói gia công gồm những gì zậy shop,builder_compat
+tiến độ gia công phím của mik thế,order_status
+muốn build bàn phím nhé,builder_compat
+tien trong vi dung lam gi a?,wallet
+mã vận đơn là gì,order_status
+Chao nha,greet
+keeby ơi hoàn tiền khi hủy đơn zậy,cancel_refund
+ban oi nhap sai mat khau bi khoa a?,account
+Keeby ơi chọn switch cho kit 75% ạ,builder_compat
+Ad oi phi ship bn,shipping
+keeby ơi đổi số điện thoại vậy,account
+cho mình hỏi shop không đồng ý trả hàng,return_item
+cho minh hoi ban switch tren san dc khong?,seller
+Bạn ơi có keycap nào hot không,find_product
+mua keycap cherry profile ở đâu ạ,find_product
+kit nào hợp gõ cho đã tay nha,find_product
+bạn ơi số dư ví của tôi thế,wallet
+xin hỏi thank you nha,thanks
+Ad ơi số dư ví của tôi với,wallet
+ad ơi sản phẩm bị từ chối duyệt ạ?,seller
+ban oi keycap nay co hop kit 75% hong nhe,builder_compat
+oke thanks nha,thanks
+xin hỏi shop đã xác nhận đơn chưa ạ?,order_status
+cho em hoi rut tien tu vi dc khong the,wallet
+bạn ơi ship về Huế bao nhiêu vậy,shipping
+Cho mik hỏi giải bài toán này giúp với,other
+Hoàn tiền khi hủy đơn ạ?,cancel_refund
+cho em hỏi thanh toán lỗi thì sao thế,payment
+bạn ơi hoàn tiền khi hủy đơn,cancel_refund
+cho mik hoi vi cua mik bn,wallet
+Kiểm tra giúp đơn v,order_status
+shop ơi thanh toán lỗi thì sao ạ,payment
+Bạn ơi nạp tiền vào ví,wallet
+cho mk hỏi sp bị từ chối duyệt,seller
+cho em hoi kit gasket dung keycap gi,builder_compat
+bạn ơi link đặt lại mật khẩu hết hạn với,account
+keeby oi don #KH-0012345 sao roi zay shop,order_status
+mình muốn hỏi đăng sp lên bán,seller
+xin hoi lube switch gia bao nhieu nhe,builder_compat
+cho em hỏi ví keebhub ở đâu với,wallet
+cho mik hỏi chọn switch cho kit 60%,builder_compat
+Trả góp được không với,payment
+kenh nguoi ban o dau,seller
+cho mình hỏi đặt nhầm muốn hủy,cancel_refund
+đổi số điện thoại,account
+shop ơi đăng nhập bằng google nhé,account
+cho mik hỏi kit 60% dùng keycap gì thế,builder_compat
+shop ơi cảm ơn thế,thanks
+shop oi an com chua a?,other
+mua 2 shop có tính 2 lần phí ship không,shipping
+Keeby ơi thanh toán vnpay bị lỗi với,payment
+ad oi shop oi nha,greet
+cho em hỏi khiếu nại shop ạ?,return_item
+shop ơi vận chuyển bằng gì vậy,shipping
+keeby ơi xem số dư vậy shop,wallet
+cho mk hoi keycap nay co hop kit 60% khong nhe,builder_compat
+ban oi doi email duoc khong a?,account
+xin hỏi sp bị từ chối duyệt với,seller
+bạn ơi keycap này có hợp kit tkl ko,builder_compat
+keeby ơi tra cứu đơn nhé,order_status
+cho em hoi co nhung hinh thuc thanh toan nao a,payment
+bao lâu shop được duyệt,seller
+Keeby ơi ví còn bnh tiền,wallet
+tìm keycap pbt rẻ rẻ?,find_product
+mik muốn hỏi hoàn tiền khi huỷ đơn?,cancel_refund
+xin hỏi thế thôi nhé,thanks
+xin hỏi ok cảm ơn với,thanks
+Keeby ơi nói chuyện với quản trị viên ạ,contact
+ban oi ship co nhanh khong vay shop,shipping
+đổi email được hông thế,account
+ad oi stab nao dang mua nhat,find_product
+Trả góp đc k nhé,payment
+chọn switch cho kit full vậy,builder_compat
+ad ơi đăng ký bán hàng,seller
+ban oi goi cho ai,contact
+cho mk hoi don moi dat sao roi the,order_status
+ăn cơm chưa với,other
+ví của mình bao nhiêu,wallet
+Xin hoi don minh da giao chua?,order_status
+Giao nhầm switch thế,return_item
+cho mk hỏi oke thanks nha ạ,thanks
+ad ơi ship về Đà Nẵng bao nhiêu ạ?,shipping
+ad ơi nhập sai mật khẩu bị khoá nhé,account
+switch gateron có lắp vừa kit 65% không,builder_compat
+tìm kit khoảng 2tr,find_product
+xin hỏi muốn mở shop,seller
+bạn ơi bán hàng trên keebhub ạ,seller
+chao nha nhe,greet
+ad ơi gọi cho ai vậy shop,contact
+ad oi hang loi co duoc doi khong a?,return_item
+kit 75% dung keycap gi vay,builder_compat
+trả góp được không,payment
+cám ơn shop nhiều ạ,thanks
+keeby ơi tuyệt vời cảm ơn thế,thanks
+shop oi vi cua mk bao nhieu,wallet
+cho mình hỏi đặt nhầm muốn hủy zậy,cancel_refund
+shop ơi bạn là ai nha,greet
+mua chuột gaming thế,other
+xin hoi co ship ra Can Tho khong,shipping
+ship hoả tốc giá sao zậy shop,shipping
+ad ơi đơn #KH-0012345 sao rồi,order_status
+keeby ơi phí ship bao nhiêu,shipping
+keeby oi dat ve may bay a?,other
+keeby ơi kiểm tra giúp đơn của em với,order_status
+thanh toán như thế nào ạ?,payment
+ban oi sao don chua duoc xac nhan voi,order_status
+shop oi tu van day cap tieng thocky the,find_product
+keeby là gì,greet
+cho mình hỏi bỏ đơn được không,cancel_refund
+helo shop vay shop,greet
+cho em hoi kit gia bao nhieu voi,find_product
+muốn mở shop,seller
+cho mk hoi don da thanh toan huy co dc hoan khong nhe,cancel_refund
+shop oi he lo a?,greet
+Keeby ơi đổi trả ra sao zậy,return_item
+cho em hoi dang nhap bang google voi,account
+Shop ơi chào buổi sáng nha,greet
+Xin hoi khi nao nhan duoc hang v,order_status
+mik muốn hỏi alo ạ?,greet
+ad oi xem tinh trang don a,order_status
+Xem ví,wallet
+ad oi lien he cham soc khach hang,contact
+ban oi can ho tro gap,contact
+Cho mk hỏi đăng ký tài khoản với,account
+hàng lỗi có đc đổi không với,return_item
+cho em hoi xem so du a,wallet
+muốn mở shop nha,seller
+bạn ơi switch gateron có lắp vừa kit 65% hông,builder_compat
+Ad oi chao ban a?,greet
+cho mình hỏi stab giá bao nhiêu thế,find_product
+shop ơi email hỗ trợ nhé,contact
+bạn ơi kiểm tra giúp đơn hôm qua thế,order_status
+Dang ky xuong gia cong nhe,seller
+ad ơi sao ví có tiền ạ?,wallet
+Keeby ơi nạp tiền vào ví,wallet
+hay qua cam on nha,thanks
+Mình muốn hỏi đơn gia công tới bước nào rồi?,order_status
+xin hỏi đổi số điện thoại ạ,account
+Xin hoi k dang nhap duoc a?,account
+Xin hoi hello nha,greet
+dia chi cua hang a?,contact
+cho em hỏi giải bài toán này giúp,other
+ban oi tien vi dung mua hang dc khong nha,wallet
+cho em hoi cap nhat thong tin ca nhan a,account
+don da thanh toan huy co duoc hoan ko nhe,cancel_refund
+ad ơi giao hàng mất mấy ngày,shipping
+xin hỏi chào ad nhé,greet
+cho em hoi thieu phu kien trong hop nha,return_item
+Keycap này có hợp kit full không,builder_compat
+cho mk hỏi asdfgh,other
+cho em hỏi làm thơ đi nhé,other
+ad oi ban lam duoc gi a,greet
+Không muốn mua nữa hủy sao nha,cancel_refund
+cho mình hỏi gợi ý stabilizer dưới 1 triệu,find_product
+Cho em hoi co ship ra hue ko nhe,shipping
+doi tra ra sao zay shop,return_item
+huỷ đơn vnpay có hoàn tiền không,cancel_refund
+cho em hoi hang bi loi thi lam sao nhe,return_item
+keeby ơi theo dõi đơn hàng nha,order_status
+cho minh hoi xem vi,wallet
+cho em hoi bai bai vay shop,thanks
+sao không chọn dc cod thế,payment
+bạn ơi đơn mới đặt sao rồi,order_status
+cho mình hỏi chọn switch cho kit gasket?,builder_compat
+mình muốn hỏi shipper giao chưa ạ,order_status
+trả tiền bằng cách nào,payment
+bán hàng trên keebhub,seller
+cho mk hỏi ok cảm ơn thế,thanks
+shop oi theo doi don hang,order_status
+mình muốn hỏi shop đã xác nhận đơn chưa,order_status
+keeby ơi bạn giúp đc gì cho mik nhé,greet
+có giao tận nhà không,shipping
+keeby oi chinh sach doi tra nha,return_item
+shop oi sua lai build da luu,builder_compat
+Keeby oi cho minh noi chuyen voi nguoi that a,contact
+don custom co cod khong voi,payment
+xo so hom nay,other
+co cua hang offline k the,contact
+shop ơi hủy đơn thế nào,cancel_refund
+shop có phím full size không?,find_product
+Xin hỏi xoá tài khoản,account
+thiếu phụ kiện trong hộp nhé,return_item
+cho em hoi dang ky ban hang nha,seller
+cho em hỏi giao sai hàng thì sao nhé,return_item
+shop ơi muốn hợp tác bán phím thế,seller
+đăng nhập bằng số điện thoại v,account
+ko nhan duoc email xac nhan nhe,account
+mau keycap gmk moi nhat a,find_product
+ad ơi đăng sản phẩm lên bán zậy shop,seller
+ad ơi switch 3 pin có lắp vừa kit tkl không,builder_compat
+keeby oi don bi ket a nhe,order_status
+cho minh hoi switch gateron co lap vua kit 60% khong a,builder_compat
+vi co het han ko?,wallet
+huỷ đơn thì tiền hoàn về đâu,cancel_refund
+Đơn custom huỷ được hông nhé,cancel_refund
+cho em hỏi hủy nhiều đơn có sao không ạ?,cancel_refund
+keeby oi phoi phim custom a?,builder_compat
+ad oi sao vi co tien a,wallet
+Mình muốn hỏi có miễn phí ship ko,shipping
+hôm nay ăn gì,other
+khieu nai shop,return_item
+ad ơi sao hông hủy dc đơn với,cancel_refund
+mình muốn hỏi tai nghe nào tốt nhé,other
+shop oi switch bi ket muon tra lai nha,return_item
+bạn ơi email hỗ trợ với,contact
+keeby ơi có ship ra Hải Phòng không ạ?,shipping
+xin hoi khieu nai len san sao,return_item
+switch kailh box có lắp vừa kit tkl không,builder_compat
+Keeby oi vi keebhub o dau nha,wallet
+Mik muon hoi ok cam on vay shop,thanks
+cho em hỏi giải thích thuyết tương đối nha,other
+xin hoi co ban phim full size hong nhe,find_product
+xin hỏi kit 65% dùng keycap gì với,builder_compat
+don dang o trang thai nao nha,order_status
+cho mk hỏi chọn switch cho kit full với,builder_compat
+Ad oi build mat bao lau nha,builder_compat
+ad ơi huỷ đơn được k vậy shop,cancel_refund
+mik muốn hỏi muốn hợp tác bán phím nhé,seller
+cho em hỏi phím full size giá bao nhiêu,find_product
+minh muon hoi lam bai tap tieng anh giup?,other
+keeby ơi hotline là gì nha,contact
+trở thành người bán nha,seller
+Xin hỏi xưởng gia công nào uy tín,builder_compat
+bạn ơi huỷ nhiều đơn có sao hông ạ,cancel_refund
+bo don duoc hong a,cancel_refund
+phím bị liệt nút muốn trả?,return_item
+bạn bn tuổi,other
+Linh kiện có tương thích k,builder_compat
+nen mua kit 75% gi tam 3 trieu zay,find_product
+Mình muốn hỏi giao sai hàng thì sao,return_item
+ad ơi hát một bài đi ạ,other
+cho em hỏi đổi ảnh đại diện,account
+Bạn ơi tìm giúp phím cơ làm văn phòng ạ?,find_product
+có ship ra Hà Nội không vậy,shipping
+xem ví,wallet
+Mình muốn hỏi giao sai hàng thì sao ạ,return_item
+còn hàng switch linear không,find_product
+shop ơi phí giao hàng,shipping
+bạn ơi đơn bao nhiêu thì free ship thế,shipping
+ad oi don hang cua toi toi dau roi the,order_status
+Xin hỏi đơn #kh-0012345 sao rồi v shop,order_status
+sao đơn chưa được xác nhận,order_status
+Ok mình hiểu rồi vậy shop,thanks
+cho em hoi lube switch gia bnh vay shop,builder_compat
+stab plate mount hay pcb mount,builder_compat
+xin hỏi chọn switch cho kit gasket zậy shop,builder_compat
+shop ơi làm sao để huỷ đơn,cancel_refund
+keeby oi mo gian hang,seller
+Giao sai hang thi sao,return_item
+ban oi shop o dau,contact
+ban oi phim bi liet nut muon tra the,return_item
+mình muốn hỏi huỷ đơn bao lâu dc hoàn tiền vậy,cancel_refund
+shop oi giao bang don vi nao nha,shipping
+Shop oi dang ky xuong gia cong,seller
+cho em hoi tra cuu don,order_status
+switch nào đáng mua nhất,find_product
+shop có keycap cherry profile không,find_product
+bạn ơi shop có kit không,find_product
+xin hỏi đăng nhập facebook đc ko,account
+keeby oi don hom qua sao roi a?,order_status
+xin hỏi keycap này có hợp kit gasket hông,builder_compat
+cho mik hoi hi ban,greet
+tks the,thanks
+ad oi thieu phu kien trong hop?,return_item
+shop ơi thanh toán lỗi thì sao vậy shop,payment
+bo don duoc khong a?,cancel_refund
+ad oi switch 3 pin lap mach 5 pin duoc hong nhe,builder_compat
+mk muốn hỏi switch bị kẹt muốn trả lại,return_item
+xin hỏi có cửa hàng offline hông vậy shop,contact
+ban oi bong da toi nay zay shop,other
+keeby ơi chào em nha,greet
+cho em hoi cho xin so zalo vay shop,contact
+shop oi alo voi,greet
+switch 5 pin có lắp vừa kit 60% không,builder_compat
+Xin hỏi hôm nay ăn gì,other
+phi san bnh,seller
+cho em hoi vi cua minh bnh vay,wallet
+Ad ơi huỷ đơn vnpay có hoàn tiền không thế,cancel_refund
+Keeby oi khong dang nhap duoc the,account
+Shop oi shop tu choi tra hang thi sao vay shop,return_item
+link đặt lại mật khẩu hết hạn nhé,account
+shop ơi cách giảm cân vậy,other
+nhan duoc hang bi mop,return_item
+Cho mình hỏi tks,thanks
+Giao hàng toàn quốc ko,shipping
+xin hỏi bai bai thế,thanks
+shop ơi có phím hotswap nào hot không nha,find_product
+cho em hỏi cảm ơn nhé?,thanks
+xin hỏi viết code python,other
+Shop oi phim co nao dang mua nhat a?,find_product
+shop ơi kit tkl dùng keycap gì,builder_compat
+keeby ơi mik biết rồi thanks nha,thanks
+ad ơi hoàn tiền khi huỷ đơn,cancel_refund
+cho mình hỏi muốn trả hàng,return_item
+cho em hỏi sửa địa chỉ nhận hàng ạ,account
+xin hỏi ok mình hiểu rồi ạ,thanks
+shop ơi bạn làm được gì?,greet
+bạn ơi sao ví có tiền nha,wallet
+shop ơi đơn mik đã giao chưa,order_status
+Thanh toán như thế nào ạ?,payment
+Shop ơi keycap này có hợp kit gasket k?,builder_compat
+muon hop tac ban phim a?,seller
+mở gian hàng ạ?,seller
+Ban hang tren keebhub,seller
+cho em hỏi huỷ đơn có mất phí hông,cancel_refund
+mk muốn hỏi shop từ chối trả hàng thì sao thế,return_item
+Thanh toan online co an toan k,payment
+thanh toán lỗi thì sao ạ?,payment
+Xin hoi can ke tay tieng lach cach tam 1 trieu a?,find_product
+Keeby ơi phím không lên đèn muốn đổi,return_item
+shop ơi làm sao để huỷ đơn thế,cancel_refund
+Mk muon hoi thanh toan bang the atm vay shop,payment
+Ad ơi sao không huỷ được đơn với,cancel_refund
+xin hỏi muốn huỷ đơn gia công ạ,cancel_refund
+ad ơi ê bot ạ,greet
+ad ơi cần hỗ trợ gấp ạ?,contact
+list keycap cherry profile dưới 300k,find_product
+gửi lại email xác nhận,account
+Mk muốn hỏi trả hàng cần những gì ạ?,return_item
+xin hoi lube switch gia bao nhieu a,builder_compat
+Cho mình hỏi đăng ký xưởng gia công với,seller
+Ad ơi kit 75% dùng keycap gì,builder_compat
+keeby oi khi nao nhan duoc hang,order_status
+keeby ơi cần kê tay chơi game zậy,find_product
+Thanh toán bằng ví keebhub đc ko,payment
+Ad oi vi con bn tien v,wallet
+xin hỏi keycap cherry profile nào hợp gõ êm,find_product
+cho mình hỏi có ship ra Huế không vậy shop,shipping
+xin hoi noi chuyen voi quan tri vien?,contact
+bạn ơi hay quá cảm ơn,thanks
+xin hoi co ban phim co khong nha,find_product
+custom builder là gì?,builder_compat
+ví của mình bao nhiêu v,wallet
+xin hỏi rút tiền từ ví được không nha,wallet
+chuyện tình cảm ạ,other
+cho em hỏi lưu cấu hình build,builder_compat
+số điện thoại shop vậy,contact
+Cho em hoi khong nhan duoc email xac nhan a,account
+bạn ơi hông đăng nhập được v,account
+cho em hoi don cua em sao roi nha,order_status
+ad ơi bao lâu shop được duyệt,seller
+ban oi kit tkl dung keycap gi,builder_compat
+Sao không chọn được cod với,payment
+Xin hỏi mình biết rồi thanks ạ,thanks
+con hang kit nhom khong,find_product
+cho em hỏi hôm nay ăn gì với,other
+cho mk hoi mau phim hotswap moi nhat a?,find_product
+Có cửa hàng offline ko nhé,contact
+minh muon hoi co nhung hinh thuc thanh toan nao vay shop,payment
+cho mình hỏi gợi ý cáp khoảng 2tr vậy,find_product
+ban oi co ship ra Ha Noi khong,shipping
+xin hoi don dang o trang thai nao voi,order_status
+bạn ơi đổi email đc hông,account
+bạn ơi chuyển tiền ví cho bạn được ko?,wallet
+cho em hoi tra hang can nhung gi,return_item
+ad oi don hang gan nhat cua toi?,order_status
+giao bằng đơn vị nào,shipping
+cho mk hỏi hi bạn,greet
+shop ơi thiếu keycap,return_item
+phim gì hay,other
+vi keebhub la gi voi,wallet
+mik muốn hỏi ví keebhub là gì nhé,wallet
+cho em hỏi trở thành người bán,seller
+ad ơi liên hệ chăm sóc khách hàng,contact
+xin hỏi thanh toán bằng ví keebhub được không,payment
+đăng ký xưởng gia công,seller
+chọn stabilizer thế nào để gõ văn bản,find_product
+mấy ngày đc trả hàng nha,return_item
+Mik muốn hỏi ship về cần thơ bn thế,shipping
+Mik muon hoi cam on keeby?,thanks
+shop ơi đăng sản phẩm lên bán v,seller
+keeby oi lam bai tap tieng anh giup?,other
+hay quá cảm ơn ạ?,thanks
+Mo gian hang nhe,seller
+shop ơi làm việc giờ nào,contact
+ban oi nhan gia cong tren san a?,seller
+shop oi muon tra hang v shop,return_item
+trả hàng cần những gì,return_item
+keeby ơi tư vấn phím full size tiếng lách cách ạ,find_product
+minh muon hoi chon switch cho kit 75%,builder_compat
+keeby ơi chọn switch cho kit full nhé,builder_compat
+Keeby ơi ví bị trừ tiền nhé,wallet
+keeby ơi tiền ví dùng mua hàng được hông ạ,wallet
+mình muốn hỏi có ship ra Cần Thơ không ạ?,shipping
+ad oi chon switch cho kit 75% v shop,builder_compat
+ad ơi giải bài toán này giúp,other
+hello,greet
+phối phím custom,builder_compat
+bong da toi nay vay shop,other
+cảm ơn nhé,thanks
+shop ơi phím full size bán chạy nhất,find_product
+Shop ơi shop thu phí gì vậy shop,seller
+Shop oi gui hang tra ve o dau the,return_item
+ban oi gia vang hom nay nhe,other
+shop ơi thank you thế,thanks
+xin hoi so dien thoai shop,contact
+Bong da toi nay nha,other
+cho minh hoi chon switch cho kit 60% a,builder_compat
+Ad ơi tôi đổi ý muốn hủy,cancel_refund
+đặt nhầm muốn huỷ ạ?,cancel_refund
+cho mk hỏi mk biết rồi thanks ạ?,thanks
+bạn ơi ok mình hiểu rồi,thanks
+cho mik hỏi ship hoả tốc giá sao ạ,shipping
+Shop ơi chọn switch cho kit tkl nhé,builder_compat
+shop ơi kit full dùng keycap gì zậy,builder_compat
+ad ơi thiếu keycap?,return_item
+xin hoi k nhan duoc email xac nhan nha,account
+Shop ơi huỷ đơn sao,cancel_refund
+thanh toan vnpay dc khong the,payment
+recommend keycap gmk tam 3 trieu a,find_product
+Xin hỏi quẹt thẻ dc hông,payment
+shop ơi khiếu nại shop zậy shop,return_item
+shop ơi xem tình trạng đơn nha,order_status
+mk muốn hỏi nút huỷ đơn ở đâu vậy,cancel_refund
+học lập trình ở đâu,other
+lien he cham soc khach hang the,contact
+keeby ơi shop thu phí gì,seller
+mk muon hoi tra gop duoc hong the,payment
+keeby ơi switch 5 pin có lắp vừa kit tkl không zậy,builder_compat
+keeby oi huy nhieu don co sao khong a?,cancel_refund
+số dư ví của tôi,wallet
+mình muốn hỏi trả tiền bằng cách nào ạ,payment
+tôi đổi ý muốn huỷ,cancel_refund
+thanh toán như thế nào,payment
+mik muốn hỏi muốn build bàn phím thế,builder_compat
+Shop ơi đăng nhập bằng số điện thoại?,account
+cấu hình phím chơi game,builder_compat
+bạn ơi kiểm tra giúp đơn KH-1234567?,order_status
+huy nhieu don co sao k,cancel_refund
+quét mã qr thanh toán,payment
+Zay la xong cam on,thanks
+cho mk hỏi thanh toán bằng thẻ atm,payment
+cho mình hỏi có những hình thức thanh toán nào v,payment
+ad oi switch gateron co lap vua kit full khong a,builder_compat
+tiền hoàn trong ví rút ra ngân hàng được không,wallet
+keeby oi he lo nha,greet
+ban oi sao bi dang xuat,account
+cho xem switch clicky dưới 200 nghìn,find_product
+bạn ơi ví có hết hạn không?,wallet
+xin hoi ship hoa toc gia sao,shipping
+bạn ơi thế thôi nhé,thanks
+cho em hỏi gợi ý kit bàn phím tầm 150k nhé,find_product
+mình muốn hỏi sao ví có tiền thế,wallet
+Cho mình hỏi kênh người bán ở đâu vậy shop,seller
+xin hỏi trả góp được ko với,payment
+keeby ơi cho xin số zalo với,contact
+Bạn ơi oke thanks nha nhé,thanks
+bạn ơi kit 60% dùng keycap gì,builder_compat
+Ad ơi đăng nhập bằng số điện thoại thế,account
+giá vàng hôm nay thế,other
+shop oi nap tien vao vi a?,wallet
+xin hỏi alo,greet
+cho em hoi muon huy don gia cong,cancel_refund
+cho em hỏi dùng ví để trả tiền đơn hàng thế,payment
+keeby oi hat mot bai di?,other
+xin hoi thanh toan visa dc khong,payment
+bạn ơi mua kit bàn phím ở đâu với,find_product
+xin hoi ship ve Ha Noi bao nhieu,shipping
+keeby ơi hello,greet
+Thời tiết hôm nay tn thế,other
+mik muon hoi thanh toan ntn the,payment
+không nhận được email xác nhận,account
+có ship ra tỉnh hông với,shipping
+keycap dưới 500k có không,find_product
+keeby ơi kênh người bán ở đâu vậy shop,seller
+keycap này có hợp kit full không,builder_compat
+ad ơi thanh toán vnpay bị lỗi?,payment
+Mk muon hoi ship ve da nang bao nhieu the,shipping
+Ad oi nhap sai mat khau bi khoa vay,account
+Ad oi theo doi don hang?,order_status
+gợi ý phím hotswap,find_product
+Mik muốn hỏi cách nấu phở nha,other
+tiền ví dùng mua hàng đc không,wallet
+keeby ơi tạo tài khoản?,account
+có ship ra Cần Thơ k nhé,shipping
+shop oi tks zay shop,thanks
+Doi anh dai dien nhe,account
+xin hoi don cua toi bao gio giao zay shop,order_status
+cho mình hỏi kit 75% khoảng 2tr có không ạ?,find_product
+cho minh hoi lich su giao dich vi voi,wallet
+Cho em hoi dia chi cua hang,contact
+shop ơi cần hỗ trợ gấp,contact
+shop ơi địa chỉ cửa hàng nhé,contact
+xin hỏi không muốn mua nữa hủy sao nhé,cancel_refund
+giải thích thuyết tương đối v shop,other
+xin hoi hoc lap trinh o dau,other

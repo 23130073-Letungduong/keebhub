@@ -142,7 +142,9 @@ router.post('/select', async (req, res, next) => {
     const map = { kit: 'kit', sw: 'switch', keycap: 'keycap', stab: 'stab' };
     const field = map[role];
     if (!field) return res.redirect('/builder');
-    const p = isValidObjectId(String(req.body.productId || '')) ? await Product.findOne({ _id: req.body.productId, status: 'active' }) : null;
+    const TYPE = { kit: ['kit'], switch: ['switch'], keycap: ['keycap'], stab: ['stabilizer'] };
+    const p = isValidObjectId(String(req.body.productId || '')) ? await Product.findOne({ _id: req.body.productId, status: 'active', partType: { $in: TYPE[field] } }).populate('shop', 'status') : null;
+    if (p && (!p.shop || p.shop.status !== 'active')) { req.flash('error', 'Sản phẩm không khả dụng.'); return res.back(); }
     if (!p) { req.flash('error', 'Sản phẩm không khả dụng.'); return res.back(); }
     b[field] = p._id;
     if (field === 'kit') b.switchQty = Math.ceil((p.attrs.keyCount || 60) / 10) * 10;

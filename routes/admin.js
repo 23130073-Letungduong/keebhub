@@ -7,6 +7,7 @@ const { cancelOrder, refundOrder } = require('../utils/orders');
 const compat = require('../utils/compat');
 const stats = require('../utils/stats');
 const returns = require('../utils/returns');
+const guard = require('../utils/guard');
 const { signIn } = require('./auth');
 
 // ---------- Đăng nhập quản trị ----------
@@ -16,11 +17,15 @@ router.get('/login', (req, res) => {
 });
 router.post('/login', async (req, res, next) => {
   try {
-    const email = String(req.body.email || '').toLowerCase().trim();
-    const user = await User.findOne({ email, role: 'admin' });
-    if (!user || !(await user.checkPassword(req.body.password || '')) || user.status !== 'active') {
+    const email = String(typeof req.body.email === 'string' ? req.body.email : '').toLowerCase().trim();
+    const wait = guard.loginBlocked(req, 'admin:' + email);
+    if (wait) return res.render('admin/login', { title: 'Đăng nhập quản trị', email, flash: { error: [`Nhập sai quá ${guard.LOGIN_MAX} lần. Vui lòng thử lại sau ${wait} phút.`], success: [], info: [] } });
+    const user = email ? await User.findOne({ email, role: 'admin' }) : null;
+    if (!user || !(await user.checkPassword(typeof req.body.password === 'string' ? req.body.password : '')) || user.status !== 'active') {
+      guard.loginFailed(req, 'admin:' + email);
       return res.render('admin/login', { title: 'Đăng nhập quản trị', email, flash: { error: ['Thông tin đăng nhập không đúng.'], success: [], info: [] } });
     }
+    guard.loginOk(req, 'admin:' + email);
     user.lastLogin = new Date();
     await user.save();
     await signIn(req, user);
@@ -155,9 +160,9 @@ router.post('/products/:id/:action', async (req, res) => {
   const p = await Product.findById(req.params.id);
   if (p) {
     const a = req.params.action;
-    if (a === 'approve') { p.status = 'active'; p.rejectReason = undefined; }
-    if (a === 'reject') { p.status = 'rejected'; p.rejectReason = req.body.reason || 'Thông tin chưa đạt chuẩn'; }
-    if (a === 'hide') p.status = 'hidden';
+    if (a === 'approve') { p.status = 'active'; p.rejectReason = undefined; p.hiddenByAdmin = false; }
+    if (a === 'reject') { p.status = 'rejected'; p.rejectReason = guard.str(req.body.reason, 300) || 'Thông tin chưa đạt chuẩn'; }
+    if (a === 'hide') { p.status = 'hidden'; p.hiddenByAdmin = true; }
     if (a === 'delete') {
       if (await Order.exists({ 'items.product': p._id })) { p.status = 'hidden'; req.flash('info', 'Sản phẩm có đơn hàng nên chỉ được ẩn.'); }
       else { await p.deleteOne(); req.flash('success', 'Đã xoá sản phẩm.'); return res.back(); }
@@ -217,7 +222,7 @@ router.post('/orders/:code/status', async (req, res, next) => {
       await order.save();
     }
     req.flash('success', `Đã cập nhật đơn #${order.code}.`);
-    res.redirect(req.body.back || `/admin/orders/${order.code}`);
+    res.redirect(guard.safePath(req.body.back, `/admin/orders/${order.code}`));
   } catch (e) { next(e); }
 });
 
@@ -229,7 +234,7 @@ router.get('/refunds', async (req, res) => {
 });
 // Hoàn tiền vào Ví KeebHub của khách (dùng cho đơn còn kẹt "Chờ hoàn tiền", ví dụ lỗi hệ thống lúc huỷ)
 router.post('/refunds/:code', async (req, res) => {
-  const back = req.body.back || '/admin/refunds';
+  const back = guard.safePath(req.body.back, '/admin/refunds');
   const o = await Order.findOne({ code: req.params.code, paymentStatus: 'refund_pending' });
   if (!o) { req.flash('error', 'Đơn không còn ở trạng thái chờ hoàn tiền.'); return res.redirect(back); }
   const r = await refundOrder(o, 'admin', o.status === 'returned' ? 'refund_return' : 'refund_cancel');
@@ -249,7 +254,7 @@ router.get('/returns', async (req, res) => {
 });
 router.post('/returns/:code/resolve', async (req, res, next) => {
   try {
-    const back = req.body.back || '/admin/returns';
+    const back = guard.safePath(req.body.back, '/admin/returns');
     const o = await Order.findOne({ code: req.params.code });
     if (!o) return next();
     const r = await returns.adminResolve(o, req.body.decision, { note: req.body.note, restock: req.body.restock === '1' });

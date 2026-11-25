@@ -57,14 +57,19 @@ router.post('/profile', upload.single('avatar'), async (req, res, next) => {
 
 router.post('/password', async (req, res, next) => {
   try {
-    const { current, password, confirm } = req.body;
-    if (req.user.password && !(await req.user.checkPassword(current || ''))) {
+    const s = v => (typeof v === 'string' ? v : '');
+    const current = s(req.body.current), password = s(req.body.password), confirm = s(req.body.confirm);
+    if (req.user.password && !(await req.user.checkPassword(current))) {
       req.flash('error', 'Mật khẩu hiện tại không đúng.'); return res.redirect('/account#security');
     }
     if (!password || password.length < 8 || password !== confirm) {
       req.flash('error', 'Mật khẩu mới tối thiểu 8 ký tự và phải khớp.'); return res.redirect('/account#security');
     }
     await req.user.setPassword(password);
+    req.user.resetToken = undefined; // link "quên mật khẩu" cũ (nếu có) hết hiệu lực
+    req.user.pwdAt = new Date();       // đăng xuất các thiết bị khác
+    req.session.loginAt = Date.now() + 1;
+    req.user.resetExpires = undefined;
     await req.user.save();
     req.flash('success', 'Đã đổi mật khẩu.');
     res.redirect('/account');
@@ -206,12 +211,13 @@ router.post('/orders/:code/review/:itemId', upload.array('images', 5), async (re
     const item = order.items.id(req.params.itemId);
     if (!item || item.reviewed || !item.product) { req.flash('error', 'Sản phẩm đã được đánh giá.'); return res.redirect(`/account/orders/${order.code}/review`); }
     const rating = Math.min(5, Math.max(1, parseInt(req.body.rating) || 5));
+    // Khoá nguyên tử: đánh dấu "đã đánh giá" trước → gửi nhiều lần cùng lúc chỉ tạo 1 đánh giá
+    const claim = await Order.updateOne({ _id: order._id, items: { $elemMatch: { _id: item._id, reviewed: { $ne: true } } } }, { $set: { 'items.$.reviewed': true } });
+    if (!claim.modifiedCount) { req.flash('error', 'Sản phẩm đã được đánh giá.'); return res.redirect(`/account/orders/${order.code}/review`); }
     await Review.create({
       product: item.product, shop: order.shop, user: req.user._id, order: order._id, rating,
       content: String(req.body.content || '').slice(0, 2000), images: (req.files || []).map(f => '/uploads/' + f.filename)
     });
-    item.reviewed = true;
-    await order.save();
     await recalcRating(item.product);
     req.flash('success', 'Cảm ơn bạn đã đánh giá!');
     res.redirect(`/account/orders/${order.code}/review`);

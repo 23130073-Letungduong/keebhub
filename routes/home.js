@@ -171,11 +171,13 @@ router.get('/p/:slug', async (req, res, next) => {
 // Hỏi đáp dưới sản phẩm
 router.post('/p/:slug/comments', requireLogin, async (req, res, next) => {
   try {
-    const p = await Product.findOne({ slug: req.params.slug });
-    if (!p) return next();
-    const content = String(req.body.content || '').trim();
+    const p = await Product.findOne({ slug: req.params.slug }).populate('shop', 'status');
+    // chỉ hỏi đáp trên sản phẩm đang bán (chủ shop được ghi chú trên sản phẩm của mình)
+    const own = req.shop && p && String(req.shop._id) === String(p.shop && p.shop._id);
+    if (!p || (!own && (p.status !== 'active' || !p.shop || p.shop.status !== 'active'))) return next();
+    const content = typeof req.body.content === 'string' ? req.body.content.trim() : '';
     if (content.length < 2) { req.flash('error', 'Nội dung quá ngắn.'); return res.redirect(`/p/${p.slug}?tab=qa#tabs`); }
-    await Comment.create({ product: p._id, shop: p.shop, user: req.user._id, content: content.slice(0, 1000) });
+    await Comment.create({ product: p._id, shop: p.shop._id, user: req.user._id, content: content.slice(0, 1000) });
     req.flash('success', 'Đã gửi câu hỏi. Shop sẽ trả lời sớm.');
     res.redirect(`/p/${p.slug}?tab=qa#tabs`);
   } catch (e) { next(e); }
@@ -192,7 +194,7 @@ router.post('/comments/:id/reply', requireLogin, async (req, res, next) => {
       await c.save();
       req.flash('success', 'Đã trả lời bình luận.');
     }
-    res.redirect(req.body.back || `/p/${c.product.slug}?tab=qa#tabs`);
+    res.redirect(require('../utils/guard').safePath(req.body.back, `/p/${c.product.slug}?tab=qa#tabs`));
   } catch (e) { next(e); }
 });
 

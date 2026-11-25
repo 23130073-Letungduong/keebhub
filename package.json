@@ -8,7 +8,10 @@
     "dev": "nodemon server.js",
     "seed": "node seed/seed.js",
     "test": "node --test --test-concurrency=1 --test-reporter=spec test/e2e.test.js",
-    "test:bat-buoc": "node --test --test-concurrency=1 --test-reporter=spec test/bat-buoc.test.js"
+    "test:bat-buoc": "node --test --test-concurrency=1 --test-reporter=spec test/bat-buoc.test.js",
+    "test:lach-luat": "node --test --test-concurrency=1 --test-reporter=spec test/lach-luat.test.js",
+    "test:keeby": "node --test --test-reporter=spec test/keeby.test.js",
+    "train:keeby": "python ml/train_intent.py"
   },
   "engines": {
     "node": ">=18"

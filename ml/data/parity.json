@@ -1,0 +1,1107 @@
+[
+{
+"text": "chào keebhub",
+"intent": "greet",
+"prob": 0.920553
+},
+{
+"text": "xin chao ban",
+"intent": "greet",
+"prob": 0.990919
+},
+{
+"text": "alo alo có ai ở đây không",
+"intent": "greet",
+"prob": 0.961925
+},
+{
+"text": "chào bạn nha mình mới vào web",
+"intent": "greet",
+"prob": 0.757417
+},
+{
+"text": "hello keeby",
+"intent": "greet",
+"prob": 0.978703
+},
+{
+"text": "bạn là bot hả",
+"intent": "greet",
+"prob": 0.942589
+},
+{
+"text": "chào buổi tối",
+"intent": "greet",
+"prob": 0.914082
+},
+{
+"text": "hi ad",
+"intent": "greet",
+"prob": 0.961876
+},
+{
+"text": "ê có ai không vậy",
+"intent": "greet",
+"prob": 0.898078
+},
+{
+"text": "keeby giúp được những gì",
+"intent": "greet",
+"prob": 0.487084
+},
+{
+"text": "xin chào shop nhé",
+"intent": "greet",
+"prob": 0.990174
+},
+{
+"text": "chao ad",
+"intent": "greet",
+"prob": 0.991724
+},
+{
+"text": "cảm ơn bạn nhiều nha",
+"intent": "thanks",
+"prob": 0.987589
+},
+{
+"text": "ok tks",
+"intent": "thanks",
+"prob": 0.9971
+},
+{
+"text": "cam on nhieu",
+"intent": "thanks",
+"prob": 0.992639
+},
+{
+"text": "thank shop",
+"intent": "thanks",
+"prob": 0.831755
+},
+{
+"text": "vậy nhé cảm ơn",
+"intent": "thanks",
+"prob": 0.998451
+},
+{
+"text": "ok mình rõ rồi",
+"intent": "thanks",
+"prob": 0.898426
+},
+{
+"text": "bye bye",
+"intent": "thanks",
+"prob": 0.95627
+},
+{
+"text": "tạm biệt keeby",
+"intent": "thanks",
+"prob": 0.925295
+},
+{
+"text": "được rồi thanks bạn",
+"intent": "thanks",
+"prob": 0.888096
+},
+{
+"text": "cảm ơn vì đã giúp",
+"intent": "thanks",
+"prob": 0.921529
+},
+{
+"text": "oki cam on",
+"intent": "thanks",
+"prob": 0.999658
+},
+{
+"text": "hiểu rồi cảm ơn nha",
+"intent": "thanks",
+"prob": 0.997507
+},
+{
+"text": "có switch nào gõ êm mà rẻ không",
+"intent": "find_product",
+"prob": 0.94403
+},
+{
+"text": "tìm keycap pbt tầm 700k",
+"intent": "find_product",
+"prob": 0.989004
+},
+{
+"text": "cho xin vài mẫu kit 75% nhôm",
+"intent": "find_product",
+"prob": 0.77322
+},
+{
+"text": "mình cần bàn phím chơi game dưới 2 triệu",
+"intent": "find_product",
+"prob": 0.964671
+},
+{
+"text": "switch tactile nào ngon",
+"intent": "find_product",
+"prob": 0.892038
+},
+{
+"text": "kit nao dang mua nhat",
+"intent": "find_product",
+"prob": 0.978751
+},
+{
+"text": "gợi ý giúp mình bộ keycap đẹp",
+"intent": "find_product",
+"prob": 0.876688
+},
+{
+"text": "shop có bán stab không",
+"intent": "find_product",
+"prob": 0.955588
+},
+{
+"text": "tu van switch linear duoi 200k",
+"intent": "find_product",
+"prob": 0.904843
+},
+{
+"text": "có kê tay gỗ không",
+"intent": "find_product",
+"prob": 0.983753
+},
+{
+"text": "phím nào cho dân lập trình",
+"intent": "find_product",
+"prob": 0.757123
+},
+{
+"text": "mua dây cáp xoắn",
+"intent": "find_product",
+"prob": 0.953736
+},
+{
+"text": "keycap gmk giá bao nhiêu",
+"intent": "find_product",
+"prob": 0.908779
+},
+{
+"text": "cho mình xem mấy cái kit gasket",
+"intent": "builder_compat",
+"prob": 0.405966
+},
+{
+"text": "đơn của mình giao tới đâu rồi",
+"intent": "order_status",
+"prob": 0.998411
+},
+{
+"text": "don hang cua toi sao roi",
+"intent": "order_status",
+"prob": 0.998334
+},
+{
+"text": "kiểm tra giúp mình đơn mới đặt",
+"intent": "order_status",
+"prob": 0.982383
+},
+{
+"text": "bao giờ mình nhận được phím",
+"intent": "order_status",
+"prob": 0.56898
+},
+{
+"text": "tiến độ build của mình thế nào rồi",
+"intent": "order_status",
+"prob": 0.929878
+},
+{
+"text": "shop xác nhận đơn của tôi chưa vậy",
+"intent": "order_status",
+"prob": 0.995625
+},
+{
+"text": "xem trạng thái đơn KH-0099887",
+"intent": "order_status",
+"prob": 0.990382
+},
+{
+"text": "đơn của tôi đang giao phải không",
+"intent": "order_status",
+"prob": 0.935172
+},
+{
+"text": "mình muốn tra mã vận đơn",
+"intent": "order_status",
+"prob": 0.891578
+},
+{
+"text": "lâu quá chưa thấy hàng tới",
+"intent": "order_status",
+"prob": 0.804513
+},
+{
+"text": "don gia cong toi buoc nao roi",
+"intent": "order_status",
+"prob": 0.971737
+},
+{
+"text": "lịch sử đơn hàng xem ở đâu",
+"intent": "order_status",
+"prob": 0.990685
+},
+{
+"text": "có trả tiền mặt khi nhận được không",
+"intent": "payment",
+"prob": 0.814878
+},
+{
+"text": "thanh toan bang the duoc ko",
+"intent": "payment",
+"prob": 0.997892
+},
+{
+"text": "mình muốn trả bằng vnpay",
+"intent": "payment",
+"prob": 0.555561
+},
+{
+"text": "có hỗ trợ quét qr không",
+"intent": "payment",
+"prob": 0.617204
+},
+{
+"text": "dùng số dư ví để thanh toán được không",
+"intent": "payment",
+"prob": 0.976517
+},
+{
+"text": "sao đơn build không cho chọn cod",
+"intent": "builder_compat",
+"prob": 0.457923
+},
+{
+"text": "thanh toán thất bại phải làm sao",
+"intent": "payment",
+"prob": 0.903204
+},
+{
+"text": "có chuyển khoản ngân hàng không",
+"intent": "payment",
+"prob": 0.476088
+},
+{
+"text": "trả tiền bằng visa được ko",
+"intent": "payment",
+"prob": 0.931623
+},
+{
+"text": "các phương thức thanh toán",
+"intent": "payment",
+"prob": 0.96686
+},
+{
+"text": "thanh toán khi nhận hàng được không",
+"intent": "payment",
+"prob": 0.9848
+},
+{
+"text": "mất bao nhiêu tiền ship",
+"intent": "shipping",
+"prob": 0.972317
+},
+{
+"text": "ship ra hà nội nhiêu tiền",
+"intent": "shipping",
+"prob": 0.974629
+},
+{
+"text": "freeship từ bao nhiêu",
+"intent": "shipping",
+"prob": 0.96061
+},
+{
+"text": "có giao nhanh trong ngày không",
+"intent": "shipping",
+"prob": 0.805853
+},
+{
+"text": "phi van chuyen tinh sao",
+"intent": "shipping",
+"prob": 0.916128
+},
+{
+"text": "mua ở 2 shop thì ship tính sao",
+"intent": "shipping",
+"prob": 0.935259
+},
+{
+"text": "có ship toàn quốc không ạ",
+"intent": "shipping",
+"prob": 0.986997
+},
+{
+"text": "đơn vị vận chuyển là gì",
+"intent": "shipping",
+"prob": 0.478971
+},
+{
+"text": "giao hỏa tốc bao nhiêu tiền",
+"intent": "shipping",
+"prob": 0.876195
+},
+{
+"text": "có miễn phí giao hàng không",
+"intent": "shipping",
+"prob": 0.948409
+},
+{
+"text": "ship tiêu chuẩn mấy ngày",
+"intent": "shipping",
+"prob": 0.961935
+},
+{
+"text": "mình lỡ đặt sai muốn hủy",
+"intent": "cancel_refund",
+"prob": 0.904802
+},
+{
+"text": "huy don o dau",
+"intent": "cancel_refund",
+"prob": 0.996179
+},
+{
+"text": "huỷ đơn đã thanh toán thì tiền về đâu",
+"intent": "cancel_refund",
+"prob": 0.907186
+},
+{
+"text": "tại sao mình không bấm huỷ được",
+"intent": "cancel_refund",
+"prob": 0.949774
+},
+{
+"text": "shop tự huỷ đơn của mình",
+"intent": "cancel_refund",
+"prob": 0.882036
+},
+{
+"text": "không cần nữa cho mình hủy đơn",
+"intent": "cancel_refund",
+"prob": 0.989289
+},
+{
+"text": "hủy đơn gia công có được không",
+"intent": "cancel_refund",
+"prob": 0.986806
+},
+{
+"text": "huỷ đơn bao lâu thì nhận lại tiền",
+"intent": "cancel_refund",
+"prob": 0.929324
+},
+{
+"text": "muốn bỏ đơn vừa đặt",
+"intent": "cancel_refund",
+"prob": 0.88802
+},
+{
+"text": "hủy đơn có bị phạt không",
+"intent": "cancel_refund",
+"prob": 0.995406
+},
+{
+"text": "don bi huy tien di dau",
+"intent": "cancel_refund",
+"prob": 0.978276
+},
+{
+"text": "phím mình nhận bị liệt mấy nút",
+"intent": "return_item",
+"prob": 0.477289
+},
+{
+"text": "giao nhầm keycap màu khác",
+"intent": "return_item",
+"prob": 0.504499
+},
+{
+"text": "hàng tới bị bể góc",
+"intent": "return_item",
+"prob": 0.643206
+},
+{
+"text": "tra hang nhu the nao",
+"intent": "return_item",
+"prob": 0.951803
+},
+{
+"text": "mình muốn trả lại hàng lỗi",
+"intent": "return_item",
+"prob": 0.986098
+},
+{
+"text": "thiếu cáp trong hộp",
+"intent": "return_item",
+"prob": 0.923611
+},
+{
+"text": "shop không cho trả hàng",
+"intent": "return_item",
+"prob": 0.987779
+},
+{
+"text": "chính sách bảo hành đổi trả",
+"intent": "return_item",
+"prob": 0.997789
+},
+{
+"text": "được trả hàng trong bao nhiêu ngày",
+"intent": "return_item",
+"prob": 0.984641
+},
+{
+"text": "switch kêu rè muốn đổi",
+"intent": "return_item",
+"prob": 0.681747
+},
+{
+"text": "khiếu nại shop ở đâu",
+"intent": "return_item",
+"prob": 0.904916
+},
+{
+"text": "nhận hàng không đúng mô tả",
+"intent": "payment",
+"prob": 0.310641
+},
+{
+"text": "ví của mình còn bao nhiêu",
+"intent": "wallet",
+"prob": 0.917499
+},
+{
+"text": "so du vi keebhub",
+"intent": "wallet",
+"prob": 0.999512
+},
+{
+"text": "tiền trong ví rút về ngân hàng được không",
+"intent": "wallet",
+"prob": 0.971508
+},
+{
+"text": "ví keebhub dùng để làm gì",
+"intent": "wallet",
+"prob": 0.893156
+},
+{
+"text": "xem lịch sử ví",
+"intent": "wallet",
+"prob": 0.94546
+},
+{
+"text": "mình có tiền trong ví chưa",
+"intent": "wallet",
+"prob": 0.975749
+},
+{
+"text": "nạp tiền ví được không",
+"intent": "wallet",
+"prob": 0.979104
+},
+{
+"text": "vi keebhub o dau",
+"intent": "wallet",
+"prob": 0.980625
+},
+{
+"text": "kiểm tra số dư giúp mình",
+"intent": "wallet",
+"prob": 0.720156
+},
+{
+"text": "tại sao ví bị trừ tiền",
+"intent": "wallet",
+"prob": 0.981382
+},
+{
+"text": "chuyển tiền ví sang tài khoản khác",
+"intent": "wallet",
+"prob": 0.909878
+},
+{
+"text": "switch 5 pin có cắm vào mạch 3 pin được không",
+"intent": "builder_compat",
+"prob": 0.880912
+},
+{
+"text": "kit 65% hợp với keycap nào",
+"intent": "builder_compat",
+"prob": 0.550693
+},
+{
+"text": "muốn nhờ shop lắp phím hộ",
+"intent": "builder_compat",
+"prob": 0.732808
+},
+{
+"text": "custom builder dùng thế nào",
+"intent": "builder_compat",
+"prob": 0.949604
+},
+{
+"text": "có dịch vụ lube switch không",
+"intent": "builder_compat",
+"prob": 0.965424
+},
+{
+"text": "build một bộ phím gõ êm",
+"intent": "builder_compat",
+"prob": 0.824837
+},
+{
+"text": "gasket mount khác gì tray mount",
+"intent": "builder_compat",
+"prob": 0.941821
+},
+{
+"text": "kiem tra tuong thich linh kien",
+"intent": "builder_compat",
+"prob": 0.897149
+},
+{
+"text": "xưởng nào nhận hàn mạch",
+"intent": "builder_compat",
+"prob": 0.804521
+},
+{
+"text": "gói gia công bao gồm gì",
+"intent": "builder_compat",
+"prob": 0.737898
+},
+{
+"text": "mở lại cấu hình đã lưu",
+"intent": "builder_compat",
+"prob": 0.802411
+},
+{
+"text": "build xong mất mấy ngày",
+"intent": "builder_compat",
+"prob": 0.784412
+},
+{
+"text": "quen mat khau roi",
+"intent": "account",
+"prob": 0.94457
+},
+{
+"text": "không vào được tài khoản",
+"intent": "account",
+"prob": 0.709768
+},
+{
+"text": "chưa nhận được mail xác nhận đăng ký",
+"intent": "account",
+"prob": 0.889521
+},
+{
+"text": "tạo tài khoản mới ở đâu",
+"intent": "account",
+"prob": 0.901226
+},
+{
+"text": "đổi mật khẩu ở đâu",
+"intent": "account",
+"prob": 0.987422
+},
+{
+"text": "login bằng google được không",
+"intent": "payment",
+"prob": 0.399226
+},
+{
+"text": "tài khoản mình bị khóa",
+"intent": "account",
+"prob": 0.969164
+},
+{
+"text": "cập nhật địa chỉ giao hàng",
+"intent": "account",
+"prob": 0.420979
+},
+{
+"text": "đổi số điện thoại tài khoản",
+"intent": "account",
+"prob": 0.994938
+},
+{
+"text": "link reset mật khẩu không dùng được",
+"intent": "account",
+"prob": 0.843538
+},
+{
+"text": "dang ky tai khoan",
+"intent": "account",
+"prob": 0.981975
+},
+{
+"text": "mình muốn bán phím trên sàn",
+"intent": "seller",
+"prob": 0.993877
+},
+{
+"text": "dang ky mo shop",
+"intent": "seller",
+"prob": 0.992375
+},
+{
+"text": "phí sàn thu bao nhiêu phần trăm",
+"intent": "seller",
+"prob": 0.979183
+},
+{
+"text": "shop mới bao lâu được duyệt",
+"intent": "seller",
+"prob": 0.952021
+},
+{
+"text": "làm sao để đăng sản phẩm",
+"intent": "seller",
+"prob": 0.798936
+},
+{
+"text": "muốn trở thành xưởng gia công trên keebhub",
+"intent": "seller",
+"prob": 0.976815
+},
+{
+"text": "sản phẩm của shop mình bị từ chối",
+"intent": "seller",
+"prob": 0.918857
+},
+{
+"text": "vào kênh người bán ở đâu",
+"intent": "seller",
+"prob": 0.946332
+},
+{
+"text": "hợp tác bán hàng với keebhub",
+"intent": "seller",
+"prob": 0.934808
+},
+{
+"text": "mở gian hàng có mất phí không",
+"intent": "seller",
+"prob": 0.825555
+},
+{
+"text": "cho mình gặp nhân viên tư vấn",
+"intent": "contact",
+"prob": 0.972616
+},
+{
+"text": "số hotline của keebhub",
+"intent": "contact",
+"prob": 0.894197
+},
+{
+"text": "email liên hệ là gì",
+"intent": "contact",
+"prob": 0.924856
+},
+{
+"text": "lien he admin",
+"intent": "contact",
+"prob": 0.974709
+},
+{
+"text": "có cửa hàng ở hcm không",
+"intent": "contact",
+"prob": 0.276305
+},
+{
+"text": "mình cần người thật hỗ trợ",
+"intent": "contact",
+"prob": 0.887725
+},
+{
+"text": "xin số điện thoại chăm sóc khách hàng",
+"intent": "contact",
+"prob": 0.963258
+},
+{
+"text": "giờ làm việc của shop",
+"intent": "contact",
+"prob": 0.976497
+},
+{
+"text": "web bị lỗi báo ai",
+"intent": "contact",
+"prob": 0.922271
+},
+{
+"text": "cho xin zalo shop",
+"intent": "contact",
+"prob": 0.92787
+},
+{
+"text": "hôm nay trời mưa không",
+"intent": "other",
+"prob": 0.96944
+},
+{
+"text": "kể chuyện vui đi",
+"intent": "other",
+"prob": 0.986808
+},
+{
+"text": "1 cộng 1 bằng mấy",
+"intent": "other",
+"prob": 0.284612
+},
+{
+"text": "viết giúp mình bài văn",
+"intent": "other",
+"prob": 0.459259
+},
+{
+"text": "bạn thích màu gì",
+"intent": "other",
+"prob": 0.398417
+},
+{
+"text": "tối nay xem phim gì",
+"intent": "other",
+"prob": 0.790341
+},
+{
+"text": "giá bitcoin hôm nay",
+"intent": "other",
+"prob": 0.993433
+},
+{
+"text": "shop có bán laptop không",
+"intent": "other",
+"prob": 0.798512
+},
+{
+"text": "dạy mình nấu ăn",
+"intent": "other",
+"prob": 0.739067
+},
+{
+"text": "qwerty uiop",
+"intent": "other",
+"prob": 0.216247
+},
+{
+"text": "bạn có buồn không",
+"intent": "find_product",
+"prob": 0.349635
+},
+{
+"text": "mua tai nghe bluetooth",
+"intent": "other",
+"prob": 0.946693
+},
+{
+"text": "Ad oi tra hang can nhung gi a?",
+"intent": "return_item",
+"prob": 0.935201
+},
+{
+"text": "shop oi tien do gia cong phim cua minh",
+"intent": "order_status",
+"prob": 0.832345
+},
+{
+"text": "cho em hỏi giải bài toán này giúp",
+"intent": "other",
+"prob": 0.974971
+},
+{
+"text": "ad oi dang nhap facebook duoc ko zay shop",
+"intent": "account",
+"prob": 0.942276
+},
+{
+"text": "shop ơi tôi muốn huỷ đơn hàng nhé",
+"intent": "cancel_refund",
+"prob": 0.979529
+},
+{
+"text": "cho mik hoi shipper giao chua a?",
+"intent": "order_status",
+"prob": 0.912891
+},
+{
+"text": "Quẹt thẻ đc không ạ",
+"intent": "payment",
+"prob": 0.962608
+},
+{
+"text": "cho em hoi thanks a?",
+"intent": "thanks",
+"prob": 0.94697
+},
+{
+"text": "trả hàng thế nào",
+"intent": "return_item",
+"prob": 0.993084
+},
+{
+"text": "ad oi rut tien tu vi duoc k nha",
+"intent": "wallet",
+"prob": 0.973439
+},
+{
+"text": "cho minh hoi cam on keeby the",
+"intent": "thanks",
+"prob": 0.978878
+},
+{
+"text": "bạn ơi đơn hàng của tôi tới đâu rồi vậy",
+"intent": "order_status",
+"prob": 0.994316
+},
+{
+"text": "xin hoi thanh toan ntn a?",
+"intent": "payment",
+"prob": 0.959853
+},
+{
+"text": "shop oi may gio roi v",
+"intent": "other",
+"prob": 0.89018
+},
+{
+"text": "xin hoi shop thu phi gi vay shop",
+"intent": "seller",
+"prob": 0.911507
+},
+{
+"text": "Cho em hoi mau switch akko moi nhat the",
+"intent": "find_product",
+"prob": 0.84998
+},
+{
+"text": "keeby oi ban lam duoc gi",
+"intent": "greet",
+"prob": 0.934839
+},
+{
+"text": "bạn ơi được rồi cảm ơn?",
+"intent": "thanks",
+"prob": 0.979156
+},
+{
+"text": "ad ơi không nhận được email xác nhận nhé",
+"intent": "account",
+"prob": 0.967769
+},
+{
+"text": "bạn ơi hay quá cảm ơn",
+"intent": "thanks",
+"prob": 0.966826
+},
+{
+"text": "keeby ơi tuyệt vời cảm ơn thế",
+"intent": "thanks",
+"prob": 0.976103
+},
+{
+"text": "shop ơi bạn là ai",
+"intent": "greet",
+"prob": 0.993186
+},
+{
+"text": "cho em hoi vi keebhub la gi voi",
+"intent": "wallet",
+"prob": 0.960015
+},
+{
+"text": "mình muốn hỏi gặp nhân viên với",
+"intent": "contact",
+"prob": 0.955203
+},
+{
+"text": "Cam on shop nhieu v",
+"intent": "thanks",
+"prob": 0.974461
+},
+{
+"text": "xin hỏi tiền trong ví dùng làm gì",
+"intent": "wallet",
+"prob": 0.978096
+},
+{
+"text": "Cần hỗ trợ gấp zậy",
+"intent": "contact",
+"prob": 0.963418
+},
+{
+"text": "xin hỏi cho xin số zalo nhé",
+"intent": "contact",
+"prob": 0.941156
+},
+{
+"text": "cho mik hỏi mua stab ở đâu nhé",
+"intent": "find_product",
+"prob": 0.869953
+},
+{
+"text": "keeby ơi nhập sai mật khẩu bị khoá nha",
+"intent": "account",
+"prob": 0.994173
+},
+{
+"text": "cho em hỏi số điện thoại shop vậy",
+"intent": "contact",
+"prob": 0.897161
+},
+{
+"text": "đơn gia công tới bước nào rồi",
+"intent": "order_status",
+"prob": 0.979354
+},
+{
+"text": "Keeby oi hey keeby",
+"intent": "greet",
+"prob": 0.944732
+},
+{
+"text": "shop ơi tôi muốn huỷ đơn hàng thế",
+"intent": "cancel_refund",
+"prob": 0.977557
+},
+{
+"text": "mk muốn hỏi huỷ đơn bao lâu được hoàn tiền ạ?",
+"intent": "cancel_refund",
+"prob": 0.990159
+},
+{
+"text": "cho em hỏi trở thành người bán",
+"intent": "seller",
+"prob": 0.967266
+},
+{
+"text": "kiểm tra giúp đơn mới đặt",
+"intent": "order_status",
+"prob": 0.983138
+},
+{
+"text": "mk muon hoi ship ve Hai Phong bnh vay shop",
+"intent": "shipping",
+"prob": 0.950529
+},
+{
+"text": "ad ơi viết code python",
+"intent": "other",
+"prob": 0.95288
+},
+{
+"text": "xin hỏi freeship hông nha",
+"intent": "shipping",
+"prob": 0.938061
+},
+{
+"text": "Cho em hoi ban laptop khong?",
+"intent": "other",
+"prob": 0.905015
+},
+{
+"text": "switch bị kẹt muốn trả lại",
+"intent": "return_item",
+"prob": 0.972106
+},
+{
+"text": "bạn ơi nhập sai mật khẩu bị khoá thế",
+"intent": "account",
+"prob": 0.994103
+},
+{
+"text": "Shop oi shop tu choi tra hang thi sao vay shop",
+"intent": "return_item",
+"prob": 0.951912
+},
+{
+"text": "Cho em hoi switch tactile nao hop nhe tay vay shop",
+"intent": "find_product",
+"prob": 0.899043
+},
+{
+"text": "keeby oi xin chao keebhub voi",
+"intent": "greet",
+"prob": 0.947417
+},
+{
+"text": "khi nào nhận được hàng v shop",
+"intent": "order_status",
+"prob": 0.850723
+},
+{
+"text": "shop oi huy don bao lau dc hoan tien vay shop",
+"intent": "cancel_refund",
+"prob": 0.970989
+},
+{
+"text": "minh muon hoi shop cua toi bi khoa a",
+"intent": "seller",
+"prob": 0.936961
+},
+{
+"text": "mở gian hàng",
+"intent": "seller",
+"prob": 0.966968
+},
+{
+"text": "nút hủy đơn ở đâu vậy",
+"intent": "cancel_refund",
+"prob": 0.978658
+},
+{
+"text": "cho mk hoi muon tra hang vay shop",
+"intent": "return_item",
+"prob": 0.948204
+},
+{
+"text": "chuyển tiền ví cho bạn được k ạ?",
+"intent": "wallet",
+"prob": 0.969915
+},
+{
+"text": "keeby ơi cảm ơn?",
+"intent": "thanks",
+"prob": 0.994989
+},
+{
+"text": "minh muon hoi chon switch cho kit gasket nha",
+"intent": "builder_compat",
+"prob": 0.917537
+},
+{
+"text": "không đăng nhập được",
+"intent": "account",
+"prob": 0.982642
+},
+{
+"text": "Ad oi tks a",
+"intent": "thanks",
+"prob": 0.948166
+},
+{
+"text": "trạng thái đơn hàng",
+"intent": "order_status",
+"prob": 0.984683
+},
+{
+"text": "Ad oi may gio roi vay",
+"intent": "other",
+"prob": 0.90569
+},
+{
+"text": "Xin hỏi cảm ơn bạn v",
+"intent": "thanks",
+"prob": 0.986415
+}
+]

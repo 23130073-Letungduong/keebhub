@@ -6,30 +6,34 @@ const vnpay = require('../utils/vnpay');
 const mailer = require('../utils/mailer');
 const { refundOrder } = require('../utils/orders');
 
+// Ghi nhận kết quả thanh toán cho cả nhóm đơn — NGUYÊN TỬ từng đơn:
+//  - chỉ đơn đang "chưa thanh toán / thất bại" mới được đổi (VNPay gọi lại nhiều lần không xử lý lặp)
+//  - đơn đã bị huỷ / trả hàng mà tiền vẫn về → chuyển "Chờ hoàn tiền" và hoàn ngay vào Ví KeebHub
+//    (kiểm tra lại SAU khi ghi "đã thanh toán" → không lọt trường hợp khách bấm huỷ đúng lúc tiền về)
 async function markGroup(group, ok, info = {}) {
   const orders = await Order.find({ paymentGroup: group });
+  const now = new Date();
   for (const o of orders) {
-    if (!['unpaid', 'failed'].includes(o.paymentStatus)) continue; // đã xử lý rồi (paid / đã hoàn) → không xử lý lại (chặn hoàn 2 lần khi VNPay gọi lại)
     if (ok) {
-      // Đơn đã bị huỷ mà khách vẫn trả tiền → đưa vào hàng chờ hoàn tiền
-      o.paymentStatus = ['cancelled', 'returned'].includes(o.status) ? 'refund_pending' : 'paid';
-      o.paidAt = new Date();
-      o.vnpTransactionNo = info.transactionNo;
-      if (info.payDate) o.vnpPayDate = info.payDate;
-      if (info.bank) o.vnpBankCode = info.bank;
-      o.history.push({ status: o.status, note: `Thanh toán VNPay thành công${info.bank ? ' (' + info.bank + ')' : ''}`, by: 'system' });
-    } else if (o.paymentStatus === 'unpaid') {
-      o.paymentStatus = 'failed';
-      o.history.push({ status: o.status, note: 'Thanh toán VNPay không thành công', by: 'system' });
+      const set = { paymentStatus: 'paid', paidAt: now, vnpTransactionNo: info.transactionNo };
+      if (info.payDate) set.vnpPayDate = info.payDate;
+      if (info.bank) set.vnpBankCode = info.bank;
+      const r = await Order.updateOne({ _id: o._id, paymentStatus: { $in: ['unpaid', 'failed'] } },
+        { $set: set, $push: { history: { status: o.status, at: now, by: 'system', note: `Thanh toán VNPay thành công${info.bank ? ' (' + info.bank + ')' : ''}` } } });
+      if (r.modifiedCount) await settleLatePayment(o._id);
+    } else {
+      await Order.updateOne({ _id: o._id, paymentStatus: 'unpaid' },
+        { $set: { paymentStatus: 'failed' }, $push: { history: { status: o.status, at: now, by: 'system', note: 'Thanh toán VNPay không thành công' } } });
     }
-    await o.save();
   }
-  return orders;
+  return Order.find({ paymentGroup: group });
 }
-// Khách trả tiền xong nhưng đơn đã bị huỷ trước đó → hoàn tiền tự động luôn
-async function refundLate(orders) {
-  for (const o of orders) if (o.paymentStatus === 'refund_pending') await refundOrder(o, 'system').catch(e => console.error('[Hoàn tiền]', e.message));
+// Đơn đã huỷ / trả hàng nhưng đang "đã thanh toán" → chuyển chờ hoàn + hoàn vào ví (khoá nguyên tử trong refundOrder)
+async function settleLatePayment(id) {
+  const r = await Order.findOneAndUpdate({ _id: id, paymentStatus: 'paid', status: { $in: ['cancelled', 'returned'] } }, { $set: { paymentStatus: 'refund_pending' } }, { new: true });
+  if (r) await refundOrder(r, 'system').catch(e => console.error('[Hoàn tiền]', e.message));
 }
+async function refundLate() { /* đã xử lý ngay trong markGroup */ }
 
 // Chuyển sang VNPay
 router.get('/vnpay/:group', requireLogin, async (req, res, next) => {

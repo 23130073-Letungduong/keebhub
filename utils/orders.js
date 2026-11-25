@@ -19,7 +19,6 @@ async function cancelOrder(order, by, reason) {
   order.cancelledAt = now;
   order.cancelReason = reason || '';
   order.cancelledBy = by;
-  if (order.paymentStatus === 'paid') order.paymentStatus = 'refund_pending';
   if (order.isCustom && order.customRequest && order.customRequest.status === 'waiting') {
     // Shop huỷ = từ chối; khách/admin huỷ = rút yêu cầu (không còn "chờ thanh toán")
     order.customRequest.status = by === 'seller' ? 'rejected' : '';
@@ -28,7 +27,14 @@ async function cancelOrder(order, by, reason) {
   if (order.isCustom && order.service && order.service.ref) await CustomService.updateOne({ _id: order.service.ref }, { $inc: { orders: -1 } });
   order.history.push({ status: 'cancelled', note: `Huỷ bởi ${({ customer: 'khách hàng', seller: 'shop', admin: 'quản trị viên' })[by] || by}${reason ? ': ' + reason : ''}`, by });
   await order.save();
-  if (order.paymentStatus === 'refund_pending') await refundOrder(order, by, 'refund_cancel').catch(e => console.error('[Hoàn tiền]', e.message));
+  // Tiền: đọc trạng thái MỚI NHẤT trong CSDL (không dùng bản đã tải) → nếu tiền VNPay về đúng lúc huỷ vẫn được hoàn
+  const p = await Order.findOneAndUpdate({ _id: order._id, paymentStatus: 'paid' }, { $set: { paymentStatus: 'refund_pending' } }, { new: true });
+  const cur = p || await Order.findById(order._id).select('paymentStatus');
+  order.paymentStatus = cur.paymentStatus;
+  if (order.paymentStatus === 'refund_pending') {
+    const r = await refundOrder(order, by, 'refund_cancel').catch(e => console.error('[Hoàn tiền]', e.message));
+    if (r && r.ok) order.paymentStatus = 'refunded';
+  }
   return order;
 }
 

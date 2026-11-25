@@ -702,7 +702,7 @@ describe('9. Kênh người bán', () => {
   it('Thêm sản phẩm thiếu tên / giá → báo lỗi', async () => {
     const cat = await M.Category.findOne({ partType: 'switch' });
     const fd = new FormData(); fd.append('name', ''); fd.append('category', String(cat._id)); fd.append('price', '0');
-    assert.ok(has(await s.req('POST', '/seller/products', { multipart: fd }), 'Vui lòng nhập tên'));
+    const rr = await s.req('POST', '/seller/products', { multipart: fd }); assert.ok(has(rr, 'Vui lòng nhập tên'), rr.status + ' ' + rr.url + ' ' + (rr.text.match(/class="alert[^"]*flash">.{0,400}/)||[''])[0].replace(/<[^>]+>/g,''));
   });
   it('Thêm sản phẩm có ảnh → chờ duyệt', async () => {
     const cat = await M.Category.findOne({ partType: 'switch' });
@@ -926,6 +926,22 @@ describe('12. Chat AI', () => {
     const u = new Client(); await u.login('khach@keebhub.vn', 'Khach@123');
     assert.match((await ask('đơn hàng của tôi tới đâu rồi', u)).body.reply, /#KH-/);
   });
+  it('Mô hình học máy đoán ý định → trả lời đúng chủ đề bằng dữ liệu thật (ví, trả hàng, ngoài phạm vi)', async () => {
+    const u = new Client(); await u.login('user12@keebhub.vn', 'Khach@123');
+    const me = await M.User.findOne({ email: 'user12@keebhub.vn' });
+    await M.User.updateOne({ _id: me._id }, { wallet: 123000 });
+    const w = await ask('vi con bao nhieu tien', u);
+    assert.equal(w.body.intent.name, 'wallet'); assert.equal(w.body.engine, 'intent');
+    assert.match(w.body.reply, /123\.000₫/);
+    assert.match((await ask('hàng nhận về bị lỗi mình muốn trả', u)).body.reply, /7 ngày/);
+    assert.match((await ask('huỷ đơn thì tiền hoàn về đâu', u)).body.reply, /Ví KeebHub/);
+    const o = await ask('hôm nay thời tiết thế nào', u);
+    assert.equal(o.body.intent.name, 'other'); assert.equal(o.body.products.length, 0); assert.match(o.body.reply, /ngoài phạm vi/);
+    const sh = await ask('phi ship bn', u);
+    assert.equal(sh.body.intent.name, 'shipping'); assert.equal(sh.body.products.length, 0);
+    assert.match((await ask('custom builder dùng sao', u)).body.reply, /6 bước/);
+    await M.User.updateOne({ _id: me._id }, { wallet: 0 });
+  });
   it('Dữ liệu rỗng / sai kiểu không gây lỗi', async () => {
     for (const body of [{}, { messages: 'abc' }, { messages: [null, 1, {}] }]) {
       const r = await c.req('POST', '/api/chat', { json: body });
@@ -949,13 +965,16 @@ describe('13. Hồi quy: các lỗi đã sửa sau đợt rà soát chức năng
     const r2 = await c.login('user8@keebhub.vn', 'Khach@123');
     assert.equal(r2.status, 200); assert.equal(r2.url, '/');
   });
-  it('Đơn đã huỷ mà vẫn thanh toán VNPay → chuyển "Chờ hoàn tiền", không thành "Đã thanh toán"', async () => {
+  it('Đơn đã huỷ mà vẫn thanh toán VNPay → hoàn ngay vào ví, không thành "Đã thanh toán"', async () => {
     const u = await M.User.findOne({ email: 'user8@keebhub.vn' });
     const o = await M.Order.findOne({ isCustom: false, paymentMethod: 'vnpay' });
     await M.Order.updateOne({ _id: o._id }, { user: u._id, status: 'cancelled', paymentStatus: 'unpaid', paymentGroup: 'PGTESTCANCEL' });
     const c = new Client(); await c.login('user8@keebhub.vn', 'Khach@123');
+    const w0 = (await M.User.findById(u._id)).wallet;
     await c.post('/payment/mock/PGTESTCANCEL', { result: 'success' });
-    assert.equal((await M.Order.findById(o._id)).paymentStatus, 'refund_pending');
+    const x = await M.Order.findById(o._id);
+    assert.equal(x.paymentStatus, 'refunded'); assert.equal(x.status, 'cancelled');
+    assert.equal((await M.User.findById(u._id)).wallet, w0 + x.total);
   });
   it('Không thanh toán mô phỏng hộ đơn của người khác', async () => {
     const u = await M.User.findOne({ email: 'user8@keebhub.vn' });
@@ -1248,7 +1267,9 @@ describe('14. Kiểm thử mở rộng (đợt rà soát lần 2)', () => {
     await M.CompatRule.updateOne({ code: 'SWITCH_PINS' }, { enabled: true }); compat.clearCache();
   });
   it('Chat AI: tin nhắn rất dài vẫn trả lời', async () => {
-    const r = await new Client().req('POST', '/api/chat', { json: { messages: [{ role: 'user', content: 'switch '.repeat(2000) }] } });
+    // đăng nhập để tính giới hạn tốc độ theo tài khoản (khách vãng lai bị giới hạn chung theo IP — mục 12 vừa dùng hết lượt)
+    const cl = new Client(); await cl.login('user11@keebhub.vn', 'Khach@123');
+    const r = await cl.req('POST', '/api/chat', { json: { messages: [{ role: 'user', content: 'switch '.repeat(2000) }] } });
     assert.equal(r.status, 200); assert.ok(JSON.parse(r.text).reply);
   });
 });

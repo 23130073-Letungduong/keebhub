@@ -10,7 +10,9 @@ async function loadUser(req, res, next) {
   try {
     if (req.session.userId) {
       const user = await User.findById(req.session.userId);
-      if (!user || user.status === 'locked') {
+      // đổi mật khẩu ở nơi khác → phiên cũ hết hiệu lực
+      const stale = user && user.pwdAt && (req.session.loginAt || 0) < user.pwdAt.getTime();
+      if (!user || user.status === 'locked' || stale) {
         req.session.userId = null;
       } else {
         req.user = user;

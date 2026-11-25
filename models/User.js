@@ -27,6 +27,9 @@ const userSchema = new mongoose.Schema({
   verifySentAt: Date, // lần gửi email xác nhận gần nhất (chống bấm Gửi lại liên tục)
   resetToken: String,
   resetExpires: Date,
+  resetSentAt: Date,
+  pwdAt: Date,        // lần đổi mật khẩu gần nhất → các phiên đăng nhập cũ (thiết bị khác) bị đăng xuất  // lần gửi email đặt lại mật khẩu gần nhất (chống spam)
+  checkoutAt: Date,   // khoá đặt hàng tạm thời (chống bấm Đặt hàng 2 lần)
   googleId: String,
   facebookId: String,
   address: {

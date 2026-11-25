@@ -3,6 +3,7 @@ const { User } = require('../models');
 const { passport, enabled } = require('../config/passport');
 const mailer = require('../utils/mailer');
 const { token } = require('../utils/helpers');
+const guard = require('../utils/guard');
 
 const BASE = () => process.env.BASE_URL || 'http://localhost:3000';
 const RESEND_WAIT = 30; // giây phải chờ giữa 2 lần gửi email xác nhận
@@ -17,6 +18,7 @@ function signIn(req, user, remember = true) {
     req.session.regenerate(err => {
       if (err) return reject(err);
       req.session.userId = String(user._id);
+      req.session.loginAt = Date.now();
       if (!remember) req.session.cookie.expires = false;
       resolve();
     });
@@ -40,9 +42,12 @@ router.get('/login', (req, res) => {
 
 router.post('/login', async (req, res, next) => {
   try {
-    const email = String(req.body.email || '').toLowerCase().trim();
-    const user = await User.findOne({ $or: [{ email }, { phone: email }] });
-    if (!user || !(await user.checkPassword(req.body.password || ''))) {
+    const email = String(typeof req.body.email === 'string' ? req.body.email : '').toLowerCase().trim();
+    const wait = guard.loginBlocked(req, email);
+    if (wait) return res.render('auth/login', { title: 'Đăng nhập', email, flash: { error: [`Bạn đã nhập sai quá ${guard.LOGIN_MAX} lần. Vui lòng thử lại sau ${wait} phút hoặc dùng "Quên mật khẩu".`], success: [], info: [] } });
+    const user = email ? await User.findOne({ $or: [{ email }, { phone: email }] }) : null;
+    if (!user || !(await user.checkPassword(typeof req.body.password === 'string' ? req.body.password : ''))) {
+      guard.loginFailed(req, email);
       return res.render('auth/login', { title: 'Đăng nhập', email, flash: { error: ['Email hoặc mật khẩu không đúng.'], success: [], info: [] } });
     }
     if (user.status === 'locked') {
@@ -55,6 +60,7 @@ router.post('/login', async (req, res, next) => {
     if (!user.emailVerified) {
       return res.render('auth/login', { title: 'Đăng nhập', email, unverified: true, resendEmail: user.email, flash: { error: ['Tài khoản chưa xác nhận email. Kiểm tra hộp thư hoặc gửi lại email xác nhận.'], success: [], info: [] } });
     }
+    guard.loginOk(req, email);
     await mergeAndGo(req, res, user, req.body.remember === 'on');
   } catch (e) { next(e); }
 });
@@ -167,7 +173,9 @@ router.post('/forgot', async (req, res, next) => {
     const email = String(req.body.email || '').toLowerCase().trim();
     const user = await User.findOne({ email });
     let sent = { ok: true };
-    if (user) {
+    // chống spam: mỗi 60 giây chỉ gửi 1 email đặt lại mật khẩu (link vừa gửi vẫn dùng được)
+    if (user && !(user.resetSentAt && Date.now() - user.resetSentAt < 60e3)) {
+      user.resetSentAt = new Date();
       user.resetToken = token();
       user.resetExpires = Date.now() + 30 * 60e3;
       await user.save();
@@ -191,6 +199,7 @@ router.post('/reset/:token', async (req, res, next) => {
       return res.render('auth/reset', { title: 'Đặt mật khẩu mới', token: req.params.token, email: user.email, flash: { error: ['Mật khẩu tối thiểu 8 ký tự và phải khớp.'], success: [], info: [] } });
     }
     await user.setPassword(pw);
+    user.pwdAt = new Date();
     user.resetToken = undefined;
     user.resetExpires = undefined;
     user.emailVerified = true;
