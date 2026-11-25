@@ -6,6 +6,7 @@
   </div>
   <div class="grp"><div class="gt">MUA HÀNG</div>
     <a class="<%= active==='orders'?'on':'' %>" href="/account/orders"><em><%- h.uiIcon('package', 18) %></em>Đơn hàng của tôi<% if (side.orders) { %><b><%= side.orders %></b><% } %></a>
+    <a class="<%= active==='wallet'?'on':'' %>" href="/account/wallet"><em><%- h.uiIcon('wallet', 18) %></em>Ví KeebHub<b style="background:var(--s600)"><%= h.money(user.wallet||0) %></b></a>
     <a class="<%= active==='builds'?'on':'' %>" href="/account/builds"><em><%- h.uiIcon('builds', 18) %></em>Cấu hình đã lưu<% if (side.builds) { %><b style="background:var(--p500)"><%= side.builds %></b><% } %></a>
     <a class="<%= active==='reviews'?'on':'' %>" href="/account/reviews"><em><%- h.uiIcon('star', 18) %></em>Đánh giá của tôi<% if (side.toReview) { %><b><%= side.toReview %></b><% } %></a>
     <a class="<%= active==='wishlist'?'on':'' %>" href="/account/wishlist"><em><%- h.uiIcon('heart', 18) %></em>Sản phẩm yêu thích</a>

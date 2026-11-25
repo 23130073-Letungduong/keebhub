@@ -1,9 +1,10 @@
 const router = require('express').Router();
-const { User, Order, Review, Build, Product, Shop } = require('../models');
+const { User, Order, Review, Build, Product, Shop, WalletTxn } = require('../models');
 const { requireLogin } = require('../middleware/auth');
 const upload = require('../config/upload');
 const { cancelOrder, canCustomerCancel, recalcRating } = require('../utils/orders');
 const { buildTotal } = require('../utils/cart');
+const returns = require('../utils/returns');
 
 router.use(requireLogin);
 
@@ -22,7 +23,7 @@ router.use(sideCounts);
 router.get('/', async (req, res) => {
   const [orderCount, spent, reviewCount] = await Promise.all([
     Order.countDocuments({ user: req.user._id }),
-    Order.aggregate([{ $match: { user: req.user._id, status: { $ne: 'cancelled' } } }, { $group: { _id: null, t: { $sum: '$total' } } }]),
+    Order.aggregate([{ $match: { user: req.user._id, status: { $nin: ['cancelled', 'returned'] } } }, { $group: { _id: null, t: { $sum: '$total' } } }]),
     Review.countDocuments({ user: req.user._id })
   ]);
   res.render('account/profile', { title: 'Hồ sơ cá nhân', active: 'profile', stats: { orderCount, spent: spent[0] ? spent[0].t : 0, reviewCount } });
@@ -73,7 +74,8 @@ router.post('/password', async (req, res, next) => {
 // ---------- Lịch sử mua hàng ----------
 const TABS = {
   all: {}, pending: { status: 'pending' }, confirmed: { status: 'confirmed' }, processing: { status: 'processing' },
-  shipping: { status: 'shipping' }, done: { status: { $in: ['delivered', 'completed'] } }, cancelled: { status: 'cancelled' }
+  shipping: { status: 'shipping' }, done: { status: { $in: ['delivered', 'completed'] } }, cancelled: { status: 'cancelled' }, returned: { status: 'returned' },
+  returns: { 'returnRequest.status': { $nin: ['', null] } }
 };
 router.get('/orders', async (req, res, next) => {
   try {
@@ -84,6 +86,7 @@ router.get('/orders', async (req, res, next) => {
       Order.aggregate([{ $match: { user: req.user._id } }, { $group: { _id: '$status', n: { $sum: 1 } } }])
     ]);
     const counts = {}; countsAgg.forEach(c => { counts[c._id] = c.n; });
+    counts._returns = await Order.countDocuments({ user: req.user._id, ...TABS.returns });
     res.render('account/orders', { title: 'Đơn hàng của tôi', active: 'orders', orders, tab, counts, canCancel: canCustomerCancel });
   } catch (e) { next(e); }
 });
@@ -92,7 +95,13 @@ router.get('/orders/:code', async (req, res, next) => {
   try {
     const order = await Order.findOne({ code: req.params.code, user: req.user._id }).populate('shop').populate('build');
     if (!order) return next();
-    res.render('account/order-detail', { title: `Đơn hàng #${order.code}`, active: 'orders', order, canCancel: canCustomerCancel(order) });
+    const rr = returns.canRequestReturn(order);
+    const ret = {
+      can: rr.ok, deadline: returns.returnDeadline(order), reasons: Order.RETURN_REASONS, label: Order.RETURN_STATUS,
+      canDispute: returns.canDispute(order), days: returns.RETURN_DAYS, hours: returns.SHOP_RESPONSE_HOURS,
+      limitLeft: rr.ok ? Math.max(0, returns.RETURN_LIMIT_30D - await returns.recentReturnCount(req.user._id)) : 0
+    };
+    res.render('account/order-detail', { title: `Đơn hàng #${order.code}`, active: 'orders', order, canCancel: canCustomerCancel(order), ret });
   } catch (e) { next(e); }
 });
 
@@ -105,8 +114,18 @@ router.post('/orders/:code/cancel', async (req, res, next) => {
       req.flash('error', order.isCustom ? 'Shop đã nhận gia công, không thể tự huỷ. Vui lòng gửi khiếu nại tới shop/admin.' : 'Đơn đã giao cho đơn vị vận chuyển, không thể huỷ.');
       return res.redirect(`/account/orders/${order.code}`);
     }
+    // Chống lạm dụng "đặt rồi huỷ" liên tục (giữ hàng của shop, phát sinh phí giao dịch VNPay):
+    // quá CANCEL_LIMIT lần tự huỷ trong 7 ngày → không cho tự huỷ nữa, phải liên hệ shop/admin.
+    const limit = Number(process.env.CANCEL_LIMIT || 3);
+    const recent = await Order.countDocuments({ user: req.user._id, cancelledBy: 'customer', cancelledAt: { $gte: new Date(Date.now() - 7 * 86400e3) } });
+    if (recent >= limit) {
+      req.flash('error', `Bạn đã tự huỷ ${recent} đơn trong 7 ngày qua. Để tránh lạm dụng, đơn này cần liên hệ shop hoặc quản trị viên (letungduong.nvn@gmail.com) để huỷ.`);
+      return res.redirect(`/account/orders/${order.code}`);
+    }
     await cancelOrder(order, 'customer', (req.body.reason || '').slice(0, 300));
-    req.flash('success', order.paymentStatus === 'refund_pending' ? 'Đã huỷ đơn. Tiền sẽ được hoàn về tài khoản trong 3-5 ngày làm việc.' : 'Đã huỷ đơn hàng.');
+    req.flash('success', order.paymentStatus === 'refunded'
+      ? `Đã huỷ đơn và hoàn ${require('../utils/helpers').money(order.total)} vào Ví KeebHub của bạn. Bạn có thể dùng số dư này để thanh toán đơn tiếp theo.`
+      : order.paymentStatus === 'refund_pending' ? 'Đã huỷ đơn. Khoản hoàn tiền đang được xử lý và sẽ cộng vào Ví KeebHub của bạn.' : 'Đã huỷ đơn hàng.');
     res.redirect(`/account/orders/${order.code}`);
   } catch (e) { next(e); }
 });
@@ -117,12 +136,57 @@ router.post('/orders/:code/received', async (req, res, next) => {
     if (!order) return next();
     if (['shipping', 'delivered'].includes(order.status)) {
       order.status = 'completed';
-      if (order.paymentMethod === 'cod') { order.paymentStatus = 'paid'; order.paidAt = new Date(); }
+      if (!order.deliveredAt) order.deliveredAt = new Date(); // mốc tính hạn trả hàng
+      if (order.paymentMethod === 'cod' && order.paymentStatus === 'unpaid') { order.paymentStatus = 'paid'; order.paidAt = new Date(); }
       order.history.push({ status: 'completed', note: 'Khách xác nhận đã nhận hàng', by: 'customer' });
       await order.save();
       req.flash('success', 'Cảm ơn bạn! Hãy đánh giá sản phẩm để giúp người mua khác nhé.');
     }
     res.redirect(`/account/orders/${order.code}`);
+  } catch (e) { next(e); }
+});
+
+// ---------- Trả hàng / hoàn tiền vào ví ----------
+const back = (res, code) => res.redirect(`/account/orders/${code}#return`);
+const flashR = (req, r) => req.flash(r.ok ? 'success' : 'error', r.message);
+router.post('/orders/:code/return', (req, res, next) => {
+  upload.array('photos', 5)(req, res, async (err) => {
+    try {
+      const order = await Order.findOne({ code: req.params.code, user: req.user._id });
+      if (!order) return next();
+      if (err) { req.flash('error', err.code === 'LIMIT_FILE_SIZE' ? 'Ảnh tối đa 5MB.' : (err.code === 'LIMIT_UNEXPECTED_FILE' ? 'Tối đa 5 ảnh.' : err.message)); return back(res, order.code); }
+      const photos = (req.files || []).map(f => '/uploads/' + f.filename);
+      const r = await returns.requestReturn(order, req.user._id, { reason: req.body.reason, detail: req.body.detail, photos });
+      if (!r.ok) for (const f of req.files || []) require('fs').unlink(f.path, () => {}); // không lưu ảnh của yêu cầu bị từ chối
+      flashR(req, r); back(res, order.code);
+    } catch (e) { next(e); }
+  });
+});
+router.post('/orders/:code/return/ship', async (req, res, next) => {
+  try {
+    const order = await Order.findOne({ code: req.params.code, user: req.user._id });
+    if (!order) return next();
+    flashR(req, await returns.shipReturn(order, req.user._id, req.body.trackingCode)); back(res, order.code);
+  } catch (e) { next(e); }
+});
+router.post('/orders/:code/return/dispute', async (req, res, next) => {
+  try {
+    const order = await Order.findOne({ code: req.params.code, user: req.user._id });
+    if (!order) return next();
+    flashR(req, await returns.disputeReturn(order, req.user._id, req.body.note)); back(res, order.code);
+  } catch (e) { next(e); }
+});
+
+// ---------- Ví KeebHub ----------
+router.get('/wallet', async (req, res, next) => {
+  try {
+    const [txns, agg] = await Promise.all([
+      WalletTxn.find({ user: req.user._id }).sort({ createdAt: -1, _id: -1 }).limit(100).lean(),
+      WalletTxn.aggregate([{ $match: { user: req.user._id } }, { $group: { _id: { $gt: ['$amount', 0] }, t: { $sum: '$amount' } } }])
+    ]);
+    const sum = { in: 0, out: 0 }; agg.forEach(a => { if (a._id) sum.in = a.t; else sum.out = -a.t; });
+    const fresh = await User.findById(req.user._id).select('wallet');
+    res.render('account/wallet', { title: 'Ví KeebHub', active: 'wallet', balance: fresh.wallet || 0, txns, sum, TYPE: WalletTxn.TYPE });
   } catch (e) { next(e); }
 });
 

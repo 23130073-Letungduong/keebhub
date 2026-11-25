@@ -3,9 +3,10 @@ const router = require('express').Router();
 const { User, Shop, Product, Order, Category, CompatRule, Review } = require('../models');
 const { requireRole } = require('../middleware/auth');
 const { escapeRegex } = require('../utils/helpers');
-const { cancelOrder } = require('../utils/orders');
+const { cancelOrder, refundOrder } = require('../utils/orders');
 const compat = require('../utils/compat');
 const stats = require('../utils/stats');
+const returns = require('../utils/returns');
 const { signIn } = require('./auth');
 
 // ---------- Đăng nhập quản trị ----------
@@ -41,12 +42,13 @@ router.use((req, res, next) => {
 }, requireRole('admin'));
 
 router.use(async (req, res, next) => {
-  const [pendingProducts, pendingShops, refunds] = await Promise.all([
+  const [pendingProducts, pendingShops, refunds, disputes] = await Promise.all([
     Product.countDocuments({ status: 'pending' }),
     Shop.countDocuments({ status: 'pending' }),
-    Order.countDocuments({ paymentStatus: 'refund_pending' })
+    Order.countDocuments({ paymentStatus: 'refund_pending' }),
+    Order.countDocuments({ 'returnRequest.status': 'disputed' })
   ]);
-  res.locals.badges = { pendingProducts, pendingShops, refunds };
+  res.locals.badges = { pendingProducts, pendingShops, refunds, disputes };
   next();
 });
 
@@ -88,7 +90,7 @@ router.get('/users', async (req, res) => {
     User.aggregate([{ $group: { _id: '$role', n: { $sum: 1 } } }])
   ]);
   const ids = users.map(u => u._id);
-  const spent = await Order.aggregate([{ $match: { user: { $in: ids }, status: { $ne: 'cancelled' } } }, { $group: { _id: '$user', t: { $sum: '$total' }, n: { $sum: 1 } } }]);
+  const spent = await Order.aggregate([{ $match: { user: { $in: ids }, status: { $nin: ['cancelled', 'returned'] } } }, { $group: { _id: '$user', t: { $sum: '$total' }, n: { $sum: 1 } } }]);
   const sm = {}; spent.forEach(s => { sm[String(s._id)] = s; });
   const rc = {}; roles.forEach(r => { rc[r._id] = r.n; });
   res.render('admin/users', { title: 'Quản lý người dùng', active: 'users', users, sm, rc, page, pages: Math.ceil(total / 20), total });
@@ -192,14 +194,23 @@ router.post('/orders/:code/status', async (req, res, next) => {
     const order = await Order.findOne({ code: req.params.code });
     if (!order) return next();
     const to = req.body.status;
+    if (['cancelled', 'returned'].includes(order.status) || to === 'returned') {
+      req.flash('error', order.status === 'returned' || to === 'returned' ? 'Trả hàng chỉ xử lý qua mục Trả hàng / Khiếu nại (để hoàn tiền đúng 1 lần).' : 'Đơn đã huỷ, không thể đổi trạng thái.');
+      return res.redirect(`/admin/orders/${order.code}`);
+    }
+    if (order.returnRequest && ['requested', 'approved', 'shipped', 'disputed'].includes(order.returnRequest.status)) {
+      req.flash('error', 'Đơn đang có yêu cầu trả hàng — hãy xử lý ở mục Trả hàng / Khiếu nại.');
+      return res.redirect(`/admin/orders/${order.code}`);
+    }
     if (to === 'cancelled' && ['delivered', 'completed'].includes(order.status)) {
       req.flash('error', 'Đơn đã giao tới khách, không thể huỷ (hãy xử lý đổi trả/hoàn tiền riêng).');
       return res.redirect(`/admin/orders/${order.code}`);
     }
     if (to === 'cancelled') await cancelOrder(order, 'admin', req.body.note || 'Quản trị viên huỷ');
-    else if (Order.STATUS[to] && order.status !== 'cancelled') {
+    else if (Order.STATUS[to]) {
       order.status = to;
       // COD đã giao/hoàn thành = đã thu tiền
+      if (['delivered', 'completed'].includes(to) && !order.deliveredAt) order.deliveredAt = new Date(); // mốc tính hạn trả hàng
       if (['delivered', 'completed'].includes(to) && order.paymentMethod === 'cod' && order.paymentStatus === 'unpaid') { order.paymentStatus = 'paid'; order.paidAt = new Date(); }
       if (to === 'shipping' && !order.shipping.trackingCode) order.shipping.trackingCode = 'GHN' + Date.now().toString().slice(-9);
       order.history.push({ status: to, note: req.body.note || 'Cập nhật bởi quản trị viên', by: 'admin' });
@@ -216,15 +227,35 @@ router.get('/refunds', async (req, res) => {
   const orders = await Order.find({ paymentStatus: tab === 'done' ? 'refunded' : 'refund_pending' }).sort({ updatedAt: -1 }).limit(50).populate('user', 'name email').populate('shop', 'name');
   res.render('admin/refunds', { title: 'Huỷ đơn & hoàn tiền', active: 'refunds', orders, tab });
 });
+// Hoàn tiền vào Ví KeebHub của khách (dùng cho đơn còn kẹt "Chờ hoàn tiền", ví dụ lỗi hệ thống lúc huỷ)
 router.post('/refunds/:code', async (req, res) => {
+  const back = req.body.back || '/admin/refunds';
   const o = await Order.findOne({ code: req.params.code, paymentStatus: 'refund_pending' });
-  if (o) {
-    o.paymentStatus = 'refunded';
-    o.history.push({ status: o.status, note: `Đã hoàn ${o.total.toLocaleString('vi-VN')}₫ qua VNPay${req.body.note ? ' — ' + req.body.note : ''}`, by: 'admin' });
-    await o.save();
-    req.flash('success', `Đã xác nhận hoàn tiền đơn #${o.code}.`);
-  }
-  res.redirect('/admin/refunds');
+  if (!o) { req.flash('error', 'Đơn không còn ở trạng thái chờ hoàn tiền.'); return res.redirect(back); }
+  const r = await refundOrder(o, 'admin', o.status === 'returned' ? 'refund_return' : 'refund_cancel');
+  req.flash(r.ok ? 'success' : 'error', `Đơn #${o.code}: ${r.message}`);
+  res.redirect(back);
+});
+
+// ---------- Trả hàng & khiếu nại (admin phân xử) ----------
+router.get('/returns', async (req, res) => {
+  const TABS = { disputed: ['disputed'], open: ['requested', 'approved', 'shipped', 'rejected'], done: ['refunded', 'closed'] };
+  const tab = TABS[req.query.tab] ? req.query.tab : 'disputed';
+  const orders = await Order.find({ 'returnRequest.status': { $in: TABS[tab] } }).sort({ updatedAt: -1 }).limit(50).populate('user', 'name email').populate('shop', 'name');
+  const since = new Date(Date.now() - 90 * 86400e3);
+  const agg = await Order.aggregate([{ $match: { user: { $in: orders.map(o => o.user && o.user._id).filter(Boolean) }, 'returnRequest.requestedAt': { $gte: since } } }, { $group: { _id: '$user', n: { $sum: 1 } } }]);
+  const history = {}; agg.forEach(a => { history[String(a._id)] = a.n; });
+  res.render('admin/returns', { title: 'Trả hàng & khiếu nại', active: 'returns', orders, tab, history, RS: Order.RETURN_STATUS, REASONS: Order.RETURN_REASONS });
+});
+router.post('/returns/:code/resolve', async (req, res, next) => {
+  try {
+    const back = req.body.back || '/admin/returns';
+    const o = await Order.findOne({ code: req.params.code });
+    if (!o) return next();
+    const r = await returns.adminResolve(o, req.body.decision, { note: req.body.note, restock: req.body.restock === '1' });
+    req.flash(r.ok ? 'success' : 'error', `Đơn #${o.code}: ${r.message}`);
+    res.redirect(back);
+  } catch (e) { next(e); }
 });
 
 // ---------- Danh mục kỹ thuật & quy tắc tương thích ----------

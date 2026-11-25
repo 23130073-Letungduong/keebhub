@@ -6,7 +6,7 @@
     <div class="pnl">
       <div class="hd"><div><h2>Đơn hàng của tôi</h2><p>Lịch sử mua hàng và tiến độ gia công</p></div></div>
       <div class="tabs" style="padding:0 12px;overflow-x:auto">
-        <% [['all','Tất cả'],['pending','Chờ xác nhận'],['confirmed','Đã xác nhận'],['processing','Đang gia công'],['shipping','Đang giao'],['done','Đã giao'],['cancelled','Đã huỷ']].forEach(function(t){ var n = t[0]==='all'?null:(t[0]==='done'?(counts.delivered||0)+(counts.completed||0):counts[t[0]]); %>
+        <% [['all','Tất cả'],['pending','Chờ xác nhận'],['confirmed','Đã xác nhận'],['processing','Đang gia công'],['shipping','Đang giao'],['done','Đã giao'],['cancelled','Đã huỷ'],['returns','Trả hàng']].forEach(function(t){ var n = t[0]==='all'?null:(t[0]==='done'?(counts.delivered||0)+(counts.completed||0):(t[0]==='returns'?counts._returns:counts[t[0]])); %>
         <a class="<%= tab===t[0]?'on':'' %>" href="?tab=<%= t[0] %>"><%= t[1] %><%= n ? ' ('+n+')' : '' %></a><% }) %>
       </div>
     </div>
@@ -16,7 +16,7 @@
       <div class="oh"><div class="sh"><i style="background:<%= o.shop ? o.shop.color : '#999' %>"><%= h.initials(o.shop ? o.shop.name : '?') %></i><%= o.shop ? o.shop.name : '' %></div>
         <% if (o.isCustom) { %><span class="bdg sale">Đơn custom</span><% } %>
         <span class="s12 muted">#<%= o.code %> · <%= h.dateTime(o.createdAt) %></span>
-        <span class="mla bdg <%= STATUS[o.status].cls %>"><%= STATUS[o.status].label %><%= o.isCustom && o.status==='processing' ? ' · '+o.progressPercent+'%' : '' %></span>
+        <span class="mla bdg <%= STATUS[o.status].cls %>"><%= STATUS[o.status].label %><%= o.isCustom && o.status==='processing' ? ' · '+o.progressPercent+'%' : '' %></span><% if (o.returnRequest && o.returnRequest.status && o.status!=='returned') { var RS = {requested:['Trả hàng: chờ duyệt','warn'],approved:['Trả hàng: chờ gửi','new'],shipped:['Trả hàng: đang gửi về','new'],refunded:['Đã hoàn ví','ok'],rejected:['Trả hàng bị từ chối','err'],disputed:['Đang khiếu nại','warn'],closed:['Trả hàng đã đóng','gray']}[o.returnRequest.status]; %> <span class="bdg <%= RS[1] %>"><%= RS[0] %></span><% } %>
         <span class="bdg <%= PAY[o.paymentStatus].cls %>"><%= PAY[o.paymentStatus].label %></span></div>
       <% o.items.slice(0,3).forEach(function(i){ %>
       <div class="oi"><div class="th"><img src="<%= i.image %>" class="kb"></div><div style="flex:1"><div class="nm"><%= i.name %></div><div class="vr"><%= i.role ? 'Linh kiện build · ' : '' %>×<%= i.qty %></div></div><b class="s14"><%= h.money(i.price*i.qty) %></b></div>

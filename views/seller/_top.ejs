@@ -6,6 +6,7 @@
   <div class="gt">TỔNG QUAN</div><a class="<%= active==='dash'?'on':'' %>" href="/seller"><em><%- h.uiIcon('dashboard', 18) %></em>Bảng điều khiển</a>
   <div class="gt">ĐƠN HÀNG</div>
   <a class="<%= active==='orders'?'on':'' %>" href="/seller/orders"><em><%- h.uiIcon('package', 18) %></em>Quản lý đơn hàng<% if (badges.pendingOrders) { %><b><%= badges.pendingOrders %></b><% } %></a>
+  <a class="<%= active==='returns'?'on':'' %>" href="/seller/returns"><em><%- h.uiIcon('undo', 18) %></em>Trả hàng / Hoàn tiền<% if (badges.returnsOpen) { %><b><%= badges.returnsOpen %></b><% } %></a>
   <a class="<%= active==='custom'?'on':'' %>" href="/seller/custom"><em><%- h.uiIcon('tool', 18) %></em>Đơn custom chờ xác nhận<% if (badges.waitingCustom) { %><b><%= badges.waitingCustom %></b><% } %></a>
   <a class="<%= active==='progress'?'on':'' %>" href="/seller/progress"><em><%- h.catIcon('service', '1.1em') %></em>Tiến độ gia công<% if (badges.processing) { %><b><%= badges.processing %></b><% } %></a>
   <div class="gt">SẢN PHẨM</div>

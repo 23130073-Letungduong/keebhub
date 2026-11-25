@@ -51,12 +51,13 @@ async function requireShop(req, res, next) {
     return res.render('seller/pending', { title: 'Shop đang chờ duyệt' });
   }
   // badge đếm cho rail
-  const [pendingOrders, waitingCustom, processing] = await Promise.all([
+  const [pendingOrders, waitingCustom, processing, returnsOpen] = await Promise.all([
     Order.countDocuments({ shop: req.shop._id, status: 'pending', 'customRequest.status': { $ne: 'waiting' } }),
     Order.countDocuments({ shop: req.shop._id, 'customRequest.status': 'waiting', status: 'pending' }),
-    Order.countDocuments({ shop: req.shop._id, status: 'processing' })
+    Order.countDocuments({ shop: req.shop._id, status: 'processing' }),
+    Order.countDocuments({ shop: req.shop._id, 'returnRequest.status': { $in: ['requested', 'shipped'] } })
   ]);
-  res.locals.badges = { pendingOrders, waitingCustom, processing };
+  res.locals.badges = { pendingOrders, waitingCustom, processing, returnsOpen };
   next();
 }
 

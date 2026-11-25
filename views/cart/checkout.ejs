@@ -27,6 +27,7 @@
         <div class="hd"><span class="n">3</span><h3>Phương thức thanh toán</h3></div>
         <div class="payopt">
           <label class="payl on"><input type="radio" name="payment" value="vnpay" checked><span class="lg">VNPAY</span><div><b>Thanh toán qua VNPay</b><br><span>ATM nội địa, Visa/Master, QR ngân hàng<%= vnpayLive ? '' : ' · (đang dùng trang mô phỏng — chưa cấu hình khoá sandbox)' %></span></div></label>
+          <% var wLow = walletBalance < grand; %><label class="payl <%= wLow?'dis':'' %>"><input type="radio" name="payment" value="wallet" <%= wLow?'disabled':'' %>><span class="lg" style="color:var(--p600)">VÍ</span><div><b>Ví KeebHub</b> <span class="bdg <%= wLow?'gray':'ok' %>" style="margin-left:4px">Số dư <%= h.money(walletBalance) %></span><br><span><%= wLow ? (walletBalance ? 'Số dư không đủ cho đơn này (cần ' + h.money(grand) + ')' : 'Ví chưa có tiền — tiền hoàn từ đơn huỷ / trả hàng sẽ được cộng vào đây') : 'Trừ trực tiếp vào số dư ví, xác nhận ngay' %></span></div></label>
           <label class="payl <%= cart.hasCustom?'dis':'' %>"><input type="radio" name="payment" value="cod" <%= cart.hasCustom?'disabled':'' %>><span class="lg">COD</span><div><b>Thanh toán khi nhận hàng</b><br><span><%= cart.hasCustom ? 'Không áp dụng cho đơn gia công custom' : 'Kiểm tra hàng trước khi trả tiền' %></span></div></label>
         </div>
       </div>
@@ -46,7 +47,7 @@
         <div class="r"><span>Phí vận chuyển</span><b><%= shipTotal ? h.money(shipTotal) : 'Miễn phí' %></b></div>
         <div class="tot"><span class="w700">Tổng thanh toán</span><b><%= h.money(grand) %></b></div>
         <button class="btn cta blk lg" style="margin-top:16px">Đặt hàng</button>
-        <p class="s12 muted" style="margin-top:10px;line-height:1.6">Nhấn "Đặt hàng" đồng nghĩa bạn đồng ý với điều khoản của KeebHub. Với VNPay, bạn sẽ được chuyển sang cổng thanh toán.</p>
+        <p class="s12 muted" style="margin-top:10px;line-height:1.6">Nhấn "Đặt hàng" đồng nghĩa bạn đồng ý với điều khoản của KeebHub. Với VNPay, bạn sẽ được chuyển sang cổng thanh toán; với Ví KeebHub, tiền được trừ ngay khi đặt hàng.</p>
       </div>
     </div>
   </form>

@@ -1,0 +1,38 @@
+<%# Thẻ yêu cầu trả hàng dùng chung cho shop / admin. Tham số: o (order), role ('seller'|'admin'), back, RS, REASONS, extra (chuỗi phụ) %>
+<% var R = o.returnRequest || {}; var S = RS[R.status] || { label: R.status, cls: 'gray' }; %>
+<div class="appr">
+  <div class="top" style="flex-wrap:wrap"><div style="flex:1;min-width:260px">
+    <div class="f ac" style="gap:8px;flex-wrap:wrap"><a href="/<%= role %>/orders/<%= o.code %>"><b class="s16">#<%= o.code %></b></a><b class="s16" style="color:var(--a600)"><%= h.money(o.total) %></b><span class="bdg <%= S.cls %>"><%= S.label %></span><% if (o.isCustom) { %><span class="bdg sale">Custom</span><% } %><span class="s12 muted"><%= h.payMethod(o.paymentMethod) %> · <%= PAY[o.paymentStatus].label %></span></div>
+    <div class="s12 muted" style="margin:4px 0 10px">Gửi lúc <%= h.dateTime(R.requestedAt) %> · giao hàng <%= h.dateTime(o.deliveredAt) || '—' %><% if (role==='admin') { %> · Shop: <b><%= o.shop ? o.shop.name : '' %></b><% } %> · Khách: <b><%= o.user ? o.user.name : '' %></b><%- typeof extra !== 'undefined' && extra ? ' · ' + extra : '' %></div>
+    <div class="s13"><b><%= REASONS[R.reason] || R.reason %></b> — <span class="t2"><%= R.detail %></span></div>
+    <% if (R.photos && R.photos.length) { %><div class="f" style="gap:8px;flex-wrap:wrap;margin-top:8px"><% R.photos.forEach(function(p){ %><a href="<%= p %>" target="_blank"><img src="<%= p %>" style="width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--border)"></a><% }) %></div><% } %>
+    <div class="s12 t2" style="margin-top:8px;line-height:1.7">
+      <% if (R.approvedAt) { %>✓ Duyệt lúc <%= h.dateTime(R.approvedAt) %><%= R.shopNote ? ' — ' + R.shopNote : '' %><br><% } %>
+      <% if (R.trackingCode) { %>✓ Khách gửi hàng: mã vận đơn <b><%= R.trackingCode %></b> · <%= h.dateTime(R.shippedAt) %><br><% } %>
+      <% if (R.receivedAt) { %>✓ Đã nhận hàng trả về · <%= h.dateTime(R.receivedAt) %><br><% } %>
+      <% if (R.rejectReason) { %>✕ Shop từ chối<%= R.rejectStage==='receipt' ? ' (sau khi nhận hàng)' : '' %>: <%= R.rejectReason %><br><% } %>
+      <% if (R.disputeNote) { %>⚑ Khách khiếu nại: <%= R.disputeNote %> · <%= h.dateTime(R.disputedAt) %><br><% } %>
+      <% if (R.resolution) { %>⚖ Quyết định của sàn: <%= R.resolution %><br><% } %>
+    </div>
+  </div></div>
+  <div class="foot" style="flex-wrap:wrap;gap:8px">
+  <% if (role==='seller') { %>
+    <% if (R.status==='requested') { %>
+      <form method="post" action="/seller/returns/<%= o.code %>/approve" class="f" style="gap:6px"><input type="hidden" name="back" value="<%= back %>"><input class="inp" name="note" placeholder="Ghi chú cho khách (tuỳ chọn)" style="padding:6px 10px"><button class="btn pri sm">Đồng ý trả hàng</button></form>
+      <form method="post" action="/seller/returns/<%= o.code %>/reject" class="f" style="gap:6px"><input type="hidden" name="back" value="<%= back %>"><input class="inp" name="reason" required minlength="10" placeholder="Lý do từ chối (≥10 ký tự)" style="padding:6px 10px"><button class="btn out sm">Từ chối</button></form>
+    <% } else if (R.status==='shipped') { %>
+      <form method="post" action="/seller/returns/<%= o.code %>/receive" onsubmit="return confirm('Xác nhận ĐÃ NHẬN đủ hàng trả về? Hệ thống sẽ hoàn <%= h.money(o.total) %> vào ví khách ngay.')"><input type="hidden" name="back" value="<%= back %>"><button class="btn cta sm">Đã nhận hàng → hoàn <%= h.money(o.total) %> vào ví khách</button></form>
+      <form method="post" action="/seller/returns/<%= o.code %>/reject" class="f" style="gap:6px"><input type="hidden" name="back" value="<%= back %>"><input class="inp" name="reason" required minlength="10" placeholder="Hàng nhận về không đúng/không đủ vì…" style="padding:6px 10px"><button class="btn out sm">Từ chối (hàng trả về không hợp lệ)</button></form>
+    <% } else if (R.status==='approved') { %><span class="s13 t2">Đang chờ khách gửi hàng về shop.</span>
+    <% } else if (R.status==='disputed') { %><span class="s13 t2">Khách đã khiếu nại — quản trị viên đang phân xử.</span><% } %>
+  <% } else if (role==='admin' && ['requested','approved','shipped','rejected','disputed'].includes(R.status)) { %>
+    <form method="post" action="/admin/returns/<%= o.code %>/resolve" class="f ac" style="gap:6px;flex-wrap:wrap;flex:1">
+      <input type="hidden" name="back" value="<%= back %>">
+      <input class="inp" name="note" placeholder="Lý do quyết định (bắt buộc ≥10 ký tự khi đóng)" style="padding:6px 10px;flex:1;min-width:220px">
+      <label class="s12 f ac" style="gap:4px"><input type="checkbox" name="restock" value="1" <%= R.status==='shipped' ? 'checked' : '' %>> Hàng đã về shop (cộng lại kho)</label>
+      <button class="btn cta sm" name="decision" value="refund" onclick="return confirm('Hoàn <%= h.money(o.total) %> vào ví khách?')">Hoàn tiền vào ví</button>
+      <button class="btn out sm" name="decision" value="close">Đóng, không hoàn</button>
+    </form>
+  <% } %>
+  </div>
+</div>

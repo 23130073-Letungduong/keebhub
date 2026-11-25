@@ -8,5 +8,6 @@ module.exports = {
   Build: require('./Build'),
   Order: require('./Order'),
   Review: require('./Review'),
-  Comment: require('./Comment')
+  Comment: require('./Comment'),
+  WalletTxn: require('./WalletTxn')
 };

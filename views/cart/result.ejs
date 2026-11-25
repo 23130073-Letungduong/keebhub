@@ -12,7 +12,7 @@
       <div class="resrow"><span>#<%= o.code %> · <%= o.shop.name %><%= o.isCustom ? ' · Gia công' : '' %></span><b><%= h.money(o.total) %> <span class="bdg <%= PAY[o.paymentStatus].cls %>"><%= PAY[o.paymentStatus].label %></span></b></div>
       <% }) %>
       <div class="resrow"><span>Tổng</span><b style="color:var(--a600);font-size:18px"><%= h.money(total) %></b></div>
-      <div class="resrow"><span>Phương thức</span><b><%= cod ? 'Thanh toán khi nhận hàng (COD)' : 'VNPay' %></b></div>
+      <div class="resrow"><span>Phương thức</span><b><%= h.payMethod(orders[0].paymentMethod) %></b></div>
       <div class="f" style="gap:10px;margin-top:20px">
         <% if (!success) { %><a class="btn cta" style="flex:1" href="/payment/vnpay/<%= group %>">Thanh toán lại</a><% } %>
         <a class="btn pri" style="flex:1" href="/account/orders">Xem đơn hàng</a>

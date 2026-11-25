@@ -58,4 +58,6 @@ function timeAgo(d) {
 const PART_LABEL = { kit: 'Kit', switch: 'Switch', keycap: 'Keycap', stabilizer: 'Stabilizer', accessory: 'Phụ kiện', prebuilt: 'Build sẵn' };
 
 const { catIcon, uiIcon } = require('./icons');
-module.exports = { catIcon, uiIcon, money, short, date, dateTime, ymd, stars, slugify, uniqueSlug, token, escapeRegex, initials, timeAgo, PART_LABEL };
+const PAY_METHOD = { cod: 'Thanh toán khi nhận hàng (COD)', vnpay: 'VNPay', wallet: 'Ví KeebHub' };
+const payMethod = (m) => PAY_METHOD[m] || String(m || '').toUpperCase();
+module.exports = { payMethod, catIcon, uiIcon, money, short, date, dateTime, ymd, stars, slugify, uniqueSlug, token, escapeRegex, initials, timeAgo, PART_LABEL };

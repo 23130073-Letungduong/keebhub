@@ -1,0 +1,10 @@
+<%- include('_top') %>
+<div class="card2">
+  <div class="toolrow"><a class="tchip <%= tab==='disputed'?'on':'' %>" href="?tab=disputed">Khiếu nại chờ phân xử (<%= badges.disputes %>)</a><a class="tchip <%= tab==='open'?'on':'' %>" href="?tab=open">Đang xử lý</a><a class="tchip <%= tab==='done'?'on':'' %>" href="?tab=done">Đã xong</a></div>
+  <div class="bd">
+    <div class="alert info s13" style="margin-bottom:14px"><span><%- h.uiIcon('info', 16) %></span><div>Quản trị viên có thể can thiệp mọi yêu cầu đang mở. <b>Hoàn tiền</b> = cộng đúng số tiền đơn vào Ví KeebHub của khách (1 lần duy nhất). Chỉ tick “Hàng đã về shop” khi shop thực sự nhận lại hàng, để kho không bị cộng khống.</div></div>
+    <% if (!orders.length) { %><div class="empty"><div class="s38"><%- h.uiIcon('alert', 40) %></div><b>Không có yêu cầu</b></div><% } %>
+    <% orders.forEach(function(o){ var n = history[String(o.user && o.user._id)] || 0; %><%- include('../partials/return-card', { o: o, role: 'admin', back: '/admin/returns?tab=' + tab, RS: RS, REASONS: REASONS, extra: n > 1 ? '<b style="color:var(--d600)">' + n + ' yêu cầu trả hàng / 90 ngày</b>' : '' }) %><% }) %>
+  </div>
+</div>
+<%- include('_bottom') %>

@@ -16,6 +16,7 @@
         <tr><td colspan="4" style="text-align:right"><b>Tổng</b></td><td style="text-align:right"><b class="s16" style="color:var(--a600)"><%= h.money(o.total) %></b></td></tr>
       </table></div></div>
     <% if (o.isCustom && o.progress.length) { %><div class="card2"><div class="hd"><h3>Tiến độ gia công · <%= o.progressPercent %>%</h3><% if (o.status==='processing') { %><a class="btn pri sm mla" href="/seller/progress?code=<%= o.code %>">Cập nhật tiến độ</a><% } %></div><%- include('../partials/stages', {o:o}) %></div><% } %>
+    <% if (o.returnRequest && o.returnRequest.status) { %><div class="card2" id="return"><div class="hd"><h3>Yêu cầu trả hàng</h3></div><div class="bd"><%- include('../partials/return-card', { o: o, role: 'seller', back: '/seller/orders/' + o.code, RS: RS, REASONS: REASONS, extra: '' }) %></div></div><% } %>
     <div class="card2"><div class="hd"><h3>Lịch sử</h3></div><div class="tl">
       <% o.history.slice().reverse().forEach(function(x){ %><div class="tli"><div class="mk"><i style="background:var(--p500)"></i></div><div><b class="s13"><%= x.note || STATUS[x.status].label %></b><div class="s12 muted"><%= h.dateTime(x.at) %> · <%= x.by %></div></div></div><% }) %>
     </div></div>

@@ -11,22 +11,26 @@
       <tr><td colspan="3" style="text-align:right"><b>Tổng</b></td><td style="text-align:right"><b style="color:var(--a600)"><%= h.money(o.total) %></b></td></tr>
     </table></div></div>
     <% if (o.progress.length) { %><div class="card2"><div class="hd"><h3>Tiến độ gia công · <%= o.progressPercent %>%</h3></div><%- include('../partials/stages', {o:o}) %></div><% } %>
+    <% if (o.returnRequest && o.returnRequest.status) { %><div class="card2" id="return"><div class="hd"><h3>Yêu cầu trả hàng</h3></div><div class="bd"><%- include('../partials/return-card', { o: o, role: 'admin', back: '/admin/orders/' + o.code, RS: RS, REASONS: REASONS, extra: '' }) %></div></div><% } %>
     <div class="card2"><div class="hd"><h3>Lịch sử</h3></div><div class="tl"><% o.history.slice().reverse().forEach(function(x){ %><div class="tli"><div class="mk"><i style="background:var(--p500)"></i></div><div><b class="s13"><%= x.note || STATUS[x.status].label %></b><div class="s12 muted"><%= h.dateTime(x.at) %> · <%= x.by %></div></div></div><% }) %></div></div>
   </div>
   <div>
     <form class="card2" method="post" action="/admin/orders/<%= o.code %>/status"><div class="hd"><h3>Can thiệp đơn hàng</h3></div><div class="bd">
-      <div class="field2"><label>Trạng thái mới</label><select class="inp" name="status"><% Object.keys(STATUS).forEach(function(k){ %><option value="<%= k %>" <%= o.status===k?'selected':'' %>><%= STATUS[k].label %></option><% }) %></select></div>
+      <div class="field2"><label>Trạng thái mới</label><select class="inp" name="status"><% Object.keys(STATUS).filter(function(k){return k!=='returned'}).forEach(function(k){ %><option value="<%= k %>" <%= o.status===k?'selected':'' %>><%= STATUS[k].label %></option><% }) %></select></div>
       <div class="field2"><label>Ghi chú</label><input class="inp" name="note" placeholder="Lý do can thiệp"></div>
-      <button class="btn pri blk" <%= o.status==='cancelled'?'disabled':'' %>>Cập nhật</button>
+      <button class="btn pri blk" <%= ['cancelled','returned'].includes(o.status)?'disabled':'' %>>Cập nhật</button>
       <p class="s12 muted" style="margin-top:8px">Chọn "Đã huỷ" sẽ hoàn kho và chuyển đơn đã thanh toán sang "Chờ hoàn tiền".</p>
     </div></form>
     <div class="card2"><div class="hd"><h3>Thanh toán & giao hàng</h3></div><div class="bd s13">
-      <div class="sumrow"><span>Phương thức</span><b><%= o.paymentMethod.toUpperCase() %></b></div>
+      <div class="sumrow"><span>Phương thức</span><b><%= h.payMethod(o.paymentMethod) %></b></div>
       <div class="sumrow" style="margin-top:6px"><span>Mã nhóm GD</span><b><%= o.paymentGroup %></b></div>
       <% if (o.vnpTransactionNo) { %><div class="sumrow" style="margin-top:6px"><span>Mã GD VNPay</span><b><%= o.vnpTransactionNo %></b></div><% } %>
       <div class="divider" style="margin:10px 0"></div>
       <b><%= o.shipping.fullName %> · <%= o.shipping.phone %></b><p class="t2"><%= o.shipping.address %></p>
-      <% if (o.paymentStatus==='refund_pending') { %><form method="post" action="/admin/refunds/<%= o.code %>" style="margin-top:12px"><button class="btn cta blk">Xác nhận đã hoàn tiền</button></form><% } %>
+      <% if (o.refund && o.refund.at) { %><div class="sumrow" style="margin-top:10px"><span>Hoàn tiền</span><b><%= o.paymentStatus==='refunded' ? (o.refund.method==='wallet' ? 'Đã hoàn ' + h.money(o.refund.amount||o.total) + ' vào Ví KeebHub' : o.refund.auto ? 'Tự động qua VNPay' : 'Xác nhận thủ công') : 'Chưa thành công' %></b></div>
+        <% if (o.refund.transactionNo) { %><div class="sumrow" style="margin-top:6px"><span>Mã GD hoàn</span><b><%= o.refund.transactionNo %></b></div><% } %>
+        <% if (o.paymentStatus==='refund_pending' && o.refund.message) { %><div class="alert warn s12" style="margin-top:8px"><%= o.refund.message %></div><% } %><% } %>
+      <% if (o.paymentStatus==='refund_pending') { %><form method="post" action="/admin/refunds/<%= o.code %>" style="margin-top:12px"><input type="hidden" name="back" value="/admin/orders/<%= o.code %>"><button class="btn cta blk">Hoàn <%= h.money(o.total) %> vào Ví KeebHub</button></form><% } %>
     </div></div>
   </div>
 </div>

@@ -1,0 +1,47 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<div class="ct"><div class="acct">
+  <%- include('_nav') %>
+  <div>
+    <div class="pnl" style="overflow:hidden">
+      <div style="padding:24px 26px;background:linear-gradient(135deg,var(--p600),var(--p500));color:#fff">
+        <div class="f ac" style="gap:10px;opacity:.9"><%- h.uiIcon('wallet', 22) %><b class="s14">Ví KeebHub</b></div>
+        <div style="font-size:34px;font-weight:800;margin-top:10px;letter-spacing:-.5px"><%= h.money(balance) %></div>
+        <div class="s13" style="opacity:.85;margin-top:4px">Số dư khả dụng · dùng để thanh toán đơn hàng tiếp theo</div>
+      </div>
+      <div class="grid3" style="padding:16px 22px;gap:14px">
+        <div><div class="s12 muted">Tổng tiền đã nhận vào ví</div><b class="s16" style="color:var(--s600)">+<%= h.money(sum.in) %></b></div>
+        <div><div class="s12 muted">Đã dùng để thanh toán</div><b class="s16">−<%= h.money(sum.out) %></b></div>
+        <div><a class="btn pri sm" href="/products">Mua sắm ngay</a></div>
+      </div>
+    </div>
+
+    <div class="pnl">
+      <div class="hd"><div style="flex:1"><h2>Lịch sử giao dịch ví</h2><p>Mỗi khoản cộng/trừ đều gắn với đơn hàng cụ thể</p></div></div>
+      <% if (!txns.length) { %>
+        <div class="bd" style="text-align:center;padding:40px 20px"><div class="muted"><%- h.uiIcon('wallet', 40, 1.4) %></div><p class="t2 s14" style="margin-top:10px">Chưa có giao dịch nào.</p><p class="s13 muted">Khi đơn đã thanh toán bị huỷ hoặc trả hàng thành công, tiền sẽ được hoàn vào đây ngay lập tức.</p></div>
+      <% } else { %>
+      <table class="tbl">
+        <tr><th>Thời gian</th><th>Loại</th><th>Nội dung</th><th style="text-align:right">Số tiền</th><th style="text-align:right">Số dư sau</th></tr>
+        <% txns.forEach(function(t){ var T = TYPE[t.type] || { label: t.type, cls: 'gray' }; %>
+        <tr>
+          <td class="s13 muted" style="white-space:nowrap"><%= h.dateTime(t.createdAt) %></td>
+          <td><span class="bdg <%= T.cls %>"><%= T.label %></span></td>
+          <td class="s13"><%= t.note %><% if (t.orderCodes && t.orderCodes.length) { %><div class="s12"><% t.orderCodes.forEach(function(c, i){ %><%= i ? ', ' : '' %><a href="/account/orders/<%= c %>" style="color:var(--p600)">#<%= c %></a><% }) %></div><% } %></td>
+          <td style="text-align:right;white-space:nowrap"><b style="color:<%= t.amount > 0 ? 'var(--s600)' : 'var(--text)' %>"><%= t.amount > 0 ? '+' : '−' %><%= h.money(Math.abs(t.amount)) %></b></td>
+          <td style="text-align:right" class="s13 muted"><%= h.money(t.balanceAfter) %></td>
+        </tr>
+        <% }) %>
+      </table>
+      <% } %>
+    </div>
+
+    <div class="pnl"><div class="bd s13 t2" style="line-height:1.7">
+      <b class="s14" style="color:var(--text)">Tiền vào ví từ đâu?</b><br>
+      • Đơn đã thanh toán (VNPay / Ví) bị huỷ → hoàn ngay toàn bộ số tiền vào ví.<br>
+      • Trả hàng được chấp nhận → hoàn tiền vào ví khi shop xác nhận đã nhận lại hàng.<br>
+      • Số dư ví chỉ dùng để mua hàng trên KeebHub, không rút ra tiền mặt / chuyển cho tài khoản khác.
+    </div></div>
+  </div>
+</div></div>
+<%- include('../partials/footer') %>

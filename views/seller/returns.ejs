@@ -1,0 +1,10 @@
+<%- include('_top') %>
+<div class="card2">
+  <div class="toolrow"><a class="tchip <%= tab==='todo'?'on':'' %>" href="?tab=todo">Cần xử lý (<%= counts.todo %>)</a><a class="tchip <%= tab==='wait'?'on':'' %>" href="?tab=wait">Chờ khách / sàn (<%= counts.wait %>)</a><a class="tchip <%= tab==='done'?'on':'' %>" href="?tab=done">Đã xong (<%= counts.done %>)</a></div>
+  <div class="bd">
+    <div class="alert info s13" style="margin-bottom:14px"><span><%- h.uiIcon('info', 16) %></span><div>Vui lòng phản hồi yêu cầu trong <b><%= hours %> giờ</b> — quá hạn khách được khiếu nại lên sàn. Tiền chỉ hoàn vào ví khách khi bạn bấm <b>“Đã nhận hàng”</b>, nên hãy kiểm tra kỹ hàng trả về trước khi xác nhận.</div></div>
+    <% if (!orders.length) { %><div class="empty"><div class="s38"><%- h.uiIcon('undo', 40) %></div><b>Không có yêu cầu trả hàng</b></div><% } %>
+    <% orders.forEach(function(o){ %><%- include('../partials/return-card', { o: o, role: 'seller', back: '/seller/returns?tab=' + tab, RS: RS, REASONS: REASONS, extra: '' }) %><% }) %>
+  </div>
+</div>
+<%- include('_bottom') %>

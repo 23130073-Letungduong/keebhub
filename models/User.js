@@ -37,7 +37,9 @@ const userSchema = new mongoose.Schema({
   cart: [cartItemSchema],
   wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
   viewed: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
-  lastLogin: Date
+  lastLogin: Date,
+  // Ví KeebHub: chỉ thay đổi qua utils/wallet.js ($inc nguyên tử + ghi sổ WalletTxn), KHÔNG gán trực tiếp
+  wallet: { type: Number, default: 0, min: 0 }
 }, { timestamps: true });
 
 userSchema.methods.setPassword = async function (plain) {

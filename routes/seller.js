@@ -7,6 +7,7 @@ const upload = require('../config/upload');
 const { uniqueSlug, slugify, escapeRegex } = require('../utils/helpers');
 const { cancelOrder, NEXT } = require('../utils/orders');
 const stats = require('../utils/stats');
+const returns = require('../utils/returns');
 
 const COLORS = ['#1B62F5', '#E84708', '#7C3AED', '#079455', '#DC6803', '#0E7490', '#BE185D'];
 
@@ -126,12 +127,38 @@ router.post('/orders/:code/status', async (req, res, next) => {
       order.status = to;
       if (to === 'shipping' && req.body.trackingCode) order.shipping.trackingCode = req.body.trackingCode;
       if (to === 'shipping' && !order.shipping.trackingCode) order.shipping.trackingCode = 'GHN' + Date.now().toString().slice(-9);
-      if (to === 'delivered' && order.paymentMethod === 'cod') { order.paymentStatus = 'paid'; order.paidAt = new Date(); }
+      if (to === 'delivered') order.deliveredAt = new Date(); // mốc tính hạn trả hàng
+      if (to === 'delivered' && order.paymentMethod === 'cod' && order.paymentStatus === 'unpaid') { order.paymentStatus = 'paid'; order.paidAt = new Date(); }
       order.history.push({ status: to, note: req.body.note || '', by: 'seller' });
       await order.save();
     }
     req.flash('success', `Đã cập nhật đơn #${order.code}: ${Order.STATUS[order.status].label}.`);
     res.redirect(req.body.back || `/seller/orders/${order.code}`);
+  } catch (e) { next(e); }
+});
+
+// ---------- Trả hàng / hoàn tiền ----------
+router.get('/returns', async (req, res, next) => {
+  try {
+    const TABS = { todo: ['requested', 'shipped'], wait: ['approved', 'disputed'], done: ['refunded', 'rejected', 'closed'] };
+    const tab = TABS[req.query.tab] ? req.query.tab : 'todo';
+    const orders = await Order.find({ shop: req.shop._id, 'returnRequest.status': { $in: TABS[tab] } }).sort({ 'returnRequest.requestedAt': -1 }).limit(50).populate('user', 'name email');
+    const counts = {};
+    for (const k of Object.keys(TABS)) counts[k] = await Order.countDocuments({ shop: req.shop._id, 'returnRequest.status': { $in: TABS[k] } });
+    res.render('seller/returns', { title: 'Trả hàng / Hoàn tiền', active: 'returns', orders, tab, counts, RS: Order.RETURN_STATUS, REASONS: Order.RETURN_REASONS, hours: returns.SHOP_RESPONSE_HOURS });
+  } catch (e) { next(e); }
+});
+// Chỉ thao tác được đơn của CHÍNH shop mình (lọc shop: req.shop._id)
+router.post('/returns/:code/:action(approve|reject|receive)', async (req, res, next) => {
+  try {
+    const order = await Order.findOne({ code: req.params.code, shop: req.shop._id });
+    if (!order) return next();
+    const a = req.params.action;
+    const r = a === 'approve' ? await returns.approveReturn(order, 'seller', req.body.note)
+      : a === 'reject' ? await returns.rejectReturn(order, 'seller', req.body.reason)
+      : await returns.receiveReturn(order, 'seller');
+    req.flash(r.ok ? 'success' : 'error', `Đơn #${order.code}: ${r.message}`);
+    res.redirect(req.body.back || '/seller/returns');
   } catch (e) { next(e); }
 });
 
@@ -175,7 +202,7 @@ router.post('/custom/:code/reject', async (req, res, next) => {
     if (!reason) { req.flash('error', 'Vui lòng nhập lý do từ chối.'); return res.redirect(`/seller/custom?code=${order.code}`); }
     order.customRequest.note = reason;
     await cancelOrder(order, 'seller', reason);
-    req.flash('success', `Đã từ chối đơn #${order.code}${order.paymentStatus === 'refund_pending' ? ' — hệ thống sẽ hoàn tiền cho khách' : ''}.`);
+    req.flash('success', `Đã từ chối đơn #${order.code}${order.paymentStatus === 'refunded' ? ' — đã tự động hoàn tiền vào Ví KeebHub của khách' : order.paymentStatus === 'refund_pending' ? ' — khoản hoàn tiền đang chờ xử lý' : ''}.`);
     res.redirect('/seller/custom');
   } catch (e) { next(e); }
 });

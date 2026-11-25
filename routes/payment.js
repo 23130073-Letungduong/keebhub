@@ -4,16 +4,19 @@ const { Order } = require('../models');
 const { requireLogin } = require('../middleware/auth');
 const vnpay = require('../utils/vnpay');
 const mailer = require('../utils/mailer');
+const { refundOrder } = require('../utils/orders');
 
 async function markGroup(group, ok, info = {}) {
   const orders = await Order.find({ paymentGroup: group });
   for (const o of orders) {
-    if (o.paymentStatus === 'paid') continue;
+    if (!['unpaid', 'failed'].includes(o.paymentStatus)) continue; // đã xử lý rồi (paid / đã hoàn) → không xử lý lại (chặn hoàn 2 lần khi VNPay gọi lại)
     if (ok) {
       // Đơn đã bị huỷ mà khách vẫn trả tiền → đưa vào hàng chờ hoàn tiền
-      o.paymentStatus = o.status === 'cancelled' ? 'refund_pending' : 'paid';
+      o.paymentStatus = ['cancelled', 'returned'].includes(o.status) ? 'refund_pending' : 'paid';
       o.paidAt = new Date();
       o.vnpTransactionNo = info.transactionNo;
+      if (info.payDate) o.vnpPayDate = info.payDate;
+      if (info.bank) o.vnpBankCode = info.bank;
       o.history.push({ status: o.status, note: `Thanh toán VNPay thành công${info.bank ? ' (' + info.bank + ')' : ''}`, by: 'system' });
     } else if (o.paymentStatus === 'unpaid') {
       o.paymentStatus = 'failed';
@@ -22,6 +25,10 @@ async function markGroup(group, ok, info = {}) {
     await o.save();
   }
   return orders;
+}
+// Khách trả tiền xong nhưng đơn đã bị huỷ trước đó → hoàn tiền tự động luôn
+async function refundLate(orders) {
+  for (const o of orders) if (o.paymentStatus === 'refund_pending') await refundOrder(o, 'system').catch(e => console.error('[Hoàn tiền]', e.message));
 }
 
 // Chuyển sang VNPay
@@ -41,7 +48,10 @@ router.get('/vnpay/:group', requireLogin, async (req, res, next) => {
       return res.render('cart/vnpay-mock', { title: 'Mô phỏng VNPay', orders, amount, group: req.params.group, info });
     }
     const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1').split(',')[0].replace('::ffff:', '').replace('::1', '127.0.0.1');
-    res.redirect(vnpay.createPaymentUrl({ txnRef: req.params.group, amount, orderInfo: info, ipAddr: ip, bankCode: req.query.bank }));
+    // Lưu vnp_CreateDate của giao dịch — API hoàn tiền VNPay bắt buộc gửi lại đúng giá trị này
+    const createDate = vnpay.vnTime();
+    await Order.updateMany({ _id: { $in: orders.map(o => o._id) } }, { vnpCreateDate: createDate });
+    res.redirect(vnpay.createPaymentUrl({ txnRef: req.params.group, amount, orderInfo: info, ipAddr: ip, bankCode: req.query.bank, createDate }));
   } catch (e) { next(e); }
 });
 
@@ -80,7 +90,8 @@ router.get('/vnpay_return', async (req, res, next) => {
       const amount = orders.reduce((s, o) => s + o.total, 0) * 100;
       if (orders.length && Number(req.query.vnp_Amount) === amount) {
         const ok = code === '00' && req.query.vnp_TransactionStatus === '00';
-        await markGroup(group, ok, { transactionNo: req.query.vnp_TransactionNo, bank: req.query.vnp_BankCode });
+        const marked = await markGroup(group, ok, { transactionNo: req.query.vnp_TransactionNo, bank: req.query.vnp_BankCode, payDate: req.query.vnp_PayDate });
+        if (ok) await refundLate(marked);
         if (ok && orders[0]) {
           const u = await require('../models').User.findById(orders[0].user);
           if (u) mailer.sendOrder(u, orders, `${process.env.BASE_URL || 'http://localhost:3000'}/account/orders`).catch(() => {});
@@ -100,8 +111,10 @@ router.get('/vnpay_ipn', async (req, res) => {
     const amount = orders.reduce((s, o) => s + o.total, 0) * 100;
     if (Number(req.query.vnp_Amount) !== amount) return res.json({ RspCode: '04', Message: 'Invalid amount' });
     if (orders.every(o => o.paymentStatus === 'paid')) return res.json({ RspCode: '02', Message: 'Order already confirmed' });
-    await markGroup(req.query.vnp_TxnRef, req.query.vnp_ResponseCode === '00' && req.query.vnp_TransactionStatus === '00',
-      { transactionNo: req.query.vnp_TransactionNo, bank: req.query.vnp_BankCode });
+    const ipnOk = req.query.vnp_ResponseCode === '00' && req.query.vnp_TransactionStatus === '00';
+    const marked = await markGroup(req.query.vnp_TxnRef, ipnOk,
+      { transactionNo: req.query.vnp_TransactionNo, bank: req.query.vnp_BankCode, payDate: req.query.vnp_PayDate });
+    if (ipnOk) await refundLate(marked);
     res.json({ RspCode: '00', Message: 'Confirm Success' });
   } catch (e) {
     res.json({ RspCode: '99', Message: 'Unknown error' });

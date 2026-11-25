@@ -235,6 +235,12 @@ ANTHROPIC_API_KEY=...     # lấy tại https://console.anthropic.com
 
 ---
 
+### 8.5. Ví KeebHub & trả hàng (không cần cấu hình)
+
+- Mọi khoản hoàn tiền (đơn huỷ đã thanh toán, trả hàng) được cộng **ngay** vào **Ví KeebHub** của khách — xem ở *Tài khoản → Ví KeebHub*. Khi thanh toán, khách chọn được "Ví KeebHub" nếu đủ số dư.
+- Trả hàng: khách gửi yêu cầu (lý do + ảnh) trong 7 ngày → shop duyệt ở *Kênh người bán → Trả hàng / Hoàn tiền* → khách gửi hàng + nhập mã vận đơn → shop bấm "Đã nhận hàng" → tiền vào ví. Shop từ chối / im lặng quá 72 giờ → khách khiếu nại, admin xử ở *Trang quản trị → Trả hàng & khiếu nại*.
+- Có thể chỉnh giới hạn trong `.env`: `CANCEL_LIMIT`, `RETURN_DAYS`, `RETURN_LIMIT` (để trống = mặc định 3 / 7 / 3).
+
 ## 9. Chạy kiểm thử tự động
 
 MongoDB phải đang chạy. Tại thư mục `keebhub`:

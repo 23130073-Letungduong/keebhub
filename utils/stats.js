@@ -6,7 +6,8 @@ const { ymd } = require('./helpers');
 const PLATFORM_FEE = 0.05; // phí sàn 5%
 
 // Đơn được tính doanh thu: không huỷ và đã thanh toán (VNPay) hoặc COD
-const REVENUE_MATCH = { status: { $ne: 'cancelled' }, $or: [{ paymentStatus: 'paid' }, { paymentMethod: 'cod' }] };
+// Không tính đơn huỷ / đã trả hàng; đơn online phải đã thanh toán (VNPay hoặc Ví), COD tính theo đơn
+const REVENUE_MATCH = { status: { $nin: ['cancelled', 'returned'] }, $or: [{ paymentStatus: 'paid' }, { paymentMethod: 'cod' }] };
 
 function parseRange(q, defDays = 14) {
   let to = q.to ? new Date(q.to + 'T23:59:59') : new Date();

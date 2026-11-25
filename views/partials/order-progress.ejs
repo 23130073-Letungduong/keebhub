@@ -10,6 +10,8 @@
 %>
 <% if (o.status==='cancelled') { %>
   <div class="alert err" style="margin:18px 22px">✕ Đơn đã huỷ<%= o.cancelReason ? ' — ' + o.cancelReason : '' %><%= o.paymentStatus==='refund_pending' ? ' · Đang chờ hoàn tiền' : o.paymentStatus==='refunded' ? ' · Đã hoàn tiền' : '' %></div>
+<% } else if (o.status==='returned') { %>
+  <div class="alert info" style="margin:18px 22px">↩ Đơn đã trả hàng<%= o.paymentStatus==='refunded' ? ' · Đã hoàn ' + h.money((o.refund&&o.refund.amount)||o.total) + ' vào Ví KeebHub' : o.paymentStatus==='refund_pending' ? ' · Đang chờ hoàn tiền' : '' %></div>
 <% } else { %>
 <div class="prog">
   <% flow.forEach(function(f,i){ var cls = i < cur ? 'done' : (i <= cur ? (i===flow.length-1 && o.status==='completed' ? 'done' : 'cur') : ''); %>

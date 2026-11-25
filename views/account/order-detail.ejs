@@ -41,7 +41,7 @@
             <div class="sumrow" style="padding:5px 0"><span>Vận chuyển</span><b><%= o.shippingFee ? h.money(o.shippingFee) : 'Miễn phí' %></b></div>
             <div class="divider" style="margin:10px 0"></div>
             <div class="sumrow"><b class="s16">Tổng thanh toán</b><b class="s20" style="color:var(--a600)"><%= h.money(o.total) %></b></div>
-            <div class="alert <%= o.paymentStatus==='paid'?'ok':'info' %> s13" style="margin-top:14px"><%- h.uiIcon('lock', 16) %> <%= o.paymentMethod==='cod' ? 'Thanh toán khi nhận hàng (COD).' : 'VNPay — ' + PAY[o.paymentStatus].label + (o.paidAt ? ' lúc ' + h.dateTime(o.paidAt) : '') + (o.vnpTransactionNo ? ' · Mã GD ' + o.vnpTransactionNo : '') %></div>
+            <div class="alert <%= o.paymentStatus==='paid'?'ok':'info' %> s13" style="margin-top:14px"><%- h.uiIcon('lock', 16) %> <%= o.paymentMethod==='cod' ? 'Thanh toán khi nhận hàng (COD).' : h.payMethod(o.paymentMethod) + ' — ' + PAY[o.paymentStatus].label + (o.paidAt ? ' lúc ' + h.dateTime(o.paidAt) : '') + (o.vnpTransactionNo ? ' · Mã GD ' + o.vnpTransactionNo : '') %></div>
           </div>
         </div>
         <div class="pnl">
@@ -64,10 +64,52 @@
           <% } %>
           <% if (['shipping','delivered'].includes(o.status)) { %><form method="post" action="/account/orders/<%= o.code %>/received" style="margin-top:10px"><button class="btn pri blk">✓ Tôi đã nhận hàng</button></form><p class="s12 muted" style="text-align:center;margin-top:8px">Chỉ bấm khi đã nhận và kiểm tra hàng.</p><% } %>
           <% if (['delivered','completed'].includes(o.status) && o.items.some(function(i){return !i.reviewed})) { %><a class="btn outp blk" style="margin-top:10px" href="/account/orders/<%= o.code %>/review"><%- h.uiIcon('star', 16) %> Đánh giá sản phẩm</a><% } %>
+          <% if (ret.can && !(o.returnRequest && o.returnRequest.status)) { %><a class="btn ghost blk" style="margin-top:6px" href="#return"><%- h.uiIcon('undo', 16) %> Trả hàng / Hoàn tiền</a><% } %>
           <a class="btn ghost blk" style="margin-top:6px" href="/account/orders">← Về danh sách đơn</a>
         </div></div>
       </div>
     </div>
+    <% var R = o.returnRequest || {}; if (R.status || ret.can) { %>
+    <div class="pnl" id="return">
+      <div class="hd"><div style="flex:1"><h2><%- h.uiIcon('undo', 18) %> Trả hàng / Hoàn tiền</h2>
+        <p><% if (R.status) { %>Trạng thái: <span class="bdg <%= ret.label[R.status].cls %>"><%= ret.label[R.status].label %></span><% } else { %>Hạn gửi yêu cầu: <b><%= h.dateTime(ret.deadline) %></b> (<%= ret.days %> ngày kể từ khi nhận hàng)<% } %></p></div></div>
+      <div class="bd s14">
+      <% if (!R.status) { %>
+        <div class="alert info s13" style="margin-bottom:14px"><span><%- h.uiIcon('info', 16) %></span><div>Chỉ áp dụng khi sản phẩm <b>lỗi, giao sai, thiếu hoặc hư hỏng do vận chuyển</b> (không áp dụng đổi ý). Bạn cần chụp ảnh rõ tình trạng sản phẩm. Tiền sẽ hoàn <b>đúng <%= h.money(o.total) %></b> vào <b>Ví KeebHub</b> khi shop nhận lại hàng. Mỗi đơn chỉ gửi yêu cầu 1 lần<%= ret.limitLeft < 3 ? ' · bạn còn ' + ret.limitLeft + ' lượt trong 30 ngày' : '' %>.</div></div>
+        <% if (ret.limitLeft <= 0) { %>
+          <div class="alert warn s13">Bạn đã dùng hết lượt yêu cầu trả hàng trong 30 ngày. Vui lòng liên hệ quản trị viên.</div>
+        <% } else { %>
+        <details><summary class="btn out" style="list-style:none;display:inline-flex">Yêu cầu trả hàng / hoàn tiền</summary>
+          <form method="post" action="/account/orders/<%= o.code %>/return" enctype="multipart/form-data" style="margin-top:14px;max-width:560px" onsubmit="return confirm('Gửi yêu cầu trả hàng? Mỗi đơn chỉ gửi được 1 lần.')">
+            <div class="field"><label>Lý do *</label><select class="inp" name="reason" required><option value="">— Chọn lý do —</option><% Object.keys(ret.reasons).forEach(function(k){ %><option value="<%= k %>"><%= ret.reasons[k] %></option><% }) %></select></div>
+            <div class="field"><label>Mô tả chi tiết *</label><textarea class="inp" name="detail" rows="3" minlength="15" maxlength="1000" required placeholder="VD: Phím Enter không nhận khi bấm, đã thử cắm lại cáp và đổi cổng USB"></textarea></div>
+            <div class="field"><label>Ảnh minh chứng * (1–5 ảnh, mỗi ảnh ≤ 5MB)</label><input class="inp" type="file" name="photos" accept="image/*" multiple required></div>
+            <button class="btn pri">Gửi yêu cầu</button>
+          </form></details>
+        <% } %>
+      <% } else { %>
+        <div class="sumrow"><span>Lý do</span><b><%= ret.reasons[R.reason] || R.reason %></b></div>
+        <p class="t2 s13" style="margin:6px 0 10px"><%= R.detail %></p>
+        <% if (R.photos && R.photos.length) { %><div class="f" style="gap:8px;flex-wrap:wrap;margin-bottom:12px"><% R.photos.forEach(function(p){ %><a href="<%= p %>" target="_blank"><img src="<%= p %>" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid var(--border)"></a><% }) %></div><% } %>
+
+        <% if (R.status==='requested') { %><div class="alert warn s13">Đang chờ shop duyệt (tối đa <%= ret.hours %> giờ). Nếu shop không phản hồi, bạn có thể khiếu nại lên sàn.</div><% } %>
+        <% if (R.status==='approved') { %>
+          <div class="alert ok s13" style="margin-bottom:12px"><div>Shop đã đồng ý. Vui lòng đóng gói đầy đủ sản phẩm, phụ kiện và gửi về:<br><b><%= o.shop.name %><%= o.shop.phone ? ' · ' + o.shop.phone : '' %></b><br><%= o.shop.address || 'Liên hệ shop để lấy địa chỉ nhận hàng' %><%= R.shopNote ? ' — Ghi chú của shop: ' + R.shopNote : '' %></div></div>
+          <form method="post" action="/account/orders/<%= o.code %>/return/ship" class="f" style="gap:8px;flex-wrap:wrap;max-width:560px"><input class="inp" name="trackingCode" required pattern="[A-Za-z0-9-]{6,40}" placeholder="Mã vận đơn gửi trả (VD: GHN123456789)" style="flex:1;min-width:220px"><button class="btn pri">Tôi đã gửi hàng</button></form>
+        <% } %>
+        <% if (R.status==='shipped') { %><div class="alert info s13">Đã gửi hàng về shop · mã vận đơn <b><%= R.trackingCode %></b>. Tiền sẽ tự động hoàn vào Ví KeebHub ngay khi shop xác nhận đã nhận hàng.</div><% } %>
+        <% if (R.status==='refunded') { %><div class="alert ok s13">Đã hoàn <b><%= h.money((o.refund && o.refund.amount) || o.total) %></b> vào <a href="/account/wallet" style="text-decoration:underline">Ví KeebHub</a><%= R.receivedAt ? ' · ' + h.dateTime(R.receivedAt) : '' %>.</div><% } %>
+        <% if (R.status==='rejected') { %><div class="alert err s13">Shop từ chối<%= R.rejectStage==='receipt' ? ' sau khi nhận hàng trả về' : '' %>: <%= R.rejectReason %></div><% } %>
+        <% if (R.status==='disputed') { %><div class="alert warn s13">Đã khiếu nại lên sàn — quản trị viên đang xem xét. Nội dung: <%= R.disputeNote %></div><% } %>
+        <% if (R.status==='closed') { %><div class="alert err s13">Quản trị viên đã đóng yêu cầu, không hoàn tiền: <%= R.resolution %></div><% } %>
+        <% if (ret.canDispute) { %>
+          <details style="margin-top:12px"><summary class="btn out sm" style="list-style:none;display:inline-flex">Khiếu nại lên sàn (1 lần)</summary>
+            <form method="post" action="/account/orders/<%= o.code %>/return/dispute" style="margin-top:10px;max-width:560px"><textarea class="inp" name="note" rows="3" minlength="10" required placeholder="Trình bày vì sao bạn không đồng ý với quyết định của shop"></textarea><button class="btn pri sm" style="margin-top:8px">Gửi khiếu nại</button></form></details>
+        <% } %>
+      <% } %>
+      </div>
+    </div>
+    <% } %>
     <div class="pnl"><div class="hd"><h2>Lịch sử đơn hàng</h2></div><div class="tl">
       <% o.history.slice().reverse().forEach(function(x){ %><div class="tli"><div class="mk"><i style="background:var(--p500)"></i></div><div><b class="s13"><%= x.note || STATUS[x.status].label %></b><div class="s12 muted"><%= h.dateTime(x.at) %></div></div></div><% }) %>
     </div></div>

@@ -13,6 +13,7 @@
   <div class="gt">VẬN HÀNH</div>
   <a class="<%= active==='orders'?'on':'' %>" href="/admin/orders"><em><%- h.uiIcon('package', 18) %></em>Quản lý đơn hàng</a>
   <a class="<%= active==='refunds'?'on':'' %>" href="/admin/refunds"><em><%- h.uiIcon('undo', 18) %></em>Huỷ đơn & hoàn tiền<% if (badges.refunds) { %><b><%= badges.refunds %></b><% } %></a>
+  <a class="<%= active==='returns'?'on':'' %>" href="/admin/returns"><em><%- h.uiIcon('alert', 18) %></em>Trả hàng & khiếu nại<% if (badges.disputes) { %><b><%= badges.disputes %></b><% } %></a>
   <div class="gt">BÁO CÁO</div>
   <a class="<%= active==='revenue'?'on':'' %>" href="/admin/revenue"><em><%- h.uiIcon('trend', 18) %></em>Doanh thu & thống kê</a>
   <div class="gt">KHÁC</div>

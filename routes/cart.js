@@ -6,6 +6,7 @@ const { requireLogin } = require('../middleware/auth');
 const { loadCart, shipFee, SHIP, FREE_SHIP_FROM } = require('../utils/cart');
 const compat = require('../utils/compat');
 const mailer = require('../utils/mailer');
+const wallet = require('../utils/wallet');
 
 // ---------- Giỏ hàng ----------
 router.get('/cart', requireLogin, async (req, res, next) => {
@@ -94,20 +95,22 @@ router.get('/checkout', requireLogin, async (req, res, next) => {
     const method = req.query.ship === 'express' ? 'express' : 'standard';
     cart.groups.forEach(g => { g.ship = shipFee(g.subtotal, method); });
     const shipTotal = cart.groups.reduce((s, g) => s + g.ship, 0);
-    res.render('cart/checkout', { title: 'Thanh toán', cart, SHIP, method, shipTotal });
+    const walletBalance = await wallet.balance(req.user._id);
+    res.render('cart/checkout', { title: 'Thanh toán', cart, SHIP, method, shipTotal, walletBalance });
   } catch (e) { next(e); }
 });
 
 router.post('/checkout', requireLogin, async (req, res, next) => {
   const created = [];
   const decremented = [];
+  let debited = 0; // số tiền đã trừ ví (để hoàn lại nếu lỗi giữa chừng)
   try {
     const cart = await loadCart(req.user._id);
     if (!cart.groups.length) return res.redirect('/cart');
     const f = (k, n = 300) => String(req.body[k] == null ? '' : req.body[k]).trim().slice(0, n);
     const fullName = f('fullName', 80), phone = f('phone', 15), address = f('address'), note = f('note', 500);
     const method = req.body.ship === 'express' ? 'express' : 'standard';
-    let payment = req.body.payment === 'cod' ? 'cod' : 'vnpay';
+    let payment = ['cod', 'wallet'].includes(req.body.payment) ? req.body.payment : 'vnpay';
     if (!fullName || !phone || !address || !/^0\d{9,10}$/.test(String(phone).trim())) {
       req.flash('error', 'Vui lòng nhập đầy đủ họ tên, số điện thoại hợp lệ và địa chỉ nhận hàng.');
       return res.redirect('/checkout');
@@ -156,7 +159,7 @@ router.post('/checkout', requireLogin, async (req, res, next) => {
         for (const l of b.lines) await dec(l.product._id, l.qty);
         const svc = b.build.service;
         const o = await Order.create({
-          user: req.user._id, shop: g.shop._id, paymentMethod: 'vnpay', paymentGroup: group, shipping, note: [note, b.build.note].filter(Boolean).join(' | '),
+          user: req.user._id, shop: g.shop._id, paymentMethod: payment === 'wallet' ? 'wallet' : 'vnpay', paymentGroup: group, shipping, note: [note, b.build.note].filter(Boolean).join(' | '),
           isCustom: true, build: b.build._id, buildCode: b.build.code,
           service: { ref: svc._id, name: svc.name, price: svc.price, days: svc.days },
           customRequest: { status: 'waiting', deadline: new Date(Date.now() + 24 * 3600e3) },
@@ -170,6 +173,19 @@ router.post('/checkout', requireLogin, async (req, res, next) => {
         created.push(o);
       }
     }
+    // Thanh toán bằng Ví KeebHub: trừ ví NGUYÊN TỬ (chỉ trừ khi số dư đủ) → không thể âm ví / trừ 2 lần
+    if (payment === 'wallet') {
+      const amount = created.reduce((s, o) => s + o.total, 0);
+      const codes = created.map(o => o.code);
+      const left = await wallet.debit(req.user._id, amount, { type: 'payment', orderCodes: codes, note: `Thanh toán đơn ${codes.map(c => '#' + c).join(', ')}` });
+      if (left === null) throw new Error('WALLET_LOW');
+      debited = amount;
+      const now = new Date();
+      await Order.updateMany({ _id: { $in: created.map(o => o._id) } }, {
+        $set: { paymentStatus: 'paid', paidAt: now },
+        $push: { history: { status: 'pending', note: 'Đã thanh toán bằng Ví KeebHub', by: 'system', at: now } }
+      });
+    }
     req.user.cart = [];
     await req.user.save();
 
@@ -178,6 +194,9 @@ router.post('/checkout', requireLogin, async (req, res, next) => {
     res.redirect(`/payment/result/${group}`);
   } catch (e) {
     // hoàn tác nếu lỗi giữa chừng
+    if (debited) {
+      await wallet.credit(req.user._id, debited, { type: 'payment_reverse', orderCodes: created.map(o => o.code), note: 'Đặt hàng không thành công — hoàn lại tiền đã trừ' }).catch(err => console.error('[Ví] hoàn lại lỗi', err.message));
+    }
     for (const d of decremented) await Product.updateOne({ _id: d.productId }, { $inc: { stock: d.qty, sold: -d.qty } });
     if (created.length) {
       for (const o of created.filter(x => x.isCustom)) {
@@ -187,6 +206,7 @@ router.post('/checkout', requireLogin, async (req, res, next) => {
       await Order.deleteMany({ _id: { $in: created.map(o => o._id) } });
     }
     if (/hết hàng/.test(e.message)) { req.flash('error', e.message); return res.redirect('/cart'); }
+    if (e.message === 'WALLET_LOW') { req.flash('error', 'Số dư Ví KeebHub không đủ để thanh toán đơn này. Vui lòng chọn phương thức khác.'); return res.redirect('/checkout'); }
     next(e);
   }
 });

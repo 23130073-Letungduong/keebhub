@@ -27,6 +27,7 @@
         <div class="ddm">
           <a href="/account"><%- h.uiIcon('user', 18) %>Hồ sơ cá nhân</a>
           <a href="/account/orders"><%- h.uiIcon('orders', 18) %>Đơn hàng của tôi</a>
+          <a href="/account/wallet"><%- h.uiIcon('wallet', 18) %>Ví KeebHub <b class="s12" style="margin-left:auto;color:var(--s600)"><%= h.money(user.wallet||0) %></b></a>
           <a href="/account/builds"><%- h.uiIcon('builds', 18) %>Cấu hình đã lưu</a>
           <a href="/account/reviews"><%- h.uiIcon('star', 18) %>Đánh giá của tôi</a>
           <% if (user.role==='seller') { %><a href="/seller"><%- h.uiIcon('store', 18) %>Kênh người bán</a><% } else if (user.role==='customer') { %><a href="/seller/register"><%- h.uiIcon('store', 18) %>Đăng ký bán hàng</a><% } %>

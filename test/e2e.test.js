@@ -257,9 +257,11 @@ describe('3. Phân quyền truy cập', () => {
     it(`Khách vãng lai vào ${u} → chuyển đăng nhập`, async () => { assert.ok((await guest.get(u)).url.startsWith('/auth/login')); });
   }
   it('Khách vãng lai vào /admin → trang đăng nhập quản trị', async () => { assert.ok((await guest.get('/admin')).url.startsWith('/admin/login')); });
-  it('Khách hàng vào /admin → 403', async () => {
+  it('Khách hàng vào /admin → trang đăng nhập quản trị (phiên khách không dùng được cho /admin)', async () => {
     const c = new Client(); await c.login('khach@keebhub.vn', 'Khach@123');
-    assert.equal((await c.get('/admin')).status, 403);
+    const r = await c.get('/admin');
+    assert.ok(r.url.startsWith('/admin/login')); assert.ok(!has(r, 'Quản lý người dùng'));
+    assert.ok((await c.get('/admin/users')).url.startsWith('/admin/login'));
   });
   it('Khách hàng vào /seller → trang đăng ký bán hàng', async () => {
     const c = new Client(); await c.login('khach@keebhub.vn', 'Khach@123');
@@ -528,7 +530,9 @@ describe('7. Quy trình gia công custom (seller) + đánh giá (khách)', () =>
     await seller.login('switchhouse@keebhub.vn', 'Seller@123');
     await cust.login('user2@keebhub.vn', 'Khach@123');
     const u = await M.User.findOne({ email: 'user2@keebhub.vn' });
-    order = await M.Order.findOne({ user: u._id, isCustom: true }).sort({ createdAt: -1 });
+    const sh = await M.Shop.findOne({ slug: 'switchhouse' });
+    // đơn custom vừa đặt ở mục 6 (lọc đúng shop + đang chờ, tránh trùng đơn mẫu có ngày tạo ngẫu nhiên)
+    order = await M.Order.findOne({ user: u._id, shop: sh._id, isCustom: true, 'customRequest.status': 'waiting', paymentStatus: 'paid' }).sort({ _id: -1 });
   });
   it('Trang đơn custom chờ xác nhận hiển thị', async () => { assert.ok(has(await seller.get('/seller/custom?code=' + order.code), order.code)); });
   it('Từ chối không ghi lý do → báo lỗi', async () => {
@@ -650,20 +654,24 @@ describe('8. Đơn hàng thường: cập nhật trạng thái & huỷ', () => {
     x = await M.Order.findById(o._id);
     assert.equal(x.status, 'delivered'); assert.equal(x.paymentStatus, 'paid');
   });
-  it('Khách huỷ đơn chờ xác nhận → hoàn kho; đơn VNPay đã trả → chờ hoàn tiền', async () => {
+  it('Khách huỷ đơn chờ xác nhận → hoàn kho; đơn VNPay đã trả → hoàn ngay vào Ví KeebHub', async () => {
     const u = await M.User.findOne({ email: 'user1@keebhub.vn' });
     const paid = await M.Order.findOne({ user: u._id, paymentMethod: 'vnpay', paymentStatus: 'paid', status: 'pending' });
     const pid = paid.items[0].product; const before = await M.Product.findById(pid);
-    assert.ok(has(await cust.post(`/account/orders/${paid.code}/cancel`, { reason: 'Đặt nhầm' }), 'hoàn về'));
+    const w0 = u.wallet || 0;
+    assert.ok(has(await cust.post(`/account/orders/${paid.code}/cancel`, { reason: 'Đặt nhầm' }), 'vào Ví KeebHub'));
     const x = await M.Order.findById(paid._id);
-    assert.equal(x.status, 'cancelled'); assert.equal(x.paymentStatus, 'refund_pending');
+    assert.equal(x.status, 'cancelled'); assert.equal(x.paymentStatus, 'refunded'); assert.equal(x.refund.method, 'wallet');
+    assert.equal((await M.User.findById(u._id)).wallet, w0 + paid.total);
+    assert.equal(await M.WalletTxn.countDocuments({ order: paid._id, type: 'refund_cancel' }), 1);
     assert.equal((await M.Product.findById(pid)).stock, before.stock + paid.items[0].qty);
-    // huỷ lần 2 không cộng kho thêm
+    // huỷ lần 2 không cộng kho / cộng ví thêm
     await cust.post(`/account/orders/${paid.code}/cancel`, { reason: 'x' });
     assert.equal((await M.Product.findById(pid)).stock, before.stock + paid.items[0].qty);
+    assert.equal((await M.User.findById(u._id)).wallet, w0 + paid.total);
   });
   it('Danh sách đơn của khách lọc theo tab', async () => {
-    for (const t of ['all', 'pending', 'confirmed', 'processing', 'shipping', 'done', 'cancelled', 'xyz']) assert.equal((await cust.get('/account/orders?tab=' + t)).status, 200);
+    for (const t of ['all', 'pending', 'confirmed', 'processing', 'shipping', 'done', 'cancelled', 'returned', 'returns', 'xyz']) assert.equal((await cust.get('/account/orders?tab=' + t)).status, 200);
   });
 });
 
@@ -1011,10 +1019,11 @@ describe('13. Hồi quy: các lỗi đã sửa sau đợt rà soát chức năng
     const r = await new Client().login('0977000111', 'Test@1234');
     assert.ok(has(r, `name="email" value="${email}"`));
   });
-  it('Admin vào /seller → về trang quản trị', async () => {
+  it('Phiên admin chỉ có hiệu lực trong /admin — vào /seller như khách chưa đăng nhập', async () => {
     const a = new Client(); await a.login('admin@keebhub.vn', 'Admin@123', true);
-    assert.ok((await a.get('/seller')).url.startsWith('/admin'));
-    assert.ok((await a.get('/seller/register')).url.startsWith('/admin'));
+    assert.ok((await a.get('/admin')).url === '/admin');
+    assert.ok((await a.get('/seller')).url.startsWith('/auth/login'));
+    assert.ok((await a.get('/seller/register')).url.startsWith('/auth/login'));
   });
   it('Giỏ có build mất kit (shop xoá kit) → checkout không lỗi', async () => {
     const c = new Client(); await c.login('user10@keebhub.vn', 'Khach@123');
@@ -1292,11 +1301,14 @@ describe('16. Luồng thao tác (rà soát QA lần 4)', () => {
   it('Admin: trang sản phẩm không có nút mua; vào giỏ / Builder / checkout → về Trang quản trị kèm thông báo', async () => {
     const a = new Client(); await a.login('admin@keebhub.vn', 'Admin@123', true);
     const p = await M.Product.findOne({ status: 'active' });
-    assert.ok(!has(await a.get('/p/' + p.slug), 'action="/cart/add"'));
+    // admin xem trước sản phẩm từ trang quản trị (link ?admin=1) → không có nút mua
+    assert.ok(!has(await a.get('/p/' + p.slug + '?admin=1'), 'action="/cart/add"'));
+    // phiên admin không mang sang khu mua hàng → giỏ / checkout / builder yêu cầu đăng nhập tài khoản khách
     for (const u of ['/cart', '/checkout', '/builder/new']) {
-      const r = await a.get(u); assert.equal(r.status, 200, u); assert.equal(r.url, '/admin', u); assert.ok(has(r, 'không dùng để mua hàng'));
+      const r = await a.get(u); assert.ok(r.url.startsWith('/auth/login'), u);
     }
-    const r = await a.post('/cart/add', { productId: String(p._id) }); assert.equal(r.url, '/admin');
+    const r = await a.post('/cart/add', { productId: String(p._id) }); assert.ok(!r.url.startsWith('/admin'));
+    assert.equal((await M.User.findOne({ email: 'admin@keebhub.vn' })).cart.length, 0);
   });
   it('Sản phẩm chờ duyệt: chủ shop xem được nhưng không có nút mua', async () => {
     const shop = await M.Shop.findOne({ slug: 'switchhouse' });
@@ -1304,5 +1316,241 @@ describe('16. Luồng thao tác (rà soát QA lần 4)', () => {
     if (!p) return;
     const s = new Client(); await s.login('switchhouse@keebhub.vn', 'Seller@123');
     const r = await s.get('/p/' + p.slug); assert.equal(r.status, 200); assert.ok(!has(r, 'action="/cart/add"')); assert.ok(has(r, 'Chờ duyệt'));
+  });
+});
+
+// =====================================================================
+describe('17. Ví KeebHub & Trả hàng (chống lạm dụng)', () => {
+  let shop, otherShop, prod, seller, otherSeller, admin;
+  const stamp = Date.now();
+  async function mkCustomer(tag, wallet = 0) {
+    const u = new M.User({ name: 'Khách ví ' + tag, email: `vi-${tag}-${stamp}@example.com`, role: 'customer', emailVerified: true, wallet });
+    await u.setPassword('Test@1234'); await u.save();
+    const c = new Client(); await c.login(u.email, 'Test@1234');
+    return { u, c };
+  }
+  // Tạo nhanh 1 đơn đã giao (đã thanh toán) trực tiếp trong DB
+  async function mkOrder(u, { daysAgo = 1, status = 'delivered', paymentStatus = 'paid', paymentMethod = 'vnpay', qty = 1 } = {}) {
+    const total = prod.price * qty + 30000;
+    return M.Order.create({
+      user: u._id, shop: shop._id, paymentMethod, paymentStatus, status, paymentGroup: 'PGT' + Math.random().toString(36).slice(2),
+      shipping: { fullName: u.name, phone: '0900000000', address: 'HCM', method: 'standard' },
+      items: [{ product: prod._id, name: prod.name, image: prod.image, partType: prod.partType, price: prod.price, qty }],
+      subtotal: prod.price * qty, shippingFee: 30000, total, paidAt: new Date(),
+      deliveredAt: ['delivered', 'completed'].includes(status) ? new Date(Date.now() - daysAgo * 86400e3) : undefined,
+      history: [{ status: 'pending', note: 'Đặt hàng thành công', by: 'customer' }]
+    });
+  }
+  function returnForm(fields, photos = 1) {
+    const fd = new FormData();
+    for (const [k, v] of Object.entries(fields)) fd.append(k, v);
+    for (let i = 0; i < photos; i++) fd.append('photos', png(), `loi${i}.png`);
+    return fd;
+  }
+  const GOOD = { reason: 'defect', detail: 'Phím Enter không nhận khi bấm, đã thử đổi cổng USB' };
+  const walletOf = async u => (await M.User.findById(u._id)).wallet;
+
+  before(async () => {
+    shop = await M.Shop.findOne({ slug: 'keeblab-store' });
+    otherShop = await M.Shop.findOne({ slug: 'switchhouse' });
+    prod = await M.Product.findOne({ shop: shop._id, status: 'active', stock: { $gt: 20 } });
+    seller = new Client(); await seller.login('keeblab@keebhub.vn', 'Seller@123');
+    otherSeller = new Client(); await otherSeller.login('switchhouse@keebhub.vn', 'Seller@123');
+    admin = new Client(); await admin.login('admin@keebhub.vn', 'Admin@123', true);
+  });
+
+  // ---------- Ví & thanh toán bằng ví ----------
+  it('Ví trống: checkout hiện "Ví KeebHub" bị khoá; cố gửi payment=wallet → báo không đủ số dư, không tạo đơn, không trừ kho', async () => {
+    const { u, c } = await mkCustomer('trong');
+    await c.post('/cart/add', { productId: String(prod._id), qty: '1' });
+    const page = await c.get('/checkout');
+    assert.ok(has(page, 'Ví KeebHub')); assert.ok(has(page, /value="wallet" disabled/));
+    const stock = (await M.Product.findById(prod._id)).stock;
+    const r = await c.post('/checkout', { fullName: 'A B', phone: '0901234567', address: '1 Lê Lợi', payment: 'wallet' });
+    assert.ok(has(r, 'Số dư Ví KeebHub không đủ'));
+    assert.equal(await M.Order.countDocuments({ user: u._id }), 0);
+    assert.equal((await M.Product.findById(prod._id)).stock, stock);
+    assert.equal((await M.User.findById(u._id)).cart.length, 1, 'giỏ hàng còn nguyên');
+  });
+
+  it('Thanh toán bằng ví: trừ đúng tổng tiền, đơn "Đã thanh toán", ghi sổ ví; huỷ → hoàn lại đúng số tiền', async () => {
+    const { u, c } = await mkCustomer('mua', 50000000);
+    await c.post('/cart/add', { productId: String(prod._id), qty: '2' });
+    const r = await c.post('/checkout', { fullName: 'A B', phone: '0901234567', address: '1 Lê Lợi', payment: 'wallet' });
+    assert.ok(r.url.startsWith('/payment/result/'), r.url); assert.ok(has(r, 'Ví KeebHub'));
+    const o = await M.Order.findOne({ user: u._id });
+    assert.equal(o.paymentMethod, 'wallet'); assert.equal(o.paymentStatus, 'paid');
+    assert.equal(await walletOf(u), 50000000 - o.total);
+    const tx = await M.WalletTxn.findOne({ user: u._id, type: 'payment' });
+    assert.equal(tx.amount, -o.total); assert.equal(tx.balanceAfter, 50000000 - o.total); assert.deepEqual(tx.orderCodes, [o.code]);
+    // shop xử lý được ngay (không bị chặn "chưa thanh toán VNPay")
+    assert.ok(has(await seller.post(`/seller/orders/${o.code}/status`, { status: 'confirmed' }), 'Đã xác nhận'));
+    await c.post(`/account/orders/${o.code}/cancel`, { reason: 'Đặt nhầm, muốn đặt lại' });
+    assert.equal(await walletOf(u), 50000000);
+    assert.equal((await M.Order.findById(o._id)).paymentStatus, 'refunded');
+    const page = await c.get('/account/wallet');
+    assert.equal(page.status, 200); assert.ok(has(page, 'Hoàn tiền đơn huỷ')); assert.ok(has(page, 'Thanh toán đơn hàng')); assert.ok(has(page, '#' + o.code));
+  });
+
+  it('Bấm huỷ 6 lần cùng lúc → chỉ hoàn ví 1 lần, kho chỉ cộng 1 lần', async () => {
+    const { u, c } = await mkCustomer('huy', 0);
+    const o = await mkOrder(u, { status: 'pending' });
+    const stock = (await M.Product.findById(prod._id)).stock;
+    await Promise.all(Array.from({ length: 6 }, () => c.post(`/account/orders/${o.code}/cancel`, { reason: 'Đặt nhầm' })));
+    assert.equal(await walletOf(u), o.total);
+    assert.equal(await M.WalletTxn.countDocuments({ order: o._id }), 1);
+    assert.equal((await M.Product.findById(prod._id)).stock, stock + 1);
+  });
+
+  it('Trừ ví đồng thời 10 lần: không bao giờ âm ví, không tiêu quá số dư', async () => {
+    const wallet = require(path.join(ROOT, 'utils', 'wallet'));
+    const { u } = await mkCustomer('race', 100000);
+    const rs = await Promise.all(Array.from({ length: 10 }, () => wallet.debit(u._id, 30000, { note: 'test' })));
+    assert.equal(rs.filter(x => x !== null).length, 3);
+    assert.equal(await walletOf(u), 10000);
+    await assert.rejects(wallet.credit(u._id, -5000, {}), /không hợp lệ/);
+    await assert.rejects(wallet.debit(u._id, 0.5, {}), /không hợp lệ/);
+  });
+
+  it('Không thể tự sửa số dư ví qua form hồ sơ', async () => {
+    const { u, c } = await mkCustomer('hack', 0);
+    await c.post('/account/profile', { name: 'Hacker', wallet: '99999999' });
+    assert.equal(await walletOf(u), 0);
+  });
+
+  // ---------- Trả hàng: điều kiện gửi yêu cầu ----------
+  it('Yêu cầu trả hàng bị chặn khi: thiếu ảnh, lý do "đổi ý"/lạ, mô tả quá ngắn, đơn chưa giao, quá hạn 7 ngày', async () => {
+    const { u, c } = await mkCustomer('dk');
+    const o = await mkOrder(u);
+    assert.ok(has(await c.get(`/account/orders/${o.code}`), 'Yêu cầu trả hàng / hoàn tiền'));
+    assert.ok(has(await c.post(`/account/orders/${o.code}/return`, null, { multipart: returnForm(GOOD, 0) }), 'ít nhất 1 ảnh'));
+    assert.ok(has(await c.post(`/account/orders/${o.code}/return`, null, { multipart: returnForm({ ...GOOD, reason: 'changed_mind' }) }), 'chọn lý do'));
+    assert.ok(has(await c.post(`/account/orders/${o.code}/return`, null, { multipart: returnForm({ ...GOOD, detail: 'hỏng' }) }), 'ít nhất 15 ký tự'));
+    assert.equal((await M.Order.findById(o._id)).returnRequest.status, '');
+    const shipping = await mkOrder(u, { status: 'shipping' });
+    assert.ok(has(await c.post(`/account/orders/${shipping.code}/return`, null, { multipart: returnForm(GOOD) }), 'đơn đã giao'));
+    const old = await mkOrder(u, { daysAgo: 8 });
+    assert.ok(!has(await c.get(`/account/orders/${old.code}`), 'Yêu cầu trả hàng / hoàn tiền'));
+    assert.ok(has(await c.post(`/account/orders/${old.code}/return`, null, { multipart: returnForm(GOOD) }), 'quá hạn'));
+    // khách khác không thao tác được đơn này
+    const { c: c2 } = await mkCustomer('la');
+    assert.equal((await c2.post(`/account/orders/${o.code}/return`, null, { multipart: returnForm(GOOD) })).status, 404);
+  });
+
+  it('Mỗi đơn chỉ 1 yêu cầu (kể cả gửi 5 lần cùng lúc)', async () => {
+    const { u, c } = await mkCustomer('mot');
+    const o = await mkOrder(u);
+    await Promise.all(Array.from({ length: 5 }, () => c.post(`/account/orders/${o.code}/return`, null, { multipart: returnForm(GOOD) })));
+    const x = await M.Order.findById(o._id);
+    assert.equal(x.returnRequest.status, 'requested'); assert.equal(x.returnRequest.photos.length, 1);
+    assert.equal(x.history.filter(hh => /yêu cầu trả hàng/.test(hh.note)).length, 1);
+    assert.ok(has(await c.post(`/account/orders/${o.code}/return`, null, { multipart: returnForm(GOOD) }), 'đã có yêu cầu'));
+  });
+
+  it('Tối đa 3 yêu cầu trả hàng / 30 ngày', async () => {
+    const { u, c } = await mkCustomer('gh');
+    for (let i = 0; i < 3; i++) { const o = await mkOrder(u); assert.ok(has(await c.post(`/account/orders/${o.code}/return`, null, { multipart: returnForm(GOOD) }), 'Đã gửi yêu cầu')); }
+    const o4 = await mkOrder(u);
+    assert.ok(has(await c.post(`/account/orders/${o4.code}/return`, null, { multipart: returnForm(GOOD) }), '3 yêu cầu trả hàng trong 30 ngày'));
+    assert.equal((await M.Order.findById(o4._id)).returnRequest.status, '');
+  });
+
+  // ---------- Trả hàng: luồng chính ----------
+  it('Luồng đầy đủ: duyệt → khách gửi hàng → shop nhận → hoàn đúng 1 lần vào ví, cộng kho, gỡ đánh giá, loại khỏi doanh thu', async () => {
+    const { u, c } = await mkCustomer('full');
+    const o = await mkOrder(u, { status: 'completed' });
+    await M.Review.create({ product: prod._id, shop: shop._id, user: u._id, order: o._id, rating: 5, content: 'Tốt' });
+    await c.post(`/account/orders/${o.code}/return`, null, { multipart: returnForm(GOOD, 2) });
+    // khách không thể tự nhập mã vận đơn khi shop chưa duyệt
+    assert.ok(has(await c.post(`/account/orders/${o.code}/return/ship`, { trackingCode: 'GHN123456789' }), 'chưa được duyệt'));
+    // shop khác không duyệt được
+    assert.equal((await otherSeller.post(`/seller/returns/${o.code}/approve`, {})).status, 404);
+    // shop không thể xác nhận "đã nhận hàng" khi khách chưa gửi
+    assert.ok(has(await seller.post(`/seller/returns/${o.code}/receive`, {}), 'khách đã gửi hàng'));
+    assert.ok(has(await seller.get('/seller/returns'), '#' + o.code));
+    assert.ok(has(await seller.post(`/seller/returns/${o.code}/approve`, { note: 'Gửi kèm hộp' }), 'Đã đồng ý'));
+    assert.ok(has(await c.post(`/account/orders/${o.code}/return/ship`, { trackingCode: 'x<1>' }), 'không hợp lệ'));
+    assert.ok(has(await c.post(`/account/orders/${o.code}/return/ship`, { trackingCode: 'GHN987654321' }), 'Đã ghi nhận'));
+    assert.equal(await walletOf(u), 0, 'chưa hoàn khi shop chưa nhận hàng');
+    const stock = (await M.Product.findById(prod._id)).stock;
+    await Promise.all(Array.from({ length: 5 }, () => seller.post(`/seller/returns/${o.code}/receive`, {})));
+    const x = await M.Order.findById(o._id);
+    assert.equal(x.status, 'returned'); assert.equal(x.paymentStatus, 'refunded'); assert.equal(x.returnRequest.status, 'refunded');
+    assert.equal(await walletOf(u), o.total);
+    assert.equal(await M.WalletTxn.countDocuments({ order: o._id, type: 'refund_return' }), 1);
+    assert.equal((await M.Product.findById(prod._id)).stock, stock + 1);
+    assert.equal(await M.Review.countDocuments({ order: o._id }), 0);
+    const { REVENUE_MATCH } = require(path.join(ROOT, 'utils', 'stats'));
+    assert.equal(await M.Order.countDocuments({ _id: o._id, ...REVENUE_MATCH }), 0);
+    // sau khi trả: không đánh giá lại, không huỷ, không trả lần 2, admin không đổi trạng thái được
+    assert.ok(!(await c.get(`/account/orders/${o.code}/review`)).url.includes('/review'));
+    assert.ok(has(await c.post(`/account/orders/${o.code}/return`, null, { multipart: returnForm(GOOD) }), 'đơn đã giao'));
+    await admin.post(`/admin/orders/${o.code}/status`, { status: 'completed' });
+    assert.equal((await M.Order.findById(o._id)).status, 'returned');
+    await admin.post(`/admin/refunds/${o.code}`, {});
+    assert.equal(await walletOf(u), o.total, 'admin bấm hoàn lại cũng không cộng thêm');
+    const page = await c.get(`/account/orders/${o.code}`);
+    assert.ok(has(page, 'Đã trả hàng')); assert.ok(has(page, 'Đã hoàn tiền vào ví'));
+  });
+
+  it('Shop từ chối → khách khiếu nại 1 lần → admin phân xử (đóng cần lý do; hoàn chỉ 1 lần)', async () => {
+    const { u, c } = await mkCustomer('kn');
+    const o = await mkOrder(u);
+    await c.post(`/account/orders/${o.code}/return`, null, { multipart: returnForm(GOOD) });
+    assert.ok(has(await c.post(`/account/orders/${o.code}/return/dispute`, { note: 'Shop không trả lời tôi' }), 'Chưa thể khiếu nại'));
+    assert.ok(has(await seller.post(`/seller/returns/${o.code}/reject`, { reason: 'ko' }), 'ít nhất 10 ký tự'));
+    assert.ok(has(await seller.post(`/seller/returns/${o.code}/reject`, { reason: 'Ảnh không cho thấy lỗi của sản phẩm' }), 'Đã từ chối'));
+    assert.ok(has(await c.post(`/account/orders/${o.code}/return/dispute`, { note: 'ngắn' }), 'ít nhất 10 ký tự'));
+    assert.ok(has(await c.post(`/account/orders/${o.code}/return/dispute`, { note: 'Video kèm theo cho thấy phím Enter liệt' }), 'Đã gửi khiếu nại'));
+    assert.ok(has(await c.post(`/account/orders/${o.code}/return/dispute`, { note: 'Khiếu nại lần thứ hai nhé' }), 'Chưa thể khiếu nại'));
+    assert.ok(has(await admin.get('/admin/returns'), '#' + o.code));
+    // đơn đang tranh chấp: admin không đổi trạng thái đơn trực tiếp được
+    assert.ok(has(await admin.post(`/admin/orders/${o.code}/status`, { status: 'cancelled' }), 'Trả hàng / Khiếu nại'));
+    assert.ok(has(await admin.post(`/admin/returns/${o.code}/resolve`, { decision: 'close', note: 'ngắn' }), 'ít nhất 10 ký tự'));
+    assert.ok(has(await admin.post(`/admin/returns/${o.code}/resolve`, { decision: 'hack' }), 'không hợp lệ'));
+    const stock = (await M.Product.findById(prod._id)).stock;
+    await Promise.all([1, 2, 3].map(() => admin.post(`/admin/returns/${o.code}/resolve`, { decision: 'refund', note: 'Lỗi do nhà sản xuất' })));
+    assert.equal(await walletOf(u), o.total);
+    assert.equal((await M.Product.findById(prod._id)).stock, stock, 'không tick "hàng đã về" → không cộng kho');
+    assert.ok(has(await admin.post(`/admin/returns/${o.code}/resolve`, { decision: 'close', note: 'Đóng lại sau khi đã hoàn' }), 'đã được xử lý'));
+    assert.equal((await M.Order.findById(o._id)).returnRequest.status, 'refunded');
+  });
+
+  it('Shop im lặng quá 72 giờ → khách được khiếu nại; admin đóng yêu cầu → không hoàn', async () => {
+    const { u, c } = await mkCustomer('im');
+    const o = await mkOrder(u);
+    await c.post(`/account/orders/${o.code}/return`, null, { multipart: returnForm(GOOD) });
+    await M.Order.updateOne({ _id: o._id }, { 'returnRequest.requestedAt': new Date(Date.now() - 73 * 3600e3) });
+    assert.ok(has(await c.get(`/account/orders/${o.code}`), 'Khiếu nại lên sàn'));
+    assert.ok(has(await c.post(`/account/orders/${o.code}/return/dispute`, { note: 'Shop không phản hồi sau 3 ngày' }), 'Đã gửi khiếu nại'));
+    assert.ok(has(await admin.post(`/admin/returns/${o.code}/resolve`, { decision: 'close', note: 'Ảnh cho thấy khách làm rơi vỡ' }), 'Đã đóng'));
+    assert.equal(await walletOf(u), 0);
+    const x = await M.Order.findById(o._id);
+    assert.equal(x.returnRequest.status, 'closed'); assert.equal(x.paymentStatus, 'paid');
+  });
+
+  it('Shop từ chối sau khi nhận hàng (hàng trả về không đúng) → không hoàn; không khiếu nại lại sau khi đã khiếu nại', async () => {
+    const { u, c } = await mkCustomer('sai');
+    const o = await mkOrder(u);
+    await c.post(`/account/orders/${o.code}/return`, null, { multipart: returnForm(GOOD) });
+    await seller.post(`/seller/returns/${o.code}/approve`, {});
+    await c.post(`/account/orders/${o.code}/return/ship`, { trackingCode: 'VTP-000111222' });
+    assert.ok(has(await seller.post(`/seller/returns/${o.code}/reject`, { reason: 'Hàng trả về là hộp rỗng, không có bàn phím' }), 'Đã từ chối'));
+    const x = await M.Order.findById(o._id);
+    assert.equal(x.returnRequest.rejectStage, 'receipt'); assert.equal(await walletOf(u), 0);
+    // shop không thể "đã nhận" sau khi đã từ chối
+    assert.ok(has(await seller.post(`/seller/returns/${o.code}/receive`, {}), 'khách đã gửi hàng'));
+    assert.equal(await walletOf(u), 0);
+  });
+
+  it('Các trang ví / trả hàng / khiếu nại / hoàn tiền mở được, tab lọc đơn trả hàng hoạt động', async () => {
+    const { c } = await mkCustomer('trang');
+    for (const p of ['/account/wallet', '/account/orders?tab=returns', '/account/orders?tab=returned']) assert.equal((await c.get(p)).status, 200, p);
+    for (const t of ['todo', 'wait', 'done', 'x']) assert.equal((await seller.get('/seller/returns?tab=' + t)).status, 200);
+    for (const t of ['disputed', 'open', 'done', 'x']) assert.equal((await admin.get('/admin/returns?tab=' + t)).status, 200);
+    for (const t of ['pending', 'done']) assert.equal((await admin.get('/admin/refunds?tab=' + t)).status, 200);
+    assert.ok(has(await admin.get('/admin/users'), 'Ví KeebHub'));
+    assert.equal((await seller.get('/seller/orders?status=returned')).status, 200);
+    assert.equal((await admin.get('/admin/orders?status=returned')).status, 200);
   });
 });
